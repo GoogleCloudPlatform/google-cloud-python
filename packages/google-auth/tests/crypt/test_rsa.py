@@ -15,19 +15,15 @@
 import os
 from unittest import mock
 
-import pytest
 from cryptography.hazmat import backends
 from cryptography.hazmat.primitives import serialization
+import pytest
+import rsa as rsa_lib
 
-try:
-    import rsa as rsa_lib  # type: ignore
+from google.auth.crypt import _cryptography_rsa
+from google.auth.crypt import _python_rsa
+from google.auth.crypt import rsa
 
-    from google.auth.crypt import _python_rsa
-except ImportError:
-    rsa_lib = None  # type: ignore
-    _pyrhon_rsa = None  # type: ignore
-
-from google.auth.crypt import _cryptography_rsa, rsa
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
 
@@ -74,13 +70,11 @@ class TestRSAVerifier:
         assert isinstance(verifier._impl, _cryptography_rsa.RSAVerifier)
         assert verifier._impl._pubkey == cryptography_public_key
 
-    @pytest.mark.skipif(not rsa_lib, reason="rsa library not installed")
     def test_init_with_rsa_key(self, rsa_public_key):
         verifier = rsa.RSAVerifier(rsa_public_key)
         assert isinstance(verifier._impl, _python_rsa.RSAVerifier)
         assert verifier._impl._pubkey == rsa_public_key
 
-    @pytest.mark.skipif(not rsa_lib, reason="rsa library not installed")
     def test_warning_with_rsa(self, rsa_public_key):
         with pytest.warns(DeprecationWarning, match="The 'rsa' library is deprecated"):
             rsa.RSAVerifier(rsa_public_key)
@@ -120,14 +114,12 @@ class TestRSASigner:
         assert signer._impl._key == cryptography_private_key
         assert signer._impl.key_id == "123"
 
-    @pytest.mark.skipif(not rsa_lib, reason="rsa library not installed")
     def test_init_with_rsa_key(self, rsa_private_key):
         signer = rsa.RSASigner(rsa_private_key, key_id="123")
         assert isinstance(signer._impl, _python_rsa.RSASigner)
         assert signer._impl._key == rsa_private_key
         assert signer._impl.key_id == "123"
 
-    @pytest.mark.skipif(not rsa_lib, reason="rsa library not installed")
     def test_warning_with_rsa(self, rsa_private_key):
         with pytest.warns(DeprecationWarning, match="The 'rsa' library is deprecated"):
             rsa.RSASigner(rsa_private_key, key_id="123")
@@ -138,8 +130,8 @@ class TestRSASigner:
         with pytest.raises(ValueError):
             rsa.RSASigner(unknown_key)
 
-    def test_sign_delegates(self, cryptography_private_key):
-        signer = rsa.RSASigner(cryptography_private_key)
+    def test_sign_delegates(self, rsa_private_key):
+        signer = rsa.RSASigner(rsa_private_key)
 
         with mock.patch.object(
             signer._impl, "sign", return_value=b"signature"
@@ -172,7 +164,6 @@ class TestRSASigner:
         assert isinstance(verifier._impl, _cryptography_rsa.RSAVerifier)
         assert isinstance(signer._impl, _cryptography_rsa.RSASigner)
 
-    @pytest.mark.skipif(not rsa_lib, reason="rsa library not installed")
     def test_end_to_end_rsa_lib(self, rsa_private_key, rsa_public_key):
         signer = rsa.RSASigner(rsa_private_key)
         message = b"Hello World"
