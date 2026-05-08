@@ -125,7 +125,7 @@ def token_factory(signer, es256_signer, es384_signer):
         # False is specified to remove the signer's key id for testing
         # headers without key ids.
         if key_id is False:
-            signer._impl._key_id = None
+            signer._key_id = None
             key_id = None
 
         if use_es256_signer:

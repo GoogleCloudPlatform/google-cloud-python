@@ -100,7 +100,7 @@ class EsVerifier(base.Verifier):
 
     @classmethod
     def from_string(cls, public_key: Union[str, bytes]) -> "EsVerifier":
-        """Construct a Verifier instance from a public key or public
+        """Construct an Verifier instance from a public key or public
         certificate string.
 
         Args:
@@ -108,7 +108,7 @@ class EsVerifier(base.Verifier):
                 x509 public key certificate.
 
         Returns:
-            google.auth.crypt.Verifier: The constructed verifier.
+            Verifier: The constructed verifier.
 
         Raises:
             ValueError: If the public key can't be parsed.

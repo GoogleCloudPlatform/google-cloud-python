@@ -24,9 +24,8 @@ cryptography_base_require = [
 
 DEPENDENCIES = (
     "pyasn1-modules>=0.2.1",
-    *cryptography_base_require,
-    # TODO: remove rsa from dependencies in next release (replaced with cryptography)
-    # https://github.com/googleapis/google-auth-library-python/issues/1810
+    # rsa==4.5 is the last version to support 2.7
+    # https://github.com/sybrenstuvel/python-rsa/issues/152#issuecomment-643470233
     "rsa>=3.1.4,<5",
 )
 
@@ -38,7 +37,7 @@ aiohttp_extra_require = [
     *requests_extra_require,
 ]
 
-pyjwt_extra_require = ["pyjwt>=2.0"]
+pyjwt_extra_require = ["pyjwt>=2.0", *cryptography_base_require]
 
 reauth_extra_require = ["pyu2f>=0.1.5"]
 
@@ -75,7 +74,6 @@ testing_extra_require = [
 ]
 
 extras = {
-    # Note: cryptography was made into a required dependency. Extra is kept for backwards compatibility
     "cryptography": cryptography_base_require,
     # pyopenssl is deprecated, kept for backwards compatibility
     "pyopenssl": cryptography_base_require,
