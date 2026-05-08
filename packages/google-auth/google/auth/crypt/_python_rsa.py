@@ -39,9 +39,13 @@ _PKCS1_MARKER = ("-----BEGIN RSA PRIVATE KEY-----", "-----END RSA PRIVATE KEY---
 _PKCS8_MARKER = ("-----BEGIN PRIVATE KEY-----", "-----END PRIVATE KEY-----")
 _PKCS8_SPEC = PrivateKeyInfo()
 
-_warning_msg = (
-    "The 'rsa' library is deprecated and will be removed in a future release. "
-    "Please migrate to 'cryptography'."
+warnings.warn(
+    (
+        "The 'rsa' library is deprecated and will be removed in a future release. "
+        "Please migrate to 'cryptography'."
+    ),
+    category=DeprecationWarning,
+    stacklevel=2,
 )
 
 
@@ -79,11 +83,6 @@ class RSAVerifier(base.Verifier):
     """
 
     def __init__(self, public_key):
-        warnings.warn(
-            _warning_msg,
-            category=DeprecationWarning,
-            stacklevel=2,
-        )
         self._pubkey = public_key
 
     @_helpers.copy_docstring(base.Verifier)
@@ -142,11 +141,6 @@ class RSASigner(base.Signer, base.FromServiceAccountMixin):
     """
 
     def __init__(self, private_key, key_id=None):
-        warnings.warn(
-            _warning_msg,
-            category=DeprecationWarning,
-            stacklevel=2,
-        )
         self._key = private_key
         self._key_id = key_id
 

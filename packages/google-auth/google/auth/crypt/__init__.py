@@ -37,12 +37,36 @@ Note that these two classes are only available if your `cryptography` dependency
 version is at least 1.4.0.
 """
 
-from google.auth.crypt import base, es, es256, rsa
+from google.auth.crypt import base
+from google.auth.crypt import rsa
 
-EsSigner = es.EsSigner
-EsVerifier = es.EsVerifier
-ES256Signer = es256.ES256Signer
-ES256Verifier = es256.ES256Verifier
+# google.auth.crypt.es depends on the crytpography module which may not be
+# successfully imported depending on the system.
+try:
+    from google.auth.crypt import es
+    from google.auth.crypt import es256
+except ImportError:  # pragma: NO COVER
+    es = None  # type: ignore
+    es256 = None  # type: ignore
+
+if es is not None and es256 is not None:  # pragma: NO COVER
+    __all__ = [
+        "EsSigner",
+        "EsVerifier",
+        "ES256Signer",
+        "ES256Verifier",
+        "RSASigner",
+        "RSAVerifier",
+        "Signer",
+        "Verifier",
+    ]
+
+    EsSigner = es.EsSigner
+    EsVerifier = es.EsVerifier
+    ES256Signer = es256.ES256Signer
+    ES256Verifier = es256.ES256Verifier
+else:  # pragma: NO COVER
+    __all__ = ["RSASigner", "RSAVerifier", "Signer", "Verifier"]
 
 
 # Aliases to maintain the v1.0.0 interface, as the crypt module was split
@@ -79,15 +103,3 @@ def verify_signature(message, signature, certs, verifier_cls=rsa.RSAVerifier):
         if verifier.verify(message, signature):
             return True
     return False
-
-
-__all__ = [
-    "EsSigner",
-    "EsVerifier",
-    "ES256Signer",
-    "ES256Verifier",
-    "RSASigner",
-    "RSAVerifier",
-    "Signer",
-    "Verifier",
-]
