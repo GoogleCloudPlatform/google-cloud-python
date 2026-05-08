@@ -172,7 +172,7 @@ def format(session):
 @nox.session(python=DEFAULT_PYTHON_VERSION)
 def mypy(session):
     """Verify type hints are mypy compatible."""
-    session.install("-e", ".[aiohttp,rsa]")
+    session.install("-e", ".[aiohttp]")
     session.install(
         "mypy",
         "types-certifi",
@@ -195,8 +195,7 @@ def mypy(session):
 
 
 @nox.session(python=ALL_PYTHON)
-@nox.parametrize(["install_deprecated_extras"], (True, False))
-def unit(session, install_deprecated_extras):
+def unit(session):
     # Install all test dependencies, then install this package in-place.
 
     min_py, max_py = UNIT_TEST_PYTHON_VERSIONS[0], UNIT_TEST_PYTHON_VERSIONS[-1]
@@ -209,13 +208,7 @@ def unit(session, install_deprecated_extras):
     constraints_path = str(
         CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
     )
-    extras_str = "testing"
-    if install_deprecated_extras:
-        # rsa and oauth2client were both archived and support dropped,
-        # but we still  test old code paths
-        session.install("oauth2client")
-        extras_str += ",rsa"
-    session.install("-e", f".[{extras_str}]", "-c", constraints_path)
+    session.install("-e", ".[testing]", "-c", constraints_path)
     session.run(
         "pytest",
         f"--junitxml=unit_{session.python}_sponge_log.xml",

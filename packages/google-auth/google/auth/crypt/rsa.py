@@ -19,10 +19,13 @@ This file provides a shared wrapper, that defers to _python_rsa or _cryptography
 for implmentations using different third party libraries
 """
 
-from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey, RSAPublicKey
+from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
+from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicKey
 
 from google.auth import _helpers
-from google.auth.crypt import _cryptography_rsa, base
+from google.auth.crypt import _cryptography_rsa
+from google.auth.crypt import _python_rsa
+from google.auth.crypt import base
 
 RSA_KEY_MODULE_PREFIX = "rsa.key"
 
@@ -34,7 +37,6 @@ class RSAVerifier(base.Verifier):
         public_key (Union["rsa.key.PublicKey", cryptography.hazmat.primitives.asymmetric.rsa.RSAPublicKey]):
             The public key used to verify signatures.
     Raises:
-        ImportError: if called with an rsa.key.PublicKey, when the rsa library is not installed
         ValueError: if an unrecognized public key is provided
     """
 
@@ -43,8 +45,6 @@ class RSAVerifier(base.Verifier):
         if isinstance(public_key, RSAPublicKey):
             impl_lib = _cryptography_rsa
         elif module_str.startswith(RSA_KEY_MODULE_PREFIX):
-            from google.auth.crypt import _python_rsa
-
             impl_lib = _python_rsa
         else:
             raise ValueError(f"unrecognized public key type: {type(public_key)}")
@@ -85,7 +85,6 @@ class RSASigner(base.Signer, base.FromServiceAccountMixin):
             public key or certificate.
 
     Raises:
-        ImportError: if called with an rsa.key.PrivateKey, when the rsa library is not installed
         ValueError: if an unrecognized public key is provided
     """
 
@@ -94,8 +93,6 @@ class RSASigner(base.Signer, base.FromServiceAccountMixin):
         if isinstance(private_key, RSAPrivateKey):
             impl_lib = _cryptography_rsa
         elif module_str.startswith(RSA_KEY_MODULE_PREFIX):
-            from google.auth.crypt import _python_rsa
-
             impl_lib = _python_rsa
         else:
             raise ValueError(f"unrecognized private key type: {type(private_key)}")

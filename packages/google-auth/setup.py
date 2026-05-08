@@ -25,6 +25,9 @@ cryptography_base_require = [
 DEPENDENCIES = (
     "pyasn1-modules>=0.2.1",
     *cryptography_base_require,
+    # TODO: remove rsa from dependencies in next release (replaced with cryptography)
+    # https://github.com/googleapis/google-auth-library-python/issues/1810
+    "rsa>=3.1.4,<5",
 )
 
 requests_extra_require = ["requests >= 2.30.0, < 3.0.0"]
@@ -46,7 +49,6 @@ urllib3_extra_require = [
     "packaging >= 20.0",
 ]
 
-
 grpc_extra_require = [
     "grpcio >= 1.59.0, < 2.0.0; python_version < '3.14'",
     "grpcio >= 1.75.1, < 2.0.0; python_version >= '3.14'",
@@ -57,6 +59,8 @@ testing_extra_require = [
     *grpc_extra_require,
     "flask",
     "freezegun",
+    # TODO(https://github.com/googleapis/google-auth-library-python/issues/1736): Remove `oauth2client` from testing requirements once an extra is added for `oauth2client` dependency.
+    "oauth2client",
     *pyjwt_extra_require,
     "pytest",
     "pytest-cov",
@@ -82,9 +86,9 @@ extras = {
     "requests": requests_extra_require,
     "testing": testing_extra_require,
     "urllib3": urllib3_extra_require,
-    # rsa is deprecated, kept for backwards compatibility
-    "rsa": [],
     "grpc": grpc_extra_require,
+    # TODO(https://github.com/googleapis/google-auth-library-python/issues/1735): Add an extra for `grpcio` dependency.
+    # TODO(https://github.com/googleapis/google-auth-library-python/issues/1736): Add an extra for `oauth2client` dependency.
 }
 
 with io.open("README.rst", "r") as fh:
