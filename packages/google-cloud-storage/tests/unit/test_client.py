@@ -136,6 +136,32 @@ class TestClient(unittest.TestCase):
     def _make_one(self, *args, **kw):
         return self._get_target_class()(*args, **kw)
 
+    def test_ctor_bucket_metadata_cache_enabled_by_default(self):
+        credentials = _make_credentials()
+        client = self._make_one(project="PROJECT", credentials=credentials)
+
+        self.assertIsNotNone(client._bucket_metadata_cache)
+
+    def test_ctor_bucket_metadata_cache_opt_out(self):
+        credentials = _make_credentials()
+        client = self._make_one(
+            project="PROJECT",
+            credentials=credentials,
+            enable_bucket_metadata_cache=False,
+        )
+
+        self.assertIsNone(client._bucket_metadata_cache)
+
+    def test_close_ok_with_disabled_bucket_metadata_cache(self):
+        credentials = _make_credentials()
+        client = self._make_one(
+            project="PROJECT",
+            credentials=credentials,
+            enable_bucket_metadata_cache=False,
+        )
+
+        client.close()
+
     def test_ctor_connection_type(self):
         from google.cloud._http import ClientInfo
 
