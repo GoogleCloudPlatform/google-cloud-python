@@ -14,6 +14,7 @@
 
 """In-memory LRU cache for bucket metadata supporting App-centric Observability (ACO)."""
 
+import asyncio
 import logging
 import threading
 
@@ -58,11 +59,18 @@ class BucketMetadataCache:
                 # bypass starting duplicate fetches.
                 return None
             else:
-                # fire a background thread and get bucket metadata.
+                # fire a background fetch and get bucket metadata.
                 self._inflight_fetches.add(bucket_name)
-                threading.Thread(
-                    target=self._fetch_background, args=(bucket_name,), daemon=True
-                ).start()
+                if hasattr(self._client, "grpc_client"):
+                    try:
+                        loop = asyncio.get_running_loop()
+                        loop.create_task(self._fetch_background_async(bucket_name))
+                    except RuntimeError:
+                        self._inflight_fetches.discard(bucket_name)
+                else:
+                    threading.Thread(
+                        target=self._fetch_background, args=(bucket_name,), daemon=True
+                    ).start()
                 return None
 
     def check_and_evict(self, bucket_name):
@@ -73,11 +81,20 @@ class BucketMetadataCache:
             if bucket_name in self._inflight_checks:
                 return
             self._inflight_checks.add(bucket_name)
-            threading.Thread(
-                target=self._verify_existence_background,
-                args=(bucket_name,),
-                daemon=True,
-            ).start()
+            if hasattr(self._client, "grpc_client"):
+                try:
+                    loop = asyncio.get_running_loop()
+                    loop.create_task(
+                        self._verify_existence_background_async(bucket_name)
+                    )
+                except RuntimeError:
+                    self._inflight_checks.discard(bucket_name)
+            else:
+                threading.Thread(
+                    target=self._verify_existence_background,
+                    args=(bucket_name,),
+                    daemon=True,
+                ).start()
 
     def _verify_existence_background(self, bucket_name):
         try:
@@ -87,6 +104,24 @@ class BucketMetadataCache:
         except Exception as e:
             logger.debug(
                 f"Background verification for bucket existence failed for {bucket_name}: {e}"
+            )
+        finally:
+            with self._lock:
+                self._inflight_checks.discard(bucket_name)
+
+    async def _verify_existence_background_async(self, bucket_name):
+        try:
+            from google.cloud import _storage_v2 as storage_v2
+
+            request = storage_v2.GetBucketRequest(
+                name=f"projects/_/buckets/{bucket_name}"
+            )
+            await self._client.grpc_client.get_bucket(request=request, timeout=10.0)
+        except (NotFound, api_exceptions.NotFound):
+            self.evict(bucket_name)
+        except Exception as e:
+            logger.debug(
+                f"Async background verification for bucket existence failed for {bucket_name}: {e}"
             )
         finally:
             with self._lock:
@@ -114,12 +149,52 @@ class BucketMetadataCache:
             with self._lock:
                 self._inflight_fetches.discard(bucket_name)
 
-    def update_from_bucket(self, bucket):
-        """Update cache from a Bucket instance."""
-        if not bucket or not bucket.name:
+    async def _fetch_background_async(self, bucket_name):
+        """Asynchronously fetch bucket metadata via gRPC and update the cache."""
+        try:
+            from google.cloud import _storage_v2 as storage_v2
+
+            request = storage_v2.GetBucketRequest(
+                name=f"projects/_/buckets/{bucket_name}"
+            )
+            bucket = await self._client.grpc_client.get_bucket(
+                request=request, timeout=10.0
+            )
+            self.update_from_bucket(bucket, bucket_name=bucket_name)
+        except (NotFound, api_exceptions.NotFound):
+            self.evict(bucket_name)
+        except api_exceptions.Forbidden:
+            self.update_cache(
+                bucket_name,
+                f"//storage.googleapis.com/projects/_/buckets/{bucket_name}",
+                "global",
+            )
+        except Exception as e:
+            logger.debug(
+                f"Async background fetch for bucket metadata failed for {bucket_name}: {e}"
+            )
+        finally:
+            with self._lock:
+                self._inflight_fetches.discard(bucket_name)
+
+    def update_from_bucket(self, bucket, bucket_name=None):
+        """Update cache from a Bucket instance or storage_v2.Bucket proto."""
+        if not bucket:
             return
+        name = bucket_name or getattr(bucket, "name", None)
+        if not name:
+            return
+        if name.startswith("projects/") and "/buckets/" in name:
+            name = name.split("/buckets/", 1)[1]
 
         project_number = getattr(bucket, "project_number", None)
+        if not project_number and hasattr(bucket, "project"):
+            proj_str = str(getattr(bucket, "project", ""))
+            if proj_str.startswith("projects/"):
+                project_number = proj_str.split("projects/", 1)[1]
+            elif proj_str:
+                project_number = proj_str
+
         location = getattr(bucket, "location", None) or "global"
         location = location.lower()
         location_type = getattr(bucket, "location_type", None) or "region"
@@ -128,14 +203,14 @@ class BucketMetadataCache:
         if location_type in ("multi-region", "dual-region"):
             location = "global"
 
-        if project_number:
-            destination_id = f"//storage.googleapis.com/projects/{project_number}/buckets/{bucket.name}"
-        else:
+        if project_number and str(project_number) != "_":
             destination_id = (
-                f"//storage.googleapis.com/projects/_/buckets/{bucket.name}"
+                f"//storage.googleapis.com/projects/{project_number}/buckets/{name}"
             )
+        else:
+            destination_id = f"//storage.googleapis.com/projects/_/buckets/{name}"
 
-        self.update_cache(bucket.name, destination_id, location)
+        self.update_cache(name, destination_id, location)
 
     def update_cache(self, bucket_name, destination_id, location):
         """Thread-safely update or insert a cache entry with bounded size."""

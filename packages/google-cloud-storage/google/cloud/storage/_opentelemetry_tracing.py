@@ -16,7 +16,6 @@
 
 import logging
 import os
-from contextlib import contextmanager
 from urllib.parse import urlparse
 
 from google.api_core import exceptions as api_exceptions
@@ -75,30 +74,88 @@ _cloud_trace_adoption_attrs = {
 }
 
 
-@contextmanager
-def create_trace_span(name, attributes=None, client=None, api_request=None, retry=None):
+class _TraceSpanContext:
+    """Context manager supporting both sync and async tracing spans."""
+
+    def __init__(
+        self,
+        name,
+        attributes=None,
+        client=None,
+        api_request=None,
+        retry=None,
+        rpc_system="http",
+    ):
+        self.name = name
+        self.attributes = attributes
+        self.client = client
+        self.api_request = api_request
+        self.retry = retry
+        self.rpc_system = rpc_system
+        self._span_cm = None
+        self._span = None
+
+    def __enter__(self):
+        if not HAS_OPENTELEMETRY or not enable_otel_traces:
+            return None
+
+        tracer = trace.get_tracer(__name__)
+        final_attributes = _get_final_attributes(
+            self.attributes,
+            self.client,
+            self.api_request,
+            self.retry,
+            rpc_system=self.rpc_system,
+        )
+        self._span_cm = tracer.start_as_current_span(
+            name=self.name, kind=trace.SpanKind.CLIENT, attributes=final_attributes
+        )
+        self._span = self._span_cm.__enter__()
+        return self._span
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self._span_cm is not None:
+            if exc_val is not None and isinstance(
+                exc_val, api_exceptions.GoogleAPICallError
+            ):
+                self._span.set_status(trace.Status(trace.StatusCode.ERROR))
+                self._span.record_exception(exc_val)
+            return self._span_cm.__exit__(exc_type, exc_val, exc_tb)
+        return False
+
+    async def __aenter__(self):
+        return self.__enter__()
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        return self.__exit__(exc_type, exc_val, exc_tb)
+
+
+def create_trace_span(
+    name,
+    attributes=None,
+    client=None,
+    api_request=None,
+    retry=None,
+    rpc_system="http",
+):
     """Creates a context manager for a new span and set it as the current span
-    in the configured tracer. If no configuration exists yields None."""
-    if not HAS_OPENTELEMETRY or not enable_otel_traces:
-        yield None
-        return
-
-    tracer = trace.get_tracer(__name__)
-    final_attributes = _get_final_attributes(attributes, client, api_request, retry)
-    # Yield new span.
-    with tracer.start_as_current_span(
-        name=name, kind=trace.SpanKind.CLIENT, attributes=final_attributes
-    ) as span:
-        try:
-            yield span
-        except api_exceptions.GoogleAPICallError as error:
-            span.set_status(trace.Status(trace.StatusCode.ERROR))
-            span.record_exception(error)
-            raise
+    in the configured tracer. Supports both sync and async context managers.
+    If no configuration exists yields None."""
+    return _TraceSpanContext(
+        name=name,
+        attributes=attributes,
+        client=client,
+        api_request=api_request,
+        retry=retry,
+        rpc_system=rpc_system,
+    )
 
 
-def _get_final_attributes(attributes=None, client=None, api_request=None, retry=None):
+def _get_final_attributes(
+    attributes=None, client=None, api_request=None, retry=None, rpc_system="http"
+):
     collected_attr = _default_attributes.copy()
+    collected_attr["rpc.system"] = rpc_system
     collected_attr.update(_cloud_trace_adoption_attrs)
     if api_request:
         collected_attr.update(_set_api_request_attr(api_request, client))

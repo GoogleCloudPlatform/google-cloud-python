@@ -26,6 +26,7 @@ from google.cloud import _storage_v2
 from google.cloud._storage_v2.types import BidiWriteObjectRedirectedError
 from google.cloud._storage_v2.types.storage import BidiWriteObjectRequest
 from google.cloud.storage import Blob
+from google.cloud.storage._helpers import create_trace_span_helper
 from google.cloud.storage.asyncio.async_grpc_client import (
     AsyncGrpcClient,
 )
@@ -465,60 +466,71 @@ class AsyncAppendableObjectWriter:
         if self._is_stream_open:
             raise ValueError("Underlying bidi-gRPC stream is already open")
 
-        retry_policy = self._merge_retry_policy(retry_policy)
+        async with create_trace_span_helper(
+            self.client,
+            self.bucket_name,
+            "Storage.AsyncAppendableObjectWriter.open",
+            rpc_system="grpc",
+        ):
+            retry_policy = self._merge_retry_policy(retry_policy)
 
-        async def _do_open():
-            current_metadata = list(metadata) if metadata else []
-            creating = not self.generation
+            async def _do_open():
+                current_metadata = list(metadata) if metadata else []
+                creating = not self.generation
 
-            # Cleanup stream from previous failed attempt, if any.
-            if self.write_obj_stream:
-                if self.write_obj_stream.is_stream_open:
-                    try:
-                        await self.write_obj_stream.close()
-                    except Exception as e:
-                        logger.warning(
-                            f"Error closing previous write stream during open retry. Got exception: {e}"
-                        )
-                self.write_obj_stream = None
-                self._is_stream_open = False
+                # Cleanup stream from previous failed attempt, if any.
+                if self.write_obj_stream:
+                    if self.write_obj_stream.is_stream_open:
+                        try:
+                            await self.write_obj_stream.close()
+                        except Exception as e:
+                            logger.warning(
+                                f"Error closing previous write stream during open retry. Got exception: {e}"
+                            )
+                    self.write_obj_stream = None
+                    self._is_stream_open = False
 
-            self.write_obj_stream = _AsyncWriteObjectStream(
-                client=self.client.grpc_client,
-                bucket_name=self.bucket_name,
-                object_name=self.object_name,
-                blob=self.blob,
-                generation_number=self.generation,
-                write_handle=self.write_handle,
-                routing_token=self._routing_token,
-                storage_class=self.storage_class,
-                preconditions=None if self._created_generation else self.preconditions,
-            )
-
-            if self._routing_token:
-                current_metadata.append(
-                    ("x-goog-request-params", f"routing_token={self._routing_token}")
+                self.write_obj_stream = _AsyncWriteObjectStream(
+                    client=self.client.grpc_client,
+                    bucket_name=self.bucket_name,
+                    object_name=self.object_name,
+                    blob=self.blob,
+                    generation_number=self.generation,
+                    write_handle=self.write_handle,
+                    routing_token=self._routing_token,
+                    storage_class=self.storage_class,
+                    preconditions=(
+                        None if self._created_generation else self.preconditions
+                    ),
                 )
 
-            await self.write_obj_stream.open(
-                metadata=current_metadata if current_metadata else None
-            )
+                if self._routing_token:
+                    current_metadata.append(
+                        (
+                            "x-goog-request-params",
+                            f"routing_token={self._routing_token}",
+                        )
+                    )
 
-            if self.write_obj_stream.generation_number:
-                if creating:
-                    self._created_generation = True
-                self.generation = self.write_obj_stream.generation_number
-            if self.write_obj_stream.write_handle:
-                self.write_handle = self.write_obj_stream.write_handle
-            if self.write_obj_stream.persisted_size is not None:
-                self.persisted_size = self.write_obj_stream.persisted_size
-                # set offset while opening
-                self.offset = self.persisted_size
+                await self.write_obj_stream.open(
+                    metadata=current_metadata if current_metadata else None
+                )
 
-            self._is_stream_open = True
-            self._routing_token = None
+                if self.write_obj_stream.generation_number:
+                    if creating:
+                        self._created_generation = True
+                    self.generation = self.write_obj_stream.generation_number
+                if self.write_obj_stream.write_handle:
+                    self.write_handle = self.write_obj_stream.write_handle
+                if self.write_obj_stream.persisted_size is not None:
+                    self.persisted_size = self.write_obj_stream.persisted_size
+                    # set offset while opening
+                    self.offset = self.persisted_size
 
-        await retry_policy(_do_open)()
+                self._is_stream_open = True
+                self._routing_token = None
+
+            await retry_policy(_do_open)()
 
     async def append(
         self,
@@ -557,100 +569,109 @@ class AsyncAppendableObjectWriter:
             logger.debug("No data provided to append; returning without action.")
             return
 
-        if retry_policy is None:
-            retry_policy = AsyncRetry(predicate=_is_write_retryable)
-
-        strategy = _WriteResumptionStrategy()
-        buffer = io.BytesIO(data)
-        attempt_count = 0
-
-        def send_and_recv_generator(
-            requests: List[BidiWriteObjectRequest],
-            state: Dict[str, _WriteState],
-            metadata: Optional[List[Tuple[str, str]]] = None,
+        async with create_trace_span_helper(
+            self.client,
+            self.bucket_name,
+            "Storage.AsyncAppendableObjectWriter.append",
+            attributes={"gcp.storage.chunk.size": len(data)},
+            rpc_system="grpc",
         ):
-            async def generator():
-                nonlocal attempt_count
-                nonlocal requests
-                attempt_count += 1
-                resp = None
-                write_state = state["write_state"]
-                # If this is a retry or redirect, we must re-open the stream
-                if attempt_count > 1 or write_state.routing_token:
-                    logger.info(
-                        f"Re-opening the stream with attempt_count: {attempt_count}"
-                    )
+            if retry_policy is None:
+                retry_policy = AsyncRetry(predicate=_is_write_retryable)
 
-                    current_metadata = list(metadata) if metadata else []
-                    if write_state.routing_token:
-                        current_metadata.append(
-                            (
-                                "x-goog-request-params",
-                                f"routing_token={write_state.routing_token}",
-                            )
-                        )
-                        self._routing_token = write_state.routing_token
+            strategy = _WriteResumptionStrategy()
+            buffer = io.BytesIO(data)
+            attempt_count = 0
 
-                    self._is_stream_open = False
-                    await self.open(metadata=current_metadata)
-
-                    write_state.persisted_size = self.persisted_size
-                    write_state.write_handle = self.write_handle
-                    write_state.routing_token = None
-
-                    write_state.user_buffer.seek(write_state.persisted_size)
-                    write_state.bytes_sent = write_state.persisted_size
-                    write_state.bytes_since_last_flush = 0
-                    self.bytes_appended_since_last_flush = 0
-
-                    requests = strategy.generate_requests(state)
-
-                for chunk_req in requests:
-                    await self.write_obj_stream.send(chunk_req)
-                    if chunk_req.flush:
-                        self._flush_count += 1
-
+            def send_and_recv_generator(
+                requests: List[BidiWriteObjectRequest],
+                state: Dict[str, _WriteState],
+                metadata: Optional[List[Tuple[str, str]]] = None,
+            ):
+                async def generator():
+                    nonlocal attempt_count
+                    nonlocal requests
+                    attempt_count += 1
                     resp = None
-                    if chunk_req.state_lookup:
-                        # TODO: if there's error, it'll raise error
-                        # and will be handled by `recover_state_on_failure`
-                        resp = await self.write_obj_stream.recv()
+                    write_state = state["write_state"]
+                    # If this is a retry or redirect, we must re-open the stream
+                    if attempt_count > 1 or write_state.routing_token:
+                        logger.info(
+                            f"Re-opening the stream with attempt_count: {attempt_count}"
+                        )
 
-                    if resp:
-                        if resp.persisted_size is not None:
-                            self.persisted_size = resp.persisted_size
-                            state["write_state"].persisted_size = resp.persisted_size
-                            self.offset = self.persisted_size
-                        if resp.write_handle:
-                            self.write_handle = resp.write_handle
-                            state["write_state"].write_handle = resp.write_handle
+                        current_metadata = list(metadata) if metadata else []
+                        if write_state.routing_token:
+                            current_metadata.append(
+                                (
+                                    "x-goog-request-params",
+                                    f"routing_token={write_state.routing_token}",
+                                )
+                            )
+                            self._routing_token = write_state.routing_token
 
-                    yield resp
+                        self._is_stream_open = False
+                        await self.open(metadata=current_metadata)
 
-            return generator()
+                        write_state.persisted_size = self.persisted_size
+                        write_state.write_handle = self.write_handle
+                        write_state.routing_token = None
 
-        # State initialization
-        write_state = _WriteState(
-            _MAX_CHUNK_SIZE_BYTES,
-            buffer,
-            self.flush_interval,
-            enable_checksum=enable_checksum,
-        )
-        write_state.write_handle = self.write_handle
-        write_state.persisted_size = self.persisted_size
-        # offset is set during `open()` call.
-        write_state.bytes_sent = self.offset or 0
-        write_state.bytes_since_last_flush = self.bytes_appended_since_last_flush
+                        write_state.user_buffer.seek(write_state.persisted_size)
+                        write_state.bytes_sent = write_state.persisted_size
+                        write_state.bytes_since_last_flush = 0
+                        self.bytes_appended_since_last_flush = 0
 
-        retry_manager = _BidiStreamRetryManager(
-            _WriteResumptionStrategy(),
-            lambda r, s: send_and_recv_generator(r, s, metadata),
-        )
-        await retry_manager.execute({"write_state": write_state}, retry_policy)
+                        requests = strategy.generate_requests(state)
 
-        # Sync local markers
-        self.bytes_appended_since_last_flush = write_state.bytes_since_last_flush
-        self.offset = write_state.bytes_sent
+                    for chunk_req in requests:
+                        await self.write_obj_stream.send(chunk_req)
+                        if chunk_req.flush:
+                            self._flush_count += 1
+
+                        resp = None
+                        if chunk_req.state_lookup:
+                            # TODO: if there's error, it'll raise error
+                            # and will be handled by `recover_state_on_failure`
+                            resp = await self.write_obj_stream.recv()
+
+                        if resp:
+                            if resp.persisted_size is not None:
+                                self.persisted_size = resp.persisted_size
+                                state[
+                                    "write_state"
+                                ].persisted_size = resp.persisted_size
+                                self.offset = self.persisted_size
+                            if resp.write_handle:
+                                self.write_handle = resp.write_handle
+                                state["write_state"].write_handle = resp.write_handle
+
+                        yield resp
+
+                return generator()
+
+            # State initialization
+            write_state = _WriteState(
+                _MAX_CHUNK_SIZE_BYTES,
+                buffer,
+                self.flush_interval,
+                enable_checksum=enable_checksum,
+            )
+            write_state.write_handle = self.write_handle
+            write_state.persisted_size = self.persisted_size
+            # offset is set during `open()` call.
+            write_state.bytes_sent = self.offset or 0
+            write_state.bytes_since_last_flush = self.bytes_appended_since_last_flush
+
+            retry_manager = _BidiStreamRetryManager(
+                _WriteResumptionStrategy(),
+                lambda r, s: send_and_recv_generator(r, s, metadata),
+            )
+            await retry_manager.execute({"write_state": write_state}, retry_policy)
+
+            # Sync local markers
+            self.bytes_appended_since_last_flush = write_state.bytes_since_last_flush
+            self.offset = write_state.bytes_sent
 
     async def simple_flush(self) -> None:
         """Flushes the data to the server.
@@ -683,17 +704,23 @@ class AsyncAppendableObjectWriter:
         if not self._is_stream_open:
             raise ValueError("Stream is not open. Call open() before flush().")
 
-        await self.write_obj_stream.send(
-            _storage_v2.BidiWriteObjectRequest(
-                flush=True,
-                state_lookup=True,
+        async with create_trace_span_helper(
+            self.client,
+            self.bucket_name,
+            "Storage.AsyncAppendableObjectWriter.flush",
+            rpc_system="grpc",
+        ):
+            await self.write_obj_stream.send(
+                _storage_v2.BidiWriteObjectRequest(
+                    flush=True,
+                    state_lookup=True,
+                )
             )
-        )
-        response = await self.write_obj_stream.recv()
-        self.persisted_size = response.persisted_size
-        self.offset = self.persisted_size
-        self.bytes_appended_since_last_flush = 0
-        return self.persisted_size
+            response = await self.write_obj_stream.recv()
+            self.persisted_size = response.persisted_size
+            self.offset = self.persisted_size
+            self.bytes_appended_since_last_flush = 0
+            return self.persisted_size
 
     async def close(
         self,
@@ -746,43 +773,49 @@ class AsyncAppendableObjectWriter:
                 "full_object_checksum can only be provided when finalize_on_close is True."
             )
 
-        if finalize_on_close:
-            return await self.finalize(
-                full_object_checksum=full_object_checksum,
-                retry_policy=retry_policy,
-            )
-
-        retry_policy = self._merge_retry_policy(retry_policy)
-
-        attempt_count = 0
-        expected_offset = self.offset
-
-        async def _do_close():
-            nonlocal attempt_count
-            attempt_count += 1
-
-            if attempt_count > 1:
-                logger.info(
-                    f"Re-opening the stream for close retry attempt: {attempt_count}"
+        async with create_trace_span_helper(
+            self.client,
+            self.bucket_name,
+            "Storage.AsyncAppendableObjectWriter.close",
+            rpc_system="grpc",
+        ):
+            if finalize_on_close:
+                return await self.finalize(
+                    full_object_checksum=full_object_checksum,
+                    retry_policy=retry_policy,
                 )
-                self._is_stream_open = False
-                await self.open()
-                if (
-                    self.offset is not None
-                    and expected_offset is not None
-                    and self.offset != expected_offset
-                ):
-                    raise exceptions.InternalServerError(
-                        f"Unrecoverable data loss during reconnect. Expected offset {expected_offset}, got {self.offset}"
+
+            retry_policy = self._merge_retry_policy(retry_policy)
+
+            attempt_count = 0
+            expected_offset = self.offset
+
+            async def _do_close():
+                nonlocal attempt_count
+                attempt_count += 1
+
+                if attempt_count > 1:
+                    logger.info(
+                        f"Re-opening the stream for close retry attempt: {attempt_count}"
                     )
+                    self._is_stream_open = False
+                    await self.open()
+                    if (
+                        self.offset is not None
+                        and expected_offset is not None
+                        and self.offset != expected_offset
+                    ):
+                        raise exceptions.InternalServerError(
+                            f"Unrecoverable data loss during reconnect. Expected offset {expected_offset}, got {self.offset}"
+                        )
 
-            await self.write_obj_stream.close()
-            return self.persisted_size
+                await self.write_obj_stream.close()
+                return self.persisted_size
 
-        try:
-            return await retry_policy(_do_close)()
-        finally:
-            self._is_stream_open = False
+            try:
+                return await retry_policy(_do_close)()
+            finally:
+                self._is_stream_open = False
 
     async def finalize(
         self,

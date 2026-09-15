@@ -149,61 +149,108 @@ def _validate_name(name):
     return name
 
 
-@contextmanager
-def create_trace_span_helper(client, bucket_name, name, attributes=None, **kwargs):
-    span_attrs = dict(attributes) if attributes else {}
+class _TraceSpanHelperContext:
+    """Context manager supporting both sync and async tracing span creation with bucket metadata."""
 
-    if (
-        bucket_name
-        and isinstance(bucket_name, str)
-        and client
-        and hasattr(client, "_bucket_metadata_cache")
-        and client._bucket_metadata_cache
-        and not _is_bucket_metadata_disabled()
-    ):
-        try:
-            if name in (
-                "Storage.Client.getBucket",
-                "Storage.Client.lookupBucket",
-                "Storage.Bucket.reload",
-                "Storage.Bucket.exists",
-            ):
-                cached = client._bucket_metadata_cache.get(bucket_name)
-            else:
-                cached = client._bucket_metadata_cache.get_or_queue_fetch(bucket_name)
+    def __init__(self, client, bucket_name, name, attributes=None, **kwargs):
+        self.client = client
+        self.bucket_name = bucket_name
+        self.name = name
+        self.attributes = attributes
+        self.kwargs = kwargs
+        self._base_cm = None
 
-            if cached and isinstance(cached, tuple) and len(cached) == 2:
-                dest_id, loc = cached
-                span_attrs.update(
-                    {
-                        "gcp.resource.destination.id": dest_id,
-                        "gcp.resource.destination.location": loc,
-                    }
-                )
-        except Exception as e:
-            _logger.debug(f"Failed cache lookup in create_trace_span_helper: {e}")
+    def _prepare_base_cm(self):
+        span_attrs = dict(self.attributes) if self.attributes else {}
+        client = self.client
+        bucket_name = self.bucket_name
+        name = self.name
 
-    if "client" not in kwargs and client:
-        kwargs["client"] = client
-
-    with _base_create_trace_span(name, attributes=span_attrs, **kwargs) as span:
-        try:
-            yield span
-        except (NotFound, api_exceptions.NotFound):
-            if (
-                bucket_name
-                and isinstance(bucket_name, str)
-                and client
-                and hasattr(client, "_bucket_metadata_cache")
-                and client._bucket_metadata_cache
-            ):
-                try:
-                    client._bucket_metadata_cache.check_and_evict(bucket_name)
-                except Exception as e:
-                    _logger.debug(
-                        f"Failed cache eviction on 404 in create_trace_span_helper: {e}"
+        if (
+            bucket_name
+            and isinstance(bucket_name, str)
+            and client
+            and hasattr(client, "_bucket_metadata_cache")
+            and client._bucket_metadata_cache
+            and not _is_bucket_metadata_disabled()
+        ):
+            try:
+                if name in (
+                    "Storage.Client.getBucket",
+                    "Storage.Client.lookupBucket",
+                    "Storage.Bucket.reload",
+                    "Storage.Bucket.exists",
+                ):
+                    cached = client._bucket_metadata_cache.get(bucket_name)
+                else:
+                    cached = client._bucket_metadata_cache.get_or_queue_fetch(
+                        bucket_name
                     )
-            raise
+
+                if cached and isinstance(cached, tuple) and len(cached) == 2:
+                    dest_id, loc = cached
+                    span_attrs.update(
+                        {
+                            "gcp.resource.destination.id": dest_id,
+                            "gcp.resource.destination.location": loc,
+                        }
+                    )
+            except Exception as e:
+                _logger.debug(f"Failed cache lookup in create_trace_span_helper: {e}")
+
+        kwargs = dict(self.kwargs)
+        if "client" not in kwargs and client:
+            kwargs["client"] = client
+
+        self._base_cm = _base_create_trace_span(name, attributes=span_attrs, **kwargs)
+        return self._base_cm
+
+    def _handle_not_found(self):
+        if (
+            self.bucket_name
+            and isinstance(self.bucket_name, str)
+            and self.client
+            and hasattr(self.client, "_bucket_metadata_cache")
+            and self.client._bucket_metadata_cache
+        ):
+            try:
+                self.client._bucket_metadata_cache.check_and_evict(self.bucket_name)
+            except Exception as e:
+                _logger.debug(
+                    f"Failed cache eviction on 404 in create_trace_span_helper: {e}"
+                )
+
+    def __enter__(self):
+        self._prepare_base_cm()
+        return self._base_cm.__enter__()
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_val is not None and isinstance(
+            exc_val, (NotFound, api_exceptions.NotFound)
+        ):
+            self._handle_not_found()
+        if self._base_cm is not None:
+            return self._base_cm.__exit__(exc_type, exc_val, exc_tb)
+        return False
+
+    async def __aenter__(self):
+        self._prepare_base_cm()
+        return await self._base_cm.__aenter__()
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        if exc_val is not None and isinstance(
+            exc_val, (NotFound, api_exceptions.NotFound)
+        ):
+            self._handle_not_found()
+        if self._base_cm is not None:
+            return await self._base_cm.__aexit__(exc_type, exc_val, exc_tb)
+        return False
+
+
+def create_trace_span_helper(client, bucket_name, name, attributes=None, **kwargs):
+    return _TraceSpanHelperContext(
+        client, bucket_name, name, attributes=attributes, **kwargs
+    )
 
 
 class _PropertyMixin(object):
