@@ -188,12 +188,14 @@ class BucketMetadataCache:
             name = name.split("/buckets/", 1)[1]
 
         project_number = getattr(bucket, "project_number", None)
-        if not project_number and hasattr(bucket, "project"):
-            proj_str = str(getattr(bucket, "project", ""))
-            if proj_str.startswith("projects/"):
-                project_number = proj_str.split("projects/", 1)[1]
-            elif proj_str:
-                project_number = proj_str
+        if not project_number:
+            project = getattr(bucket, "project", None)
+            if project:
+                proj_str = str(project)
+                if proj_str.startswith("projects/"):
+                    project_number = proj_str.split("projects/", 1)[1]
+                else:
+                    project_number = proj_str
 
         location = getattr(bucket, "location", None) or "global"
         location = location.lower()
