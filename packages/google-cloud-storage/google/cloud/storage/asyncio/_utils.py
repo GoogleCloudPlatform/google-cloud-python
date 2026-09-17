@@ -45,10 +45,7 @@ def update_write_handle_if_exists(obj, response):
 def inject_traceparent_to_metadata(metadata=None):
     """Inject W3C traceparent (and tracestate) into gRPC metadata tuple or list."""
     meta_list = list(metadata) if metadata else []
-    if (
-        not _opentelemetry_tracing.HAS_OPENTELEMETRY
-        or not _opentelemetry_tracing.enable_otel_traces
-    ):
+    if not _opentelemetry_tracing._is_otel_traces_enabled():
         return (
             tuple(meta_list)
             if isinstance(metadata, tuple) or metadata is None

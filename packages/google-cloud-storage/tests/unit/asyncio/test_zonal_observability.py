@@ -47,6 +47,10 @@ def exporter(monkeypatch):
     monkeypatch.delenv("DISABLE_GCS_PYTHON_CLIENT_OTEL_BUCKET_METADATA", raising=False)
     importlib.reload(_opentelemetry_tracing)
 
+    if hasattr(trace_api, "_TRACER_PROVIDER_SET_ONCE"):
+        trace_api._TRACER_PROVIDER_SET_ONCE._done = False
+    trace_api._TRACER_PROVIDER = None
+
     tracer_provider = TracerProvider()
     memory_exporter = InMemorySpanExporter()
     span_processor = export.SimpleSpanProcessor(memory_exporter)
@@ -55,6 +59,8 @@ def exporter(monkeypatch):
 
     yield memory_exporter
     memory_exporter.clear()
+    monkeypatch.setenv("ENABLE_GCS_PYTHON_CLIENT_OTEL_TRACES", "false")
+    importlib.reload(_opentelemetry_tracing)
 
 
 @pytest.fixture
@@ -75,8 +81,7 @@ def mock_client():
 
 
 def test_inject_traceparent_to_metadata_when_disabled(monkeypatch):
-    monkeypatch.setenv("ENABLE_GCS_PYTHON_CLIENT_OTEL_TRACES", "false")
-    importlib.reload(_opentelemetry_tracing)
+    monkeypatch.setattr(_opentelemetry_tracing, "enable_otel_traces", False)
 
     orig = (("x-goog-request-params", "bucket=foo"),)
     result = _utils.inject_traceparent_to_metadata(orig)
@@ -195,7 +200,8 @@ async def test_async_multi_range_downloader_spans(exporter, mock_client):
         mock_stream_cls.return_value = mock_stream
 
         mock_mux = mock.AsyncMock()
-        mock_mux.register.return_value = mock.AsyncMock()
+        mock_mux.register = mock.Mock(return_value=mock.AsyncMock())
+        mock_mux.unregister = mock.Mock()
         mock_mux_cls.return_value = mock_mux
 
         mock_retry_mgr = mock.AsyncMock()
@@ -250,3 +256,23 @@ async def test_bucket_metadata_cache_async_grpc_fetch(mock_client):
         "projects/987654321/buckets/new-zonal-bucket",
         "us-west1-b",
     )
+
+
+@pytest.mark.asyncio
+async def test_create_trace_span_helper_with_sync_mock_context_manager(mock_client):
+    """Verify fallback when _base_create_trace_span returns a synchronous context manager."""
+    from contextlib import contextmanager
+    from google.cloud.storage import _helpers
+
+    fake_span = object()
+
+    @contextmanager
+    def sync_cm(*args, **kwargs):
+        yield fake_span
+
+    with mock.patch.object(_helpers, "_base_create_trace_span", side_effect=sync_cm):
+        async with _helpers.create_trace_span_helper(
+            mock_client, "my-zonal-bucket", "Test.SyncFallback"
+        ) as span:
+            assert span is fake_span
+

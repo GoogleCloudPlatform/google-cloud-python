@@ -110,6 +110,7 @@ class AsyncGrpcClient:
         self._debug_metrics_enabled = _opentelemetry_metrics.is_debug_metrics_enabled(
             enable_debug_metrics
         )
+        self._is_async_grpc_client = True
         self._bucket_metadata_cache = BucketMetadataCache(self)
 
         if isinstance(credentials, auth_credentials.AnonymousCredentials):

@@ -43,6 +43,16 @@ def _is_bucket_metadata_disabled() -> bool:
 enable_otel_traces = _parse_bool_env(
     ENABLE_OTEL_TRACES_ENV_VAR, _DEFAULT_ENABLE_OTEL_TRACES_VALUE
 )
+
+
+def _is_otel_traces_enabled() -> bool:
+    if not HAS_OPENTELEMETRY or not enable_otel_traces:
+        return False
+    return _parse_bool_env(
+        ENABLE_OTEL_TRACES_ENV_VAR, _DEFAULT_ENABLE_OTEL_TRACES_VALUE
+    )
+
+
 logger = logging.getLogger(__name__)
 
 
@@ -96,7 +106,7 @@ class _TraceSpanContext:
         self._span = None
 
     def __enter__(self):
-        if not HAS_OPENTELEMETRY or not enable_otel_traces:
+        if not _is_otel_traces_enabled():
             return None
 
         tracer = trace.get_tracer(__name__)

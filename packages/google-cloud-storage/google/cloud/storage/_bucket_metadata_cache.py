@@ -61,7 +61,7 @@ class BucketMetadataCache:
             else:
                 # fire a background fetch and get bucket metadata.
                 self._inflight_fetches.add(bucket_name)
-                if hasattr(self._client, "grpc_client"):
+                if getattr(self._client, "_is_async_grpc_client", False) is True:
                     try:
                         loop = asyncio.get_running_loop()
                         loop.create_task(self._fetch_background_async(bucket_name))
@@ -81,7 +81,7 @@ class BucketMetadataCache:
             if bucket_name in self._inflight_checks:
                 return
             self._inflight_checks.add(bucket_name)
-            if hasattr(self._client, "grpc_client"):
+            if getattr(self._client, "_is_async_grpc_client", False) is True:
                 try:
                     loop = asyncio.get_running_loop()
                     loop.create_task(
@@ -182,25 +182,31 @@ class BucketMetadataCache:
         if not bucket:
             return
         name = bucket_name or getattr(bucket, "name", None)
-        if not name:
+        if not name or not isinstance(name, str):
             return
         if name.startswith("projects/") and "/buckets/" in name:
             name = name.split("/buckets/", 1)[1]
 
         project_number = getattr(bucket, "project_number", None)
         if not project_number:
-            project = getattr(bucket, "project", None)
-            if project:
-                proj_str = str(project)
+            proj_attr = getattr(bucket, "project", None)
+            if isinstance(proj_attr, (str, int)):
+                proj_str = str(proj_attr)
                 if proj_str.startswith("projects/"):
                     project_number = proj_str.split("projects/", 1)[1]
-                else:
+                elif proj_str:
                     project_number = proj_str
 
-        location = getattr(bucket, "location", None) or "global"
-        location = location.lower()
-        location_type = getattr(bucket, "location_type", None) or "region"
-        location_type = location_type.lower()
+        loc_attr = getattr(bucket, "location", None)
+        location = (
+            loc_attr.lower() if isinstance(loc_attr, str) and loc_attr else "global"
+        )
+        loc_type_attr = getattr(bucket, "location_type", None)
+        location_type = (
+            loc_type_attr.lower()
+            if isinstance(loc_type_attr, str) and loc_type_attr
+            else "region"
+        )
 
         if location_type in ("multi-region", "dual-region"):
             location = "global"

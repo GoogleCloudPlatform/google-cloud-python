@@ -19,6 +19,7 @@ These are *not* part of the API.
 
 import base64
 import datetime
+import inspect
 import logging
 import os
 import secrets
@@ -32,17 +33,14 @@ from google.api_core import exceptions as api_exceptions
 from google.auth import environment_vars
 from google.cloud.exceptions import NotFound
 
-from google.cloud.storage._opentelemetry_tracing import (
-    _is_bucket_metadata_disabled,
-)
-from google.cloud.storage._opentelemetry_tracing import (
-    create_trace_span as _base_create_trace_span,
-)
+from google.cloud.storage import _opentelemetry_tracing
 from google.cloud.storage.constants import _DEFAULT_TIMEOUT
 from google.cloud.storage.retry import (
     DEFAULT_RETRY,
     DEFAULT_RETRY_IF_METAGENERATION_SPECIFIED,
 )
+
+_base_create_trace_span = None
 
 _logger = logging.getLogger(__name__)
 
@@ -172,7 +170,8 @@ class _TraceSpanHelperContext:
             and client
             and hasattr(client, "_bucket_metadata_cache")
             and client._bucket_metadata_cache
-            and not _is_bucket_metadata_disabled()
+            and _opentelemetry_tracing._is_otel_traces_enabled()
+            and not _opentelemetry_tracing._is_bucket_metadata_disabled()
         ):
             try:
                 if name in (
@@ -202,7 +201,12 @@ class _TraceSpanHelperContext:
         if "client" not in kwargs and client:
             kwargs["client"] = client
 
-        self._base_cm = _base_create_trace_span(name, attributes=span_attrs, **kwargs)
+        create_span_fn = (
+            _base_create_trace_span
+            if _base_create_trace_span is not None
+            else _opentelemetry_tracing.create_trace_span
+        )
+        self._base_cm = create_span_fn(name, attributes=span_attrs, **kwargs)
         return self._base_cm
 
     def _handle_not_found(self):
@@ -212,6 +216,7 @@ class _TraceSpanHelperContext:
             and self.client
             and hasattr(self.client, "_bucket_metadata_cache")
             and self.client._bucket_metadata_cache
+            and _opentelemetry_tracing._is_otel_traces_enabled()
         ):
             try:
                 self.client._bucket_metadata_cache.check_and_evict(self.bucket_name)
@@ -235,7 +240,10 @@ class _TraceSpanHelperContext:
 
     async def __aenter__(self):
         self._prepare_base_cm()
-        return await self._base_cm.__aenter__()
+        if hasattr(self._base_cm, "__aenter__"):
+            res = self._base_cm.__aenter__()
+            return await res if inspect.isawaitable(res) else res
+        return self._base_cm.__enter__()
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         if exc_val is not None and isinstance(
@@ -243,7 +251,10 @@ class _TraceSpanHelperContext:
         ):
             self._handle_not_found()
         if self._base_cm is not None:
-            return await self._base_cm.__aexit__(exc_type, exc_val, exc_tb)
+            if hasattr(self._base_cm, "__aexit__"):
+                res = self._base_cm.__aexit__(exc_type, exc_val, exc_tb)
+                return await res if inspect.isawaitable(res) else res
+            return self._base_cm.__exit__(exc_type, exc_val, exc_tb)
         return False
 
 
