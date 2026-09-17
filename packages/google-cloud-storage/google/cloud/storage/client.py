@@ -1238,9 +1238,9 @@ class Client(ClientWithProject):
                 predefined_default_object_acl = DefaultObjectACL.validate_predefined(
                     predefined_default_object_acl
                 )
-                query_params[
-                    "predefinedDefaultObjectAcl"
-                ] = predefined_default_object_acl
+                query_params["predefinedDefaultObjectAcl"] = (
+                    predefined_default_object_acl
+                )
 
             if user_project is not None:
                 query_params["userProject"] = user_project
