@@ -71,4 +71,3 @@ def inject_traceparent_to_metadata(metadata=None):
         if isinstance(metadata, tuple) or metadata is None
         else meta_list
     )
-

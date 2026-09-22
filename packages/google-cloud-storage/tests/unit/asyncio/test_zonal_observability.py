@@ -89,9 +89,7 @@ def test_inject_traceparent_to_metadata_when_disabled(monkeypatch):
 
 
 def test_inject_traceparent_to_metadata_when_enabled(exporter):
-    with _opentelemetry_tracing.create_trace_span(
-        "Test.ParentSpan", rpc_system="grpc"
-    ):
+    with _opentelemetry_tracing.create_trace_span("Test.ParentSpan", rpc_system="grpc"):
         orig = (("x-goog-request-params", "bucket=foo"),)
         result = _utils.inject_traceparent_to_metadata(orig)
         keys = [k for k, _ in result]
@@ -184,13 +182,17 @@ async def test_async_multi_range_downloader_spans(exporter, mock_client):
         object_name="read-obj",
     )
 
-    with mock.patch(
-        "google.cloud.storage.asyncio.async_multi_range_downloader._AsyncReadObjectStream"
-    ) as mock_stream_cls, mock.patch(
-        "google.cloud.storage.asyncio.async_multi_range_downloader._StreamMultiplexer"
-    ) as mock_mux_cls, mock.patch(
-        "google.cloud.storage.asyncio.async_multi_range_downloader._BidiStreamRetryManager"
-    ) as mock_retry_mgr_cls:
+    with (
+        mock.patch(
+            "google.cloud.storage.asyncio.async_multi_range_downloader._AsyncReadObjectStream"
+        ) as mock_stream_cls,
+        mock.patch(
+            "google.cloud.storage.asyncio.async_multi_range_downloader._StreamMultiplexer"
+        ) as mock_mux_cls,
+        mock.patch(
+            "google.cloud.storage.asyncio.async_multi_range_downloader._BidiStreamRetryManager"
+        ) as mock_retry_mgr_cls,
+    ):
         mock_stream = mock.AsyncMock()
         mock_stream.generation_number = 2002
         mock_stream.read_handle = storage_v2.BidiReadHandle(handle=b"rhandle-1")
@@ -209,7 +211,9 @@ async def test_async_multi_range_downloader_spans(exporter, mock_client):
 
         await mrd.open()
         buf1, buf2 = BytesIO(), BytesIO()
-        await mrd.download_ranges([(0, 100, buf1), (200, 300, buf2)], enable_checksum=False)
+        await mrd.download_ranges(
+            [(0, 100, buf1), (200, 300, buf2)], enable_checksum=False
+        )
         await mrd.close()
 
     spans = exporter.get_finished_spans()
@@ -262,6 +266,7 @@ async def test_bucket_metadata_cache_async_grpc_fetch(mock_client):
 async def test_create_trace_span_helper_with_sync_mock_context_manager(mock_client):
     """Verify fallback when _base_create_trace_span returns a synchronous context manager."""
     from contextlib import contextmanager
+
     from google.cloud.storage import _helpers
 
     fake_span = object()
@@ -275,4 +280,3 @@ async def test_create_trace_span_helper_with_sync_mock_context_manager(mock_clie
             mock_client, "my-zonal-bucket", "Test.SyncFallback"
         ) as span:
             assert span is fake_span
-

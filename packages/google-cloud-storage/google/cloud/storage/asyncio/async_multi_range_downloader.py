@@ -378,9 +378,7 @@ class AsyncMultiRangeDownloader:
                 if self.read_obj_str.persisted_size is not None:
                     self.persisted_size = self.read_obj_str.persisted_size
                 self.is_finalized = self.read_obj_str.is_finalized
-                self.full_obj_server_crc32c = (
-                    self.read_obj_str.full_obj_server_crc32c
-                )
+                self.full_obj_server_crc32c = self.read_obj_str.full_obj_server_crc32c
 
                 self._is_stream_open = True
 
