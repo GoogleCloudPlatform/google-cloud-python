@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import contextlib
 import io
 import logging
 from dataclasses import dataclass
@@ -316,6 +317,30 @@ class AsyncAppendableObjectWriter:
         self.object_resource: Optional[_storage_v2.Object] = None
         self._flush_count = 0
         self.blob: Optional[Blob] = None
+        self._in_t2_span: bool = False
+
+    @contextlib.asynccontextmanager
+    async def _trace_span(
+        self,
+        name: str,
+        attributes: Optional[Dict[str, Union[str, int]]] = None,
+    ):
+        """Creates a T2 OpenTelemetry span only for top-level public API calls."""
+        if getattr(self, "_in_t2_span", False):
+            yield None
+            return
+        self._in_t2_span = True
+        try:
+            async with create_trace_span_helper(
+                self.client,
+                self.bucket_name,
+                name,
+                attributes=attributes,
+                rpc_system="grpc",
+            ) as span:
+                yield span
+        finally:
+            self._in_t2_span = False
 
     @classmethod
     def from_blob(
@@ -466,12 +491,7 @@ class AsyncAppendableObjectWriter:
         if self._is_stream_open:
             raise ValueError("Underlying bidi-gRPC stream is already open")
 
-        async with create_trace_span_helper(
-            self.client,
-            self.bucket_name,
-            "Storage.AsyncAppendableObjectWriter.open",
-            rpc_system="grpc",
-        ):
+        async with self._trace_span("Storage.AsyncAppendableObjectWriter.open"):
             retry_policy = self._merge_retry_policy(retry_policy)
 
             async def _do_open():
@@ -569,12 +589,9 @@ class AsyncAppendableObjectWriter:
             logger.debug("No data provided to append; returning without action.")
             return
 
-        async with create_trace_span_helper(
-            self.client,
-            self.bucket_name,
+        async with self._trace_span(
             "Storage.AsyncAppendableObjectWriter.append",
             attributes={"gcp.storage.chunk.size": len(data)},
-            rpc_system="grpc",
         ):
             if retry_policy is None:
                 retry_policy = AsyncRetry(predicate=_is_write_retryable)
@@ -685,12 +702,13 @@ class AsyncAppendableObjectWriter:
         if not self._is_stream_open:
             raise ValueError("Stream is not open. Call open() before simple_flush().")
 
-        await self.write_obj_stream.send(
-            _storage_v2.BidiWriteObjectRequest(
-                flush=True,
+        async with self._trace_span("Storage.AsyncAppendableObjectWriter.simpleFlush"):
+            await self.write_obj_stream.send(
+                _storage_v2.BidiWriteObjectRequest(
+                    flush=True,
+                )
             )
-        )
-        self.bytes_appended_since_last_flush = 0
+            self.bytes_appended_since_last_flush = 0
 
     async def flush(self) -> int:
         """Flushes the data to the server.
@@ -704,12 +722,7 @@ class AsyncAppendableObjectWriter:
         if not self._is_stream_open:
             raise ValueError("Stream is not open. Call open() before flush().")
 
-        async with create_trace_span_helper(
-            self.client,
-            self.bucket_name,
-            "Storage.AsyncAppendableObjectWriter.flush",
-            rpc_system="grpc",
-        ):
+        async with self._trace_span("Storage.AsyncAppendableObjectWriter.flush"):
             await self.write_obj_stream.send(
                 _storage_v2.BidiWriteObjectRequest(
                     flush=True,
@@ -773,12 +786,7 @@ class AsyncAppendableObjectWriter:
                 "full_object_checksum can only be provided when finalize_on_close is True."
             )
 
-        async with create_trace_span_helper(
-            self.client,
-            self.bucket_name,
-            "Storage.AsyncAppendableObjectWriter.close",
-            rpc_system="grpc",
-        ):
+        async with self._trace_span("Storage.AsyncAppendableObjectWriter.close"):
             if finalize_on_close:
                 return await self.finalize(
                     full_object_checksum=full_object_checksum,
@@ -877,48 +885,49 @@ class AsyncAppendableObjectWriter:
                 ),
             )
 
-        retry_policy = self._merge_retry_policy(retry_policy)
+        async with self._trace_span("Storage.AsyncAppendableObjectWriter.finalize"):
+            retry_policy = self._merge_retry_policy(retry_policy)
 
-        attempt_count = 0
-        expected_offset = self.offset
+            attempt_count = 0
+            expected_offset = self.offset
 
-        async def _do_finalize():
-            nonlocal attempt_count
-            attempt_count += 1
+            async def _do_finalize():
+                nonlocal attempt_count
+                attempt_count += 1
 
-            if attempt_count > 1:
-                logger.info(
-                    f"Re-opening the stream for finalize retry attempt: {attempt_count}"
-                )
+                if attempt_count > 1:
+                    logger.info(
+                        f"Re-opening the stream for finalize retry attempt: {attempt_count}"
+                    )
+                    self._is_stream_open = False
+                    await self.open()
+                    if (
+                        self.offset is not None
+                        and expected_offset is not None
+                        and self.offset != expected_offset
+                    ):
+                        raise exceptions.InternalServerError(
+                            f"Unrecoverable data loss during reconnect. Expected offset {expected_offset}, got {self.offset}"
+                        )
+
+                await self.write_obj_stream.send(finalize_req)
+                response = await self.write_obj_stream.recv()
+                self.object_resource = response.resource
+                self.persisted_size = self.object_resource.size
+                return self.object_resource
+
+            try:
+                return await retry_policy(_do_finalize)()
+            finally:
+                if self.write_obj_stream:
+                    try:
+                        await self.write_obj_stream.close()
+                    except Exception as e:
+                        logger.debug(
+                            f"Stream close during finalize cleanup resulted in: {e}"
+                        )
                 self._is_stream_open = False
-                await self.open()
-                if (
-                    self.offset is not None
-                    and expected_offset is not None
-                    and self.offset != expected_offset
-                ):
-                    raise exceptions.InternalServerError(
-                        f"Unrecoverable data loss during reconnect. Expected offset {expected_offset}, got {self.offset}"
-                    )
-
-            await self.write_obj_stream.send(finalize_req)
-            response = await self.write_obj_stream.recv()
-            self.object_resource = response.resource
-            self.persisted_size = self.object_resource.size
-            return self.object_resource
-
-        try:
-            return await retry_policy(_do_finalize)()
-        finally:
-            if self.write_obj_stream:
-                try:
-                    await self.write_obj_stream.close()
-                except Exception as e:
-                    logger.debug(
-                        f"Stream close during finalize cleanup resulted in: {e}"
-                    )
-            self._is_stream_open = False
-            self.offset = None
+                self.offset = None
 
     @property
     def is_stream_open(self) -> bool:

@@ -46,11 +46,7 @@ enable_otel_traces = _parse_bool_env(
 
 
 def _is_otel_traces_enabled() -> bool:
-    if not HAS_OPENTELEMETRY or not enable_otel_traces:
-        return False
-    return _parse_bool_env(
-        ENABLE_OTEL_TRACES_ENV_VAR, _DEFAULT_ENABLE_OTEL_TRACES_VALUE
-    )
+    return bool(HAS_OPENTELEMETRY and enable_otel_traces)
 
 
 logger = logging.getLogger(__name__)
@@ -118,7 +114,11 @@ class _TraceSpanContext:
             rpc_system=self.rpc_system,
         )
         self._span_cm = tracer.start_as_current_span(
-            name=self.name, kind=trace.SpanKind.CLIENT, attributes=final_attributes
+            name=self.name,
+            kind=trace.SpanKind.CLIENT,
+            attributes=final_attributes,
+            record_exception=False,
+            set_status_on_exception=False,
         )
         self._span = self._span_cm.__enter__()
         return self._span

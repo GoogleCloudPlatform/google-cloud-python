@@ -56,12 +56,17 @@ def setup_optin(mock_os_environ):
     """Mock envar to opt-in tracing for storage client."""
     mock_os_environ["ENABLE_GCS_PYTHON_CLIENT_OTEL_TRACES"] = True
     importlib.reload(_opentelemetry_tracing)
+    yield
+    mock_os_environ["ENABLE_GCS_PYTHON_CLIENT_OTEL_TRACES"] = "False"
+    importlib.reload(_opentelemetry_tracing)
 
 
 @pytest.fixture()
 def setup_optout(mock_os_environ):
     """Mock envar to opt-in tracing for storage client."""
     mock_os_environ["ENABLE_GCS_PYTHON_CLIENT_OTEL_TRACES"] = "False"
+    importlib.reload(_opentelemetry_tracing)
+    yield
     importlib.reload(_opentelemetry_tracing)
 
 

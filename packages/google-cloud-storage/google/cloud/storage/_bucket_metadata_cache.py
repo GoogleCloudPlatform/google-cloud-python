@@ -38,6 +38,17 @@ class BucketMetadataCache:
         self._lock = threading.Lock()
         self._inflight_fetches = set()
         self._inflight_checks = set()
+        self._background_tasks = set()
+
+    def _spawn_async_task(self, coro, inflight_set, bucket_name):
+        try:
+            loop = asyncio.get_running_loop()
+            task = loop.create_task(coro)
+            self._background_tasks.add(task)
+            task.add_done_callback(self._background_tasks.discard)
+        except RuntimeError:
+            coro.close()
+            inflight_set.discard(bucket_name)
 
     def get(self, bucket_name):
         """Thread-safely retrieve cached metadata without queueing fetch."""
@@ -62,11 +73,11 @@ class BucketMetadataCache:
                 # fire a background fetch and get bucket metadata.
                 self._inflight_fetches.add(bucket_name)
                 if getattr(self._client, "_is_async_grpc_client", False) is True:
-                    try:
-                        loop = asyncio.get_running_loop()
-                        loop.create_task(self._fetch_background_async(bucket_name))
-                    except RuntimeError:
-                        self._inflight_fetches.discard(bucket_name)
+                    self._spawn_async_task(
+                        self._fetch_background_async(bucket_name),
+                        self._inflight_fetches,
+                        bucket_name,
+                    )
                 else:
                     threading.Thread(
                         target=self._fetch_background, args=(bucket_name,), daemon=True
@@ -82,13 +93,11 @@ class BucketMetadataCache:
                 return
             self._inflight_checks.add(bucket_name)
             if getattr(self._client, "_is_async_grpc_client", False) is True:
-                try:
-                    loop = asyncio.get_running_loop()
-                    loop.create_task(
-                        self._verify_existence_background_async(bucket_name)
-                    )
-                except RuntimeError:
-                    self._inflight_checks.discard(bucket_name)
+                self._spawn_async_task(
+                    self._verify_existence_background_async(bucket_name),
+                    self._inflight_checks,
+                    bucket_name,
+                )
             else:
                 threading.Thread(
                     target=self._verify_existence_background,
@@ -116,7 +125,10 @@ class BucketMetadataCache:
             request = storage_v2.GetBucketRequest(
                 name=f"projects/_/buckets/{bucket_name}"
             )
-            await self._client.grpc_client.get_bucket(request=request, timeout=10.0)
+            bucket = await self._client.grpc_client.get_bucket(
+                request=request, timeout=10.0
+            )
+            self.update_from_bucket(bucket, bucket_name=bucket_name)
         except (NotFound, api_exceptions.NotFound):
             self.evict(bucket_name)
         except Exception as e:

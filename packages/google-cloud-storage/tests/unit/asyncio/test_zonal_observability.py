@@ -14,11 +14,13 @@
 
 """Unit tests for OpenTelemetry tracing in Zonal Buckets (Rapid Storage) async gRPC classes."""
 
+import asyncio
 import importlib
 from io import BytesIO
 from unittest import mock
 
 import pytest
+from google.api_core import exceptions as api_exceptions
 
 from google.cloud import _storage_v2 as storage_v2
 from google.cloud.storage import _opentelemetry_tracing
@@ -59,6 +61,9 @@ def exporter(monkeypatch):
 
     yield memory_exporter
     memory_exporter.clear()
+    if hasattr(trace_api, "_TRACER_PROVIDER_SET_ONCE"):
+        trace_api._TRACER_PROVIDER_SET_ONCE._done = False
+    trace_api._TRACER_PROVIDER = None
     monkeypatch.setenv("ENABLE_GCS_PYTHON_CLIENT_OTEL_TRACES", "false")
     importlib.reload(_opentelemetry_tracing)
 
@@ -74,7 +79,7 @@ def mock_client():
         # Pre-populate ACO bucket metadata cache for zonal bucket verification
         client._bucket_metadata_cache.update_cache(
             "my-zonal-bucket",
-            "projects/123456789/buckets/my-zonal-bucket",
+            "//storage.googleapis.com/projects/123456789/buckets/my-zonal-bucket",
             "us-east1-a",
         )
         return client
@@ -117,7 +122,7 @@ async def test_async_grpc_client_get_and_delete_object_spans(exporter, mock_clie
     assert get_span.attributes["gcp.client.service"] == "storage"
     assert (
         get_span.attributes["gcp.resource.destination.id"]
-        == "projects/123456789/buckets/my-zonal-bucket"
+        == "//storage.googleapis.com/projects/123456789/buckets/my-zonal-bucket"
     )
     assert get_span.attributes["gcp.resource.destination.location"] == "us-east1-a"
 
@@ -152,6 +157,7 @@ async def test_async_appendable_object_writer_spans(exporter, mock_client):
 
         await writer.open()
         await writer.append(b"hello world")
+        await writer.simple_flush()
         await writer.flush()
         await writer.close()
 
@@ -160,6 +166,7 @@ async def test_async_appendable_object_writer_spans(exporter, mock_client):
     assert span_names == [
         "Storage.AsyncAppendableObjectWriter.open",
         "Storage.AsyncAppendableObjectWriter.append",
+        "Storage.AsyncAppendableObjectWriter.simpleFlush",
         "Storage.AsyncAppendableObjectWriter.flush",
         "Storage.AsyncAppendableObjectWriter.close",
     ]
@@ -169,9 +176,54 @@ async def test_async_appendable_object_writer_spans(exporter, mock_client):
     assert append_span.attributes["gcp.storage.chunk.size"] == 11
     assert (
         append_span.attributes["gcp.resource.destination.id"]
-        == "projects/123456789/buckets/my-zonal-bucket"
+        == "//storage.googleapis.com/projects/123456789/buckets/my-zonal-bucket"
     )
     assert append_span.attributes["gcp.resource.destination.location"] == "us-east1-a"
+
+
+@pytest.mark.asyncio
+async def test_async_appendable_object_writer_finalize_and_no_nested_spans(
+    exporter, mock_client
+):
+    writer = AsyncAppendableObjectWriter(
+        client=mock_client,
+        bucket_name="my-zonal-bucket",
+        object_name="append-obj",
+    )
+
+    with mock.patch(
+        "google.cloud.storage.asyncio.async_appendable_object_writer._AsyncWriteObjectStream"
+    ) as mock_stream_cls:
+        mock_stream = mock.AsyncMock()
+        mock_stream.generation_number = 1001
+        mock_stream.write_handle = storage_v2.BidiWriteHandle(handle=b"handle-1")
+        mock_stream.persisted_size = 0
+        mock_stream.recv.return_value = storage_v2.BidiWriteObjectResponse(
+            resource=storage_v2.Object(size=5)
+        )
+        mock_stream_cls.return_value = mock_stream
+
+        # 1. Direct finalize() call emits Storage.AsyncAppendableObjectWriter.finalize
+        await writer.open()
+        await writer.finalize()
+
+        # 2. close(finalize_on_close=True) emits only close(), without nested finalize()
+        await writer.open()
+        # Simulate a retry on finalize inside close(finalize_on_close=True) that re-opens stream
+        mock_stream.send.side_effect = [
+            api_exceptions.ServiceUnavailable("transient error"),
+            None,
+        ]
+        await writer.close(finalize_on_close=True)
+
+    spans = exporter.get_finished_spans()
+    span_names = [s.name for s in spans]
+    assert span_names == [
+        "Storage.AsyncAppendableObjectWriter.open",
+        "Storage.AsyncAppendableObjectWriter.finalize",
+        "Storage.AsyncAppendableObjectWriter.open",
+        "Storage.AsyncAppendableObjectWriter.close",
+    ]
 
 
 @pytest.mark.asyncio
@@ -229,7 +281,7 @@ async def test_async_multi_range_downloader_spans(exporter, mock_client):
     assert download_span.attributes["gcp.storage.range.count"] == 2
     assert (
         download_span.attributes["gcp.resource.destination.id"]
-        == "projects/123456789/buckets/my-zonal-bucket"
+        == "//storage.googleapis.com/projects/123456789/buckets/my-zonal-bucket"
     )
     assert download_span.attributes["gcp.resource.destination.location"] == "us-east1-a"
 
@@ -250,16 +302,93 @@ async def test_bucket_metadata_cache_async_grpc_fetch(mock_client):
     res = cache.get_or_queue_fetch("new-zonal-bucket")
     assert res is None
 
-    # Allow scheduled task on event loop to complete
-    import asyncio
-
-    await asyncio.sleep(0.01)
+    # Deterministically await tracked background tasks
+    await asyncio.gather(*cache._background_tasks)
 
     cached = cache.get("new-zonal-bucket")
     assert cached == (
-        "projects/987654321/buckets/new-zonal-bucket",
+        "//storage.googleapis.com/projects/987654321/buckets/new-zonal-bucket",
         "us-west1-b",
     )
+
+
+@pytest.mark.asyncio
+async def test_bucket_metadata_cache_async_grpc_403_fallback(mock_client):
+    cache = mock_client._bucket_metadata_cache
+    cache.clear()
+
+    mock_client._grpc_client.get_bucket.side_effect = api_exceptions.Forbidden(
+        "storage.buckets.get denied"
+    )
+
+    res = cache.get_or_queue_fetch("restricted-bucket")
+    assert res is None
+
+    await asyncio.gather(*cache._background_tasks)
+
+    cached = cache.get("restricted-bucket")
+    assert cached == (
+        "//storage.googleapis.com/projects/_/buckets/restricted-bucket",
+        "global",
+    )
+
+
+@pytest.mark.asyncio
+async def test_bucket_metadata_cache_async_grpc_404_eviction_and_refresh(mock_client):
+    cache = mock_client._bucket_metadata_cache
+
+    # 1. If bucket still exists on 404 check, refresh cache entry from GetBucket response
+    mock_client._grpc_client.get_bucket.return_value = storage_v2.Bucket(
+        name="projects/_/buckets/my-zonal-bucket",
+        project="projects/123456789",
+        location="US-EAST1-B",
+        location_type="zone",
+    )
+    cache.check_and_evict("my-zonal-bucket")
+    await asyncio.gather(*cache._background_tasks)
+    assert cache.get("my-zonal-bucket") == (
+        "//storage.googleapis.com/projects/123456789/buckets/my-zonal-bucket",
+        "us-east1-b",
+    )
+
+    # 2. If GetBucket returns 404 NotFound, evict bucket from cache
+    mock_client._grpc_client.get_bucket.side_effect = api_exceptions.NotFound(
+        "Bucket not found"
+    )
+    cache.check_and_evict("my-zonal-bucket")
+    await asyncio.gather(*cache._background_tasks)
+    assert cache.get("my-zonal-bucket") is None
+
+
+@pytest.mark.asyncio
+async def test_async_grpc_error_records_span_exception_once_and_evicts_on_404(
+    exporter, mock_client
+):
+    from opentelemetry import trace as trace_api
+
+    mock_client._grpc_client.get_object.side_effect = api_exceptions.NotFound(
+        "Object or bucket not found"
+    )
+    mock_client._grpc_client.get_bucket.side_effect = api_exceptions.NotFound(
+        "Bucket not found"
+    )
+
+    with pytest.raises(api_exceptions.NotFound):
+        await mock_client.get_object("my-zonal-bucket", "missing-obj")
+
+    await asyncio.gather(*mock_client._bucket_metadata_cache._background_tasks)
+
+    # Verify bucket was evicted after 404 background existence check
+    assert mock_client._bucket_metadata_cache.get("my-zonal-bucket") is None
+
+    spans = exporter.get_finished_spans()
+    assert len(spans) == 1
+    span = spans[0]
+    assert span.name == "Storage.AsyncGrpcClient.getObject"
+    assert span.status.status_code == trace_api.StatusCode.ERROR
+    # Exception event should be recorded exactly once (no duplicate event)
+    exception_events = [e for e in span.events if e.name == "exception"]
+    assert len(exception_events) == 1
 
 
 @pytest.mark.asyncio
