@@ -81,6 +81,42 @@ def _reprobe_crc32c_memoryview_support(monkeypatch):
 
 
 class TestAsyncMultiRangeDownloader:
+    @staticmethod
+    def _make_mock_client():
+        mock_client = mock.MagicMock()
+        mock_client.grpc_client = mock.AsyncMock()
+        return mock_client
+
+    @staticmethod
+    def _make_mock_stream(
+        generation=_TEST_GENERATION_NUMBER,
+        persisted_size=_TEST_OBJECT_SIZE,
+        read_handle=_TEST_READ_HANDLE,
+        is_finalized=True,
+        open_side_effect=None,
+    ):
+        s = mock.MagicMock()
+        s.open = AsyncMock(side_effect=open_side_effect)
+        s.close = AsyncMock()
+        s.generation_number = generation
+        s.persisted_size = persisted_size
+        s.read_handle = read_handle
+        s.is_finalized = is_finalized
+        s.full_obj_server_crc32c = 12345 if is_finalized else None
+        s.object_metadata = mock.Mock()
+        return s
+
+    @staticmethod
+    def _make_dummy_pooled_stream():
+        from google.cloud.storage.asyncio._stream_pool import (
+            _PooledStream,
+        )
+
+        return _PooledStream(
+            mock.MagicMock(close=AsyncMock()),
+            mock.MagicMock(close=AsyncMock()),
+        )
+
     def create_read_ranges(self, num_ranges):
         ranges = []
         for i in range(num_ranges):
@@ -1525,3 +1561,1062 @@ class TestAsyncMultiRangeDownloader:
         assert _is_read_retryable(exceptions.NotFound("not found")) is False
         assert _is_read_retryable(exceptions.PermissionDenied("denied")) is False
         assert _is_read_retryable(exceptions.InvalidArgument("invalid")) is False
+
+    def test_pooled_stream_load(self):
+        stream = self._make_dummy_pooled_stream()
+
+        # Initially zero load
+        assert stream.calculate_load(target_io_depth=10, target_bytes=1000) == 0.0
+
+        # Add 5 ranges and 500 bytes -> 5/10 = 0.5, 500/1000 = 0.5 -> load = 0.5*0.5 + 0.5*0.5 = 0.5
+        stream.record_request(5, 500)
+        assert stream.pending_ranges == 5
+        assert stream.pending_bytes == 500
+        assert stream.calculate_load(target_io_depth=10, target_bytes=1000) == 0.5
+
+        # Release
+        stream.record_completion(3, 300)
+        assert stream.pending_ranges == 2
+        assert stream.pending_bytes == 200
+        assert stream.calculate_load(target_io_depth=10, target_bytes=1000) == 0.2
+
+    @mock.patch("google.cloud.storage.asyncio._stream_pool.logger")
+    @pytest.mark.asyncio
+    async def test_pooled_stream_close_logs_warnings_on_error(self, mock_logger):
+        from google.cloud.storage.asyncio._stream_pool import (
+            _PooledStream,
+        )
+
+        mock_stream = mock.MagicMock(
+            close=AsyncMock(side_effect=RuntimeError("stream close error"))
+        )
+        mock_mux = mock.MagicMock(
+            close=AsyncMock(side_effect=RuntimeError("mux close error"))
+        )
+        pooled = _PooledStream(mock_stream, mock_mux)
+
+        await pooled.close()
+
+        assert mock_logger.warning.call_count == 2
+
+    @pytest.mark.asyncio
+    async def test_stream_pool_scale_up_and_dispatch(self):
+        from google.cloud.storage.asyncio._stream_pool import (
+            MultiStreamConfig,
+            _StreamPool,
+        )
+
+        async def stream_factory():
+            return self._make_dummy_pooled_stream()
+
+        pool = _StreamPool(
+            stream_factory=stream_factory,
+            multi_stream_config=MultiStreamConfig(
+                min_streams=1,
+                max_streams=2,
+                target_io_depth=2,
+                target_bytes=100,
+            ),
+        )
+        initial_stream = await stream_factory()
+        await pool.add_stream(initial_stream)
+
+        # 1. Distribute with small load (1 range, 10 bytes) -> load < 1.0, stays on initial stream
+        assignments, overflow, scale_tasks = await pool.distribute_ranges(
+            [(0, 10, BytesIO())]
+        )
+        assert list(assignments.keys()) == [initial_stream]
+        assert overflow == []
+        assert scale_tasks == []
+        assert len(pool.streams) == 1
+
+        # 2. Add enough load to exceed target load > 1.0 -> triggers background scale up
+        assignments2, _, _ = await pool.distribute_ranges([(10, 100, BytesIO())])
+        assert list(assignments2.keys()) == [initial_stream]
+
+        # Allow event loop to run background scale-up task
+        await asyncio.sleep(0.01)
+        assert len(pool.streams) == 2
+        s2 = pool.streams[1]
+        assert s2 != initial_stream
+
+        # 3. Next distribute selects idle stream s2
+        assignments3, _, _ = await pool.distribute_ranges([(110, 10, BytesIO())])
+        assert list(assignments3.keys()) == [s2]
+
+        # 4. Release stream capacity and close
+        pool.release_stream(initial_stream, 2, 110)
+        pool.release_stream(s2, 1, 10)
+        await pool.close()
+        assert len(pool.streams) == 0
+
+    @pytest.mark.asyncio
+    async def test_stream_pool_proportional_scale_up(self):
+        from google.cloud.storage.asyncio._stream_pool import (
+            MultiStreamConfig,
+            _StreamPool,
+        )
+
+        async def stream_factory():
+            return self._make_dummy_pooled_stream()
+
+        pool = _StreamPool(
+            stream_factory=stream_factory,
+            multi_stream_config=MultiStreamConfig(
+                min_streams=1,
+                max_streams=5,
+                target_io_depth=2,
+                target_bytes=100,
+            ),
+        )
+        initial_stream = await stream_factory()
+        await pool.add_stream(initial_stream)
+
+        # Huge burst: 6 ranges of 50 bytes each (total load = 3.0) -> triggers 2 concurrent background scale-ups
+        ranges = [(i * 50, 50, BytesIO()) for i in range(6)]
+        assignments, overflow, scale_tasks = await pool.distribute_ranges(ranges)
+        assert list(assignments.keys()) == [initial_stream]
+        assert len(assignments[initial_stream]) == 2
+        assert len(overflow) == 4
+        assert len(scale_tasks) == 2
+        assert pool._pending_scale_ups == 2
+        assert len(pool._background_tasks) == 2
+
+        # Allow background scale-up tasks to finish
+        await asyncio.gather(*scale_tasks)
+        assert len(pool.streams) == 3
+        assert pool._pending_scale_ups == 0
+
+        # Burst exceeding max_streams -> capped by remaining headroom (5 - 3 = 2)
+        more_ranges = [(i * 50, 50, BytesIO()) for i in range(10)]
+        _, _, scale_tasks2 = await pool.distribute_ranges(more_ranges)
+        assert len(scale_tasks2) == 2
+        assert pool._pending_scale_ups == 2
+
+        await asyncio.gather(*scale_tasks2)
+        assert len(pool.streams) == 5
+        assert pool._pending_scale_ups == 0
+
+        await pool.close()
+        assert len(pool.streams) == 0
+
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader._AsyncReadObjectStream"
+    )
+    @pytest.mark.asyncio
+    async def test_create_mrd_with_multi_stream_config(self, mock_cls_stream):
+        from google.cloud.storage.asyncio.async_multi_range_downloader import (
+            MultiStreamConfig,
+        )
+
+        mock_client = self._make_mock_client()
+        mock_cls_stream.side_effect = [
+            self._make_mock_stream(read_handle=b"h1"),
+            self._make_mock_stream(read_handle=b"h2"),
+        ]
+
+        config = MultiStreamConfig(
+            min_streams=2,
+            max_streams=4,
+            target_io_depth=8,
+            target_bytes=2 * 1024 * 1024,
+        )
+
+        mrd = await AsyncMultiRangeDownloader.create_mrd(
+            mock_client, "b", "o", multi_stream_config=config
+        )
+
+        assert mrd.multi_stream_config.min_streams == 2
+        assert mrd.multi_stream_config.max_streams == 4
+        assert mrd.multi_stream_config.target_io_depth == 8
+        assert mrd.multi_stream_config.target_bytes == 2 * 1024 * 1024
+        # Verified that 2 streams were opened concurrently for min_streams=2
+        assert len(mrd._pool.streams) == 2
+        await mrd.close()
+
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader._AsyncReadObjectStream"
+    )
+    @pytest.mark.asyncio
+    async def test_mrd_open_min_streams_failure_cleanup(self, mock_cls_stream):
+        from google.cloud.storage.asyncio.async_multi_range_downloader import (
+            MultiStreamConfig,
+        )
+
+        # Arrange: primary and 2nd stream succeed, 3rd stream fails during open()
+        mock_client = self._make_mock_client()
+        primary_stream = self._make_mock_stream()
+        second_stream = self._make_mock_stream()
+        failing_stream = self._make_mock_stream(
+            open_side_effect=exceptions.PermissionDenied("Stream failed")
+        )
+        mock_cls_stream.side_effect = [
+            primary_stream,
+            second_stream,
+            failing_stream,
+        ]
+
+        config = MultiStreamConfig(min_streams=3, max_streams=4)
+        mrd = AsyncMultiRangeDownloader(
+            mock_client, "b", "o", multi_stream_config=config
+        )
+
+        # Act & Assert
+        with pytest.raises(exceptions.PermissionDenied, match="Stream failed"):
+            await mrd.open()
+
+        assert mrd._is_stream_open is False
+        assert mrd._pool is None
+        assert mrd.read_obj_str is None
+        assert mrd._multiplexer is None
+        assert mrd._primary_stream is None
+        primary_stream.close.assert_awaited_once()
+        second_stream.close.assert_awaited_once()
+
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader._AsyncReadObjectStream"
+    )
+    @pytest.mark.asyncio
+    async def test_mrd_download_ranges_triggers_pool_scaling(self, mock_cls_stream):
+        from google.cloud.storage.asyncio.async_multi_range_downloader import (
+            MultiStreamConfig,
+        )
+
+        mock_client = self._make_mock_client()
+        mock_cls_stream.side_effect = [
+            self._make_mock_stream(),
+            self._make_mock_stream(),
+        ]
+
+        config = MultiStreamConfig(
+            min_streams=1,
+            max_streams=3,
+            target_io_depth=1,
+            target_bytes=50,
+        )
+        mrd = await AsyncMultiRangeDownloader.create_mrd(
+            mock_client, "b", "o", multi_stream_config=config
+        )
+        assert len(mrd._pool.streams) == 1
+
+        with mock.patch.object(mrd, "_download_ranges_on_stream", new=AsyncMock()):
+            # Download ranges with load > 1.0 (2 ranges, 100 bytes)
+            await mrd.download_ranges([(0, 50, BytesIO()), (50, 50, BytesIO())])
+            await asyncio.sleep(0.01)
+            # Pool dynamically scaled up to 2 streams
+            assert len(mrd._pool.streams) == 2
+
+        await mrd.close()
+
+    @pytest.mark.parametrize(
+        "config_kwargs",
+        [
+            pytest.param(None, id="default-no-config"),
+            pytest.param(
+                {"min_streams": 1, "max_streams": 1}, id="explicit-max-streams-one"
+            ),
+        ],
+    )
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader._AsyncReadObjectStream"
+    )
+    @pytest.mark.asyncio
+    async def test_create_mrd_single_stream_bypass(
+        self, mock_cls_stream, config_kwargs
+    ):
+        from google.cloud.storage.asyncio.async_multi_range_downloader import (
+            MultiStreamConfig,
+        )
+
+        # Arrange
+        mock_client = self._make_mock_client()
+        mock_cls_stream.return_value = self._make_mock_stream()
+        config = MultiStreamConfig(**config_kwargs) if config_kwargs else None
+
+        # Act
+        mrd = await AsyncMultiRangeDownloader.create_mrd(
+            mock_client, "b", "o", multi_stream_config=config
+        )
+
+        # Assert
+        assert mrd._pool is None
+        with mock.patch.object(
+            mrd, "_download_ranges_on_stream", new=AsyncMock()
+        ) as mock_dl:
+            await mrd.download_ranges([(0, 50, BytesIO())])
+            assert mock_dl.call_count == 1
+            assert mock_dl.call_args[0][0] == mrd._primary_stream
+
+        await mrd.close()
+
+    @pytest.mark.asyncio
+    async def test_stream_pool_closed_and_cancellation(self):
+        from google.cloud.storage.asyncio._stream_pool import (
+            MultiStreamConfig,
+            _StreamPool,
+        )
+
+        scale_up_started = asyncio.Event()
+        scale_up_finish = asyncio.Event()
+
+        async def slow_factory():
+            scale_up_started.set()
+            await scale_up_finish.wait()
+            return self._make_dummy_pooled_stream()
+
+        pool = _StreamPool(
+            stream_factory=slow_factory,
+            multi_stream_config=MultiStreamConfig(
+                min_streams=1,
+                max_streams=2,
+                target_io_depth=1,
+                target_bytes=10,
+            ),
+        )
+        initial_s = self._make_dummy_pooled_stream()
+        await pool.add_stream(initial_s)
+
+        # Trigger scale up
+        await pool.distribute_ranges([(0, 20, BytesIO())])
+        await scale_up_started.wait()
+        assert len(pool._background_tasks) == 1
+        task = next(iter(pool._background_tasks))
+
+        # Close pool while scale up task is pending
+        await pool.close()
+        assert pool._closed is True
+        assert len(pool.streams) == 0
+
+        # Background task should be cancelled and awaited by close()
+        with pytest.raises(asyncio.CancelledError):
+            await task
+        assert task.cancelled()
+
+        # distribute_ranges on closed pool must raise ValueError
+        with pytest.raises(ValueError, match="Pool is closed"):
+            await pool.distribute_ranges([(0, 10, BytesIO())])
+
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader._AsyncReadObjectStream"
+    )
+    @pytest.mark.asyncio
+    async def test_routing_token_preservation_and_propagation(
+        self, mock_cls_async_read_object_stream
+    ):
+        from google.cloud.storage.asyncio.async_multi_range_downloader import (
+            MultiStreamConfig,
+        )
+
+        def make_redirect_error(token: str, handle: bytes):
+            redirect = _storage_v2.BidiReadObjectRedirectedError(
+                routing_token=token,
+                read_handle=_storage_v2.BidiReadHandle(handle=handle),
+            )
+            status = status_pb2.Status()
+            detail = status.details.add()
+            detail.type_url = (
+                "type.googleapis.com/google.storage.v2.BidiReadObjectRedirectedError"
+            )
+            detail.value = _storage_v2.BidiReadObjectRedirectedError.serialize(redirect)
+            grpc_error = mock.MagicMock()
+            grpc_error.trailing_metadata.return_value = [
+                ("grpc-status-details-bin", status.SerializeToString())
+            ]
+            return exceptions.Aborted("redirect", errors=[grpc_error])
+
+        mock_client = self._make_mock_client()
+
+        # 1. Primary stream fails on first open with redirect ("token-abc"), succeeds on retry
+        s1_failed = self._make_mock_stream(
+            open_side_effect=make_redirect_error("token-abc", b"h1")
+        )
+        s1_ok = self._make_mock_stream(read_handle=b"h1")
+        # 2. Second stream opened via min_streams=2 receives "token-abc", fails once with redirect ("token-xyz"), succeeds on retry
+        s2_failed = self._make_mock_stream(
+            open_side_effect=make_redirect_error("token-xyz", b"h2")
+        )
+        s2_ok = self._make_mock_stream(read_handle=b"h2")
+
+        mock_cls_async_read_object_stream.side_effect = [
+            s1_failed,
+            s1_ok,
+            s2_failed,
+            s2_ok,
+        ]
+
+        config = MultiStreamConfig(min_streams=2, max_streams=4)
+        mrd = await AsyncMultiRangeDownloader.create_mrd(
+            mock_client, "b", "o", multi_stream_config=config
+        )
+
+        # Verify s1_ok received routing_token=token-abc on retry
+        assert ("x-goog-request-params", "routing_token=token-abc") in (
+            s1_ok.open.call_args.kwargs["metadata"]
+        )
+        # Verify s2_failed inherited routing_token=token-abc preserved from primary open
+        assert ("x-goog-request-params", "routing_token=token-abc") in (
+            s2_failed.open.call_args.kwargs["metadata"]
+        )
+        # Verify s2_ok retried with the updated routing_token=token-xyz
+        assert ("x-goog-request-params", "routing_token=token-xyz") in (
+            s2_ok.open.call_args.kwargs["metadata"]
+        )
+        assert mrd._routing_token == "token-xyz"
+
+        await mrd.close()
+
+    @pytest.mark.asyncio
+    async def test_stream_pool_selection_min_streams_and_further(self):
+        from google.cloud.storage.asyncio._stream_pool import (
+            MultiStreamConfig,
+            _StreamPool,
+        )
+
+        pool = _StreamPool(
+            stream_factory=lambda: self._make_dummy_pooled_stream(),
+            multi_stream_config=MultiStreamConfig(
+                min_streams=2,
+                max_streams=4,
+                target_io_depth=2,
+                target_bytes=100,
+            ),
+        )
+
+        s1 = self._make_dummy_pooled_stream()
+        s2 = self._make_dummy_pooled_stream()
+        await pool.add_stream(s1)
+        await pool.add_stream(s2)
+
+        # s1 has some load, s2 has 0 load -> selects least loaded among min_streams (s2)
+        s1.record_request(1, 10)
+        assert s1.calculate_load(2, 100) == 0.3
+        assert s2.calculate_load(2, 100) == 0.0
+
+        assignments, _, _ = await pool.distribute_ranges(
+            [(0, 10, BytesIO())], allow_scale_up=False
+        )
+        assert list(assignments.keys()) == [s2]
+
+        # Fully load both s1 and s2 (load >= 1.0)
+        s1.record_request(2, 100)
+        s2.record_request(3, 100)
+        assert s1.is_fully_loaded(2, 100)
+        assert s2.is_fully_loaded(2, 100)
+
+        # Add further streams s3 and s4 (beyond min_streams=2)
+        s3 = self._make_dummy_pooled_stream()
+        s4 = self._make_dummy_pooled_stream()
+        await pool.add_stream(s3)
+        await pool.add_stream(s4)
+
+        # Give s3 some load (0.35), s4 has 0.0 load
+        s3.record_request(1, 20)
+        assert s3.calculate_load(2, 100) == 0.35
+        assert s4.calculate_load(2, 100) == 0.0
+
+        # Since base streams are fully loaded, selects FIRST not fully loaded further stream (s3, not s4!)
+        assignments_further, _, _ = await pool.distribute_ranges(
+            [(0, 10, BytesIO())], allow_scale_up=False
+        )
+        assert list(assignments_further.keys()) == [s3]
+
+        # Now fully load s3
+        s3.record_request(3, 100)
+        assert s3.is_fully_loaded(2, 100)
+
+        # Next distribute chooses s4 (the first not fully loaded further stream now)
+        assignments_s4, _, _ = await pool.distribute_ranges(
+            [(0, 10, BytesIO())], allow_scale_up=False
+        )
+        assert list(assignments_s4.keys()) == [s4]
+
+        # Now fully load s4
+        s4.record_request(3, 100)
+        assert s4.is_fully_loaded(2, 100)
+
+        # When all streams are fully loaded, fallback selects the least loaded overall
+        # Let s3 have load 2.0 and s1, s2, s4 have load 3.0
+        s3.pending_ranges = 4
+        s3.pending_bytes = 200
+        s1.pending_ranges = 6
+        s1.pending_bytes = 300
+        s2.pending_ranges = 6
+        s2.pending_bytes = 300
+        s4.pending_ranges = 6
+        s4.pending_bytes = 300
+
+        fallback_assignments, _, _ = await pool.distribute_ranges(
+            [(0, 10, BytesIO())], allow_scale_up=False
+        )
+        assert list(fallback_assignments.keys()) == [s3]
+
+        await pool.close()
+
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader._AsyncReadObjectStream"
+    )
+    @pytest.mark.asyncio
+    async def test_mrd_download_ranges_sharding_across_streams(self, mock_cls_stream):
+        from google.cloud.storage.asyncio.async_multi_range_downloader import (
+            MultiStreamConfig,
+        )
+
+        mock_client = self._make_mock_client()
+        s1 = self._make_mock_stream(read_handle=b"h1")
+        s2 = self._make_mock_stream(read_handle=b"h2")
+        s3 = self._make_mock_stream(read_handle=b"h3")
+
+        open_stream_started = asyncio.Event()
+
+        async def s3_open_after_s1_starts(*args, **kwargs):
+            # Prove s1/s2 start downloading before s3 finishes opening
+            await asyncio.wait_for(open_stream_started.wait(), timeout=1.0)
+
+        s3.open = AsyncMock(side_effect=s3_open_after_s1_starts)
+        mock_cls_stream.side_effect = [s1, s2, s3]
+
+        # Each range of 50 bytes with target_io_depth=2, target_bytes=100 has load = 0.5.
+        # So 2 ranges (100 bytes) saturate a stream (load = 1.0).
+        config = MultiStreamConfig(
+            min_streams=2,
+            max_streams=3,
+            target_io_depth=2,
+            target_bytes=100,
+        )
+        mrd = await AsyncMultiRangeDownloader.create_mrd(
+            mock_client, "b", "o", multi_stream_config=config
+        )
+        assert len(mrd._pool.streams) == 2
+
+        dispatched_shards = []
+
+        async def record_shard(pooled_stream, sub_ranges, *args, **kwargs):
+            open_stream_started.set()
+            dispatched_shards.append((pooled_stream, list(sub_ranges)))
+
+        with mock.patch.object(
+            mrd, "_download_ranges_on_stream", side_effect=record_shard
+        ):
+            # Pass 6 ranges of 50 bytes each (total load = 3.0 across max_streams=3).
+            # Open streams (s1, s2) start immediately while s3 opens in parallel for overflow.
+            ranges = [(i * 50, 50, BytesIO()) for i in range(6)]
+            await mrd.download_ranges(ranges)
+
+            assert len(mrd._pool.streams) == 3
+            assert len(dispatched_shards) == 3
+            assert [len(sub_ranges) for _, sub_ranges in dispatched_shards] == [2, 2, 2]
+
+        # Verify all counters were released back to 0 after completion
+        for ps in mrd._pool.streams:
+            assert ps.pending_ranges == 0
+            assert ps.pending_bytes == 0
+
+        await mrd.close()
+
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader._AsyncReadObjectStream"
+    )
+    @pytest.mark.asyncio
+    async def test_mrd_download_ranges_fills_current_stream_until_fully_loaded(
+        self, mock_cls_stream
+    ):
+        from google.cloud.storage.asyncio.async_multi_range_downloader import (
+            MultiStreamConfig,
+        )
+
+        mock_client = self._make_mock_client()
+        s1 = self._make_mock_stream(read_handle=b"h1")
+        s2 = self._make_mock_stream(read_handle=b"h2")
+        mock_cls_stream.side_effect = [s1, s2]
+
+        # Each 25-byte range has load = 0.5*(1/4) + 0.5*(25/100) = 0.25.
+        # So 4 ranges (100 bytes) saturate a stream (load = 1.0).
+        config = MultiStreamConfig(
+            min_streams=2,
+            max_streams=4,
+            target_io_depth=4,
+            target_bytes=100,
+        )
+        mrd = await AsyncMultiRangeDownloader.create_mrd(
+            mock_client, "b", "o", multi_stream_config=config
+        )
+        assert len(mrd._pool.streams) == 2
+
+        dispatched_shards = []
+
+        async def record_shard(pooled_stream, sub_ranges, *args, **kwargs):
+            dispatched_shards.append((pooled_stream, list(sub_ranges)))
+
+        with mock.patch.object(
+            mrd, "_download_ranges_on_stream", side_effect=record_shard
+        ):
+            # 1. Small batch (2 ranges, total load = 0.5 < 1.0): stays together on stream 0
+            r_small = [(0, 25, BytesIO()), (25, 25, BytesIO())]
+            await mrd.download_ranges(r_small)
+            assert len(dispatched_shards) == 1
+            assert dispatched_shards[0] == (mrd._pool.streams[0], r_small)
+
+            dispatched_shards.clear()
+
+            # 2. Larger batch (6 ranges, total load = 1.5):
+            # First 4 ranges fill stream 0 to load 1.0; next 2 ranges go contiguously to stream 1
+            r_large = [(i * 25, 25, BytesIO()) for i in range(6)]
+            await mrd.download_ranges(r_large)
+            assert len(dispatched_shards) == 2
+            assert dispatched_shards[0] == (mrd._pool.streams[0], r_large[:4])
+            assert dispatched_shards[1] == (mrd._pool.streams[1], r_large[4:])
+
+        await mrd.close()
+
+    @pytest.mark.asyncio
+    async def test_download_ranges_uninitialized_stream_or_multiplexer_raises(self):
+        mock_client = self._make_mock_client()
+        mrd = AsyncMultiRangeDownloader(mock_client, "b", "o")
+        mrd._is_stream_open = True
+        mrd.read_obj_str = None
+        mrd._multiplexer = None
+
+        with pytest.raises(
+            ValueError,
+            match="Underlying bidi-gRPC stream or multiplexer is not initialized",
+        ):
+            await mrd.download_ranges([(0, 10, BytesIO())])
+
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader._AsyncReadObjectStream"
+    )
+    @pytest.mark.asyncio
+    async def test_reopen_non_primary_stream_preserves_primary_stream_and_metadata(
+        self, mock_cls_stream
+    ):
+        from google.cloud.storage.asyncio.async_multi_range_downloader import (
+            MultiStreamConfig,
+        )
+
+        mock_client = self._make_mock_client()
+        primary_stream = self._make_mock_stream(read_handle=b"h1", is_finalized=True)
+        non_primary_initial = self._make_mock_stream(
+            read_handle=b"h2", is_finalized=False
+        )
+        non_primary_initial.object_metadata = None
+        non_primary_initial.full_obj_server_crc32c = None
+
+        replacement_stream = self._make_mock_stream(
+            read_handle=b"h3", is_finalized=False
+        )
+        # Reopening with a read_handle may not return response.metadata
+        replacement_stream.object_metadata = None
+        replacement_stream.full_obj_server_crc32c = None
+
+        mock_cls_stream.side_effect = [
+            primary_stream,
+            non_primary_initial,
+            replacement_stream,
+        ]
+
+        config = MultiStreamConfig(min_streams=2, max_streams=4)
+        mrd = await AsyncMultiRangeDownloader.create_mrd(
+            mock_client, "b", "o", multi_stream_config=config
+        )
+        assert mrd.read_obj_str is primary_stream
+        assert mrd._primary_stream.stream is primary_stream
+        assert mrd.is_finalized is True
+        assert mrd.full_obj_server_crc32c == 12345
+
+        non_primary_pooled = mrd._pool.streams[1]
+        assert non_primary_pooled is not mrd._primary_stream
+        assert non_primary_pooled.stream is non_primary_initial
+
+        # Reopen the non-primary stream via _create_stream_factory
+        factory = mrd._create_stream_factory(
+            state={"read_handle": b"h2", "routing_token": "tok"},
+            metadata=None,
+            pooled_stream=non_primary_pooled,
+        )
+        reopened = await factory()
+
+        assert reopened is replacement_stream
+        assert non_primary_pooled.stream is replacement_stream
+        assert mrd.read_obj_str is mrd._primary_stream.stream
+        assert mrd.read_obj_str is primary_stream
+        assert mrd.is_finalized is True
+        assert mrd.full_obj_server_crc32c == 12345
+
+        await mrd.close()
+
+    @pytest.mark.parametrize(
+        ("kwargs", "expected_msg"),
+        [
+            pytest.param(
+                {"min_streams": 0},
+                "min_streams must be >= 1",
+                id="min-streams-below-one",
+            ),
+            pytest.param(
+                {"min_streams": 4, "max_streams": 2},
+                "max_streams must be >= min_streams",
+                id="max-below-min-streams",
+            ),
+            pytest.param(
+                {"target_io_depth": 0},
+                "target_io_depth must be > 0",
+                id="non-positive-target-io-depth",
+            ),
+            pytest.param(
+                {"target_bytes": -1},
+                "target_bytes must be > 0",
+                id="non-positive-target-bytes",
+            ),
+        ],
+    )
+    def test_multi_stream_config_validation(self, kwargs, expected_msg):
+        from google.cloud.storage.asyncio._stream_pool import MultiStreamConfig
+
+        with pytest.raises(ValueError, match=expected_msg):
+            MultiStreamConfig(**kwargs)
+
+    @pytest.mark.asyncio
+    async def test_stream_pool_empty_raises_and_scale_up_error_logged(self):
+        from google.cloud.storage.asyncio._stream_pool import (
+            MultiStreamConfig,
+            _StreamPool,
+        )
+
+        async def failing_factory():
+            raise RuntimeError("open failed")
+
+        pool = _StreamPool(
+            stream_factory=failing_factory,
+            multi_stream_config=MultiStreamConfig(
+                min_streams=1, max_streams=2, target_io_depth=1, target_bytes=10
+            ),
+        )
+
+        with pytest.raises(ValueError, match="No streams available in stream pool"):
+            await pool.distribute_ranges([(0, 10, BytesIO())])
+
+        await pool.add_stream(self._make_dummy_pooled_stream())
+        await pool.distribute_ranges([(0, 20, BytesIO())])
+        await asyncio.sleep(0.01)
+
+        assert pool._pending_scale_ups == 0
+        assert len(pool.streams) == 1
+        await pool.close()
+
+    @pytest.mark.asyncio
+    async def test_stream_pool_scale_up_cancellation_closes_new_stream(self):
+        from google.cloud.storage.asyncio._stream_pool import (
+            MultiStreamConfig,
+            _StreamPool,
+        )
+
+        # Arrange
+        factory_returning = asyncio.Event()
+        new_pooled_stream = self._make_dummy_pooled_stream()
+        new_pooled_stream.close = AsyncMock()
+
+        async def factory():
+            factory_returning.set()
+            await asyncio.sleep(0)
+            return new_pooled_stream
+
+        pool = _StreamPool(
+            stream_factory=factory,
+            multi_stream_config=MultiStreamConfig(
+                min_streams=1,
+                max_streams=2,
+                target_io_depth=1,
+                target_bytes=10,
+            ),
+        )
+        await pool.add_stream(self._make_dummy_pooled_stream())
+
+        # Act: hold pool._lock while factory() finishes, then cancel the pending scale-up task
+        await pool.distribute_ranges([(0, 20, BytesIO())])
+        await factory_returning.wait()
+        async with pool._lock:
+            await asyncio.sleep(0)
+            scale_task = next(iter(pool._background_tasks))
+            scale_task.cancel()
+
+        await pool.close()
+
+        # Assert
+        new_pooled_stream.close.assert_awaited_once()
+        assert pool._pending_scale_ups == 0
+
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader._AsyncReadObjectStream"
+    )
+    @pytest.mark.asyncio
+    async def test_download_ranges_cancels_siblings_on_failure_and_data_corruption(
+        self, mock_cls_stream
+    ):
+        from google.cloud.storage.asyncio.async_multi_range_downloader import (
+            MultiStreamConfig,
+        )
+
+        # Arrange: s1 (base), s2 (fast scale-up), s3 (slow scale-up)
+        mock_client = self._make_mock_client()
+        s1 = self._make_mock_stream(read_handle=b"h1")
+        s2 = self._make_mock_stream(read_handle=b"h2")
+        s3 = self._make_mock_stream(read_handle=b"h3")
+
+        s2_overflow_started = asyncio.Event()
+        scale_up_gate = asyncio.Event()
+
+        async def slow_s3_open(*args, **kwargs):
+            await scale_up_gate.wait()
+
+        s3.open = AsyncMock(side_effect=slow_s3_open)
+        mock_cls_stream.side_effect = [s1, s2, s3]
+
+        config = MultiStreamConfig(
+            min_streams=1,
+            max_streams=3,
+            target_io_depth=1,
+            target_bytes=50,
+        )
+        mrd = await AsyncMultiRangeDownloader.create_mrd(
+            mock_client, "b", "o", multi_stream_config=config
+        )
+
+        overflow_batch_cancelled = asyncio.Event()
+
+        async def side_effect_dl(pooled_stream, batch, *args, **kwargs):
+            if pooled_stream.stream is s1:
+                await s2_overflow_started.wait()
+                await mrd.close()
+                raise DataCorruption(None, "checksum mismatch")
+            else:
+                s2_overflow_started.set()
+                try:
+                    await asyncio.sleep(10)
+                except asyncio.CancelledError:
+                    overflow_batch_cancelled.set()
+                    raise
+
+        # Act & Assert
+        with mock.patch.object(
+            mrd, "_download_ranges_on_stream", side_effect=side_effect_dl
+        ):
+            ranges = [(i * 50, 50, BytesIO()) for i in range(3)]
+            with pytest.raises(DataCorruption, match="checksum mismatch"):
+                await mrd.download_ranges(ranges)
+
+        assert overflow_batch_cancelled.is_set()
+        assert mrd.is_stream_open is False
+        assert mrd._pool is None
+
+    @pytest.mark.asyncio
+    async def test_stream_pool_contiguous_distribution_when_saturated(self):
+        from google.cloud.storage.asyncio._stream_pool import (
+            MultiStreamConfig,
+            _StreamPool,
+        )
+
+        # Arrange
+        pool = _StreamPool(
+            stream_factory=lambda: self._make_dummy_pooled_stream(),
+            multi_stream_config=MultiStreamConfig(
+                min_streams=2,
+                max_streams=2,
+                target_io_depth=2,
+                target_bytes=100,
+            ),
+        )
+        s1 = self._make_dummy_pooled_stream()
+        s2 = self._make_dummy_pooled_stream()
+        await pool.add_stream(s1)
+        await pool.add_stream(s2)
+        ranges = [(i * 50, 50, BytesIO()) for i in range(8)]
+
+        # Act
+        assignments, overflow, scale_tasks = await pool.distribute_ranges(ranges)
+
+        # Assert: contiguous slices without range-by-range interleaving
+        assert overflow == []
+        assert scale_tasks == []
+        assert assignments[s1] == ranges[:4]
+        assert assignments[s2] == ranges[4:]
+
+        await pool.close()
+
+    @pytest.mark.parametrize(
+        ("persisted_size", "offset", "expected_effective_bytes"),
+        [
+            pytest.param(1000, 200, 800, id="known-persisted-size"),
+            pytest.param(None, 0, 500, id="unknown-persisted-size-fallback"),
+        ],
+    )
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader._AsyncReadObjectStream"
+    )
+    @pytest.mark.asyncio
+    async def test_zero_length_range_load_accounting_and_release(
+        self, mock_cls_stream, persisted_size, offset, expected_effective_bytes
+    ):
+        from google.cloud.storage.asyncio.async_multi_range_downloader import (
+            MultiStreamConfig,
+        )
+
+        # Arrange
+        mock_client = self._make_mock_client()
+        s1 = self._make_mock_stream(read_handle=b"h1", persisted_size=persisted_size)
+        s2 = self._make_mock_stream(read_handle=b"h2", persisted_size=persisted_size)
+        mock_cls_stream.side_effect = [s1, s2]
+
+        config = MultiStreamConfig(
+            min_streams=1,
+            max_streams=2,
+            target_io_depth=2,
+            target_bytes=500,
+        )
+        mrd = await AsyncMultiRangeDownloader.create_mrd(
+            mock_client, "b", "o", multi_stream_config=config
+        )
+        recorded_loads = []
+
+        async def inspect_load(pooled_stream, batch, *args, **kwargs):
+            recorded_loads.append(
+                (pooled_stream.pending_ranges, pooled_stream.pending_bytes)
+            )
+
+        # Act
+        with mock.patch.object(
+            mrd, "_download_ranges_on_stream", side_effect=inspect_load
+        ):
+            await mrd.download_ranges([(offset, 0, BytesIO())])
+
+        # Assert
+        assert recorded_loads == [(1, expected_effective_bytes)]
+        for ps in mrd._pool.streams:
+            assert ps.pending_ranges == 0
+            assert ps.pending_bytes == 0
+
+        await mrd.close()
+
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader._AsyncReadObjectStream"
+    )
+    @pytest.mark.asyncio
+    async def test_download_overflow_incremental_dispatch_and_inflight_reuse(
+        self, mock_cls_stream
+    ):
+        from google.cloud.storage.asyncio.async_multi_range_downloader import (
+            MultiStreamConfig,
+        )
+
+        mock_client = self._make_mock_client()
+        s1 = self._make_mock_stream(read_handle=b"h1")
+        s2 = self._make_mock_stream(read_handle=b"h2")
+        s3 = self._make_mock_stream(read_handle=b"h3")
+
+        s2_dispatched = asyncio.Event()
+
+        async def s3_waits_for_s2_dispatch(*args, **kwargs):
+            # Prove s2 receives and starts downloading overflow BEFORE s3 finishes opening!
+            await asyncio.wait_for(s2_dispatched.wait(), timeout=1.0)
+
+        s3.open = AsyncMock(side_effect=s3_waits_for_s2_dispatch)
+        mock_cls_stream.side_effect = [s1, s2, s3]
+
+        config = MultiStreamConfig(
+            min_streams=1,
+            max_streams=3,
+            target_io_depth=2,
+            target_bytes=100,
+        )
+        mrd = await AsyncMultiRangeDownloader.create_mrd(
+            mock_client, "b", "o", multi_stream_config=config
+        )
+
+        dispatched = []
+
+        async def record_dl(pooled_stream, batch, *args, **kwargs):
+            dispatched.append((pooled_stream, list(batch)))
+            if pooled_stream.stream is s2:
+                s2_dispatched.set()
+
+        with mock.patch.object(
+            mrd, "_download_ranges_on_stream", side_effect=record_dl
+        ):
+            # 6 ranges (2 per stream across s1, s2, s3).
+            # s2 opens immediately, so overflow ranges r2..r3 are dispatched to s2
+            # without head-of-line blocking on s3.open!
+            ranges = [(i * 50, 50, BytesIO()) for i in range(6)]
+            await mrd.download_ranges(ranges)
+
+        assert len(mrd._pool.streams) == 3
+        assert len(dispatched) == 3
+        for ps in mrd._pool.streams:
+            assert ps.pending_ranges == 0
+            assert ps.pending_bytes == 0
+
+        await mrd.close()
+
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader._AsyncReadObjectStream"
+    )
+    @pytest.mark.asyncio
+    async def test_concurrent_multi_stream_stress_reliability(self, mock_cls_stream):
+        from google.cloud.storage.asyncio.async_multi_range_downloader import (
+            MultiStreamConfig,
+        )
+
+        mock_client = self._make_mock_client()
+
+        def make_stream(*args, **kwargs):
+            s = self._make_mock_stream(persisted_size=10_000)
+
+            async def delayed_open(*a, **kw):
+                await asyncio.sleep(0.002)
+
+            s.open = AsyncMock(side_effect=delayed_open)
+            return s
+
+        mock_cls_stream.side_effect = make_stream
+
+        config = MultiStreamConfig(
+            min_streams=2,
+            max_streams=6,
+            target_io_depth=4,
+            target_bytes=200,
+        )
+        mrd = await AsyncMultiRangeDownloader.create_mrd(
+            mock_client, "b", "o", multi_stream_config=config
+        )
+
+        completed_ranges = 0
+
+        async def simulated_dl(pooled_stream, batch, *args, **kwargs):
+            nonlocal completed_ranges
+            await asyncio.sleep(0.001)
+            for offset, length, buf in batch:
+                size = length if length > 0 else (10_000 - offset)
+                buf.write(b"x" * min(size, 16))
+            completed_ranges += len(batch)
+
+        with mock.patch.object(
+            mrd, "_download_ranges_on_stream", side_effect=simulated_dl
+        ):
+            # Run 12 concurrent download_ranges calls with varying batch sizes and zero-length ranges
+            concurrent_calls = []
+            expected_ranges = 0
+            for call_idx in range(12):
+                batch = [
+                    (i * 50, 50 if (i + call_idx) % 7 != 0 else 0, BytesIO())
+                    for i in range(1, (call_idx % 8) + 2)
+                ]
+                expected_ranges += len(batch)
+                concurrent_calls.append(mrd.download_ranges(batch))
+
+            await asyncio.gather(*concurrent_calls)
+
+        assert completed_ranges == expected_ranges
+        assert 2 < len(mrd._pool.streams) <= 6
+        for ps in mrd._pool.streams:
+            assert ps.pending_ranges == 0
+            assert ps.pending_bytes == 0
+
+        await mrd.close()
