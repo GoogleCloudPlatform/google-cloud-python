@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import contextlib
 import io
 import logging
 from dataclasses import dataclass
@@ -26,7 +25,7 @@ from google.rpc import status_pb2
 from google.cloud import _storage_v2
 from google.cloud._storage_v2.types import BidiWriteObjectRedirectedError
 from google.cloud._storage_v2.types.storage import BidiWriteObjectRequest
-from google.cloud.storage import Blob
+from google.cloud.storage import Blob, _opentelemetry_tracing
 from google.cloud.storage._helpers import create_trace_span_helper
 from google.cloud.storage.asyncio.async_grpc_client import (
     AsyncGrpcClient,
@@ -142,6 +141,30 @@ class Preconditions:
     if_generation_not_match: Optional[int] = None
     if_metageneration_match: Optional[int] = None
     if_metageneration_not_match: Optional[int] = None
+
+
+class _WriterTraceSpanContext:
+    """Async context manager that tracks top-level T2 span state on the writer."""
+
+    __slots__ = ("_writer", "_cm")
+
+    def __init__(self, writer: "AsyncAppendableObjectWriter", cm):
+        self._writer = writer
+        self._cm = cm
+
+    async def __aenter__(self):
+        self._writer._in_t2_span = True
+        try:
+            return await self._cm.__aenter__()
+        except BaseException:
+            self._writer._in_t2_span = False
+            raise
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        try:
+            return await self._cm.__aexit__(exc_type, exc_val, exc_tb)
+        finally:
+            self._writer._in_t2_span = False
 
 
 class AsyncAppendableObjectWriter:
@@ -319,28 +342,24 @@ class AsyncAppendableObjectWriter:
         self.blob: Optional[Blob] = None
         self._in_t2_span: bool = False
 
-    @contextlib.asynccontextmanager
-    async def _trace_span(
+    def _trace_span(
         self,
         name: str,
         attributes: Optional[Dict[str, Union[str, int]]] = None,
     ):
         """Creates a T2 OpenTelemetry span only for top-level public API calls."""
         if getattr(self, "_in_t2_span", False):
-            yield None
-            return
-        self._in_t2_span = True
-        try:
-            async with create_trace_span_helper(
-                self.client,
-                self.bucket_name,
-                name,
-                attributes=attributes,
-                rpc_system="grpc",
-            ) as span:
-                yield span
-        finally:
-            self._in_t2_span = False
+            return _opentelemetry_tracing._NOOP_TRACE_SPAN_CONTEXT
+        cm = create_trace_span_helper(
+            self.client,
+            self.bucket_name,
+            name,
+            attributes=attributes,
+            rpc_system="grpc",
+        )
+        if cm is _opentelemetry_tracing._NOOP_TRACE_SPAN_CONTEXT:
+            return cm
+        return _WriterTraceSpanContext(self, cm)
 
     @classmethod
     def from_blob(

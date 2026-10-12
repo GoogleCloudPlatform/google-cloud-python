@@ -409,3 +409,31 @@ async def test_create_trace_span_helper_with_sync_mock_context_manager(mock_clie
             mock_client, "my-zonal-bucket", "Test.SyncFallback"
         ) as span:
             assert span is fake_span
+
+
+@pytest.mark.asyncio
+async def test_noop_trace_span_fast_path_when_disabled(monkeypatch, mock_client):
+    """Verify zero-allocation singleton context manager is returned when tracing is disabled."""
+    from google.cloud.storage import _helpers
+
+    monkeypatch.setattr(_opentelemetry_tracing, "enable_otel_traces", False)
+
+    cm1 = _opentelemetry_tracing.create_trace_span("Test.NoOp")
+    cm2 = _helpers.create_trace_span_helper(mock_client, "my-zonal-bucket", "Test.NoOp")
+    writer = AsyncAppendableObjectWriter(
+        client=mock_client,
+        bucket_name="my-zonal-bucket",
+        object_name="append-obj",
+    )
+    cm3 = writer._trace_span("Test.NoOp")
+
+    assert cm1 is _opentelemetry_tracing._NOOP_TRACE_SPAN_CONTEXT
+    assert cm2 is _opentelemetry_tracing._NOOP_TRACE_SPAN_CONTEXT
+    assert cm3 is _opentelemetry_tracing._NOOP_TRACE_SPAN_CONTEXT
+
+    with cm1 as s1:
+        assert s1 is None
+    async with cm2 as s2:
+        assert s2 is None
+    async with cm3 as s3:
+        assert s3 is None

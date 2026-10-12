@@ -80,8 +80,40 @@ _cloud_trace_adoption_attrs = {
 }
 
 
+class _NoOpTraceSpanContext:
+    """Singleton no-op context manager supporting both sync and async protocols."""
+
+    __slots__ = ()
+
+    def __enter__(self):
+        return None
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        return False
+
+    async def __aenter__(self):
+        return None
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        return False
+
+
+_NOOP_TRACE_SPAN_CONTEXT = _NoOpTraceSpanContext()
+
+
 class _TraceSpanContext:
     """Context manager supporting both sync and async tracing spans."""
+
+    __slots__ = (
+        "name",
+        "attributes",
+        "client",
+        "api_request",
+        "retry",
+        "rpc_system",
+        "_span_cm",
+        "_span",
+    )
 
     def __init__(
         self,
@@ -151,6 +183,8 @@ def create_trace_span(
     """Creates a context manager for a new span and set it as the current span
     in the configured tracer. Supports both sync and async context managers.
     If no configuration exists yields None."""
+    if not _is_otel_traces_enabled():
+        return _NOOP_TRACE_SPAN_CONTEXT
     return _TraceSpanContext(
         name=name,
         attributes=attributes,

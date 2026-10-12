@@ -42,29 +42,38 @@ def update_write_handle_if_exists(obj, response):
         obj.write_handle = response.write_handle
 
 
+try:
+    from opentelemetry.trace.propagation.tracecontext import (
+        TraceContextTextMapPropagator,
+    )
+
+    _TRACE_CONTEXT_PROPAGATOR = TraceContextTextMapPropagator()
+except ImportError:  # pragma: NO COVER
+    _TRACE_CONTEXT_PROPAGATOR = None
+
+
 def inject_traceparent_to_metadata(metadata=None):
     """Inject W3C traceparent (and tracestate) into gRPC metadata tuple or list."""
-    meta_list = list(metadata) if metadata else []
-    if not _opentelemetry_tracing._is_otel_traces_enabled():
-        return (
-            tuple(meta_list)
-            if isinstance(metadata, tuple) or metadata is None
-            else meta_list
-        )
+    if (
+        not _opentelemetry_tracing._is_otel_traces_enabled()
+        or _TRACE_CONTEXT_PROPAGATOR is None
+    ):
+        return () if metadata is None else metadata
 
+    carrier = {}
     try:
-        from opentelemetry.trace.propagation.tracecontext import (
-            TraceContextTextMapPropagator,
-        )
-
-        carrier = {}
-        TraceContextTextMapPropagator().inject(carrier)
-        existing_keys = {k.lower() for k, _ in meta_list}
-        for key, val in carrier.items():
-            if key.lower() not in existing_keys:
-                meta_list.append((key, val))
+        _TRACE_CONTEXT_PROPAGATOR.inject(carrier)
     except Exception:
-        pass
+        return () if metadata is None else metadata
+
+    if not carrier:
+        return () if metadata is None else metadata
+
+    meta_list = list(metadata) if metadata else []
+    existing_keys = {k.lower() for k, _ in meta_list}
+    for key, val in carrier.items():
+        if key.lower() not in existing_keys:
+            meta_list.append((key, val))
 
     return (
         tuple(meta_list)

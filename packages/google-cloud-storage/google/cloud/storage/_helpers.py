@@ -147,8 +147,27 @@ def _validate_name(name):
     return name
 
 
+_BUCKET_METADATA_FETCH_SPAN_NAMES = frozenset(
+    (
+        "Storage.Client.getBucket",
+        "Storage.Client.lookupBucket",
+        "Storage.Bucket.reload",
+        "Storage.Bucket.exists",
+    )
+)
+
+
 class _TraceSpanHelperContext:
     """Context manager supporting both sync and async tracing span creation with bucket metadata."""
+
+    __slots__ = (
+        "client",
+        "bucket_name",
+        "name",
+        "attributes",
+        "kwargs",
+        "_base_cm",
+    )
 
     def __init__(self, client, bucket_name, name, attributes=None, **kwargs):
         self.client = client
@@ -165,40 +184,32 @@ class _TraceSpanHelperContext:
         name = self.name
 
         if (
-            bucket_name
-            and isinstance(bucket_name, str)
-            and client
-            and hasattr(client, "_bucket_metadata_cache")
-            and client._bucket_metadata_cache
-            and _opentelemetry_tracing._is_otel_traces_enabled()
+            _opentelemetry_tracing._is_otel_traces_enabled()
             and not _opentelemetry_tracing._is_bucket_metadata_disabled()
+            and bucket_name
+            and isinstance(bucket_name, str)
+            and client is not None
         ):
-            try:
-                if name in (
-                    "Storage.Client.getBucket",
-                    "Storage.Client.lookupBucket",
-                    "Storage.Bucket.reload",
-                    "Storage.Bucket.exists",
-                ):
-                    cached = client._bucket_metadata_cache.get(bucket_name)
-                else:
-                    cached = client._bucket_metadata_cache.get_or_queue_fetch(
-                        bucket_name
+            cache = getattr(client, "_bucket_metadata_cache", None)
+            if cache is not None:
+                try:
+                    if name in _BUCKET_METADATA_FETCH_SPAN_NAMES:
+                        cached = cache.get(bucket_name)
+                    else:
+                        cached = cache.get_or_queue_fetch(bucket_name)
+
+                    if cached and isinstance(cached, tuple) and len(cached) == 2:
+                        dest_id, loc = cached
+                        span_attrs["gcp.resource.destination.id"] = dest_id
+                        span_attrs["gcp.resource.destination.location"] = loc
+                except Exception as e:
+                    _logger.debug(
+                        f"Failed cache lookup in create_trace_span_helper: {e}"
                     )
 
-                if cached and isinstance(cached, tuple) and len(cached) == 2:
-                    dest_id, loc = cached
-                    span_attrs.update(
-                        {
-                            "gcp.resource.destination.id": dest_id,
-                            "gcp.resource.destination.location": loc,
-                        }
-                    )
-            except Exception as e:
-                _logger.debug(f"Failed cache lookup in create_trace_span_helper: {e}")
-
-        kwargs = dict(self.kwargs)
-        if "client" not in kwargs and client:
+        kwargs = self.kwargs
+        if "client" not in kwargs and client is not None:
+            kwargs = dict(kwargs)
             kwargs["client"] = client
 
         create_span_fn = (
@@ -211,19 +222,19 @@ class _TraceSpanHelperContext:
 
     def _handle_not_found(self):
         if (
-            self.bucket_name
+            _opentelemetry_tracing._is_otel_traces_enabled()
+            and self.bucket_name
             and isinstance(self.bucket_name, str)
-            and self.client
-            and hasattr(self.client, "_bucket_metadata_cache")
-            and self.client._bucket_metadata_cache
-            and _opentelemetry_tracing._is_otel_traces_enabled()
+            and self.client is not None
         ):
-            try:
-                self.client._bucket_metadata_cache.check_and_evict(self.bucket_name)
-            except Exception as e:
-                _logger.debug(
-                    f"Failed cache eviction on 404 in create_trace_span_helper: {e}"
-                )
+            cache = getattr(self.client, "_bucket_metadata_cache", None)
+            if cache is not None:
+                try:
+                    cache.check_and_evict(self.bucket_name)
+                except Exception as e:
+                    _logger.debug(
+                        f"Failed cache eviction on 404 in create_trace_span_helper: {e}"
+                    )
 
     def __enter__(self):
         self._prepare_base_cm()
@@ -240,6 +251,14 @@ class _TraceSpanHelperContext:
 
     async def __aenter__(self):
         self._prepare_base_cm()
+        if isinstance(
+            self._base_cm,
+            (
+                _opentelemetry_tracing._TraceSpanContext,
+                _opentelemetry_tracing._NoOpTraceSpanContext,
+            ),
+        ):
+            return self._base_cm.__enter__()
         if hasattr(self._base_cm, "__aenter__"):
             res = self._base_cm.__aenter__()
             return await res if inspect.isawaitable(res) else res
@@ -251,6 +270,14 @@ class _TraceSpanHelperContext:
         ):
             self._handle_not_found()
         if self._base_cm is not None:
+            if isinstance(
+                self._base_cm,
+                (
+                    _opentelemetry_tracing._TraceSpanContext,
+                    _opentelemetry_tracing._NoOpTraceSpanContext,
+                ),
+            ):
+                return self._base_cm.__exit__(exc_type, exc_val, exc_tb)
             if hasattr(self._base_cm, "__aexit__"):
                 res = self._base_cm.__aexit__(exc_type, exc_val, exc_tb)
                 return await res if inspect.isawaitable(res) else res
@@ -259,6 +286,11 @@ class _TraceSpanHelperContext:
 
 
 def create_trace_span_helper(client, bucket_name, name, attributes=None, **kwargs):
+    if (
+        _base_create_trace_span is None
+        and not _opentelemetry_tracing._is_otel_traces_enabled()
+    ):
+        return _opentelemetry_tracing._NOOP_TRACE_SPAN_CONTEXT
     return _TraceSpanHelperContext(
         client, bucket_name, name, attributes=attributes, **kwargs
     )

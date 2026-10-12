@@ -61,8 +61,9 @@ class BucketMetadataCache:
         Returns None immediately on cache miss so caller does not block.
         """
         with self._lock:
-            if bucket_name in self._cache:
-                return self._cache.get(bucket_name)
+            cached = self._cache.get(bucket_name)
+            if cached is not None:
+                return cached
             elif bucket_name in self._inflight_fetches:
                 # This handles a thundering herd where 'n' threads
                 # simultaneously experience a cache miss while 1 is already
