@@ -434,7 +434,7 @@ class Credentials(
             expiry,
             grant_response,
             rapt_token,
-        ) = reauth.refresh_grant(
+        ) = self._call_refresh_grant(
             request,
             self._token_uri,
             self._refresh_token,
@@ -442,7 +442,6 @@ class Credentials(
             self._client_secret,
             scopes=scopes,
             rapt_token=self._rapt_token,
-            enable_reauth_refresh=self._enable_reauth_refresh,
         )
 
         self.token = access_token
@@ -467,6 +466,51 @@ class Credentials(
                         ", ".join(scopes_requested_but_not_granted)
                     )
                 )
+
+    def _call_refresh_grant(
+        self,
+        request,
+        token_uri,
+        refresh_token,
+        client_id,
+        client_secret,
+        scopes=None,
+        rapt_token=None,
+    ):
+        """Performs the token refresh grant call.
+
+        Subclasses may override this to customize the token request,
+        for example to add DPoP proof-of-possession headers.
+
+        Args:
+            request (google.auth.transport.Request): The object used to make
+                HTTP requests.
+            token_uri (str): The OAuth 2.0 token endpoint URI.
+            refresh_token (str): The refresh token.
+            client_id (str): The OAuth 2.0 client ID.
+            client_secret (str): The OAuth 2.0 client secret.
+            scopes (Optional[Sequence[str]]): The requested scopes.
+            rapt_token (Optional[str]): The reauth Proof Token.
+
+        Returns:
+            Tuple[str, str, Optional[datetime], Mapping[str, str], str]:
+                The access token, new refresh token, expiration, the full
+                response data, and the rapt token.
+
+        Raises:
+            google.auth.exceptions.RefreshError: If the token endpoint
+                returned an error.
+        """
+        return reauth.refresh_grant(
+            request,
+            token_uri,
+            refresh_token,
+            client_id,
+            client_secret,
+            scopes=scopes,
+            rapt_token=rapt_token,
+            enable_reauth_refresh=self._enable_reauth_refresh,
+        )
 
     @classmethod
     def from_authorized_user_info(cls, info, scopes=None):

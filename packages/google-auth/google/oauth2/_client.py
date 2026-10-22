@@ -147,6 +147,7 @@ def _token_endpoint_request_no_throw(
     use_json=False,
     can_retry=True,
     headers=None,
+    return_response_headers=False,
     **kwargs,
 ):
     """Makes a request to the OAuth 2.0 authorization server's token endpoint.
@@ -163,6 +164,9 @@ def _token_endpoint_request_no_throw(
             content type. The default value is False.
         can_retry (bool): Enable or disable request retry behavior.
         headers (Optional[Mapping[str, str]]): The headers for the request.
+        return_response_headers (Optional[bool]): If True, the response
+            headers will be included as a fourth element in the returned
+            tuple.  The default value is False.
         kwargs: Additional arguments passed on to the request method. The
             kwargs will be passed to `requests.request` method, see:
             https://docs.python-requests.org/en/latest/api/#requests.request.
@@ -175,7 +179,8 @@ def _token_endpoint_request_no_throw(
         Tuple(bool, Mapping[str, str], Optional[bool]): A boolean indicating
           if the request is successful, a mapping for the JSON-decoded response
           data and in the case of an error a boolean indicating if the error
-          is retryable.
+          is retryable.  If ``return_response_headers`` is True, a fourth
+          element containing the response headers mapping is appended.
     """
     if use_json:
         headers_to_use = {"Content-Type": _JSON_CONTENT_TYPE}
@@ -192,12 +197,14 @@ def _token_endpoint_request_no_throw(
 
     response_data = {}
     retryable_error = False
+    response_headers = {}
 
     retries = _exponential_backoff.ExponentialBackoff()
     for _ in retries:
         response = request(
             method="POST", url=token_uri, headers=headers_to_use, body=body, **kwargs
         )
+        response_headers = getattr(response, "headers", {})
         response_body = (
             response.data.decode("utf-8")
             if hasattr(response.data, "decode")
@@ -211,6 +218,8 @@ def _token_endpoint_request_no_throw(
             response_data = response_body
 
         if response.status == http_client.OK:
+            if return_response_headers:
+                return True, response_data, None, response_headers
             return True, response_data, None
 
         retryable_error = _can_retry(
@@ -218,8 +227,12 @@ def _token_endpoint_request_no_throw(
         )
 
         if not can_retry or not retryable_error:
+            if return_response_headers:
+                return False, response_data, retryable_error, response_headers
             return False, response_data, retryable_error
 
+    if return_response_headers:
+        return False, response_data, retryable_error, response_headers
     return False, response_data, retryable_error
 
 
@@ -246,6 +259,9 @@ def _token_endpoint_request(
             content type. The default value is False.
         can_retry (bool): Enable or disable request retry behavior.
         headers (Optional[Mapping[str, str]]): The headers for the request.
+        return_response_headers (Optional[bool]): If True, the response
+            headers will be included as a fourth element in the returned
+            tuple.  The default value is False.
         kwargs: Additional arguments passed on to the request method. The
             kwargs will be passed to `requests.request` method, see:
             https://docs.python-requests.org/en/latest/api/#requests.request.
