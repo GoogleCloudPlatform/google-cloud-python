@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import functools
 import importlib
 from unittest import mock
 
@@ -36,6 +37,11 @@ def mock_transport(monkeypatch):
 
     transport.create_read_session = mock.Mock(name="fake_create_read_session")
     transport.read_rows = mock.Mock(name="fake_read_rows")
+    transport._client_options = None
+    if hasattr(transports.grpc.BigQueryReadGrpcTransport, "_wrap_method"):
+        transport._wrap_method = functools.partial(
+            transports.grpc.BigQueryReadGrpcTransport._wrap_method, transport
+        )
     transports.grpc.BigQueryReadGrpcTransport._prep_wrapped_messages(
         transport, client_info.ClientInfo()
     )
