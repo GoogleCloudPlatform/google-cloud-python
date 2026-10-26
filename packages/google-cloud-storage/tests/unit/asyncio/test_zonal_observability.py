@@ -287,6 +287,68 @@ async def test_async_multi_range_downloader_spans(exporter, mock_client):
 
 
 @pytest.mark.asyncio
+async def test_async_multi_range_downloader_data_corruption_marks_span_error(
+    exporter, mock_client
+):
+    from opentelemetry import trace as trace_api
+
+    from google.cloud.storage.exceptions import DataCorruption
+
+    mrd = AsyncMultiRangeDownloader(
+        client=mock_client,
+        bucket_name="my-zonal-bucket",
+        object_name="read-obj",
+    )
+
+    with (
+        mock.patch(
+            "google.cloud.storage.asyncio.async_multi_range_downloader._AsyncReadObjectStream"
+        ) as mock_stream_cls,
+        mock.patch(
+            "google.cloud.storage.asyncio.async_multi_range_downloader._StreamMultiplexer"
+        ) as mock_mux_cls,
+        mock.patch(
+            "google.cloud.storage.asyncio.async_multi_range_downloader._BidiStreamRetryManager"
+        ) as mock_retry_mgr_cls,
+    ):
+        mock_stream = mock.AsyncMock()
+        mock_stream.generation_number = 2002
+        mock_stream.read_handle = storage_v2.BidiReadHandle(handle=b"rhandle-1")
+        mock_stream.persisted_size = 1024
+        mock_stream.is_finalized = True
+        mock_stream.full_obj_server_crc32c = None
+        mock_stream_cls.return_value = mock_stream
+
+        mock_mux = mock.AsyncMock()
+        mock_mux.register = mock.Mock(return_value=mock.AsyncMock())
+        mock_mux.unregister = mock.Mock()
+        mock_mux_cls.return_value = mock_mux
+
+        mock_retry_mgr = mock.AsyncMock()
+        mock_retry_mgr.execute.side_effect = DataCorruption(
+            mock.Mock(), "CRC32C checksum mismatch"
+        )
+        mock_retry_mgr_cls.return_value = mock_retry_mgr
+
+        await mrd.open()
+        with pytest.raises(DataCorruption):
+            await mrd.download_ranges([(0, 100, BytesIO())], enable_checksum=False)
+
+    spans = exporter.get_finished_spans()
+    assert [s.name for s in spans] == [
+        "Storage.AsyncMultiRangeDownloader.open",
+        "Storage.AsyncMultiRangeDownloader.close",
+        "Storage.AsyncMultiRangeDownloader.downloadRanges",
+    ]
+
+    close_span, download_span = spans[1], spans[2]
+    assert close_span.status.status_code == trace_api.StatusCode.UNSET
+    assert download_span.status.status_code == trace_api.StatusCode.ERROR
+    assert len(download_span.events) == 1
+    assert download_span.events[0].name == "exception"
+
+
+@pytest.mark.asyncio
 async def test_bucket_metadata_cache_async_grpc_fetch(mock_client):
     cache = mock_client._bucket_metadata_cache
     cache.clear()

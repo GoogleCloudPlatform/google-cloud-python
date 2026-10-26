@@ -18,7 +18,6 @@ import logging
 import os
 from urllib.parse import urlparse
 
-from google.api_core import exceptions as api_exceptions
 from google.api_core import retry as api_retry
 
 from google.cloud.storage import __version__
@@ -112,7 +111,6 @@ class _TraceSpanContext:
         "retry",
         "rpc_system",
         "_span_cm",
-        "_span",
     )
 
     def __init__(
@@ -131,7 +129,6 @@ class _TraceSpanContext:
         self.retry = retry
         self.rpc_system = rpc_system
         self._span_cm = None
-        self._span = None
 
     def __enter__(self):
         if not _is_otel_traces_enabled():
@@ -149,19 +146,11 @@ class _TraceSpanContext:
             name=self.name,
             kind=trace.SpanKind.CLIENT,
             attributes=final_attributes,
-            record_exception=False,
-            set_status_on_exception=False,
         )
-        self._span = self._span_cm.__enter__()
-        return self._span
+        return self._span_cm.__enter__()
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self._span_cm is not None:
-            if exc_val is not None and isinstance(
-                exc_val, api_exceptions.GoogleAPICallError
-            ):
-                self._span.set_status(trace.Status(trace.StatusCode.ERROR))
-                self._span.record_exception(exc_val)
             return self._span_cm.__exit__(exc_type, exc_val, exc_tb)
         return False
 

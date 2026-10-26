@@ -35,6 +35,8 @@ def setup():
     except ImportError:  # pragma: NO COVER
         pytest.skip("This test suite requires OpenTelemetry pacakges.")
 
+    trace_api._TRACER_PROVIDER_SET_ONCE._done = False
+    trace_api._TRACER_PROVIDER = None
     tracer_provider = TracerProvider()
     memory_exporter = InMemorySpanExporter()
     span_processor = export.SimpleSpanProcessor(memory_exporter)
@@ -42,6 +44,9 @@ def setup():
     trace_api.set_tracer_provider(tracer_provider)
     importlib.reload(_opentelemetry_tracing)
     yield memory_exporter
+    memory_exporter.clear()
+    trace_api._TRACER_PROVIDER_SET_ONCE._done = False
+    trace_api._TRACER_PROVIDER = None
 
 
 @pytest.fixture()
@@ -144,6 +149,74 @@ def test_enable_trace_error(setup, setup_optin):
             assert span.attributes == expected_attributes
             assert span.name == "OtelTracing.Test"
             raise NotFound("Test catching NotFound error in trace span.")
+
+    spans = setup.get_finished_spans()
+    assert len(spans) == 1
+    finished_span = spans[0]
+    assert finished_span.status.status_code == trace_api.StatusCode.ERROR
+    assert len(finished_span.events) == 1
+    assert finished_span.events[0].name == "exception"
+
+
+def test_enable_trace_non_api_error_sync(setup, setup_optin):
+    from opentelemetry import trace as trace_api
+
+    from google.cloud.storage.exceptions import DataCorruption
+
+    with pytest.raises(DataCorruption):
+        with _opentelemetry_tracing.create_trace_span("OtelTracing.DataCorruptionSync"):
+            raise DataCorruption(mock.Mock(), "CRC32C checksum mismatch")
+
+    spans = setup.get_finished_spans()
+    assert len(spans) == 1
+    finished_span = spans[0]
+    assert finished_span.name == "OtelTracing.DataCorruptionSync"
+    assert finished_span.status.status_code == trace_api.StatusCode.ERROR
+    assert len(finished_span.events) == 1
+    assert finished_span.events[0].name == "exception"
+
+
+@pytest.mark.asyncio
+async def test_enable_trace_errors_async(setup, setup_optin):
+    from google.cloud.exceptions import NotFound
+    from opentelemetry import trace as trace_api
+
+    from google.cloud.storage.exceptions import DataCorruption
+
+    with pytest.raises(GoogleAPICallError):
+        async with _opentelemetry_tracing.create_trace_span(
+            "OtelTracing.AsyncApiError"
+        ) as span:
+            assert span.kind == trace_api.SpanKind.CLIENT
+            raise NotFound("Async NotFound error")
+
+    with pytest.raises(DataCorruption):
+        async with _opentelemetry_tracing.create_trace_span(
+            "OtelTracing.AsyncDataCorruption"
+        ):
+            raise DataCorruption(mock.Mock(), "Async CRC32C checksum mismatch")
+
+    spans = setup.get_finished_spans()
+    assert len(spans) == 2
+
+    api_err_span, corruption_span = spans[0], spans[1]
+    assert api_err_span.name == "OtelTracing.AsyncApiError"
+    assert api_err_span.status.status_code == trace_api.StatusCode.ERROR
+    assert len(api_err_span.events) == 1
+    assert api_err_span.events[0].name == "exception"
+
+    assert corruption_span.name == "OtelTracing.AsyncDataCorruption"
+    assert corruption_span.status.status_code == trace_api.StatusCode.ERROR
+    assert len(corruption_span.events) == 1
+    assert corruption_span.events[0].name == "exception"
+
+
+def test_trace_span_context_disabled_before_enter(setup, setup_optin, monkeypatch):
+    cm = _opentelemetry_tracing.create_trace_span("OtelTracing.DisabledBeforeEnter")
+    monkeypatch.setattr(_opentelemetry_tracing, "enable_otel_traces", False)
+    with cm as span:
+        assert span is None
+    assert len(setup.get_finished_spans()) == 0
 
 
 def test_get_final_attributes(setup, setup_optin):
