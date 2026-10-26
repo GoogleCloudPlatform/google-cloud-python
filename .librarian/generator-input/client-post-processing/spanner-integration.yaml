@@ -21,9 +21,9 @@ replacements:
     count: 1
 
   - paths: [packages/google-cloud-spanner/google/cloud/spanner_v1/services/spanner/client.py]
-    before: '(\s+api_audience=self\._client_options\.api_audience,\n)(?!\s+metrics_interceptor=MetricsInterceptor)'
+    before: '([ \t]+"api_audience": self\._client_options\.api_audience,\n)(?![ \t]+"metrics_interceptor":)'
     after: |
-      \g<1>                metrics_interceptor=MetricsInterceptor(),
+      \g<1>                "metrics_interceptor": MetricsInterceptor(),
     count: 1
 
   - paths: [packages/google-cloud-spanner/google/cloud/spanner_v1/services/spanner/transports/base.py]
@@ -110,9 +110,9 @@ replacements:
     after: |
       \g<1>        self._metrics_interceptor = None
     count: 1
-  - paths: 
+  - paths:
       - packages/google-cloud-spanner/google/cloud/spanner_v1/services/spanner/transports/grpc.py
-    before: '([ \t]+)(\("grpc\.keepalive_time_ms", 120000\),\n[ \t]+\](?:,\n[ \t]*|\n[ \t]*)\)\n+)([ \t]+)(self\._interceptor = _LoggingClientInterceptor\(\)\n)'
+    before: '([ \t]+)(\("grpc\.keepalive_time_ms", 120000\),\n[ \t]+\](?:,\n[ \t]*|\n[ \t]*)\)\n+)(?![ \t]+# Wrap the gRPC channel with the metric interceptor)([ \t]+)(channel_interceptors = list\(interceptors\) if interceptors else \[\]\n)'
     after: |
       \g<1>\g<2>\g<3># Wrap the gRPC channel with the metric interceptor
       \g<3>if metrics_interceptor is not None:
@@ -125,29 +125,29 @@ replacements:
     count: 1
   - paths:
       - packages/google-cloud-spanner/google/cloud/spanner_v1/services/spanner/transports/grpc_asyncio.py
-    before: '([ \t]+)(\("grpc\.keepalive_time_ms", 120000\),\n[ \t]+\](?:,\n[ \t]*|\n[ \t]*)\)\n+)([ \t]+)(self\._interceptor = _LoggingClientAIOInterceptor\(\)\n)'
+    before: '([ \t]+)(\("grpc\.keepalive_time_ms", 120000\),\n[ \t]+\](?:,\n[ \t]*|\n[ \t]*)\)\n+)(?![ \t]+if metrics_interceptor is not None:)([ \t]+)(# Wrap channel with user-specified and logging interceptors\.\n)'
     after: |
       \g<1>\g<2>\g<3>if metrics_interceptor is not None:
-                  self._metrics_interceptor = AsyncMetricsInterceptor()
-                  # Attach interceptor directly since grpc.aio does not provide intercept_channel.
-                  if hasattr(self._grpc_channel, "_unary_unary_interceptors"):
-                      self._grpc_channel._unary_unary_interceptors.append(
-                          self._metrics_interceptor
-                      )
-                  if hasattr(self._grpc_channel, "_unary_stream_interceptors"):
-                      self._grpc_channel._unary_stream_interceptors.append(
-                          self._metrics_interceptor
-                      )
-                  if hasattr(self._grpc_channel, "_stream_unary_interceptors"):
-                      self._grpc_channel._stream_unary_interceptors.append(
-                          self._metrics_interceptor
-                      )
-                  if hasattr(self._grpc_channel, "_stream_stream_interceptors"):
-                      self._grpc_channel._stream_stream_interceptors.append(
-                          self._metrics_interceptor
-                      )
+      \g<3>    self._metrics_interceptor = AsyncMetricsInterceptor()
+      \g<3>    # Attach interceptor directly since grpc.aio does not provide intercept_channel.
+      \g<3>    if hasattr(self._grpc_channel, "_unary_unary_interceptors"):
+      \g<3>        self._grpc_channel._unary_unary_interceptors.append(
+      \g<3>            self._metrics_interceptor
+      \g<3>        )
+      \g<3>    if hasattr(self._grpc_channel, "_unary_stream_interceptors"):
+      \g<3>        self._grpc_channel._unary_stream_interceptors.append(
+      \g<3>            self._metrics_interceptor
+      \g<3>        )
+      \g<3>    if hasattr(self._grpc_channel, "_stream_unary_interceptors"):
+      \g<3>        self._grpc_channel._stream_unary_interceptors.append(
+      \g<3>            self._metrics_interceptor
+      \g<3>        )
+      \g<3>    if hasattr(self._grpc_channel, "_stream_stream_interceptors"):
+      \g<3>        self._grpc_channel._stream_stream_interceptors.append(
+      \g<3>            self._metrics_interceptor
+      \g<3>        )
 
-              self._interceptor = _LoggingClientAIOInterceptor()
+      \g<3>\g<4>
     count: 1
   - paths: [packages/google-cloud-spanner/setup.py]
     before: '(?s)dependencies = \[.*?\]\nextras = \{\s*\}'
