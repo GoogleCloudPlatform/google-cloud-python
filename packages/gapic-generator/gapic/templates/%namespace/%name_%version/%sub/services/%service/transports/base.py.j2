@@ -162,6 +162,10 @@ class {{ service.name }}Transport(abc.ABC):
             host += ':443'
         self._host = host
 
+        if isinstance(client_options, client_options_lib.ClientOptions) and not client_options.api_endpoint:
+            client_options.api_endpoint = self._host
+        elif isinstance(client_options, dict) and not client_options.get("api_endpoint"):
+            client_options["api_endpoint"] = self._host
         self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 

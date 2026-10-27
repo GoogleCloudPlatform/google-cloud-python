@@ -13315,9 +13315,18 @@ def test_cloud_redis_base_transport_wrap_method_modern_api_core(monkeypatch):
 
     # 2. Base transport: kind raises NotImplementedError and is cleanly omitted
     with mock.patch.object(transports.base.gapic_v1.method, "wrap_method") as mock_wrap:
+        options = client_options.ClientOptions()
         base_transport = transports.CloudRedisTransport(
-            credentials=ga_credentials.AnonymousCredentials()
+            credentials=ga_credentials.AnonymousCredentials(),
+            client_options=options,
         )
+        assert base_transport._client_options.api_endpoint == base_transport._host
+        dict_options = {}
+        dict_transport = transports.CloudRedisTransport(
+            credentials=ga_credentials.AnonymousCredentials(),
+            client_options=dict_options,
+        )
+        assert dict_transport._client_options["api_endpoint"] == dict_transport._host
         func = mock.MagicMock()
         base_transport._wrap_method(func)
         assert "kind" not in mock_wrap.call_args.kwargs
