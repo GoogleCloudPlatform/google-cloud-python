@@ -14,6 +14,7 @@
 
 import datetime
 import sys
+import types
 from unittest import mock
 
 import pytest
@@ -780,43 +781,8 @@ def test_wrap_method_otel_tracing_endpoint_attributes_from_default_host(
     )
 
 
-def test_extract_error_attributes_standard_exception():
-    """Proves that _extract_error_attributes returns fallback error.type for exceptions without ErrorInfo."""
-    assert google.api_core.gapic_v1.method._extract_error_attributes(
-        ValueError("fail")
-    ) == {"error.type": "ValueError", "status.message": "fail"}
-    assert google.api_core.gapic_v1.method._extract_error_attributes(
-        exceptions.InvalidArgument("invalid argument")
-    ) == {"error.type": "INVALID_ARGUMENT", "status.message": "invalid argument"}
-    assert google.api_core.gapic_v1.method._extract_error_attributes(None) == {}
-
-
-def test_extract_error_attributes_with_error_info():
-    """Proves that _extract_error_attributes extracts domain, error.type, and metadata from ErrorInfo."""
-    import types
-
-    error_info = types.SimpleNamespace(
-        domain="googleapis.com",
-        reason="SERVICE_DISABLED",
-        metadata={
-            "service": "secretmanager.googleapis.com",
-            "consumer": "projects/123",
-        },
-    )
-    exc = types.SimpleNamespace(error_info=error_info)
-    attrs = google.api_core.gapic_v1.method._extract_error_attributes(exc)
-    assert attrs == {
-        "gcp.errors.domain": "googleapis.com",
-        "error.type": "SERVICE_DISABLED",
-        "gcp.errors.metadata.service": "secretmanager.googleapis.com",
-        "gcp.errors.metadata.consumer": "projects/123",
-    }
-
-
 def test_wrap_method_otel_tracing_records_gcp_error_attributes(mock_otel):
     """Proves that method spans record gcp.errors.* attributes when ErrorInfo is present."""
-    import types
-
     error_info = types.SimpleNamespace(
         domain="googleapis.com",
         reason="RESOURCE_EXHAUSTED",
@@ -842,173 +808,6 @@ def test_wrap_method_otel_tracing_records_gcp_error_attributes(mock_otel):
         "gcp.errors.metadata.quota_limit", "100"
     )
     mock_otel.span.set_attribute.assert_any_call("status.message", "quota exceeded")
-
-
-def test_extract_error_attributes_variations():
-    """Proves that _extract_error_attributes handles __cause__, gRPC error details parsing, and direct fallbacks."""
-    import types
-
-    from google.api_core.gapic_v1.method import _extract_error_attributes
-
-    # 1. __cause__ attribute fallback
-    inner_err = types.SimpleNamespace(
-        error_info=types.SimpleNamespace(domain="d", reason="r", metadata={"k": "v"})
-    )
-    outer_err = types.SimpleNamespace(__cause__=inner_err)
-    assert _extract_error_attributes(outer_err) == {
-        "gcp.errors.domain": "d",
-        "error.type": "r",
-        "gcp.errors.metadata.k": "v",
-    }
-
-    # 2. rpc_call with trailing_metadata parsed via _parse_grpc_error_details
-    rpc_call = types.SimpleNamespace(trailing_metadata=[("meta", "val")])
-    exc_with_call = types.SimpleNamespace(trailing_metadata=rpc_call.trailing_metadata)
-    error_info = types.SimpleNamespace(
-        domain="parse_d", reason="parse_r", metadata={"foo": "bar"}
-    )
-    with mock.patch(
-        "google.api_core.exceptions._parse_grpc_error_details",
-        return_value=(None, error_info),
-    ):
-        assert _extract_error_attributes(exc_with_call) == {
-            "gcp.errors.domain": "parse_d",
-            "error.type": "parse_r",
-            "gcp.errors.metadata.foo": "bar",
-        }
-
-    # 3. rpc_call with response attribute holding trailing_metadata and _parse_grpc_error_details raising Exception
-    exc_with_resp = types.SimpleNamespace(
-        response=types.SimpleNamespace(trailing_metadata=[])
-    )
-    with mock.patch(
-        "google.api_core.exceptions._parse_grpc_error_details",
-        side_effect=ValueError("bad proto"),
-    ):
-        assert _extract_error_attributes(exc_with_resp) == {
-            "error.type": "SimpleNamespace"
-        }
-
-    # 4. error_info with empty domain, empty reason, empty metadata
-    error_info_empty = types.SimpleNamespace(domain="", reason="", metadata=None)
-    exc_empty = types.SimpleNamespace(error_info=error_info_empty)
-    assert _extract_error_attributes(exc_empty) == {"error.type": "SimpleNamespace"}
-
-    # 5. else fallback where target_exc directly has domain, reason, and metadata
-    exc_fallback = types.SimpleNamespace(
-        domain="fallback_d",
-        reason="fallback_r",
-        metadata={"f_key": 42},
-    )
-    assert _extract_error_attributes(exc_fallback) == {
-        "gcp.errors.domain": "fallback_d",
-        "error.type": "fallback_r",
-        "gcp.errors.metadata.f_key": "42",
-    }
-
-    # 6. else fallback with empty attributes (e.g. domain="", reason="", metadata={})
-    exc_fallback_empty = types.SimpleNamespace(
-        domain="",
-        reason="",
-        metadata={},
-    )
-    assert _extract_error_attributes(exc_fallback_empty) == {
-        "error.type": "SimpleNamespace"
-    }
-
-    # 7. status.message extraction from .message attribute
-    exc_with_msg = types.SimpleNamespace(message="api call failed")
-    assert _extract_error_attributes(exc_with_msg) == {
-        "error.type": "SimpleNamespace",
-        "status.message": "api call failed",
-    }
-
-    # 8. status.message extraction from .details() callable (e.g. gRPC RpcError)
-    exc_with_details = types.SimpleNamespace(details=lambda: "rpc deadline exceeded")
-    assert _extract_error_attributes(exc_with_details) == {
-        "error.type": "SimpleNamespace",
-        "status.message": "rpc deadline exceeded",
-    }
-
-    # 9. status.message extraction from Exception string representation
-    exc_standard = ValueError("invalid argument passed")
-    assert _extract_error_attributes(exc_standard) == {
-        "error.type": "ValueError",
-        "status.message": "invalid argument passed",
-    }
-
-    # 10. Exception with empty message string does not populate status.message
-    exc_empty_msg = ValueError("")
-    assert _extract_error_attributes(exc_empty_msg) == {
-        "error.type": "ValueError",
-    }
-
-    # 11. status.message extraction from BaseException subclasses (e.g. asyncio.CancelledError)
-    import asyncio
-
-    exc_cancelled_with_msg = asyncio.CancelledError("async task cancelled")
-    assert _extract_error_attributes(exc_cancelled_with_msg) == {
-        "error.type": "CancelledError",
-        "status.message": "async task cancelled",
-    }
-
-    exc_cancelled_empty = asyncio.CancelledError()
-    assert _extract_error_attributes(exc_cancelled_empty) == {
-        "error.type": "CancelledError",
-    }
-
-    # 12. HTTP response attached to GoogleAPICallError (direct and wrapped in RetryError)
-    http_resp_503 = types.SimpleNamespace(
-        status_code=503,
-        json=lambda: {"error": {"message": "Persistent outage"}},
-    )
-    http_exc = exceptions.ServiceUnavailable(
-        "POST http://localhost:7469/v1beta1/sequences/23: Persistent outage",
-        response=http_resp_503,
-    )
-    assert _extract_error_attributes(http_exc) == {
-        "error.type": "503",
-        "status.message": "Persistent outage",
-    }
-    retry_http_exc = exceptions.RetryError("Deadline of 0.1s exceeded", cause=http_exc)
-    assert _extract_error_attributes(retry_http_exc) == {
-        "error.type": "503",
-        "status.message": "Persistent outage",
-    }
-
-    # 13. HTTP response with dict ErrorInfo (from JSON format_http_response_error)
-    http_exc_dict_info = exceptions.BadRequest(
-        "POST http://localhost:7469/v1beta1/echo:echo: Quota exceeded",
-        response=types.SimpleNamespace(
-            status_code=400,
-            json=lambda: {"error": {"message": "Quota exceeded"}},
-        ),
-        error_info={
-            "domain": "googleapis.com",
-            "reason": "RATE_LIMIT_EXCEEDED",
-            "metadata": {"service": "showcase.googleapis.com"},
-        },
-    )
-    assert _extract_error_attributes(http_exc_dict_info) == {
-        "gcp.errors.domain": "googleapis.com",
-        "error.type": "RATE_LIMIT_EXCEEDED",
-        "gcp.errors.metadata.service": "showcase.googleapis.com",
-        "status.message": "Quota exceeded",
-    }
-
-    # 14. gRPC Call-like response (has trailing_metadata) is NOT treated as an HTTP response
-    grpc_call_like = types.SimpleNamespace(
-        status_code=503,
-        trailing_metadata=(),
-    )
-    grpc_exc_with_resp = exceptions.ServiceUnavailable(
-        "gRPC transport error",
-        response=grpc_call_like,
-    )
-    assert _extract_error_attributes(grpc_exc_with_resp) == {
-        "error.type": "UNAVAILABLE",
-        "status.message": "gRPC transport error",
-    }
 
 
 def test_wrap_method_otel_tracing_partial_span_capabilities(mock_otel):

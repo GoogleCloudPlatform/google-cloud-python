@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import asyncio
 import sys
 import types
 import urllib.parse
@@ -19,7 +20,7 @@ from unittest import mock
 
 import pytest
 
-from google.api_core import _observability
+from google.api_core import _observability, exceptions
 from google.api_core._feature_gating_helpers import FeatureGatingError
 from google.api_core.client_options import ClientOptions
 
@@ -1633,3 +1634,537 @@ def test_suppressing_interceptors_define_slots():
     assert _observability._AsyncSuppressingClientInterceptor.__slots__ == ()
     assert "__dict__" not in _observability._SuppressingClientInterceptor.__dict__
     assert "__dict__" not in _observability._AsyncSuppressingClientInterceptor.__dict__
+
+
+def test_has_opentelemetry_caching(monkeypatch):
+    """Proves has_opentelemetry caches True and False states across calls."""
+    monkeypatch.setattr(_observability, "_HAS_OPENTELEMETRY", None)
+    monkeypatch.setitem(sys.modules, "opentelemetry", types.ModuleType("opentelemetry"))
+    monkeypatch.setitem(
+        sys.modules,
+        "opentelemetry.trace",
+        types.ModuleType("opentelemetry.trace"),
+    )
+
+    assert _observability.has_opentelemetry() is True
+    assert _observability._HAS_OPENTELEMETRY is True
+    # Cached call returns True even if sys.modules changes
+    monkeypatch.setitem(sys.modules, "opentelemetry.trace", None)
+    assert _observability.has_opentelemetry() is True
+
+    # Reset sentinel and test when ImportError occurs
+    monkeypatch.setattr(_observability, "_HAS_OPENTELEMETRY", None)
+    assert _observability.has_opentelemetry() is False
+    assert _observability._HAS_OPENTELEMETRY is False
+
+    # Cached call returns False even if opentelemetry.trace becomes available
+    monkeypatch.setitem(
+        sys.modules,
+        "opentelemetry.trace",
+        types.ModuleType("opentelemetry.trace"),
+    )
+    assert _observability.has_opentelemetry() is False
+
+
+@pytest.mark.parametrize(
+    "trace_flags,expected_sampled",
+    [
+        pytest.param(
+            types.SimpleNamespace(sampled=True), True, id="flag_obj_sampled_true"
+        ),
+        pytest.param(
+            types.SimpleNamespace(sampled=False),
+            False,
+            id="flag_obj_sampled_false",
+        ),
+        pytest.param(1, True, id="int_bitmask_sampled_true"),
+        pytest.param(0, False, id="int_bitmask_sampled_false"),
+        pytest.param(2, False, id="int_bitmask_other_bit_unsampled"),
+        pytest.param(None, False, id="none_trace_flags"),
+    ],
+)
+def test_extract_trace_context_explicit_span_flags(trace_flags, expected_sampled):
+    """Proves extract_trace_context formats hex IDs and resolves trace_flags."""
+    span = mock.Mock(spec_set=["get_span_context"])
+    span.get_span_context.return_value = types.SimpleNamespace(
+        is_valid=True,
+        trace_id=0x0123456789ABCDEF0123456789ABCDEF,
+        span_id=0x0123456789ABCDEF,
+        trace_flags=trace_flags,
+    )
+
+    expected = {
+        "trace_id": "0123456789abcdef0123456789abcdef",
+        "span_id": "0123456789abcdef",
+        "logging.googleapis.com/trace": "0123456789abcdef0123456789abcdef",
+        "logging.googleapis.com/spanId": "0123456789abcdef",
+        "logging.googleapis.com/trace_sampled": expected_sampled,
+    }
+    assert _observability.extract_trace_context(span) == expected
+
+
+def test_extract_trace_context_invalid_or_broken_span():
+    """Proves extract_trace_context returns {} on broken spans or non-int IDs."""
+    bad_span = mock.Mock(spec_set=["get_span_context"])
+    bad_span.get_span_context.side_effect = RuntimeError("broken span")
+    assert _observability.extract_trace_context(bad_span) == {}
+
+    invalid_ctx_span = mock.Mock(spec_set=["get_span_context"])
+    invalid_ctx_span.get_span_context.return_value = types.SimpleNamespace(
+        is_valid=False
+    )
+    assert _observability.extract_trace_context(invalid_ctx_span) == {}
+
+    bad_ctx_span = mock.Mock(spec_set=["get_span_context"])
+    bad_ctx_span.get_span_context.return_value = types.SimpleNamespace(
+        is_valid=True, trace_id="not_an_int", span_id="not_an_int"
+    )
+    assert _observability.extract_trace_context(bad_ctx_span) == {}
+
+
+def test_extract_trace_context_ambient_fallback(monkeypatch, mock_otel):
+    """Proves extract_trace_context falls back to get_current_span()."""
+    monkeypatch.setattr(_observability, "_HAS_OPENTELEMETRY", True)
+    mock_otel.span.get_span_context.return_value = types.SimpleNamespace(
+        is_valid=True,
+        trace_id=0x0123456789ABCDEF0123456789ABCDEF,
+        span_id=0x0123456789ABCDEF,
+        trace_flags=types.SimpleNamespace(sampled=True),
+    )
+
+    res = _observability.extract_trace_context(None)
+    assert res["trace_id"] == "0123456789abcdef0123456789abcdef"
+    assert res["logging.googleapis.com/trace_sampled"] is True
+
+    # Ambient get_current_span raising an exception returns {}
+    mock_otel.trace.get_current_span.side_effect = RuntimeError("ambient error")
+    assert _observability.extract_trace_context(None) == {}
+
+    # OTel not installed returns {}
+    monkeypatch.setattr(_observability, "_HAS_OPENTELEMETRY", False)
+    assert _observability.extract_trace_context(None) == {}
+
+
+@pytest.mark.parametrize(
+    "target_exc,expected",
+    [
+        pytest.param(
+            exceptions.BadRequest(
+                "bad request",
+                error_info={
+                    "domain": "googleapis.com",
+                    "reason": "RATE_LIMIT_EXCEEDED",
+                    "metadata": {"service": "showcase.googleapis.com"},
+                },
+            ),
+            (
+                "googleapis.com",
+                "RATE_LIMIT_EXCEEDED",
+                {"service": "showcase.googleapis.com"},
+            ),
+            id="google_api_call_error_with_dict_error_info",
+        ),
+        pytest.param(
+            types.SimpleNamespace(
+                error_info=types.SimpleNamespace(
+                    domain="googleapis.com",
+                    reason="SERVICE_DISABLED",
+                    metadata={
+                        "service": "secretmanager.googleapis.com",
+                        "consumer": "projects/123",
+                    },
+                )
+            ),
+            (
+                "googleapis.com",
+                "SERVICE_DISABLED",
+                {
+                    "service": "secretmanager.googleapis.com",
+                    "consumer": "projects/123",
+                },
+            ),
+            id="error_info_namespace",
+        ),
+        pytest.param(
+            types.SimpleNamespace(
+                domain="fallback_d",
+                reason="fallback_r",
+                metadata={"f_key": 42},
+            ),
+            ("fallback_d", "fallback_r", {"f_key": 42}),
+            id="direct_attributes_fallback",
+        ),
+        pytest.param(
+            {
+                "domain": "googleapis.com",
+                "reason": "RATE_LIMIT_EXCEEDED",
+                "metadata": {"quota": "100"},
+            },
+            ("googleapis.com", "RATE_LIMIT_EXCEEDED", {"quota": "100"}),
+            id="raw_dict_input",
+        ),
+        pytest.param(
+            types.SimpleNamespace(
+                error_info=types.SimpleNamespace(domain="", reason="", metadata=None)
+            ),
+            ("", "", None),
+            id="empty_error_info_attributes",
+        ),
+        pytest.param(
+            ValueError("invalid argument"),
+            (None, None, None),
+            id="standard_exception_without_error_info",
+        ),
+    ],
+)
+def test_extract_error_info_fields(target_exc, expected):
+    """Proves _extract_error_info_fields resolves (domain, reason, metadata) across exception and dict shapes."""
+    assert _observability._extract_error_info_fields(target_exc) == expected
+
+
+@pytest.mark.parametrize(
+    "target_exc,return_value,side_effect,expected",
+    [
+        pytest.param(
+            types.SimpleNamespace(trailing_metadata=[("meta", "val")]),
+            (
+                None,
+                types.SimpleNamespace(
+                    domain="parse_d",
+                    reason="parse_r",
+                    metadata={"foo": "bar"},
+                ),
+            ),
+            None,
+            ("parse_d", "parse_r", {"foo": "bar"}),
+            id="direct_trailing_metadata_parsed",
+        ),
+        pytest.param(
+            types.SimpleNamespace(response=types.SimpleNamespace(trailing_metadata=[])),
+            None,
+            ValueError("bad proto"),
+            (None, None, None),
+            id="response_trailing_metadata_parse_error_fails_open",
+        ),
+    ],
+)
+def test_extract_error_info_fields_grpc_trailing_metadata(
+    target_exc, return_value, side_effect, expected
+):
+    """Proves _extract_error_info_fields parses gRPC trailing metadata and fails open on malformed protos."""
+    with mock.patch(
+        "google.api_core.exceptions._parse_grpc_error_details",
+        return_value=return_value,
+        side_effect=side_effect,
+    ):
+        assert _observability._extract_error_info_fields(target_exc) == expected
+
+
+@pytest.mark.parametrize(
+    "target_exc,http_response,fallback,expected",
+    [
+        pytest.param(
+            exceptions.ServiceUnavailable(
+                "POST http://localhost:7469/v1beta1/sequences/23: Persistent outage"
+            ),
+            types.SimpleNamespace(
+                status_code=503,
+                json=lambda: {"error": {"message": "Persistent outage"}},
+            ),
+            None,
+            "Persistent outage",
+            id="http_response_json_takes_precedence",
+        ),
+        pytest.param(
+            types.SimpleNamespace(message="api call failed"),
+            None,
+            None,
+            "api call failed",
+            id="message_attribute",
+        ),
+        pytest.param(
+            types.SimpleNamespace(details=lambda: "rpc deadline exceeded"),
+            None,
+            None,
+            "rpc deadline exceeded",
+            id="details_callable",
+        ),
+        pytest.param(
+            types.SimpleNamespace(details="static details string"),
+            None,
+            None,
+            "static details string",
+            id="details_string_attribute",
+        ),
+        pytest.param(
+            types.SimpleNamespace(),
+            None,
+            "explicit fallback",
+            "explicit fallback",
+            id="fallback_argument",
+        ),
+        pytest.param(
+            ValueError("invalid argument passed"),
+            None,
+            None,
+            "invalid argument passed",
+            id="standard_exception_str",
+        ),
+        pytest.param(
+            ValueError(""),
+            None,
+            None,
+            None,
+            id="standard_exception_empty_str",
+        ),
+        pytest.param(
+            asyncio.CancelledError("async task cancelled"),
+            None,
+            None,
+            "async task cancelled",
+            id="base_exception_subclass_with_msg",
+        ),
+        pytest.param(
+            asyncio.CancelledError(),
+            None,
+            None,
+            None,
+            id="base_exception_subclass_empty",
+        ),
+    ],
+)
+def test_extract_error_message(target_exc, http_response, fallback, expected):
+    """Proves _extract_error_message resolves messages across HTTP responses, .message, .details(), fallback, and str(exc)."""
+    assert (
+        _observability._extract_error_message(target_exc, http_response, fallback)
+        == expected
+    )
+
+
+_INVALID_ARGUMENT_CODE = (
+    "INVALID_ARGUMENT" if exceptions.grpc is not None else "BAD_REQUEST"
+)
+_UNAVAILABLE_CODE = (
+    "UNAVAILABLE" if exceptions.grpc is not None else "SERVICE_UNAVAILABLE"
+)
+
+
+@pytest.mark.parametrize(
+    "exc,kwargs,expected",
+    [
+        pytest.param(None, {}, {}, id="none_exc_no_kwargs"),
+        pytest.param(
+            None,
+            {"status_code": "503"},
+            {
+                "rpc.response.status_code": "503",
+                "error.type": "503",
+                "status.message": "HTTP 503",
+            },
+            id="none_exc_with_status_code",
+        ),
+        pytest.param(
+            None,
+            {"status_code": "503", "status_message": "Service Unavailable"},
+            {
+                "rpc.response.status_code": "503",
+                "error.type": "503",
+                "status.message": "Service Unavailable",
+            },
+            id="none_exc_with_status_code_and_message",
+        ),
+        pytest.param(
+            ValueError("fail"),
+            {},
+            {
+                "rpc.response.status_code": "ValueError",
+                "error.type": "ValueError",
+                "status.message": "fail",
+            },
+            id="standard_exception",
+        ),
+        pytest.param(
+            ValueError(""),
+            {},
+            {
+                "rpc.response.status_code": "ValueError",
+                "error.type": "ValueError",
+            },
+            id="standard_exception_empty_message",
+        ),
+        pytest.param(
+            exceptions.InvalidArgument("invalid argument"),
+            {},
+            {
+                "rpc.response.status_code": _INVALID_ARGUMENT_CODE,
+                "error.type": _INVALID_ARGUMENT_CODE,
+                "status.message": "invalid argument",
+            },
+            id="google_api_call_error_without_error_info",
+        ),
+        pytest.param(
+            types.SimpleNamespace(
+                error_info=types.SimpleNamespace(
+                    domain="googleapis.com",
+                    reason="SERVICE_DISABLED",
+                    metadata={
+                        "service": "secretmanager.googleapis.com",
+                        "consumer": "projects/123",
+                        "count": 42,
+                    },
+                )
+            ),
+            {},
+            {
+                "rpc.response.status_code": "SimpleNamespace",
+                "gcp.errors.domain": "googleapis.com",
+                "error.type": "SERVICE_DISABLED",
+                "gcp.errors.metadata.service": "secretmanager.googleapis.com",
+                "gcp.errors.metadata.consumer": "projects/123",
+                "gcp.errors.metadata.count": "42",
+            },
+            id="error_info_with_domain_reason_and_metadata",
+        ),
+        pytest.param(
+            types.SimpleNamespace(domain="", reason="", metadata={}),
+            {},
+            {
+                "rpc.response.status_code": "SimpleNamespace",
+                "error.type": "SimpleNamespace",
+            },
+            id="empty_error_info_falls_back_to_resolved_code",
+        ),
+        pytest.param(
+            {
+                "domain": "googleapis.com",
+                "reason": "RATE_LIMIT_EXCEEDED",
+                "metadata": {"quota": "100"},
+            },
+            {"status_message": "Quota exceeded"},
+            {
+                "rpc.response.status_code": "dict",
+                "gcp.errors.domain": "googleapis.com",
+                "error.type": "RATE_LIMIT_EXCEEDED",
+                "gcp.errors.metadata.quota": "100",
+                "status.message": "Quota exceeded",
+            },
+            id="dict_error_info",
+        ),
+        pytest.param(
+            types.SimpleNamespace(
+                __cause__=types.SimpleNamespace(
+                    error_info=types.SimpleNamespace(
+                        domain="d", reason="r", metadata={"k": "v"}
+                    )
+                )
+            ),
+            {},
+            {
+                "rpc.response.status_code": "SimpleNamespace",
+                "gcp.errors.domain": "d",
+                "error.type": "r",
+                "gcp.errors.metadata.k": "v",
+            },
+            id="dunder_cause_unwrapping",
+        ),
+        pytest.param(
+            exceptions.ServiceUnavailable(
+                "POST http://localhost:7469/v1beta1/sequences/23: Persistent outage",
+                response=types.SimpleNamespace(
+                    status_code=503,
+                    json=lambda: {"error": {"message": "Persistent outage"}},
+                ),
+            ),
+            {},
+            {
+                "rpc.response.status_code": _UNAVAILABLE_CODE,
+                "error.type": "503",
+                "status.message": "Persistent outage",
+            },
+            id="http_response_error_without_reason",
+        ),
+        pytest.param(
+            exceptions.RetryError(
+                "Deadline of 0.1s exceeded",
+                cause=exceptions.ServiceUnavailable(
+                    "POST http://localhost:7469/v1beta1/sequences/23: Persistent outage",
+                    response=types.SimpleNamespace(
+                        status_code=503,
+                        json=lambda: {"error": {"message": "Persistent outage"}},
+                    ),
+                ),
+            ),
+            {},
+            {
+                "rpc.response.status_code": _UNAVAILABLE_CODE,
+                "error.type": "503",
+                "status.message": "Persistent outage",
+            },
+            id="retry_error_wrapping_http_response_error",
+        ),
+        pytest.param(
+            exceptions.BadRequest(
+                "POST http://localhost:7469/v1beta1/echo:echo: Quota exceeded",
+                response=types.SimpleNamespace(
+                    status_code=400,
+                    json=lambda: {"error": {"message": "Quota exceeded"}},
+                ),
+                error_info={
+                    "domain": "googleapis.com",
+                    "reason": "RATE_LIMIT_EXCEEDED",
+                    "metadata": {"service": "showcase.googleapis.com"},
+                },
+            ),
+            {},
+            {
+                "rpc.response.status_code": "BAD_REQUEST",
+                "gcp.errors.domain": "googleapis.com",
+                "error.type": "RATE_LIMIT_EXCEEDED",
+                "gcp.errors.metadata.service": "showcase.googleapis.com",
+                "status.message": "Quota exceeded",
+            },
+            id="http_response_error_with_dict_error_info",
+        ),
+        pytest.param(
+            exceptions.ServiceUnavailable(
+                "gRPC transport error",
+                response=types.SimpleNamespace(
+                    status_code=503,
+                    trailing_metadata=(),
+                ),
+            ),
+            {},
+            {
+                "rpc.response.status_code": _UNAVAILABLE_CODE,
+                "error.type": _UNAVAILABLE_CODE,
+                "status.message": "gRPC transport error",
+            },
+            id="grpc_call_like_response_excluded_from_http_handling",
+        ),
+    ],
+)
+def test_build_telemetry_error_attributes(exc, kwargs, expected):
+    """Proves build_telemetry_error_attributes populates status code, error.type, domain, metadata, and message."""
+    assert _observability.build_telemetry_error_attributes(exc, **kwargs) == expected
+
+
+def test_build_telemetry_error_attributes_include_exception():
+    """Proves include_exception=True formats real exception stacktraces."""
+    try:
+        raise RuntimeError("")
+    except RuntimeError as caught_exc:
+        exc_empty = caught_exc
+
+    attrs_inc = _observability.build_telemetry_error_attributes(
+        exc_empty,
+        status_code="UNAVAILABLE",
+        status_message="backend down",
+        include_exception=True,
+    )
+    assert attrs_inc["rpc.response.status_code"] == "UNAVAILABLE"
+    assert attrs_inc["error.type"] == "UNAVAILABLE"
+    assert attrs_inc["status.message"] == "backend down"
+    assert attrs_inc["exception.type"] == "RuntimeError"
+    assert attrs_inc["exception.message"] == ""
+    assert "Traceback (most recent call last):" in attrs_inc["exception.stacktrace"]
+    assert "raise RuntimeError" in attrs_inc["exception.stacktrace"]
