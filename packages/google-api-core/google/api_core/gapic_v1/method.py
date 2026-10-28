@@ -18,12 +18,18 @@ This is used by gapic clients to provide common error mapping, retry, timeout,
 compression, pagination, and long-running operations to gRPC methods.
 """
 
+import asyncio
 import contextlib
 import enum
 import functools
-from typing import List, Tuple
+import logging
+from typing import Any, List, Optional, Tuple
 
-from google.api_core import _observability, grpc_helpers
+from google.api_core import (
+    _observability,
+    client_logging,
+    grpc_helpers,
+)
 from google.api_core.gapic_v1 import client_info
 from google.api_core.gapic_v1.client_info import METRICS_METADATA_KEY
 from google.api_core.timeout import TimeToDeadlineTimeout
@@ -110,22 +116,6 @@ def _extract_metrics_header(metadata) -> Tuple[str, List[Tuple[str, str]]]:
     return metric_str, arbitrary_metadata
 
 
-def _extract_rpc_identity(
-    method_name: str,
-) -> Tuple[str, str, str]:
-    """Extract (full_rpc_name, service_name, rpc_method_name) from an explicit method name.
-
-    Args:
-        method_name: Explicit RPC name (e.g. "/google.cloud.secretmanager.v1.SecretManagerService/AccessSecretVersion").
-
-    Returns:
-        Tuple[str, str, str]: A 3-tuple of (full_rpc_name, service_name, rpc_method_name).
-    """
-    method_str = method_name.lstrip("/")
-    service, _, method = method_str.rpartition("/")
-    return method_str, service, method
-
-
 class _GapicCallable(object):
     """Callable that applies retry, timeout, and metadata logic.
 
@@ -181,6 +171,9 @@ class _GapicCallable(object):
         self._retry = retry
         self._timeout = timeout
         self._compression = compression
+        self._client_options = client_options
+        self._method_name = method_name
+        self._kind = kind
 
         # Pre-extract the x-goog-api-client header from the initialized metadata.
         self._x_goog_api_client, remaining = _extract_metrics_header(metadata)
@@ -215,12 +208,12 @@ class _GapicCallable(object):
                 else:
                     tracer = trace.get_tracer("google.api_core")
 
-                span_name, _, _ = _extract_rpc_identity(method_name)
+                span_name, _, _ = _observability.extract_rpc_identity(method_name)
                 endpoint_attrs = _observability._extract_endpoint_attributes(
                     client_options, default_host=default_host
                 )
                 span_attributes = {
-                    "rpc.system.name": "http" if kind.startswith("rest") else "grpc",
+                    "rpc.system.name": _observability._resolve_rpc_system(kind),
                     "rpc.method": span_name,
                     **endpoint_attrs,
                 }
@@ -270,8 +263,101 @@ class _GapicCallable(object):
 
         return wrapped_func
 
+    def _emit_method_error_log(
+        self,
+        exc: BaseException,
+        span: Any,
+        error_attrs: dict[str, Any],
+        is_cancelled: bool,
+        logger: Optional[logging.Logger] = None,
+    ) -> None:
+        """Constructs and emits the L3 terminal method error/cancellation log record.
+
+        Args:
+            exc (BaseException): The terminal exception raised by the RPC method.
+            span (Any): The active Tier 3 OpenTelemetry span, if any.
+            error_attrs (dict[str, Any]): Pre-extracted telemetry error attributes.
+            is_cancelled (bool): True if the RPC was cancelled rather than failed.
+            logger (Optional[logging.Logger]): Explicit logger override for testing.
+        """
+        try:
+            rpc_system = _observability._resolve_rpc_system(self._kind)
+            if is_cancelled:
+                error_attrs.pop("exception.stacktrace", None)
+            extra_payload: dict[str, Any] = {
+                "rpcName": self._method_name,
+                "rpc.system.name": rpc_system,
+                **error_attrs,
+                **_observability.extract_trace_context(span),
+            }
+            extra_payload["json_fields"] = dict(extra_payload)
+
+            log_target = logger or _observability._get_service_logger(
+                self._method_name, self._target
+            )
+            log_level = logging.DEBUG if is_cancelled else logging.ERROR
+            log_target.log(
+                log_level,
+                (
+                    "RPC cancelled for %s: %s"
+                    if is_cancelled
+                    else "RPC failed for %s: %s"
+                ),
+                self._method_name or "unknown_rpc",
+                exc,
+                exc_info=not is_cancelled,
+                extra=extra_payload,
+            )
+        except Exception:
+            pass
+
+    def _report_method_error(
+        self,
+        exc: BaseException,
+        span: Any = None,
+        logger: Optional[logging.Logger] = None,
+    ) -> None:
+        """Enriches the active Tier 3 method span and emits an L3 terminal method error log.
+
+        Args:
+            exc (BaseException): The terminal exception raised by the RPC method.
+            span (Optional[Any]): The active Tier 3 OpenTelemetry span, if any.
+            logger (Optional[logging.Logger]): Explicit logger override for testing.
+        """
+        error_logging_enabled = client_logging.is_error_logging_enabled(
+            self._client_options
+        )
+        if span is None and not error_logging_enabled:
+            return
+
+        error_attrs = _observability.build_telemetry_error_attributes(
+            exc, include_exception=error_logging_enabled
+        )
+        status_code = error_attrs.get("rpc.response.status_code", "")
+        is_cancelled = status_code in ("CANCELLED", "CancelledError") or isinstance(
+            exc, asyncio.CancelledError
+        )
+        if is_cancelled:
+            error_attrs["rpc.response.status_code"] = "CANCELLED"
+
+        # 1. Enrich active Tier 3 method span
+        if span is not None and hasattr(span, "set_attribute"):
+            try:
+                for k, v in error_attrs.items():
+                    if not k.startswith("exception."):
+                        span.set_attribute(k, v)
+            except Exception:
+                pass
+
+        # 2. Emit L2/L3 Terminal Method Error Log
+        if error_logging_enabled:
+            self._emit_method_error_log(
+                exc, span, error_attrs, is_cancelled, logger=logger
+            )
+
     @contextlib.contextmanager
     def _trace_span(self):
+        """Context manager that wraps method execution in a Tier 3 OpenTelemetry span."""
         span_cm = contextlib.nullcontext()
         if self._start_span_fn is not None:
             try:
@@ -288,11 +374,7 @@ class _GapicCallable(object):
             except (KeyboardInterrupt, SystemExit, GeneratorExit):
                 raise
             except BaseException as exc:
-                if span is not None and hasattr(span, "set_attribute"):
-                    for k, v in _observability.build_telemetry_error_attributes(
-                        exc
-                    ).items():
-                        span.set_attribute(k, v)
+                self._report_method_error(exc, span)
                 raise
 
     def __call__(

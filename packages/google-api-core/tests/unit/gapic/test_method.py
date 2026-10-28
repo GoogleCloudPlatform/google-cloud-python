@@ -849,3 +849,84 @@ def test_wrap_method_uninstrumented_exception():
 
     with pytest.raises(RuntimeError, match="uninstrumented error"):
         wrapped()
+
+
+def test_gapic_callable_report_method_error_and_logging(monkeypatch):
+    """Proves _GapicCallable._report_method_error enriches spans, emits ERROR logs on failure, and is silent on success."""
+    import logging
+    import types
+
+    monkeypatch.setenv("GOOGLE_SDK_EXPERIMENTAL_PYTHON_LOGGING_ENABLED", "true")
+
+    mock_ok_target = mock.Mock(return_value="ok")
+    wrapped_ok = google.api_core.gapic_v1.method.wrap_method(
+        mock_ok_target,
+        method_name="/google.cloud.secretmanager.v1.SecretManagerService/GetSecret",
+    )
+    mock_logger = mock.Mock()
+    with mock.patch(
+        "google.api_core._observability._get_service_logger",
+        return_value=mock_logger,
+    ):
+        assert wrapped_ok() == "ok"
+        mock_logger.log.assert_not_called()
+
+    error_info = types.SimpleNamespace(
+        domain="googleapis.com",
+        reason="SECRET_NOT_FOUND",
+        metadata={"project": "my-proj"},
+    )
+    err = exceptions.NotFound("Secret missing")
+    err._error_info = error_info
+
+    wrapped_fail = google.api_core.gapic_v1.method.wrap_method(
+        mock.Mock(side_effect=err),
+        method_name="/google.cloud.secretmanager.v1.SecretManagerService/GetSecret",
+        kind="rest",
+    )
+    mock_span = mock.Mock()
+    mock_span.get_span_context.return_value = types.SimpleNamespace(
+        is_valid=True,
+        trace_id=0x0123456789ABCDEF0123456789ABCDEF,
+        span_id=0x0123456789ABCDEF,
+        trace_flags=0x01,
+    )
+
+    err_logger = mock.Mock()
+    wrapped_fail._report_method_error(err, span=mock_span, logger=err_logger)
+    err_logger.log.assert_called_once()
+    args, kwargs = err_logger.log.call_args
+    assert args[0] == logging.ERROR
+    assert kwargs["exc_info"] is True
+    extra = kwargs["extra"]
+    assert (
+        extra["rpcName"]
+        == "/google.cloud.secretmanager.v1.SecretManagerService/GetSecret"
+    )
+    assert extra["rpc.system.name"] == "http"
+    assert extra["rpc.response.status_code"] == "NOT_FOUND"
+    assert extra["error.type"] == "SECRET_NOT_FOUND"
+    assert extra["gcp.errors.domain"] == "googleapis.com"
+    assert extra["gcp.errors.metadata.project"] == "my-proj"
+    assert extra["status.message"] == "Secret missing"
+    assert extra["exception.type"] == "NotFound"
+    assert "exception.stacktrace" in extra
+    assert extra["trace_id"] == "0123456789abcdef0123456789abcdef"
+    assert extra["span_id"] == "0123456789abcdef"
+    assert extra["json_fields"]["error.type"] == "SECRET_NOT_FOUND"
+
+    cancel_logger = mock.Mock()
+    wrapped_fail._report_method_error(
+        exceptions.Cancelled("Call cancelled"), span=mock_span, logger=cancel_logger
+    )
+    cancel_logger.log.assert_called_once()
+    c_args, c_kwargs = cancel_logger.log.call_args
+    assert c_args[0] == logging.DEBUG
+    assert c_kwargs["exc_info"] is False
+    assert "exception.stacktrace" not in c_kwargs["extra"]
+    assert c_kwargs["extra"]["rpc.response.status_code"] == "CANCELLED"
+
+    bad_span = mock.Mock()
+    bad_span.set_attribute.side_effect = RuntimeError("span broken")
+    err_logger.log.side_effect = RuntimeError("logger broken")
+    wrapped_fail._report_method_error(err, span=bad_span, logger=err_logger)

@@ -2,10 +2,35 @@ import json
 import logging
 import os
 from collections.abc import Mapping
-from typing import List, Optional
+from typing import Any, List, Optional
+
+from google.api_core import _feature_gating_helpers
 
 _LOGGING_INITIALIZED = False
 _BASE_LOGGER_NAME = "google"
+_LOGGER_PROVIDER = "logger_provider"
+
+
+def is_error_logging_enabled(client_options: Any = None) -> bool:
+    """Determines if OpenTelemetry-correlated Production Error Logging (PEL) is enabled.
+
+    This feature gate controls action-oriented error and retry logging
+    (configured via ``GOOGLE_SDK_EXPERIMENTAL_PYTHON_LOGGING_ENABLED`` and
+    ``client_options.logger_provider``), and is distinct from Application Payload
+    Debug Logging (APDL) configured via ``GOOGLE_SDK_PYTHON_LOGGING_SCOPE``.
+
+    Args:
+        client_options (Optional[Any]): The client options object or dictionary.
+
+    Returns:
+        bool: True if production error logging is enabled, False otherwise.
+    """
+    return _feature_gating_helpers.resolve_feature_flags(
+        env_var="GOOGLE_SDK_EXPERIMENTAL_PYTHON_LOGGING_ENABLED",
+        feature_key=_LOGGER_PROVIDER,
+        configuration=client_options,
+    )
+
 
 # Fields to be included in the StructuredLogFormatter.
 #

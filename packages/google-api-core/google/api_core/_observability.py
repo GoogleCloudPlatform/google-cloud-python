@@ -20,11 +20,12 @@ from __future__ import annotations
 
 import contextlib
 import functools
+import logging
 import traceback
 import urllib.parse
 from typing import TYPE_CHECKING, Any, Callable, Sequence
 
-from google.api_core import _feature_gating_helpers, exceptions
+from google.api_core import _feature_gating_helpers, client_logging, exceptions
 from google.api_core.client_options import ClientOptions
 
 try:
@@ -286,6 +287,231 @@ def build_telemetry_error_attributes(
         attrs["exception.stacktrace"] = "".join(traceback.format_exception(exc))
 
     return attrs
+
+
+_LOGGER = logging.getLogger(__name__)
+
+
+def _decode_method_name(method: str | bytes | None) -> str:
+    """Normalizes a string or bytes RPC method name to a UTF-8 string.
+
+    Args:
+        method (Optional[Union[str, bytes]]): Raw RPC method name from call details.
+
+    Returns:
+        str: Decoded string method name (or empty string if None).
+    """
+    if isinstance(method, bytes):
+        return method.decode("utf-8", errors="replace")
+    return str(method or "")
+
+
+def extract_rpc_identity(
+    method_name: str | bytes | None,
+) -> tuple[str, str, str]:
+    """Extracts (full_rpc_name, service_name, rpc_method_name) from a gRPC method path.
+
+    Args:
+        method_name (Optional[Union[str, bytes]]): Explicit gRPC method path
+            (e.g. "/google.cloud.secretmanager.v1.SecretManagerService/GetSecret").
+
+    Returns:
+        tuple[str, str, str]: A 3-tuple of (full_rpc_name, service_name, rpc_method_name).
+    """
+    method_str = _decode_method_name(method_name).lstrip("/")
+    service, _, method = method_str.rpartition("/")
+    return method_str, service, method
+
+
+def _resolve_rpc_system(kind: str | None = "grpc") -> str:
+    """Normalizes a transport kind ('grpc', 'rest', 'rest_asyncio', 'http') to an OTel rpc.system.name.
+
+    Args:
+        kind (Optional[str]): The transport kind identifier.
+
+    Returns:
+        str: "http" for REST/HTTP transports, or "grpc" otherwise.
+    """
+    if isinstance(kind, str) and kind.startswith(("rest", "http")):
+        return "http"
+    return "grpc"
+
+
+def _get_service_logger(
+    method_name: str | bytes | None = None,
+    target: Any = None,
+) -> logging.Logger:
+    """Resolves a service-scoped logger matching GOOGLE_SDK_PYTHON_LOGGING_SCOPE.
+
+    1. If `target` has a `__module__` starting with `google.` (excluding `google.api_core`),
+       returns `logging.getLogger(target.__module__)`.
+    2. Otherwise, if `method_name` is a full gRPC method path (e.g.
+       `/google.cloud.secretmanager.v1.SecretManagerService/GetSecret`), extracts
+       the service package prefix (`google.cloud.secretmanager.v1`).
+    3. Falls back to `logging.getLogger("google.api_core._observability")`.
+
+    Args:
+        method_name (Optional[Union[str, bytes]]): Full gRPC method path.
+        target (Optional[Any]): The low-level RPC target callable.
+
+    Returns:
+        logging.Logger: The resolved service-scoped logger.
+    """
+    target_mod = getattr(target, "__module__", None)
+    if (
+        isinstance(target_mod, str)
+        and target_mod.startswith("google.")
+        and not target_mod.startswith("google.api_core")
+    ):
+        return logging.getLogger(target_mod)
+    if method_name:
+        # Example transformation:
+        #   Input:        "/google.cloud.secretmanager.v1.SecretManagerService/GetSecret"
+        #   service_name: "google.cloud.secretmanager.v1.SecretManagerService"
+        #   pkg:          "google.cloud.secretmanager.v1"
+        _, service_name, _ = extract_rpc_identity(method_name)
+        pkg = service_name.rpartition(".")[0]
+        if pkg.startswith("google."):
+            return logging.getLogger(pkg)
+    return _LOGGER
+
+
+def _is_failed_attempt(
+    norm_status: str | None,
+    exc: BaseException | None,
+) -> bool:
+    """Determines whether a transport attempt ended with an error or exception.
+
+    Args:
+        norm_status (Optional[str]): Normalized status code string (e.g. "OK", "200", "503").
+        exc (Optional[BaseException]): Exception raised or returned during the attempt.
+
+    Returns:
+        bool: True if the attempt failed, False if it succeeded.
+    """
+    if exc is not None:
+        return True
+    if norm_status is None or norm_status == "OK":
+        return False
+    return not (norm_status.isdigit() and int(norm_status) < 400)
+
+
+def _build_attempt_log_extra(
+    span: Any,
+    target: str | None,
+    status_code: int | str | None,
+    norm_status: str | None,
+    kind: str,
+    http_method: str | None,
+    exc: BaseException | None,
+    status_message: str | None,
+) -> tuple[dict[str, Any], str | None]:
+    """Builds the structured extra dictionary and resolved status for a failed wire attempt.
+
+    Args:
+        span (Any): Active OpenTelemetry span, if any.
+        target (Optional[str]): Full RPC method name (gRPC) or request URL (HTTP).
+        status_code (Optional[Union[int, str]]): Raw HTTP status code or gRPC status name.
+        norm_status (Optional[str]): Stringified status code if provided.
+        kind (str): Transport kind ("grpc", "rest", "rest_asyncio", or "http").
+        http_method (Optional[str]): HTTP request method (e.g. "GET", "POST").
+        exc (Optional[BaseException]): Exception raised or returned during the attempt.
+        status_message (Optional[str]): Explicit status message fallback.
+
+    Returns:
+        tuple[dict[str, Any], Optional[str]]: A 2-tuple of (extra_payload, resolved_status).
+    """
+    rpc_system = _resolve_rpc_system(kind)
+    error_attrs = build_telemetry_error_attributes(
+        exc,
+        status_code=norm_status,
+        status_message=status_message,
+        include_exception=True,
+    )
+    resolved_status = norm_status or error_attrs.get("rpc.response.status_code")
+    extra_payload: dict[str, Any] = {
+        "rpc.system.name": rpc_system,
+        **error_attrs,
+        "rpc.response.status_code": resolved_status,
+        **extract_trace_context(span),
+    }
+    if rpc_system == "http":
+        extra_payload["url.full"] = target
+        extra_payload["httpRequest"] = {
+            "requestMethod": http_method,
+            "requestUrl": target,
+            "status": (
+                int(status_code)
+                if isinstance(status_code, int)
+                or (isinstance(status_code, str) and status_code.isdigit())
+                else status_code
+            ),
+        }
+    else:
+        extra_payload["rpc.method"] = target
+
+    extra_payload["json_fields"] = dict(extra_payload)
+    return extra_payload, resolved_status
+
+
+def log_transport_attempt(
+    span: Any = None,
+    target: str | None = None,
+    status_code: int | str | None = None,
+    kind: str = "grpc",
+    http_method: str | None = None,
+    exc: BaseException | None = None,
+    client_options: Any = None,
+    logger: logging.Logger | None = None,
+    status_message: str | None = None,
+) -> None:
+    """Emits a DEBUG log for a failed wire attempt (retry/redirect/failure).
+
+    Successful transport attempts (2xx HTTP or OK gRPC) return immediately without
+    emitting logs to avoid hot-path allocations.
+
+    Args:
+        span (Optional[Any]): Active OpenTelemetry span, if any.
+        target (Optional[str]): Full RPC method name (gRPC) or request URL (HTTP).
+        status_code (Optional[Union[int, str]]): HTTP status code or gRPC status name.
+        kind (str): Transport kind identifier ("grpc", "rest", "rest_asyncio", or "http").
+        http_method (Optional[str]): HTTP request method (e.g. "GET", "POST").
+        exc (Optional[BaseException]): Exception raised or returned during the attempt.
+        client_options (Optional[Any]): Client options used for feature gating.
+        logger (Optional[logging.Logger]): Explicit logger override.
+        status_message (Optional[str]): Explicit status message fallback.
+    """
+    if not client_logging.is_error_logging_enabled(client_options):
+        return
+
+    norm_status = str(status_code) if status_code is not None else None
+    if not _is_failed_attempt(norm_status, exc):
+        return
+
+    try:
+        rpc_system = _resolve_rpc_system(kind)
+        extra_payload, resolved_status = _build_attempt_log_extra(
+            span=span,
+            target=target,
+            status_code=status_code,
+            norm_status=norm_status,
+            kind=rpc_system,
+            http_method=http_method,
+            exc=exc,
+            status_message=status_message,
+        )
+        target_logger = logger or _get_service_logger(
+            target if rpc_system == "grpc" else None
+        )
+        target_logger.debug(
+            "Transport attempt failed for %s (status=%s)",
+            target or "unknown_target",
+            resolved_status or "ERROR",
+            extra=extra_payload,
+        )
+    except Exception:
+        # Fail-open: never disrupt the caller's RPC flow on logging errors
+        pass
 
 
 def _extract_endpoint_attributes(
@@ -584,11 +810,149 @@ class _AsyncSuppressingClientInterceptor(
             return await continuation(client_call_details, request_iterator)
 
 
+class _BaseGrpcAttemptLoggingInterceptor:
+    """Shared base logic for sync and async gRPC attempt logging interceptors.
+
+    Args:
+        client_options (Optional[Any]): Client options used for error logging gating.
+    """
+
+    __slots__ = ("_client_options",)
+
+    def __init__(self, client_options: Any = None) -> None:
+        self._client_options = client_options
+
+    @contextlib.contextmanager
+    def _capture_attempt_exception(self, method_str: str):
+        """Logs any unhandled exception raised during gRPC continuation dispatch and re-raises.
+
+        Args:
+            method_str (str): Decoded gRPC method name.
+        """
+        try:
+            yield
+        except BaseException as exc:
+            log_transport_attempt(
+                target=method_str,
+                kind="grpc",
+                exc=exc,
+                client_options=self._client_options,
+            )
+            raise
+
+
+class _GrpcAttemptLoggingInterceptor(
+    _BaseGrpcAttemptLoggingInterceptor, _SyncUnaryUnaryClientInterceptor
+):
+    """Sync gRPC client interceptor that logs failed wire attempts at DEBUG level."""
+
+    __slots__ = ()
+
+    def intercept_unary_unary(
+        self, continuation: Any, client_call_details: Any, request: Any
+    ) -> Any:
+        """Intercepts a sync unary-unary gRPC call and logs failed wire attempts.
+
+        Args:
+            continuation (Callable): Next interceptor or channel continuation callable.
+            client_call_details (Any): gRPC call details containing the method name.
+            request (Any): Outbound protobuf request message.
+
+        Returns:
+            Any: The gRPC Call/Future response returned by ``continuation``.
+        """
+        method_str = _decode_method_name(getattr(client_call_details, "method", None))
+        with self._capture_attempt_exception(method_str):
+            response = continuation(client_call_details, request)
+
+        exc_fn = getattr(response, "exception", None)
+        if callable(exc_fn):
+            resp_exc = exc_fn()
+            if resp_exc is not None:
+                code_fn = getattr(response, "code", None)
+                code = code_fn() if callable(code_fn) else None
+                code_name = getattr(code, "name", None) or str(code or "UNKNOWN")
+                log_transport_attempt(
+                    target=method_str,
+                    status_code=code_name,
+                    kind="grpc",
+                    exc=resp_exc,
+                    client_options=self._client_options,
+                )
+        return response
+
+
+class _AsyncGrpcAttemptLoggingInterceptor(
+    _BaseGrpcAttemptLoggingInterceptor, _AsyncUnaryUnaryClientInterceptor
+):
+    """AsyncIO gRPC client interceptor that logs failed wire attempts at DEBUG level."""
+
+    __slots__ = ()
+
+    async def intercept_unary_unary(
+        self, continuation: Any, client_call_details: Any, request: Any
+    ) -> Any:
+        """Intercepts an async unary-unary gRPC call and logs failed wire attempts.
+
+        Args:
+            continuation (Callable): Next async interceptor or channel continuation callable.
+            client_call_details (Any): gRPC call details containing the method name.
+            request (Any): Outbound protobuf request message.
+
+        Returns:
+            Any: The async gRPC call object returned by ``continuation``.
+        """
+        method_str = _decode_method_name(getattr(client_call_details, "method", None))
+        with self._capture_attempt_exception(method_str):
+            call = await continuation(client_call_details, request)
+            code_fn = getattr(call, "code", None)
+            if callable(code_fn):
+                code = await code_fn()
+                code_name = getattr(code, "name", str(code))
+                if code_name != "OK":
+                    details_fn = getattr(call, "details", None)
+                    details = await details_fn() if callable(details_fn) else ""
+                    log_transport_attempt(
+                        target=method_str,
+                        status_code=code_name,
+                        kind="grpc",
+                        exc=Exception(details) if details else None,
+                        client_options=self._client_options,
+                        status_message=details or None,
+                    )
+            return call
+
+
+def _build_otel_grpc_hook_kwargs(
+    client_options: ClientOptions | dict[str, Any] | None = None,
+    default_host: str | None = None,
+) -> dict[str, Any]:
+    """Builds shared keyword arguments for upstream opentelemetry-instrumentation-grpc.
+
+    Args:
+        client_options (Optional[Union[ClientOptions, dict[str, Any]]]): Client options
+            used to resolve endpoint attributes and custom tracer provider.
+        default_host (Optional[str]): Fallback transport host when ``api_endpoint`` is not
+            set on ``client_options``.
+
+    Returns:
+        dict[str, Any]: Keyword arguments (`tracer_provider`, `request_hook`, `response_hook`).
+    """
+    endpoint_attrs = _extract_endpoint_attributes(
+        client_options, default_host=default_host
+    )
+    return {
+        "tracer_provider": _get_tracer_provider(client_options),
+        "request_hook": _make_grpc_client_request_hook(endpoint_attrs),
+        "response_hook": _grpc_client_response_hook,
+    }
+
+
 def get_otel_interceptor(
     client_options: ClientOptions | dict[str, Any] | None = None,
     default_host: str | None = None,
 ) -> Callable[[grpc.Channel], grpc.Channel] | None:
-    """Returns an interceptor callable that wraps a sync gRPC channel with OpenTelemetry tracing.
+    """Returns a callable that wraps a sync gRPC channel with tracing and/or error logging.
 
     Args:
         client_options (Optional[Union[ClientOptions, dict[str, Any]]]): The client options
@@ -597,44 +961,57 @@ def get_otel_interceptor(
             set on ``client_options``.
 
     Returns:
-        Callable[[grpc.Channel], grpc.Channel] | None: An interceptor callable if OpenTelemetry
-            tracing is enabled and installed, None otherwise.
+        Callable[[grpc.Channel], grpc.Channel] | None: A channel-wrapping callable if
+            OpenTelemetry tracing or error logging is enabled, None otherwise.
     """
-    if not is_otel_capabilities_enabled(client_options):
+    tracing_enabled = is_otel_capabilities_enabled(client_options)
+    error_logging_enabled = client_logging.is_error_logging_enabled(client_options)
+    if not tracing_enabled and not error_logging_enabled:
         return None
 
-    import opentelemetry.instrumentation.grpc as otel_grpc  # type: ignore[import-not-found]
+    custom_interceptors: list[Any] = []
+    tracing_interceptor: Any = None
 
-    endpoint_attrs = _extract_endpoint_attributes(
-        client_options, default_host=default_host
-    )
-    request_hook = _make_grpc_client_request_hook(endpoint_attrs)
+    if tracing_enabled:
+        import opentelemetry.instrumentation.grpc as otel_grpc  # type: ignore[import-not-found]
 
-    interceptor: ClientInterceptor = otel_grpc.client_interceptor(
-        tracer_provider=_get_tracer_provider(client_options),
-        request_hook=request_hook,
-        response_hook=_grpc_client_response_hook,
-    )
-    suppressor = _SuppressingClientInterceptor()
+        tracing_interceptor = otel_grpc.client_interceptor(
+            **_build_otel_grpc_hook_kwargs(client_options, default_host)
+        )
+        custom_interceptors.append(_SuppressingClientInterceptor())
 
-    def otel_interceptor(channel: grpc.Channel) -> grpc.Channel:
-        if grpc is not None:
+    if error_logging_enabled:
+        custom_interceptors.append(_GrpcAttemptLoggingInterceptor(client_options))
+
+    def apply_sync_otel_interceptors(channel: grpc.Channel) -> grpc.Channel:
+        """Applies configured sync observability interceptors to a gRPC channel.
+
+        Args:
+            channel (grpc.Channel): The synchronous gRPC channel to wrap.
+
+        Returns:
+            grpc.Channel: The intercepted gRPC channel.
+        """
+        if grpc is not None and custom_interceptors:
             try:
-                channel = grpc.intercept_channel(channel, suppressor)
+                channel = grpc.intercept_channel(channel, *custom_interceptors)
             except (AttributeError, TypeError):
                 # Fallback if grpc lacks intercept_channel or custom channel type rejects it.
                 pass
-        return otel_grpc.intercept_channel(channel, interceptor)
+        if tracing_interceptor is not None:
+            return otel_grpc.intercept_channel(channel, tracing_interceptor)
+        return channel
 
-    otel_interceptor._is_otel_interceptor = True  # type: ignore[attr-defined]
-    return otel_interceptor
+    # Ignored by mypy: Function attribute used to tag our interceptor wrapper
+    apply_sync_otel_interceptors._is_otel_interceptor = True  # type: ignore[attr-defined]
+    return apply_sync_otel_interceptors
 
 
 def get_otel_async_interceptor(
     client_options: ClientOptions | dict[str, Any] | None = None,
     default_host: str | None = None,
 ) -> Sequence[grpc.aio.ClientInterceptor] | None:
-    """Returns async gRPC client interceptors for OpenTelemetry tracing.
+    """Returns async gRPC client interceptors for OpenTelemetry tracing and/or error logging.
 
     Args:
         client_options (Optional[Union[ClientOptions, dict[str, Any]]]): The client options
@@ -643,31 +1020,31 @@ def get_otel_async_interceptor(
             set on ``client_options``.
 
     Returns:
-        Sequence[grpc.aio.ClientInterceptor] | None: Instantiated OpenTelemetry async
-            client interceptors if tracing is enabled and installed, None otherwise.
+        Sequence[grpc.aio.ClientInterceptor] | None: Instantiated async client interceptors
+            if OpenTelemetry tracing or error logging is enabled, None otherwise.
     """
-    if not is_otel_capabilities_enabled(client_options):
+    tracing_enabled = is_otel_capabilities_enabled(client_options)
+    error_logging_enabled = client_logging.is_error_logging_enabled(client_options)
+    if not tracing_enabled and not error_logging_enabled:
         return None
 
-    # Ignored by mypy: Optional dependency only loaded if early-return is skipped
-    import opentelemetry.instrumentation.grpc as otel_grpc  # type: ignore[import-not-found]
+    interceptors: list[Any] = []
+    if tracing_enabled:
+        # Ignored by mypy: Optional dependency only loaded if tracing_enabled is True
+        import opentelemetry.instrumentation.grpc as otel_grpc  # type: ignore[import-not-found]
 
-    endpoint_attrs = _extract_endpoint_attributes(
-        client_options, default_host=default_host
-    )
-    request_hook = _make_grpc_client_request_hook(endpoint_attrs)
+        raw_interceptors = otel_grpc.aio_client_interceptors(
+            **_build_otel_grpc_hook_kwargs(client_options, default_host)
+        )
+        interceptors.extend(
+            raw_interceptors
+            if isinstance(raw_interceptors, (list, tuple))
+            else [raw_interceptors]
+        )
+        interceptors.append(_AsyncSuppressingClientInterceptor())
 
-    raw_interceptors = otel_grpc.aio_client_interceptors(
-        tracer_provider=_get_tracer_provider(client_options),
-        request_hook=request_hook,
-        response_hook=_grpc_client_response_hook,
-    )
-    interceptors = (
-        list(raw_interceptors)
-        if isinstance(raw_interceptors, (list, tuple))
-        else [raw_interceptors]
-    )
-    interceptors.append(_AsyncSuppressingClientInterceptor())
+    if error_logging_enabled:
+        interceptors.append(_AsyncGrpcAttemptLoggingInterceptor(client_options))
 
     return interceptors
 
@@ -900,12 +1277,65 @@ class _TraceContext:
         self._parent_span: Any = None
         self._cm: Any = None
 
+    def _log_http_attempt(
+        self,
+        status_code: int | str | None = None,
+        exc: BaseException | None = None,
+        status_message: str | None = None,
+    ) -> None:
+        """Emits a DEBUG transport attempt log for a failed HTTP request (fail-open).
+
+        Args:
+            status_code (Optional[Union[int, str]]): HTTP response status code or error code.
+            exc (Optional[BaseException]): Exception raised during HTTP dispatch, if any.
+            status_message (Optional[str]): Extracted HTTP error message fallback.
+        """
+        try:
+            resolved_url = (
+                getattr(self._request, "url", None)
+                if self._request is not None
+                else self._url
+            )
+            resolved_method = (
+                getattr(self._request, "method", None)
+                if self._request is not None
+                else self._method
+            )
+            log_transport_attempt(
+                span=self._span,
+                target=resolved_url,
+                status_code=status_code,
+                kind="http",
+                http_method=resolved_method,
+                exc=exc,
+                client_options=self._client_options,
+                status_message=status_message,
+            )
+        except Exception:
+            pass
+
     def record_response(self, response: Any) -> None:
-        """Record HTTP response attributes on the active span.
+        """Record HTTP response attributes on the active span and log failed attempts.
 
         Args:
             response (Any): The HTTP response object (e.g. requests.Response).
         """
+        status_code = getattr(
+            response, "status_code", getattr(response, "status", None)
+        )
+        code_int: int | None = None
+        error_msg: str | None = None
+        if status_code is not None:
+            try:
+                code_int = int(status_code)
+                if code_int >= 400:
+                    error_msg = self._extract_http_error_message(response)
+                    self._log_http_attempt(
+                        status_code=code_int, status_message=error_msg
+                    )
+            except Exception:
+                pass
+
         span = self._span
         if span is None or not hasattr(span, "set_attribute"):
             return
@@ -916,11 +1346,7 @@ class _TraceContext:
                 StatusCode,
             )
 
-            status_code = getattr(
-                response, "status_code", getattr(response, "status", None)
-            )
-            if status_code is not None:
-                code_int = int(status_code)
+            if code_int is not None:
                 span.set_attribute("http.response.status_code", code_int)
                 if self._parent_span is not None:
                     self._parent_span.set_attribute(
@@ -929,7 +1355,6 @@ class _TraceContext:
                 if code_int >= 400:
                     span.set_status(Status(StatusCode.ERROR))
                     span.set_attribute("error.type", str(code_int))
-                    error_msg = self._extract_http_error_message(response)
                     if error_msg:
                         span.set_attribute("status.message", error_msg)
 
@@ -955,7 +1380,7 @@ class _TraceContext:
     record_http_response = record_response
 
     def record_error(self, exc: BaseException | None) -> None:
-        """Record supplemental Cloud Observability error attributes on the active span.
+        """Record supplemental Cloud Observability error attributes on the active span and log failed attempts.
 
         Upstream OpenTelemetry's ``start_as_current_span`` context manager automatically
         records the exception event and marks the span status as ERROR when an unhandled
@@ -971,15 +1396,18 @@ class _TraceContext:
         Args:
             exc (Optional[BaseException]): The exception raised during dispatch.
         """
+        if exc is None:
+            return
+
+        status_code = getattr(exc, "code", None) or getattr(exc, "status_code", None)
+        self._log_http_attempt(status_code=status_code, exc=exc)
+
         span = self._span
-        if span is None or exc is None:
+        if span is None:
             return
 
         try:
             if hasattr(span, "set_attribute"):
-                status_code = getattr(exc, "code", None) or getattr(
-                    exc, "status_code", None
-                )
                 if status_code:
                     span.set_attribute("error.type", str(status_code))
                 else:
@@ -1060,10 +1488,12 @@ class _TraceContext:
     def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
         if self._cm is not None:
             try:
-                if exc_val is not None and self._span is not None:
+                if exc_val is not None:
                     self.record_error(exc_val)
             finally:
                 self._cm.__exit__(exc_type, exc_val, exc_tb)
+        elif exc_val is not None:
+            self.record_error(exc_val)
         # Always return None so caller exceptions are never suppressed
         return None
 

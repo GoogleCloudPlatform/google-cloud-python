@@ -223,3 +223,21 @@ def test_structured_log_formatter_json_fields_only():
         "gcp.errors.metadata.service",
         "custom_from_json_fields",
     ]
+
+
+def test_is_error_logging_enabled(monkeypatch):
+    import pytest
+
+    from google.api_core._feature_gating_helpers import FeatureGatingError
+    from google.api_core.client_logging import is_error_logging_enabled
+
+    monkeypatch.delenv("GOOGLE_SDK_EXPERIMENTAL_PYTHON_LOGGING_ENABLED", raising=False)
+    assert is_error_logging_enabled() is False
+
+    monkeypatch.setenv("GOOGLE_SDK_EXPERIMENTAL_PYTHON_LOGGING_ENABLED", "true")
+    assert is_error_logging_enabled() is True
+
+    monkeypatch.setenv("GOOGLE_SDK_EXPERIMENTAL_PYTHON_LOGGING_ENABLED", "false")
+    assert is_error_logging_enabled() is False
+    with pytest.raises(FeatureGatingError):
+        is_error_logging_enabled({"logger_provider": object()})
