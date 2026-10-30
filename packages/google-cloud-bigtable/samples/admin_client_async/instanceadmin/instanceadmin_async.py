@@ -28,9 +28,9 @@ async def run_instance_operations(project_id, instance_id, cluster_id):
     # [START bigtable_async_check_instance_exists]
     from google.api_core.exceptions import NotFound
 
-    from google.cloud import bigtable_admin
+    from google.cloud import bigtable_admin_v2
 
-    async with bigtable_admin.BigtableInstanceAdminAsyncClient() as client:
+    async with bigtable_admin_v2.BigtableInstanceAdminAsyncClient() as client:
         instance_path = client.instance_path(project_id, instance_id)
 
         try:
@@ -43,21 +43,21 @@ async def run_instance_operations(project_id, instance_id, cluster_id):
     # [START bigtable_async_create_prod_instance]
     from google.api_core.exceptions import NotFound
 
-    from google.cloud import bigtable_admin
+    from google.cloud import bigtable_admin_v2
 
-    async with bigtable_admin.BigtableInstanceAdminAsyncClient() as client:
+    async with bigtable_admin_v2.BigtableInstanceAdminAsyncClient() as client:
         project_path = client.common_project_path(project_id)
         instance_path = client.instance_path(project_id, instance_id)
 
-        cluster = bigtable_admin.Cluster(
+        cluster = bigtable_admin_v2.Cluster(
             location=client.common_location_path(project_id, "us-central1-f"),
             serve_nodes=1,
-            default_storage_type=bigtable_admin.StorageType.SSD,
+            default_storage_type=bigtable_admin_v2.StorageType.SSD,
         )
-        instance_obj = bigtable_admin.Instance(
+        instance_obj = bigtable_admin_v2.Instance(
             display_name=instance_id,
             labels={"prod-label": "prod-label"},
-            type_=bigtable_admin.Instance.Type.PRODUCTION,
+            type_=bigtable_admin_v2.Instance.Type.PRODUCTION,
         )
 
         try:
@@ -77,9 +77,9 @@ async def run_instance_operations(project_id, instance_id, cluster_id):
     # [END bigtable_async_create_prod_instance]
 
     # [START bigtable_async_list_instances]
-    from google.cloud import bigtable_admin
+    from google.cloud import bigtable_admin_v2
 
-    async with bigtable_admin.BigtableInstanceAdminAsyncClient() as client:
+    async with bigtable_admin_v2.BigtableInstanceAdminAsyncClient() as client:
         project_path = client.common_project_path(project_id)
 
         print("\nListing instances:")
@@ -89,9 +89,9 @@ async def run_instance_operations(project_id, instance_id, cluster_id):
     # [END bigtable_async_list_instances]
 
     # [START bigtable_async_get_instance]
-    from google.cloud import bigtable_admin
+    from google.cloud import bigtable_admin_v2
 
-    async with bigtable_admin.BigtableInstanceAdminAsyncClient() as client:
+    async with bigtable_admin_v2.BigtableInstanceAdminAsyncClient() as client:
         instance_path = client.instance_path(project_id, instance_id)
 
         inst = await client.get_instance(name=instance_path)
@@ -99,9 +99,9 @@ async def run_instance_operations(project_id, instance_id, cluster_id):
     # [END bigtable_async_get_instance]
 
     # [START bigtable_async_get_clusters]
-    from google.cloud import bigtable_admin
+    from google.cloud import bigtable_admin_v2
 
-    async with bigtable_admin.BigtableInstanceAdminAsyncClient() as client:
+    async with bigtable_admin_v2.BigtableInstanceAdminAsyncClient() as client:
         instance_path = client.instance_path(project_id, instance_id)
 
         print("\nListing clusters...")
@@ -115,9 +115,9 @@ async def delete_instance(project_id, instance_id):
     # [START bigtable_async_delete_instance]
     from google.api_core.exceptions import NotFound
 
-    from google.cloud import bigtable_admin
+    from google.cloud import bigtable_admin_v2
 
-    async with bigtable_admin.BigtableInstanceAdminAsyncClient() as client:
+    async with bigtable_admin_v2.BigtableInstanceAdminAsyncClient() as client:
         instance_path = client.instance_path(project_id, instance_id)
 
         print("\nDeleting instance")
@@ -133,9 +133,9 @@ async def add_cluster(project_id, instance_id, cluster_id):
     # [START bigtable_async_create_cluster]
     from google.api_core.exceptions import NotFound
 
-    from google.cloud import bigtable_admin
+    from google.cloud import bigtable_admin_v2
 
-    async with bigtable_admin.BigtableInstanceAdminAsyncClient() as client:
+    async with bigtable_admin_v2.BigtableInstanceAdminAsyncClient() as client:
         instance_path = client.instance_path(project_id, instance_id)
         cluster_path = client.cluster_path(project_id, instance_id, cluster_id)
 
@@ -144,10 +144,10 @@ async def add_cluster(project_id, instance_id, cluster_id):
         for cluster in clusters_response.clusters:
             print(cluster.name.split("/")[-1])
 
-        new_cluster = bigtable_admin.Cluster(
+        new_cluster = bigtable_admin_v2.Cluster(
             location=client.common_location_path(project_id, "us-central1-a"),
             serve_nodes=1,
-            default_storage_type=bigtable_admin.StorageType.SSD,
+            default_storage_type=bigtable_admin_v2.StorageType.SSD,
         )
         try:
             await client.get_cluster(name=cluster_path)
@@ -177,9 +177,9 @@ async def delete_cluster(project_id, instance_id, cluster_id):
     # [START bigtable_async_delete_cluster]
     from google.api_core.exceptions import NotFound
 
-    from google.cloud import bigtable_admin
+    from google.cloud import bigtable_admin_v2
 
-    async with bigtable_admin.BigtableInstanceAdminAsyncClient() as client:
+    async with bigtable_admin_v2.BigtableInstanceAdminAsyncClient() as client:
         cluster_path = client.cluster_path(project_id, instance_id, cluster_id)
 
         print("\nDeleting cluster")
