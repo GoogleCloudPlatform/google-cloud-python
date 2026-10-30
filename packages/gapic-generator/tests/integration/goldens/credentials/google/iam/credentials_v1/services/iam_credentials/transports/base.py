@@ -14,10 +14,12 @@
 # limitations under the License.
 #
 import abc
+import copy
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
 from google.iam.credentials_v1 import gapic_version as package_version
 from google.iam.credentials_v1._compat import (
+    _observability,
     ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
     WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
 )
@@ -130,9 +132,23 @@ class IAMCredentialsTransport(abc.ABC):
             host += ':443'
         self._host = host
 
-        if isinstance(client_options, client_options_lib.ClientOptions) and not client_options.api_endpoint:
+        # If the transport was instantiated directly with client_options=None
+        # while OpenTelemetry tracing is enabled via environment variable,
+        # create a ClientOptions instance with the resolved transport host so
+        # method and wire spans can record server.address and server.port.
+        if (
+            client_options is None
+            and _observability is not None
+            and _observability.is_otel_capabilities_enabled(None)
+        ):
+            client_options = client_options_lib.ClientOptions(api_endpoint=self._host)
+        # And here we check for the presence of an api_endpoint attr OR key,
+        # shallow-copying before populating to avoid mutating caller-owned state.
+        elif isinstance(client_options, client_options_lib.ClientOptions) and not client_options.api_endpoint:
+            client_options = copy.copy(client_options)
             client_options.api_endpoint = self._host
         elif isinstance(client_options, dict) and not client_options.get("api_endpoint"):
+            client_options = copy.copy(client_options)
             client_options["api_endpoint"] = self._host
         self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
