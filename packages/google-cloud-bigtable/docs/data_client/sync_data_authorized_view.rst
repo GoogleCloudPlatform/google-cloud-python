@@ -1,6 +1,6 @@
 Authorized View
 ~~~~~~~~~~~~~~~
 
-.. autoclass:: google.cloud.bigtable.data._sync_autogen.client.AuthorizedView
+.. autoclass:: google.cloud.bigtable.data.AuthorizedView
   :members:
   :inherited-members:
