@@ -841,7 +841,7 @@ def test_iam_credentials_grpc_transport_otel_channel_interceptor():
             client_options=options,
         )
 
-        mock_get_interceptor.assert_called_once_with(options)
+        mock_get_interceptor.assert_called_once_with(transport._client_options)
         mock_apply_interceptors.assert_called_once_with(
             mock_channel, [mock_otel_interceptor]
         )
@@ -915,7 +915,9 @@ def test_iam_credentials_grpc_asyncio_transport_otel_channel_interceptor():
             client_options=options,
         )
 
-        mock_apply_async_interceptors.assert_called_once_with(mock_channel, options)
+        mock_apply_async_interceptors.assert_called_once_with(
+            mock_channel, transport._client_options
+        )
         assert mock_create_channel.call_count == 1
         assert transport.grpc_channel == mock_channel
 
