@@ -43,6 +43,8 @@ from typing import TYPE_CHECKING
 from google.api_core import exceptions as core_exceptions
 from grpc import RpcError, StatusCode
 
+from google.cloud.bigtable.data.exceptions import InvalidChunk
+
 if TYPE_CHECKING:
     from google.cloud.bigtable.data._accelerator._daemon import AcceleratorDaemon
 
@@ -182,6 +184,14 @@ def handle_accelerator_error(
             if isinstance(exc, RpcError):
                 raise core_exceptions.from_grpc_error(exc) from exc
             raise exc
+        raise _AcceleratorFallback() from exc
+    if isinstance(exc, InvalidChunk):
+        _LOGGER.warning(
+            "Accelerator daemon returned an invalid ReadRows chunk; permanently "
+            "falling back to the native Bigtable client for this table.",
+            exc_info=exc,
+        )
+        breaker.trip()
         raise _AcceleratorFallback() from exc
     if not isinstance(exc, RpcError):
         # A bug in our own merge machinery, not a daemon result. Do not mask it

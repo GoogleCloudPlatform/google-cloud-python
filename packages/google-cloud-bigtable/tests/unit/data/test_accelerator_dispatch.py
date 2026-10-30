@@ -370,6 +370,39 @@ class TestReadRowViaAccelerator:
             self._run(t._read_row_via_accelerator(query, 30.0, 20.0))
         assert not t._accelerator_breaker.bypass()
 
+    def test_invalid_chunk_trips_breaker_and_raises_fallback(self):
+        from google.protobuf import wrappers_pb2
+
+        from google.cloud.bigtable.data.read_rows_query import ReadRowsQuery
+        from google.cloud.bigtable_v2.types.bigtable import ReadRowsResponse
+
+        async def _malformed_stream():
+            yield ReadRowsResponse(
+                chunks=[
+                    ReadRowsResponse.CellChunk(
+                        row_key=b"",
+                        family_name=wrappers_pb2.StringValue(value="cf1"),
+                        qualifier=wrappers_pb2.BytesValue(value=b"q1"),
+                        timestamp_micros=1000,
+                        value=b"v1",
+                        commit_row=True,
+                    )
+                ]
+            )
+
+        async def _awaitable_stream():
+            return _malformed_stream()
+
+        client_mock = mock.AsyncMock()
+        client_mock.read_rows.return_value = _awaitable_stream()
+        daemon = mock.Mock(is_running=True)
+        t = _bare_target(accel_client=client_mock, accel_daemon=daemon)
+
+        query = ReadRowsQuery(row_keys=b"", limit=1)
+        with pytest.raises(_AcceleratorFallback):
+            self._run(t._read_row_via_accelerator(query, 30.0, 20.0))
+        assert t._accelerator_breaker.bypass()
+
 
 # ---------------------------------------------------------------------------
 # read_row: accelerator dispatch and fallback to native
