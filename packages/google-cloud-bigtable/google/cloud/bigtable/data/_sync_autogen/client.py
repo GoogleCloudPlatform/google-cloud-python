@@ -29,6 +29,7 @@ import weakref
 from functools import partial
 from typing import TYPE_CHECKING, Any, Callable, Iterable, Optional, Sequence, Set, cast
 
+import google.auth
 import google.auth._default
 import google.auth.credentials
 from google.api_core import client_options as client_options_lib
@@ -260,7 +261,7 @@ class BigtableDataClient(ClientWithProject):
         if (
             project is None
             and credentials is None
-            and (client_options is not None)
+            and client_options is not None
             and client_options.credentials_file
         ):
             project = os.getenv(

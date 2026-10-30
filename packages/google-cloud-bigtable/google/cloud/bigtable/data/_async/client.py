@@ -35,6 +35,7 @@ from typing import (
     cast,
 )
 
+import google.auth
 import google.auth._default
 import google.auth.credentials
 from google.api_core import client_options as client_options_lib
