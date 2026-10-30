@@ -14,13 +14,12 @@
 # limitations under the License.
 #
 import abc
-import copy
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
 from google.cloud.asset_v1 import gapic_version as package_version
 from google.cloud.asset_v1._compat import (
-    _observability,
     ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+    SUPPORTS_DEFAULT_HOST as _SUPPORTS_DEFAULT_HOST,
     WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
 )
 _ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
@@ -135,25 +134,13 @@ class AssetServiceTransport(abc.ABC):
             host += ':443'
         self._host = host
 
-        # If the transport was instantiated directly with client_options=None
-        # while OpenTelemetry tracing is enabled via environment variable,
-        # create a ClientOptions instance with the resolved transport host so
-        # method and wire spans can record server.address and server.port.
-        if (
-            client_options is None
-            and _observability is not None
-            and _observability.is_otel_capabilities_enabled(None)
-        ):
-            client_options = client_options_lib.ClientOptions(api_endpoint=self._host)
-        # And here we check for the presence of an api_endpoint attr OR key,
-        # shallow-copying before populating to avoid mutating caller-owned state.
-        elif isinstance(client_options, client_options_lib.ClientOptions) and not client_options.api_endpoint:
-            client_options = copy.copy(client_options)
-            client_options.api_endpoint = self._host
-        elif isinstance(client_options, dict) and not client_options.get("api_endpoint"):
-            client_options = copy.copy(client_options)
-            client_options["api_endpoint"] = self._host
         self._client_options = client_options
+        # If a pre-constructed gRPC channel was provided to the subclass before
+        # super().__init__, self._host is not used to create the channel and
+        # cannot be trusted as the default span endpoint.
+        self._default_host: Optional[str] = (
+            None if getattr(self, "_grpc_channel", None) is not None else self._host
+        )
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
@@ -172,6 +159,8 @@ class AssetServiceTransport(abc.ABC):
         """
         if _WRAP_METHOD_SUPPORTS_TRACING:
             kwargs["client_options"] = self._client_options
+            if _SUPPORTS_DEFAULT_HOST:
+                kwargs["default_host"] = self._default_host
             try:
                 kind = self.kind
             except NotImplementedError:
@@ -184,7 +173,7 @@ class AssetServiceTransport(abc.ABC):
         # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
         #   falling back to gRPC wrapping), but tracing args are not.
         # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
-        for k in ["client_options", "method_name", "is_streaming"]:
+        for k in ["client_options", "method_name", "is_streaming", "default_host"]:
             kwargs.pop(k, None)
 
         try:
@@ -211,6 +200,8 @@ class AssetServiceTransport(abc.ABC):
         """
         if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
             kwargs["client_options"] = self._client_options
+            if _SUPPORTS_DEFAULT_HOST:
+                kwargs["default_host"] = self._default_host
             try:
                 kind = self.kind
             except NotImplementedError:
@@ -223,7 +214,7 @@ class AssetServiceTransport(abc.ABC):
         # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
         #   falling back to gRPC wrapping), but tracing args are not.
         # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
-        for k in ["client_options", "method_name", "is_streaming"]:
+        for k in ["client_options", "method_name", "is_streaming", "default_host"]:
             kwargs.pop(k, None)
 
         try:

@@ -20,7 +20,11 @@ import warnings
 from typing import Callable, Dict, Optional, Sequence, Tuple, Union
 from typing import TYPE_CHECKING
 
-from google.cloud.asset_v1._compat import _observability, apply_channel_interceptors
+from google.cloud.asset_v1._compat import (
+    _observability,
+    SUPPORTS_DEFAULT_HOST as _SUPPORTS_DEFAULT_HOST,
+    apply_channel_interceptors,
+)
 
 from google.api_core import client_options as client_options_lib
 from google.api_core import grpc_helpers
@@ -277,9 +281,12 @@ class AssetServiceGrpcTransport(AssetServiceTransport):
             )
 
         channel_interceptors = list(interceptors) if interceptors else []
+        _otel_interceptor_kwargs = (
+            {"default_host": self._default_host} if _SUPPORTS_DEFAULT_HOST else {}
+        )
         if (
             _observability is not None
-            and (otel_interceptor := _observability.get_otel_interceptor(self._client_options)) is not None
+            and (otel_interceptor := _observability.get_otel_interceptor(self._client_options, **_otel_interceptor_kwargs)) is not None
             and otel_interceptor not in channel_interceptors
             and not any(getattr(i, "_is_otel_interceptor", None) is True for i in channel_interceptors)
         ):

@@ -99,6 +99,15 @@ ASYNC_WRAP_METHOD_SUPPORTS_KIND = WRAP_METHOD_SUPPORTS_TRACING or hasattr(
     gapic_v1.method_async, "_DEFAULT_ASYNC_TRANSPORT_KIND"
 )
 
+# The `default_host` parameter in gapic_v1.method.wrap_method,
+# gapic_v1.method_async.wrap_method, _observability.get_otel_interceptor, and
+# _observability.apply_otel_async_channel_interceptors allows transports to pass
+# their resolved default host without mutating caller-owned client_options.
+SUPPORTS_DEFAULT_HOST = bool(
+    getattr(gapic_v1.method.wrap_method, "__kwdefaults__", None)
+    and "default_host" in gapic_v1.method.wrap_method.__kwdefaults__
+)
+
 try:
     from google.api_core import grpc_helpers
 except ImportError:  # pragma: NO COVER

@@ -826,7 +826,14 @@ def test_metrics_service_v2_grpc_transport_otel_channel_interceptor():
             client_options=options,
         )
 
-        mock_get_interceptor.assert_called_once_with(transport._client_options)
+        expected_kwargs = (
+            {"default_host": transport._default_host}
+            if transports.grpc._SUPPORTS_DEFAULT_HOST
+            else {}
+        )
+        mock_get_interceptor.assert_called_once_with(
+            transport._client_options, **expected_kwargs
+        )
         mock_apply_interceptors.assert_called_once_with(
             mock_channel, [mock_otel_interceptor]
         )
@@ -900,8 +907,13 @@ def test_metrics_service_v2_grpc_asyncio_transport_otel_channel_interceptor():
             client_options=options,
         )
 
+        expected_kwargs = (
+            {"default_host": transport._default_host}
+            if transports.grpc_asyncio._SUPPORTS_DEFAULT_HOST
+            else {}
+        )
         mock_apply_async_interceptors.assert_called_once_with(
-            mock_channel, transport._client_options
+            mock_channel, transport._client_options, **expected_kwargs
         )
         assert mock_create_channel.call_count == 1
         assert transport.grpc_channel == mock_channel
@@ -4249,64 +4261,73 @@ def test_api_key_credentials(client_class, transport_class):
             )
 
 
-def test_metrics_service_v2_base_transport_wrap_method_modern_api_core(monkeypatch):
-    monkeypatch.setattr(transports.base, "_WRAP_METHOD_SUPPORTS_TRACING", True)
-    # 1. Concrete transport: passes client_options=None and kind="grpc"
-    with mock.patch.object(transports.base.gapic_v1.method, "wrap_method") as mock_wrap:
-        transport = transports.MetricsServiceV2GrpcTransport(
-            credentials=ga_credentials.AnonymousCredentials()
-        )
-        func = mock.MagicMock()
-        transport._wrap_method(func)
-        assert mock_wrap.call_args.kwargs["kind"] == "grpc"
-        assert "client_options" in mock_wrap.call_args.kwargs
-
-    # 2. Base transport: kind raises NotImplementedError and is cleanly omitted
-    with mock.patch.object(transports.base.gapic_v1.method, "wrap_method") as mock_wrap:
-        base_transport = transports.MetricsServiceV2Transport(
-            credentials=ga_credentials.AnonymousCredentials()
-        )
-        func = mock.MagicMock()
-        base_transport._wrap_method(func)
-        assert "kind" not in mock_wrap.call_args.kwargs
-        assert "client_options" in mock_wrap.call_args.kwargs
-
-
 @pytest.mark.parametrize(
-    "otel_enabled,expected_endpoint",
+    "supports_default_host,is_concrete,expected_kind,expected_has_default_host",
     [
-        pytest.param(False, None, id="otel_disabled"),
-        pytest.param(True, "default.example.com:443", id="otel_enabled"),
+        pytest.param(
+            True,
+            True,
+            "grpc",
+            True,
+            id="concrete_transport_supports_default_host",
+        ),
+        pytest.param(
+            False,
+            False,
+            None,
+            False,
+            id="base_transport_no_default_host",
+        ),
     ],
 )
-def test_metrics_service_v2_base_transport_client_options_none(
-    monkeypatch, otel_enabled, expected_endpoint
+def test_metrics_service_v2_base_transport_wrap_method_modern_api_core(
+    monkeypatch,
+    supports_default_host,
+    is_concrete,
+    expected_kind,
+    expected_has_default_host,
 ):
-    fake_observability = mock.MagicMock()
-    fake_observability.is_otel_capabilities_enabled.return_value = otel_enabled
-    monkeypatch.setattr(transports.base, "_observability", fake_observability)
+    monkeypatch.setattr(transports.base, "_WRAP_METHOD_SUPPORTS_TRACING", True)
+    monkeypatch.setattr(transports.base, "_SUPPORTS_DEFAULT_HOST", supports_default_host)
+    transport_cls = (
+        transports.MetricsServiceV2GrpcTransport
+        if is_concrete
+        else transports.MetricsServiceV2Transport
+    )
+    with mock.patch.object(transports.base.gapic_v1.method, "wrap_method") as mock_wrap:
+        transport = transport_cls(credentials=ga_credentials.AnonymousCredentials())
+        func = mock.MagicMock()
+        transport._wrap_method(func)
+        if expected_kind:
+            assert mock_wrap.call_args.kwargs["kind"] == expected_kind
+        else:
+            assert "kind" not in mock_wrap.call_args.kwargs
+        assert "client_options" in mock_wrap.call_args.kwargs
+        if expected_has_default_host:
+            assert mock_wrap.call_args.kwargs["default_host"] == transport._default_host
+        else:
+            assert "default_host" not in mock_wrap.call_args.kwargs
 
+
+def test_metrics_service_v2_base_transport_client_options_none():
     transport = transports.MetricsServiceV2Transport(
         host="default.example.com:443",
         credentials=ga_credentials.AnonymousCredentials(),
         client_options=None,
     )
-    assert getattr(transport._client_options, "api_endpoint", None) == expected_endpoint
+    assert transport._client_options is None
+    assert transport._default_host == "default.example.com:443"
 
 
 @pytest.mark.parametrize(
-    "initial_endpoint,expected_endpoint",
+    "initial_endpoint",
     [
-        pytest.param(None, "default.example.com:443", id="default_from_host"),
-        pytest.param(
-            "custom.example.com:443",
-            "custom.example.com:443",
-            id="preserve_explicit",
-        ),
+        pytest.param(None, id="unset_api_endpoint"),
+        pytest.param("custom.example.com:443", id="explicit_api_endpoint"),
     ],
 )
 def test_metrics_service_v2_base_transport_client_options_object(
-    initial_endpoint, expected_endpoint
+    initial_endpoint,
 ):
     options = client_options.ClientOptions(api_endpoint=initial_endpoint)
     transport = transports.MetricsServiceV2Transport(
@@ -4314,27 +4335,28 @@ def test_metrics_service_v2_base_transport_client_options_object(
         credentials=ga_credentials.AnonymousCredentials(),
         client_options=options,
     )
-    assert transport._client_options.api_endpoint == expected_endpoint
-    assert options.api_endpoint == initial_endpoint
+    assert transport._client_options is options
+    assert transport._client_options.api_endpoint == initial_endpoint
+    assert transport._default_host == "default.example.com:443"
 
 
 @pytest.mark.parametrize(
-    "initial_options,expected_options",
+    "initial_options,expected_endpoint",
     [
         pytest.param(
             {},
-            {"api_endpoint": "default.example.com:443"},
-            id="default_from_host",
+            None,
+            id="unset_api_endpoint",
         ),
         pytest.param(
             {"api_endpoint": "custom.example.com:443"},
-            {"api_endpoint": "custom.example.com:443"},
-            id="preserve_explicit",
+            "custom.example.com:443",
+            id="explicit_api_endpoint",
         ),
     ],
 )
 def test_metrics_service_v2_base_transport_client_options_dict(
-    initial_options, expected_options
+    initial_options, expected_endpoint
 ):
     options = dict(initial_options)
     transport = transports.MetricsServiceV2Transport(
@@ -4342,8 +4364,27 @@ def test_metrics_service_v2_base_transport_client_options_dict(
         credentials=ga_credentials.AnonymousCredentials(),
         client_options=options,
     )
-    assert transport._client_options == expected_options
+    assert transport._client_options is options
+    assert transport._client_options.get("api_endpoint") == expected_endpoint
+    assert transport._default_host == "default.example.com:443"
     assert options == initial_options
+
+
+def test_metrics_service_v2_base_transport_default_host_ignored_when_custom_grpc_channel():
+    class _CustomChannelTransport(transports.MetricsServiceV2Transport):
+        def __init__(self, **kwargs):
+            self._ignore_credentials = True
+            self._grpc_channel = mock.sentinel.custom_channel
+            super().__init__(**kwargs)
+
+    options = client_options.ClientOptions()
+    transport = _CustomChannelTransport(
+        host="default.example.com:443",
+        client_options=options,
+    )
+    assert transport._client_options is options
+    assert transport._client_options.api_endpoint is None
+    assert transport._default_host is None
 
 
 def test_metrics_service_v2_base_transport_wrap_method_older_api_core_fallbacks(monkeypatch):
@@ -4420,27 +4461,52 @@ def test_metrics_service_v2_base_transport_wrap_method_older_api_core_fallbacks(
         assert "is_streaming" not in kwargs
 
 
-def test_metrics_service_v2_base_transport_wrap_async_method_modern_api_core(monkeypatch):
+@pytest.mark.parametrize(
+    "supports_default_host,is_concrete,expected_kind,expected_has_default_host",
+    [
+        pytest.param(
+            True,
+            True,
+            "grpc_asyncio",
+            True,
+            id="concrete_transport_supports_default_host",
+        ),
+        pytest.param(
+            False,
+            False,
+            None,
+            False,
+            id="base_transport_no_default_host",
+        ),
+    ],
+)
+def test_metrics_service_v2_base_transport_wrap_async_method_modern_api_core(
+    monkeypatch,
+    supports_default_host,
+    is_concrete,
+    expected_kind,
+    expected_has_default_host,
+):
     monkeypatch.setattr(transports.base, "_ASYNC_WRAP_METHOD_SUPPORTS_TRACING", True)
-    # 1. Concrete transport: passes client_options=None and kind="grpc_asyncio"
+    monkeypatch.setattr(transports.base, "_SUPPORTS_DEFAULT_HOST", supports_default_host)
+    transport_cls = (
+        transports.MetricsServiceV2GrpcAsyncIOTransport
+        if is_concrete
+        else transports.MetricsServiceV2Transport
+    )
     with mock.patch.object(transports.base.gapic_v1.method_async, "wrap_method") as mock_wrap:
-        transport = transports.MetricsServiceV2GrpcAsyncIOTransport(
-            credentials=ga_credentials.AnonymousCredentials()
-        )
+        transport = transport_cls(credentials=ga_credentials.AnonymousCredentials())
         func = mock.MagicMock()
         transport._wrap_async_method(func)
-        assert mock_wrap.call_args.kwargs["kind"] == "grpc_asyncio"
+        if expected_kind:
+            assert mock_wrap.call_args.kwargs["kind"] == expected_kind
+        else:
+            assert "kind" not in mock_wrap.call_args.kwargs
         assert "client_options" in mock_wrap.call_args.kwargs
-
-    # 2. Base transport: kind raises NotImplementedError and is cleanly omitted
-    with mock.patch.object(transports.base.gapic_v1.method_async, "wrap_method") as mock_wrap:
-        base_transport = transports.MetricsServiceV2Transport(
-            credentials=ga_credentials.AnonymousCredentials()
-        )
-        func = mock.MagicMock()
-        base_transport._wrap_async_method(func)
-        assert "kind" not in mock_wrap.call_args.kwargs
-        assert "client_options" in mock_wrap.call_args.kwargs
+        if expected_has_default_host:
+            assert mock_wrap.call_args.kwargs["default_host"] == transport._default_host
+        else:
+            assert "default_host" not in mock_wrap.call_args.kwargs
 
 
 def test_metrics_service_v2_base_transport_wrap_async_method_older_api_core_fallbacks(monkeypatch):

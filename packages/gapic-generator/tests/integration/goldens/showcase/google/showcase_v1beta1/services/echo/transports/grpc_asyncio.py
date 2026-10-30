@@ -20,7 +20,11 @@ import warnings
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
 from typing import TYPE_CHECKING
 
-from google.showcase_v1beta1._compat import _observability, apply_async_channel_interceptors
+from google.showcase_v1beta1._compat import (
+    _observability,
+    SUPPORTS_DEFAULT_HOST as _SUPPORTS_DEFAULT_HOST,
+    apply_async_channel_interceptors,
+)
 
 from google.api_core import client_options as client_options_lib
 from google.api_core import gapic_v1
@@ -344,8 +348,11 @@ class EchoGrpcAsyncIOTransport(EchoTransport):
             # NOTE: Coverage tool ignores async interceptors in environments running
             # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
             # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            _otel_interceptor_kwargs = (
+                {"default_host": self._default_host} if _SUPPORTS_DEFAULT_HOST else {}
+            )  # pragma: NO COVER
             self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
-                self._grpc_channel, self._client_options
+                self._grpc_channel, self._client_options, **_otel_interceptor_kwargs
             )  # pragma: NO COVER
 
         self._logged_channel = self._grpc_channel
