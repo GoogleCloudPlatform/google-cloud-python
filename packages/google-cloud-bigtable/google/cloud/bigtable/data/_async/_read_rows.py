@@ -260,11 +260,11 @@ class _ReadRowsOperationAsync:
                         if c.reset_row:
                             raise _ResetRow(c)
                         k = c.row_key
-                        f = c.family_name.value
+                        f = c.family_name.value if c.HasField("family_name") else None
                         q = c.qualifier.value if c.HasField("qualifier") else None
                         if k and k != row_key:
                             raise InvalidChunk("unexpected new row key")
-                        if f:
+                        if f is not None:
                             family = f
                             if q is not None:
                                 qualifier = q

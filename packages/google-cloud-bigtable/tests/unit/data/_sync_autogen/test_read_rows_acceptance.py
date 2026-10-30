@@ -250,6 +250,48 @@ class TestReadRowsAcceptance:
                 )
             )
 
+    def test_empty_family_name_first_chunk(self):
+        rows = self._process_chunks(
+            ReadRowsResponse.CellChunk(
+                row_key=b"a",
+                family_name="",
+                qualifier=b"q",
+                timestamp_micros=1000,
+                value=b"v",
+                commit_row=True,
+            )
+        )
+        assert len(rows) == 1
+        cells = rows[0].get_cells(family="", qualifier=b"q")
+        assert len(cells) == 1
+        assert cells[0].value == b"v"
+
+    def test_empty_family_name_after_nonempty_family(self):
+        rows = self._process_chunks(
+            ReadRowsResponse.CellChunk(
+                row_key=b"a",
+                family_name="cf1",
+                qualifier=b"q",
+                timestamp_micros=2000,
+                value=b"v1",
+                commit_row=False,
+            ),
+            ReadRowsResponse.CellChunk(
+                family_name="",
+                qualifier=b"q",
+                timestamp_micros=1000,
+                value=b"v2",
+                commit_row=True,
+            ),
+        )
+        assert len(rows) == 1
+        cf1_cells = rows[0].get_cells(family="cf1", qualifier=b"q")
+        empty_cells = rows[0].get_cells(family="", qualifier=b"q")
+        assert len(cf1_cells) == 1
+        assert cf1_cells[0].value == b"v1"
+        assert len(empty_cells) == 1
+        assert empty_cells[0].value == b"v2"
+
     def test_mid_cell_row_key_change(self):
         with pytest.raises(InvalidChunk):
             self._process_chunks(
