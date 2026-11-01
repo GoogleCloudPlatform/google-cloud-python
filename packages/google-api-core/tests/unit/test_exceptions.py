@@ -12,8 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import copy
 import http.client
 import json
+import pickle
 from unittest import mock
 
 import pytest
@@ -52,6 +54,41 @@ def test_create_google_cloud_error_with_args():
     assert exception.message == "Testing"
     assert exception.errors == [error]
     assert exception.response == response
+
+
+@pytest.mark.parametrize("protocol", range(pickle.HIGHEST_PROTOCOL + 1))
+def test_retry_error_pickle_round_trip(protocol):
+    cause = exceptions.ServiceUnavailable("backend unavailable")
+    error = exceptions.RetryError("Timeout of 1.0s exceeded", cause)
+
+    restored = pickle.loads(pickle.dumps(error, protocol=protocol))
+
+    assert isinstance(restored, exceptions.RetryError)
+    assert restored.message == error.message
+    assert isinstance(restored.cause, exceptions.ServiceUnavailable)
+    assert restored.cause.message == cause.message
+    assert str(restored) == str(error)
+
+
+def test_retry_error_pickle_round_trip_without_cause():
+    error = exceptions.RetryError("Timeout of 1.0s exceeded", None)
+
+    restored = pickle.loads(pickle.dumps(error))
+
+    assert restored.cause is None
+    assert str(restored) == str(error)
+
+
+@pytest.mark.parametrize("copy_fn", [copy.copy, copy.deepcopy])
+def test_retry_error_copy(copy_fn):
+    cause = exceptions.ServiceUnavailable("backend unavailable")
+    error = exceptions.RetryError("Timeout of 1.0s exceeded", cause)
+
+    copied = copy_fn(error)
+
+    assert isinstance(copied, exceptions.RetryError)
+    assert copied.message == error.message
+    assert str(copied) == str(error)
 
 
 def test_from_http_status():
