@@ -97,7 +97,7 @@ class RetryError(GoogleAPIError):
         # ``cause`` is a required constructor argument that isn't stored in
         # ``self.args``, so the default ``BaseException.__reduce__`` can't
         # rebuild the exception (e.g. when it's pickled across processes).
-        return (self.__class__, (self.message, self._cause))
+        return (self.__class__, (self.message, self._cause), self.__dict__)
 
 
 class _GoogleAPICallErrorMeta(type):

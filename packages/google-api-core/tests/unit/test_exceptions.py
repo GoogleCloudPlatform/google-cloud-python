@@ -79,6 +79,15 @@ def test_retry_error_pickle_round_trip_without_cause():
     assert str(restored) == str(error)
 
 
+def test_retry_error_pickle_preserves_instance_attributes():
+    error = exceptions.RetryError("Timeout of 1.0s exceeded", None)
+    error.custom_attribute = "value"
+
+    restored = pickle.loads(pickle.dumps(error))
+
+    assert restored.custom_attribute == "value"
+
+
 @pytest.mark.parametrize("copy_fn", [copy.copy, copy.deepcopy])
 def test_retry_error_copy(copy_fn):
     cause = exceptions.ServiceUnavailable("backend unavailable")
