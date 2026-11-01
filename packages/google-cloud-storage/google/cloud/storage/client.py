@@ -46,6 +46,7 @@ from google.cloud.storage._helpers import (
     _get_api_endpoint_override,
     _get_environ_project,
     _get_storage_emulator_override,
+    _list_metrics_context,
     _start_storage_operation,
     _virtual_hosted_style_base_url,
     create_trace_span_helper,
@@ -497,12 +498,17 @@ class Client(ClientWithProject):
         :returns: service account email address
         """
         with create_trace_span(name="Storage.Client.getServiceAccountEmail"):
-            if project is None:
-                project = self.project
+            with _start_storage_operation(
+                self,
+                "storage.Client.get_service_account_email",
+                "GetServiceAccount",
+            ):
+                if project is None:
+                    project = self.project
 
-            path = f"/projects/{project}/serviceAccount"
-            api_response = self._get_resource(path, timeout=timeout, retry=retry)
-            return api_response["email_address"]
+                path = f"/projects/{project}/serviceAccount"
+                api_response = self._get_resource(path, timeout=timeout, retry=retry)
+                return api_response["email_address"]
 
     def bucket(self, bucket_name, user_project=None, generation=None):
         """Factory constructor for bucket object.
@@ -1056,37 +1062,45 @@ class Client(ClientWithProject):
         with create_trace_span_helper(
             self, bucket_name, name="Storage.Client.getBucket"
         ):
-            bucket = self._bucket_arg_to_bucket(bucket_or_name, generation=generation)
-            try:
-                bucket.reload(
-                    client=self,
-                    timeout=timeout,
-                    if_metageneration_match=if_metageneration_match,
-                    if_metageneration_not_match=if_metageneration_not_match,
-                    retry=retry,
-                    soft_deleted=soft_deleted,
+            with _start_storage_operation(
+                self, "storage.Client.get_bucket", "GetBucket"
+            ):
+                bucket = self._bucket_arg_to_bucket(
+                    bucket_or_name, generation=generation
                 )
-            except api_exceptions.Forbidden:
+                try:
+                    bucket.reload(
+                        client=self,
+                        timeout=timeout,
+                        if_metageneration_match=if_metageneration_match,
+                        if_metageneration_not_match=if_metageneration_not_match,
+                        retry=retry,
+                        soft_deleted=soft_deleted,
+                    )
+                except api_exceptions.Forbidden:
+                    if (
+                        hasattr(self, "_bucket_metadata_cache")
+                        and self._bucket_metadata_cache
+                    ):
+                        try:
+                            self._bucket_metadata_cache.update_cache(
+                                bucket_name,
+                                f"//storage.googleapis.com/projects/_/buckets/{bucket_name}",
+                                "global",
+                            )
+                        except Exception:
+                            pass
+                    raise
+
                 if (
                     hasattr(self, "_bucket_metadata_cache")
                     and self._bucket_metadata_cache
                 ):
                     try:
-                        self._bucket_metadata_cache.update_cache(
-                            bucket_name,
-                            f"//storage.googleapis.com/projects/_/buckets/{bucket_name}",
-                            "global",
-                        )
+                        self._bucket_metadata_cache.update_from_bucket(bucket)
                     except Exception:
                         pass
-                raise
-
-            if hasattr(self, "_bucket_metadata_cache") and self._bucket_metadata_cache:
-                try:
-                    self._bucket_metadata_cache.update_from_bucket(bucket)
-                except Exception:
-                    pass
-            return bucket
+                return bucket
 
     def lookup_bucket(
         self,
@@ -1127,39 +1141,42 @@ class Client(ClientWithProject):
         with create_trace_span_helper(
             self, bucket_name, name="Storage.Client.lookupBucket"
         ):
-            try:
-                bucket = self.get_bucket(
-                    bucket_name,
-                    timeout=timeout,
-                    if_metageneration_match=if_metageneration_match,
-                    if_metageneration_not_match=if_metageneration_not_match,
-                    retry=retry,
-                )
-                if (
-                    hasattr(self, "_bucket_metadata_cache")
-                    and self._bucket_metadata_cache
-                ):
-                    try:
-                        self._bucket_metadata_cache.update_from_bucket(bucket)
-                    except Exception:
-                        pass
-                return bucket
-            except api_exceptions.Forbidden:
-                if (
-                    hasattr(self, "_bucket_metadata_cache")
-                    and self._bucket_metadata_cache
-                ):
-                    try:
-                        self._bucket_metadata_cache.update_cache(
-                            bucket_name,
-                            f"//storage.googleapis.com/projects/_/buckets/{bucket_name}",
-                            "global",
-                        )
-                    except Exception:
-                        pass
-                raise
-            except NotFound:
-                return None
+            with _start_storage_operation(
+                self, "storage.Client.lookup_bucket", "GetBucket"
+            ):
+                try:
+                    bucket = self.get_bucket(
+                        bucket_name,
+                        timeout=timeout,
+                        if_metageneration_match=if_metageneration_match,
+                        if_metageneration_not_match=if_metageneration_not_match,
+                        retry=retry,
+                    )
+                    if (
+                        hasattr(self, "_bucket_metadata_cache")
+                        and self._bucket_metadata_cache
+                    ):
+                        try:
+                            self._bucket_metadata_cache.update_from_bucket(bucket)
+                        except Exception:
+                            pass
+                    return bucket
+                except api_exceptions.Forbidden:
+                    if (
+                        hasattr(self, "_bucket_metadata_cache")
+                        and self._bucket_metadata_cache
+                    ):
+                        try:
+                            self._bucket_metadata_cache.update_cache(
+                                bucket_name,
+                                f"//storage.googleapis.com/projects/_/buckets/{bucket_name}",
+                                "global",
+                            )
+                        except Exception:
+                            pass
+                    raise
+                except NotFound:
+                    return None
 
     def create_bucket(
         self,
@@ -1242,75 +1259,85 @@ class Client(ClientWithProject):
                 If the bucket already exists.
         """
         with create_trace_span(name="Storage.Client.createBucket"):
-            bucket = self._bucket_arg_to_bucket(bucket_or_name)
-            query_params = {}
+            with _start_storage_operation(
+                self, "storage.Client.create_bucket", "CreateBucket"
+            ):
+                bucket = self._bucket_arg_to_bucket(bucket_or_name)
+                query_params = {}
 
-            if project is None:
-                project = self.project
-
-            # Use no project if STORAGE_EMULATOR_HOST is set
-            if self._is_emulator_set:
                 if project is None:
-                    project = _get_environ_project()
-                if project is None:
-                    project = "<none>"
+                    project = self.project
 
-            # Only include the project parameter if a project is set.
-            # If a project is not set, falls back to API validation (BadRequest).
-            if project is not None:
-                query_params = {"project": project}
+                # Use no project if STORAGE_EMULATOR_HOST is set
+                if self._is_emulator_set:
+                    if project is None:
+                        project = _get_environ_project()
+                    if project is None:
+                        project = "<none>"
 
-            if requester_pays is not None:
-                warnings.warn(
-                    "requester_pays arg is deprecated. Use Bucket().requester_pays instead.",
-                    PendingDeprecationWarning,
-                    stacklevel=1,
+                # Only include the project parameter if a project is set.
+                # If a project is not set, falls back to API validation (BadRequest).
+                if project is not None:
+                    query_params = {"project": project}
+
+                if requester_pays is not None:
+                    warnings.warn(
+                        "requester_pays arg is deprecated. Use Bucket().requester_pays instead.",
+                        PendingDeprecationWarning,
+                        stacklevel=1,
+                    )
+                    bucket.requester_pays = requester_pays
+
+                if predefined_acl is not None:
+                    predefined_acl = BucketACL.validate_predefined(predefined_acl)
+                    query_params["predefinedAcl"] = predefined_acl
+
+                if predefined_default_object_acl is not None:
+                    predefined_default_object_acl = (
+                        DefaultObjectACL.validate_predefined(
+                            predefined_default_object_acl
+                        )
+                    )
+                    query_params["predefinedDefaultObjectAcl"] = (
+                        predefined_default_object_acl
+                    )
+
+                if user_project is not None:
+                    query_params["userProject"] = user_project
+
+                if enable_object_retention:
+                    query_params["enableObjectRetention"] = enable_object_retention
+
+                properties = {key: bucket._properties[key] for key in bucket._changes}
+                properties["name"] = bucket.name
+
+                if location is not None:
+                    properties["location"] = location
+
+                if data_locations is not None:
+                    properties["customPlacementConfig"] = {
+                        "dataLocations": data_locations
+                    }
+
+                api_response = self._post_resource(
+                    "/b",
+                    properties,
+                    query_params=query_params,
+                    timeout=timeout,
+                    retry=retry,
+                    _target_object=bucket,
                 )
-                bucket.requester_pays = requester_pays
 
-            if predefined_acl is not None:
-                predefined_acl = BucketACL.validate_predefined(predefined_acl)
-                query_params["predefinedAcl"] = predefined_acl
-
-            if predefined_default_object_acl is not None:
-                predefined_default_object_acl = DefaultObjectACL.validate_predefined(
-                    predefined_default_object_acl
-                )
-                query_params["predefinedDefaultObjectAcl"] = (
-                    predefined_default_object_acl
-                )
-
-            if user_project is not None:
-                query_params["userProject"] = user_project
-
-            if enable_object_retention:
-                query_params["enableObjectRetention"] = enable_object_retention
-
-            properties = {key: bucket._properties[key] for key in bucket._changes}
-            properties["name"] = bucket.name
-
-            if location is not None:
-                properties["location"] = location
-
-            if data_locations is not None:
-                properties["customPlacementConfig"] = {"dataLocations": data_locations}
-
-            api_response = self._post_resource(
-                "/b",
-                properties,
-                query_params=query_params,
-                timeout=timeout,
-                retry=retry,
-                _target_object=bucket,
-            )
-
-            bucket._set_properties(api_response)
-            if hasattr(self, "_bucket_metadata_cache") and self._bucket_metadata_cache:
-                try:
-                    self._bucket_metadata_cache.update_from_bucket(bucket)
-                except Exception:
-                    pass
-            return bucket
+                bucket._set_properties(api_response)
+                if (
+                    hasattr(self, "_bucket_metadata_cache")
+                    and self._bucket_metadata_cache
+                ):
+                    try:
+                        self._bucket_metadata_cache.update_from_bucket(bucket)
+                    except Exception:
+                        pass
+                return bucket
 
     def download_blob_to_file(
         self,
@@ -1421,26 +1448,29 @@ class Client(ClientWithProject):
             bucket_name,
             name="Storage.Client.downloadBlobToFile",
         ):
-            if not isinstance(blob_or_uri, Blob):
-                blob_or_uri = Blob.from_uri(blob_or_uri)
+            with _start_storage_operation(
+                self, "storage.Client.download_blob_to_file", "ReadObject"
+            ):
+                if not isinstance(blob_or_uri, Blob):
+                    blob_or_uri = Blob.from_uri(blob_or_uri)
 
-            blob_or_uri._prep_and_do_download(
-                file_obj,
-                client=self,
-                start=start,
-                end=end,
-                raw_download=raw_download,
-                if_etag_match=if_etag_match,
-                if_etag_not_match=if_etag_not_match,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                timeout=timeout,
-                checksum=checksum,
-                retry=retry,
-                single_shot_download=single_shot_download,
-            )
+                blob_or_uri._prep_and_do_download(
+                    file_obj,
+                    client=self,
+                    start=start,
+                    end=end,
+                    raw_download=raw_download,
+                    if_etag_match=if_etag_match,
+                    if_etag_not_match=if_etag_not_match,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    timeout=timeout,
+                    checksum=checksum,
+                    retry=retry,
+                    single_shot_download=single_shot_download,
+                )
 
     def list_blobs(
         self,
@@ -1630,17 +1660,18 @@ class Client(ClientWithProject):
                 extra_params["userProject"] = bucket.user_project
 
             path = bucket.path + "/o"
-            iterator = self._list_resource(
-                path,
-                _item_to_blob,
-                page_token=page_token,
-                max_results=max_results,
-                extra_params=extra_params,
-                page_start=_blobs_page_start,
-                page_size=page_size,
-                timeout=timeout,
-                retry=retry,
-            )
+            with _list_metrics_context("storage.Client.list_blobs", "ListObjects"):
+                iterator = self._list_resource(
+                    path,
+                    _item_to_blob,
+                    page_token=page_token,
+                    max_results=max_results,
+                    extra_params=extra_params,
+                    page_start=_blobs_page_start,
+                    page_size=page_size,
+                    timeout=timeout,
+                    retry=retry,
+                )
             iterator.bucket = bucket
             iterator.prefixes = set()
             return iterator
@@ -1762,17 +1793,18 @@ class Client(ClientWithProject):
             if return_partial_success is not None:
                 extra_params["returnPartialSuccess"] = return_partial_success
 
-            iterator = self._list_resource(
-                "/b",
-                _item_to_bucket,
-                page_token=page_token,
-                max_results=max_results,
-                extra_params=extra_params,
-                page_size=page_size,
-                timeout=timeout,
-                retry=retry,
-                page_start=_buckets_page_start,
-            )
+            with _list_metrics_context("storage.Client.list_buckets", "ListBuckets"):
+                iterator = self._list_resource(
+                    "/b",
+                    _item_to_bucket,
+                    page_token=page_token,
+                    max_results=max_results,
+                    extra_params=extra_params,
+                    page_size=page_size,
+                    timeout=timeout,
+                    retry=retry,
+                    page_start=_buckets_page_start,
+                )
             return iterator
 
     def restore_bucket(
@@ -1821,24 +1853,27 @@ class Client(ClientWithProject):
         :rtype: :class:`google.cloud.storage.bucket.Bucket`
         :returns: The restored Bucket.
         """
-        query_params = {"generation": generation, "projection": projection}
+        with _start_storage_operation(
+            self, "storage.Client.restore_bucket", "RestoreBucket"
+        ):
+            query_params = {"generation": generation, "projection": projection}
 
-        _add_generation_match_parameters(
-            query_params,
-            if_metageneration_match=if_metageneration_match,
-            if_metageneration_not_match=if_metageneration_not_match,
-        )
+            _add_generation_match_parameters(
+                query_params,
+                if_metageneration_match=if_metageneration_match,
+                if_metageneration_not_match=if_metageneration_not_match,
+            )
 
-        bucket = self.bucket(bucket_name)
-        api_response = self._post_resource(
-            f"{bucket.path}/restore",
-            None,
-            query_params=query_params,
-            timeout=timeout,
-            retry=retry,
-        )
-        bucket._set_properties(api_response)
-        return bucket
+            bucket = self.bucket(bucket_name)
+            api_response = self._post_resource(
+                f"{bucket.path}/restore",
+                None,
+                query_params=query_params,
+                timeout=timeout,
+                retry=retry,
+            )
+            bucket._set_properties(api_response)
+            return bucket
 
     def create_hmac_key(
         self,
@@ -1884,26 +1919,29 @@ class Client(ClientWithProject):
         :returns: metadata for the created key, plus the bytes of the key's secret, which is an 40-character base64-encoded string.
         """
         with create_trace_span(name="Storage.Client.createHmacKey"):
-            if project_id is None:
-                project_id = self.project
+            with _start_storage_operation(
+                self, "storage.Client.create_hmac_key", "CreateHMACKey"
+            ):
+                if project_id is None:
+                    project_id = self.project
 
-            path = f"/projects/{project_id}/hmacKeys"
-            qs_params = {"serviceAccountEmail": service_account_email}
+                path = f"/projects/{project_id}/hmacKeys"
+                qs_params = {"serviceAccountEmail": service_account_email}
 
-            if user_project is not None:
-                qs_params["userProject"] = user_project
+                if user_project is not None:
+                    qs_params["userProject"] = user_project
 
-            api_response = self._post_resource(
-                path,
-                None,
-                query_params=qs_params,
-                timeout=timeout,
-                retry=retry,
-            )
-            metadata = HMACKeyMetadata(self)
-            metadata._properties = api_response["metadata"]
-            secret = api_response["secret"]
-            return metadata, secret
+                api_response = self._post_resource(
+                    path,
+                    None,
+                    query_params=qs_params,
+                    timeout=timeout,
+                    retry=retry,
+                )
+                metadata = HMACKeyMetadata(self)
+                metadata._properties = api_response["metadata"]
+                secret = api_response["secret"]
+                return metadata, secret
 
     def list_hmac_keys(
         self,
@@ -1966,14 +2004,15 @@ class Client(ClientWithProject):
             if user_project is not None:
                 extra_params["userProject"] = user_project
 
-            return self._list_resource(
-                path,
-                _item_to_hmac_key_metadata,
-                max_results=max_results,
-                extra_params=extra_params,
-                timeout=timeout,
-                retry=retry,
-            )
+            with _list_metrics_context("storage.Client.list_hmac_keys", "ListHMACKeys"):
+                return self._list_resource(
+                    path,
+                    _item_to_hmac_key_metadata,
+                    max_results=max_results,
+                    extra_params=extra_params,
+                    timeout=timeout,
+                    retry=retry,
+                )
 
     def get_hmac_key_metadata(
         self, access_id, project_id=None, user_project=None, timeout=_DEFAULT_TIMEOUT
@@ -1996,9 +2035,12 @@ class Client(ClientWithProject):
         :param user_project: (Optional) This parameter is currently ignored.
         """
         with create_trace_span(name="Storage.Client.getHmacKeyMetadata"):
-            metadata = HMACKeyMetadata(self, access_id, project_id, user_project)
-            metadata.reload(timeout=timeout)  # raises NotFound for missing key
-            return metadata
+            with _start_storage_operation(
+                self, "storage.Client.get_hmac_key_metadata", "GetHMACKey"
+            ):
+                metadata = HMACKeyMetadata(self, access_id, project_id, user_project)
+                metadata.reload(timeout=timeout)  # raises NotFound for missing key
+                return metadata
 
     def generate_signed_post_policy_v4(
         self,
