@@ -14,22 +14,26 @@
 
 """Concurrent media operations."""
 
+import atexit
 import base64
 import concurrent.futures
+import contextvars
 import copyreg
 import functools
 import inspect
 import io
+import multiprocessing.util
 import os
 import pickle
 import struct
 import warnings
+from contextlib import nullcontext
 from pathlib import Path
 
 import google_crc32c
 from google.api_core import exceptions
 
-from google.cloud.storage import Blob, Client
+from google.cloud.storage import Blob, Client, _helpers, _opentelemetry_metrics
 from google.cloud.storage._media.requests.upload import XMLMPUContainer, XMLMPUPart
 from google.cloud.storage.blob import _get_host_name, _quote
 from google.cloud.storage.constants import _DEFAULT_TIMEOUT
@@ -68,6 +72,34 @@ but the actual crc32c checksum of the downloaded contents was:
 
 
 _cached_clients = {}
+_cleanup_registered_pid = None
+
+
+def _cleanup_cached_clients():
+    if not _cached_clients:
+        return
+    clients = list(_cached_clients.values())
+    _cached_clients.clear()
+    had_active_metrics = False
+    for cl in clients:
+        if getattr(cl, "metrics_enabled", False) or getattr(
+            cl, "debug_metrics_enabled", False
+        ):
+            had_active_metrics = True
+        try:
+            cl.close()
+        except Exception:
+            pass
+    if not had_active_metrics:
+        return
+    metrics_mod = _opentelemetry_metrics.metrics
+    if metrics_mod is not None:
+        try:
+            provider = metrics_mod.get_meter_provider()
+            if hasattr(provider, "force_flush"):
+                provider.force_flush()
+        except Exception:
+            pass
 
 
 def _deprecate_threads_param(func):
@@ -174,7 +206,9 @@ def upload_many(
         recreated in each subprocess. The serialization of the Client object
         for use in subprocesses is an approximation and may not capture every
         detail of the Client object, especially if the Client was modified after
-        its initial creation or if `Client._http` was modified in any way.
+        its initial creation, if `Client._http` was modified in any way, or if a
+        custom OpenTelemetry `meter_provider` was passed to `Client` (subprocess
+        workers fall back to the subprocess's global `MeterProvider`).
 
         THREAD worker types are observed to be relatively efficient for
         operations with many small files, but not for operations with large
@@ -212,33 +246,55 @@ def upload_many(
     upload_kwargs["command"] = "tm.upload_many"
 
     pool_class, needs_pickling = _get_pool_class_and_requirements(worker_type)
+    default_method = "storage.transfer_manager.upload_many"
+    method_override = _helpers._CLIENT_METHOD_OVERRIDE.get() or default_method
+    pickle_extra_kwargs = {}
+    if method_override != default_method:
+        pickle_extra_kwargs["_gcs_method_override"] = method_override
+    if _helpers._SUPPRESS_INTERNAL_METRICS.get():
+        pickle_extra_kwargs["_gcs_suppress_metrics"] = True
 
-    with pool_class(max_workers=max_workers) as executor:
-        futures = []
-        for path_or_file, blob in file_blob_pairs:
-            # File objects are only supported by the THREAD worker because they can't
-            # be pickled.
-            if needs_pickling and not isinstance(path_or_file, str):
-                raise ValueError(
-                    "Passing in a file object is only supported by the THREAD worker type. Please either select THREAD workers, or pass in filenames only."
-                )
+    with _helpers._client_method_override(method_override):
+        with pool_class(max_workers=max_workers) as executor:
+            futures = []
+            for path_or_file, blob in file_blob_pairs:
+                # File objects are only supported by the THREAD worker because they can't
+                # be pickled.
+                if needs_pickling and not isinstance(path_or_file, str):
+                    raise ValueError(
+                        "Passing in a file object is only supported by the THREAD worker type. Please either select THREAD workers, or pass in filenames only."
+                    )
 
-            futures.append(
-                executor.submit(
-                    _call_method_on_maybe_pickled_blob,
-                    _pickle_client(blob) if needs_pickling else blob,
-                    (
-                        "_handle_filename_and_upload"
-                        if isinstance(path_or_file, str)
-                        else "_prep_and_do_upload"
-                    ),
-                    path_or_file,
-                    **upload_kwargs,
+                method_name = (
+                    "_handle_filename_and_upload"
+                    if isinstance(path_or_file, str)
+                    else "_prep_and_do_upload"
                 )
+                if needs_pickling:
+                    futures.append(
+                        executor.submit(
+                            _call_method_on_maybe_pickled_blob,
+                            _pickle_client(blob),
+                            method_name,
+                            path_or_file,
+                            **upload_kwargs,
+                            **pickle_extra_kwargs,
+                        )
+                    )
+                else:
+                    futures.append(
+                        executor.submit(
+                            contextvars.copy_context().run,
+                            _call_method_on_maybe_pickled_blob,
+                            blob,
+                            method_name,
+                            path_or_file,
+                            **upload_kwargs,
+                        )
+                    )
+            concurrent.futures.wait(
+                futures, timeout=deadline, return_when=concurrent.futures.ALL_COMPLETED
             )
-        concurrent.futures.wait(
-            futures, timeout=deadline, return_when=concurrent.futures.ALL_COMPLETED
-        )
 
     results = []
     for future in futures:
@@ -335,7 +391,9 @@ def download_many(
         recreated in each subprocess. The serialization of the Client object
         for use in subprocesses is an approximation and may not capture every
         detail of the Client object, especially if the Client was modified after
-        its initial creation or if `Client._http` was modified in any way.
+        its initial creation, if `Client._http` was modified in any way, or if a
+        custom OpenTelemetry `meter_provider` was passed to `Client` (subprocess
+        workers fall back to the subprocess's global `MeterProvider`).
 
         THREAD worker types are observed to be relatively efficient for
         operations with many small files, but not for operations with large
@@ -375,37 +433,59 @@ def download_many(
     download_kwargs["command"] = "tm.download_many"
 
     pool_class, needs_pickling = _get_pool_class_and_requirements(worker_type)
+    default_method = "storage.transfer_manager.download_many"
+    method_override = _helpers._CLIENT_METHOD_OVERRIDE.get() or default_method
+    pickle_extra_kwargs = {}
+    if method_override != default_method:
+        pickle_extra_kwargs["_gcs_method_override"] = method_override
+    if _helpers._SUPPRESS_INTERNAL_METRICS.get():
+        pickle_extra_kwargs["_gcs_suppress_metrics"] = True
 
-    with pool_class(max_workers=max_workers) as executor:
-        futures = []
-        for blob, path_or_file in blob_file_pairs:
-            # File objects are only supported by the THREAD worker because they can't
-            # be pickled.
-            if needs_pickling and not isinstance(path_or_file, str):
-                raise ValueError(
-                    "Passing in a file object is only supported by the THREAD worker type. Please either select THREAD workers, or pass in filenames only."
+    with _helpers._client_method_override(method_override):
+        with pool_class(max_workers=max_workers) as executor:
+            futures = []
+            for blob, path_or_file in blob_file_pairs:
+                # File objects are only supported by the THREAD worker because they can't
+                # be pickled.
+                if needs_pickling and not isinstance(path_or_file, str):
+                    raise ValueError(
+                        "Passing in a file object is only supported by the THREAD worker type. Please either select THREAD workers, or pass in filenames only."
+                    )
+
+                if skip_if_exists and isinstance(path_or_file, str):
+                    if os.path.isfile(path_or_file):
+                        continue
+
+                method_name = (
+                    "_handle_filename_and_download"
+                    if isinstance(path_or_file, str)
+                    else "_prep_and_do_download"
                 )
-
-            if skip_if_exists and isinstance(path_or_file, str):
-                if os.path.isfile(path_or_file):
-                    continue
-
-            futures.append(
-                executor.submit(
-                    _call_method_on_maybe_pickled_blob,
-                    _pickle_client(blob) if needs_pickling else blob,
-                    (
-                        "_handle_filename_and_download"
-                        if isinstance(path_or_file, str)
-                        else "_prep_and_do_download"
-                    ),
-                    path_or_file,
-                    **download_kwargs,
-                )
+                if needs_pickling:
+                    futures.append(
+                        executor.submit(
+                            _call_method_on_maybe_pickled_blob,
+                            _pickle_client(blob),
+                            method_name,
+                            path_or_file,
+                            **download_kwargs,
+                            **pickle_extra_kwargs,
+                        )
+                    )
+                else:
+                    futures.append(
+                        executor.submit(
+                            contextvars.copy_context().run,
+                            _call_method_on_maybe_pickled_blob,
+                            blob,
+                            method_name,
+                            path_or_file,
+                            **download_kwargs,
+                        )
+                    )
+            concurrent.futures.wait(
+                futures, timeout=deadline, return_when=concurrent.futures.ALL_COMPLETED
             )
-        concurrent.futures.wait(
-            futures, timeout=deadline, return_when=concurrent.futures.ALL_COMPLETED
-        )
 
     results = []
     for future in futures:
@@ -549,7 +629,9 @@ def upload_many_from_filenames(
         recreated in each subprocess. The serialization of the Client object
         for use in subprocesses is an approximation and may not capture every
         detail of the Client object, especially if the Client was modified after
-        its initial creation or if `Client._http` was modified in any way.
+        its initial creation, if `Client._http` was modified in any way, or if a
+        custom OpenTelemetry `meter_provider` was passed to `Client` (subprocess
+        workers fall back to the subprocess's global `MeterProvider`).
 
         THREAD worker types are observed to be relatively efficient for
         operations with many small files, but not for operations with large
@@ -600,15 +682,18 @@ def upload_many_from_filenames(
             setattr(blob, prop, value)
         file_blob_pairs.append((path, blob))
 
-    return upload_many(
-        file_blob_pairs,
-        skip_if_exists=skip_if_exists,
-        upload_kwargs=upload_kwargs,
-        deadline=deadline,
-        raise_exception=raise_exception,
-        worker_type=worker_type,
-        max_workers=max_workers,
-    )
+    with _helpers._client_method_override(
+        "storage.transfer_manager.upload_many_from_filenames"
+    ):
+        return upload_many(
+            file_blob_pairs,
+            skip_if_exists=skip_if_exists,
+            upload_kwargs=upload_kwargs,
+            deadline=deadline,
+            raise_exception=raise_exception,
+            worker_type=worker_type,
+            max_workers=max_workers,
+        )
 
 
 @_deprecate_threads_param
@@ -778,7 +863,9 @@ def download_many_to_path(
         recreated in each subprocess. The serialization of the Client object
         for use in subprocesses is an approximation and may not capture every
         detail of the Client object, especially if the Client was modified after
-        its initial creation or if `Client._http` was modified in any way.
+        its initial creation, if `Client._http` was modified in any way, or if a
+        custom OpenTelemetry `meter_provider` was passed to `Client` (subprocess
+        workers fall back to the subprocess's global `MeterProvider`).
 
         THREAD worker types are observed to be relatively efficient for
         operations with many small files, but not for operations with large
@@ -846,15 +933,18 @@ def download_many_to_path(
         blob_file_pairs.append((bucket.blob(full_blob_name), resolved_path))
         indices_to_process.append(i)
 
-    many_results = download_many(
-        blob_file_pairs,
-        download_kwargs=download_kwargs,
-        deadline=deadline,
-        raise_exception=raise_exception,
-        worker_type=worker_type,
-        max_workers=max_workers,
-        skip_if_exists=False,  # skip_if_exists is handled in the loop above
-    )
+    with _helpers._client_method_override(
+        "storage.transfer_manager.download_many_to_path"
+    ):
+        many_results = download_many(
+            blob_file_pairs,
+            download_kwargs=download_kwargs,
+            deadline=deadline,
+            raise_exception=raise_exception,
+            worker_type=worker_type,
+            max_workers=max_workers,
+            skip_if_exists=False,  # skip_if_exists is handled in the loop above
+        )
 
     for meta_index, result in zip(indices_to_process, many_results):
         results[meta_index] = result
@@ -929,7 +1019,9 @@ def download_chunks_concurrently(
         recreated in each subprocess. The serialization of the Client object
         for use in subprocesses is an approximation and may not capture every
         detail of the Client object, especially if the Client was modified after
-        its initial creation or if `Client._http` was modified in any way.
+        its initial creation, if `Client._http` was modified in any way, or if a
+        custom OpenTelemetry `meter_provider` was passed to `Client` (subprocess
+        workers fall back to the subprocess's global `MeterProvider`).
 
         THREAD worker types are observed to be relatively efficient for
         operations with many small files, but not for operations with large
@@ -961,88 +1053,140 @@ def download_chunks_concurrently(
             consistency with other download methods despite the exception
             originating elsewhere.
     """
-    client = blob.client
+    override_client = (
+        download_kwargs.get("client") if isinstance(download_kwargs, dict) else None
+    )
+    client = _helpers._resolve_operation_client(blob, override_client)
 
-    if download_kwargs is None:
-        download_kwargs = {}
-    if "start" in download_kwargs or "end" in download_kwargs:
-        raise ValueError(
-            "Download arguments 'start' and 'end' are not supported by download_chunks_concurrently."
-        )
-    if "checksum" in download_kwargs:
-        raise ValueError(
-            "'checksum' is in download_kwargs, but is not supported because sliced downloads have a different checksum mechanism from regular downloads. Use the 'crc32c_checksum' argument on download_chunks_concurrently instead."
-        )
-
-    download_kwargs = download_kwargs.copy()
-    download_kwargs["checksum"] = None
-    download_kwargs["command"] = "tm.download_sharded"
-
-    # We must know the size and the generation of the blob.
-    if not blob.size or not blob.generation:
-        blob.reload()
-
-    pool_class, needs_pickling = _get_pool_class_and_requirements(worker_type)
-    # Pickle the blob ahead of time (just once, not once per chunk) if needed.
-    maybe_pickled_blob = _pickle_client(blob) if needs_pickling else blob
-
-    futures = []
-
-    # Create and/or truncate the destination file to prepare for sparse writing.
-    with open(filename, "wb") as _:
-        pass
-
-    with pool_class(max_workers=max_workers) as executor:
-        cursor = 0
-        end = blob.size
-        while cursor < end:
-            start = cursor
-            cursor = min(cursor + chunk_size, end)
-            futures.append(
-                executor.submit(
-                    _download_and_write_chunk_in_place,
-                    maybe_pickled_blob,
-                    filename,
-                    start=start,
-                    end=cursor - 1,
-                    download_kwargs=download_kwargs,
-                    crc32c_checksum=crc32c_checksum,
+    with _helpers._start_storage_operation(
+        client,
+        "storage.transfer_manager.download_chunks_concurrently",
+        "ReadObject",
+    ):
+        with _helpers._suppress_body_size():
+            if download_kwargs is None:
+                download_kwargs = {}
+            if "start" in download_kwargs or "end" in download_kwargs:
+                raise ValueError(
+                    "Download arguments 'start' and 'end' are not supported by download_chunks_concurrently."
                 )
+            if "checksum" in download_kwargs:
+                raise ValueError(
+                    "'checksum' is in download_kwargs, but is not supported because sliced downloads have a different checksum mechanism from regular downloads. Use the 'crc32c_checksum' argument on download_chunks_concurrently instead."
+                )
+
+            download_kwargs = download_kwargs.copy()
+            download_kwargs["checksum"] = None
+            download_kwargs["command"] = "tm.download_sharded"
+
+            # We must know the size and the generation of the blob.
+            if not blob.size or not blob.generation:
+                if override_client is not None:
+                    blob.reload(client=override_client)
+                else:
+                    blob.reload()
+
+            pool_class, needs_pickling = _get_pool_class_and_requirements(worker_type)
+            # Pickle the blob ahead of time (just once, not once per chunk) if needed.
+            maybe_pickled_blob = _pickle_client(blob) if needs_pickling else blob
+            pickle_extra_kwargs = (
+                {"_gcs_suppress_metrics": True}
+                if _helpers._SUPPRESS_INTERNAL_METRICS.get()
+                else {}
             )
 
-        concurrent.futures.wait(
-            futures, timeout=deadline, return_when=concurrent.futures.ALL_COMPLETED
-        )
+            futures = []
 
-    # Raise any exceptions; combine checksums.
-    results = []
-    for future in futures:
-        results.append(future.result())
+            # Create and/or truncate the destination file to prepare for sparse writing.
+            with open(filename, "wb") as _:
+                pass
 
-    if crc32c_checksum and results:
-        crc_digest = _digest_ordered_checksum_and_size_pairs(results)
-        actual_checksum = base64.b64encode(crc_digest).decode("utf-8")
-        expected_checksum = blob.crc32c
-        if actual_checksum != expected_checksum:
-            # For consistency with other download methods we will use
-            # "google.cloud.storage._media.common.DataCorruption" despite the error
-            # not originating inside google.cloud.storage._media.
-            download_url = blob._get_download_url(
-                client,
-                if_generation_match=download_kwargs.get("if_generation_match"),
-                if_generation_not_match=download_kwargs.get("if_generation_not_match"),
-                if_metageneration_match=download_kwargs.get("if_metageneration_match"),
-                if_metageneration_not_match=download_kwargs.get(
-                    "if_metageneration_not_match"
-                ),
-            )
-            raise DataCorruption(
-                None,
-                DOWNLOAD_CRC32C_MISMATCH_TEMPLATE.format(
-                    download_url, expected_checksum, actual_checksum
-                ),
-            )
-    return None
+            with pool_class(max_workers=max_workers) as executor:
+                cursor = 0
+                end = blob.size
+                while cursor < end:
+                    start = cursor
+                    cursor = min(cursor + chunk_size, end)
+                    if needs_pickling:
+                        futures.append(
+                            executor.submit(
+                                _download_and_write_chunk_in_place,
+                                maybe_pickled_blob,
+                                filename,
+                                start=start,
+                                end=cursor - 1,
+                                download_kwargs=download_kwargs,
+                                crc32c_checksum=crc32c_checksum,
+                                **pickle_extra_kwargs,
+                            )
+                        )
+                    else:
+                        futures.append(
+                            executor.submit(
+                                contextvars.copy_context().run,
+                                functools.partial(
+                                    _download_and_write_chunk_in_place,
+                                    maybe_pickled_blob,
+                                    filename,
+                                    start=start,
+                                    end=cursor - 1,
+                                    download_kwargs=download_kwargs,
+                                    crc32c_checksum=crc32c_checksum,
+                                ),
+                            )
+                        )
+
+                concurrent.futures.wait(
+                    futures,
+                    timeout=deadline,
+                    return_when=concurrent.futures.ALL_COMPLETED,
+                )
+
+            # Raise any exceptions; combine checksums.
+            results = []
+            for future in futures:
+                results.append(future.result())
+
+            if crc32c_checksum and results:
+                crc_digest = _digest_ordered_checksum_and_size_pairs(results)
+                actual_checksum = base64.b64encode(crc_digest).decode("utf-8")
+                expected_checksum = blob.crc32c
+                if actual_checksum != expected_checksum:
+                    # For consistency with other download methods we will use
+                    # "google.cloud.storage._media.common.DataCorruption" despite the error
+                    # not originating inside google.cloud.storage._media.
+                    download_url = blob._get_download_url(
+                        client,
+                        if_generation_match=download_kwargs.get("if_generation_match"),
+                        if_generation_not_match=download_kwargs.get(
+                            "if_generation_not_match"
+                        ),
+                        if_metageneration_match=download_kwargs.get(
+                            "if_metageneration_match"
+                        ),
+                        if_metageneration_not_match=download_kwargs.get(
+                            "if_metageneration_not_match"
+                        ),
+                    )
+                    raise DataCorruption(
+                        None,
+                        DOWNLOAD_CRC32C_MISMATCH_TEMPLATE.format(
+                            download_url, expected_checksum, actual_checksum
+                        ),
+                    )
+
+        if (
+            not _helpers._SUPPRESS_BODY_SIZE.get()
+            and not _helpers._SUPPRESS_INTERNAL_METRICS.get()
+        ):
+            recorder = _opentelemetry_metrics.get_active_recorder(client)
+            if (
+                recorder is not None
+                and isinstance(blob.size, int)
+                and not isinstance(blob.size, bool)
+            ):
+                recorder.record_response_body_size(blob.size, operation="ReadObject")
+        return None
 
 
 def upload_chunks_concurrently(
@@ -1121,7 +1265,9 @@ def upload_chunks_concurrently(
         recreated in each subprocess. The serialization of the Client object
         for use in subprocesses is an approximation and may not capture every
         detail of the Client object, especially if the Client was modified after
-        its initial creation or if `Client._http` was modified in any way.
+        its initial creation, if `Client._http` was modified in any way, or if a
+        custom OpenTelemetry `meter_provider` was passed to `Client` (subprocess
+        workers fall back to the subprocess's global `MeterProvider`).
 
         THREAD worker types are observed to be relatively efficient for
         operations with many small files, but not for operations with large
@@ -1172,79 +1318,130 @@ def upload_chunks_concurrently(
     """
 
     bucket = blob.bucket
-    client = blob.client
-    transport = blob._get_transport(client)
+    client = _helpers._resolve_operation_client(blob)
 
-    hostname = _get_host_name(client._connection)
-    url = "{hostname}/{bucket}/{blob}".format(
-        hostname=hostname, bucket=bucket.name, blob=_quote(blob.name)
-    )
+    with _helpers._start_storage_operation(
+        client,
+        "storage.transfer_manager.upload_chunks_concurrently",
+        "WriteObject",
+    ):
+        with _helpers._suppress_body_size():
+            transport = blob._get_transport(client)
 
-    base_headers, object_metadata, content_type = blob._get_upload_arguments(
-        client, content_type, filename=filename, command="tm.upload_sharded"
-    )
-    headers = {**base_headers, **_headers_from_metadata(object_metadata)}
-
-    if blob.user_project is not None:
-        headers["x-goog-user-project"] = blob.user_project
-
-    # When a Customer Managed Encryption Key is used to encrypt Cloud Storage object
-    # at rest, object resource metadata will store the version of the Key Management
-    # Service cryptographic material. If a Blob instance with KMS Key metadata set is
-    # used to upload a new version of the object then the existing kmsKeyName version
-    # value can't be used in the upload request and the client instead ignores it.
-    if blob.kms_key_name is not None and "cryptoKeyVersions" not in blob.kms_key_name:
-        headers["x-goog-encryption-kms-key-name"] = blob.kms_key_name
-
-    container = XMLMPUContainer(url, filename, headers=headers, retry=retry)
-
-    container.initiate(transport=transport, content_type=content_type)
-    upload_id = container.upload_id
-
-    size = os.path.getsize(filename)
-    num_of_parts = -(size // -chunk_size)  # Ceiling division
-
-    pool_class, needs_pickling = _get_pool_class_and_requirements(worker_type)
-    # Pickle the blob ahead of time (just once, not once per chunk) if needed.
-    maybe_pickled_client = _pickle_client(client) if needs_pickling else client
-
-    futures = []
-
-    with pool_class(max_workers=max_workers) as executor:
-        for part_number in range(1, num_of_parts + 1):
-            start = (part_number - 1) * chunk_size
-            end = min(part_number * chunk_size, size)
-
-            futures.append(
-                executor.submit(
-                    _upload_part,
-                    maybe_pickled_client,
-                    url,
-                    upload_id,
-                    filename,
-                    start=start,
-                    end=end,
-                    part_number=part_number,
-                    checksum=checksum,
-                    headers=headers.copy(),
-                    retry=retry,
-                )
+            hostname = _get_host_name(client._connection)
+            url = "{hostname}/{bucket}/{blob}".format(
+                hostname=hostname, bucket=bucket.name, blob=_quote(blob.name)
             )
 
-        concurrent.futures.wait(
-            futures, timeout=deadline, return_when=concurrent.futures.ALL_COMPLETED
-        )
+            base_headers, object_metadata, content_type = blob._get_upload_arguments(
+                client, content_type, filename=filename, command="tm.upload_sharded"
+            )
+            headers = {**base_headers, **_headers_from_metadata(object_metadata)}
 
-    try:
-        # Harvest results and raise exceptions.
-        for future in futures:
-            part_number, etag = future.result()
-            container.register_part(part_number, etag)
+            if blob.user_project is not None:
+                headers["x-goog-user-project"] = blob.user_project
 
-        container.finalize(blob._get_transport(client))
-    except Exception:
-        container.cancel(blob._get_transport(client))
-        raise
+            # When a Customer Managed Encryption Key is used to encrypt Cloud Storage object
+            # at rest, object resource metadata will store the version of the Key Management
+            # Service cryptographic material. If a Blob instance with KMS Key metadata set is
+            # used to upload a new version of the object then the existing kmsKeyName version
+            # value can't be used in the upload request and the client instead ignores it.
+            if (
+                blob.kms_key_name is not None
+                and "cryptoKeyVersions" not in blob.kms_key_name
+            ):
+                headers["x-goog-encryption-kms-key-name"] = blob.kms_key_name
+
+            container = XMLMPUContainer(url, filename, headers=headers, retry=retry)
+
+            container.initiate(transport=transport, content_type=content_type)
+            upload_id = container.upload_id
+
+            size = os.path.getsize(filename)
+            num_of_parts = -(size // -chunk_size)  # Ceiling division
+
+            pool_class, needs_pickling = _get_pool_class_and_requirements(worker_type)
+            # Pickle the blob ahead of time (just once, not once per chunk) if needed.
+            maybe_pickled_client = _pickle_client(client) if needs_pickling else client
+            pickle_extra_kwargs = (
+                {"_gcs_suppress_metrics": True}
+                if _helpers._SUPPRESS_INTERNAL_METRICS.get()
+                else {}
+            )
+
+            futures = []
+
+            with pool_class(max_workers=max_workers) as executor:
+                for part_number in range(1, num_of_parts + 1):
+                    start = (part_number - 1) * chunk_size
+                    end = min(part_number * chunk_size, size)
+
+                    if needs_pickling:
+                        futures.append(
+                            executor.submit(
+                                _upload_part,
+                                maybe_pickled_client,
+                                url,
+                                upload_id,
+                                filename,
+                                start=start,
+                                end=end,
+                                part_number=part_number,
+                                checksum=checksum,
+                                headers=headers.copy(),
+                                retry=retry,
+                                **pickle_extra_kwargs,
+                            )
+                        )
+                    else:
+                        futures.append(
+                            executor.submit(
+                                contextvars.copy_context().run,
+                                functools.partial(
+                                    _upload_part,
+                                    maybe_pickled_client,
+                                    url,
+                                    upload_id,
+                                    filename,
+                                    start=start,
+                                    end=end,
+                                    part_number=part_number,
+                                    checksum=checksum,
+                                    headers=headers.copy(),
+                                    retry=retry,
+                                ),
+                            )
+                        )
+
+                concurrent.futures.wait(
+                    futures,
+                    timeout=deadline,
+                    return_when=concurrent.futures.ALL_COMPLETED,
+                )
+
+            try:
+                # Harvest results and raise exceptions.
+                for future in futures:
+                    part_number, etag = future.result()
+                    container.register_part(part_number, etag)
+
+                container.finalize(blob._get_transport(client))
+            except BaseException as exc:
+                try:
+                    with _helpers._suppress_internal_metrics():
+                        container.cancel(blob._get_transport(client))
+                except BaseException as cleanup_exc:
+                    _helpers._record_primary_exception(exc, cleanup_exc)
+                    raise
+                raise
+
+        if (
+            not _helpers._SUPPRESS_BODY_SIZE.get()
+            and not _helpers._SUPPRESS_INTERNAL_METRICS.get()
+        ):
+            recorder = _opentelemetry_metrics.get_active_recorder(client)
+            if recorder is not None:
+                recorder.record_request_body_size(size, operation="WriteObject")
 
 
 def _upload_part(
@@ -1258,30 +1455,41 @@ def _upload_part(
     checksum,
     headers,
     retry,
+    _gcs_suppress_metrics=False,
 ):
     """Helper function that runs inside a thread or subprocess to upload a part.
 
     `maybe_pickled_client` is either a Client (for threads) or a specially
     pickled Client (for processes) because the default pickling mangles Client
     objects."""
-
-    if isinstance(maybe_pickled_client, Client):
-        client = maybe_pickled_client
-    else:
-        client = pickle.loads(maybe_pickled_client)
-    part = XMLMPUPart(
-        url,
-        upload_id,
-        filename,
-        start=start,
-        end=end,
-        part_number=part_number,
-        checksum=checksum,
-        headers=headers,
-        retry=retry,
+    suppress_ctx = (
+        _helpers._suppress_internal_metrics()
+        if _gcs_suppress_metrics
+        else nullcontext()
     )
-    part.upload(client._http)
-    return (part_number, part.etag)
+    with suppress_ctx:
+        if isinstance(maybe_pickled_client, Client):
+            client = maybe_pickled_client
+        else:
+            client = pickle.loads(maybe_pickled_client)
+        with _helpers._bind_suboperation_context(
+            client,
+            "storage.transfer_manager.upload_chunks_concurrently",
+            "WriteObject",
+        ):
+            part = XMLMPUPart(
+                url,
+                upload_id,
+                filename,
+                start=start,
+                end=end,
+                part_number=part_number,
+                checksum=checksum,
+                headers=headers,
+                retry=retry,
+            )
+            part.upload(client._http)
+            return (part_number, part.etag)
 
 
 def _headers_from_metadata(metadata):
@@ -1300,7 +1508,13 @@ def _headers_from_metadata(metadata):
 
 
 def _download_and_write_chunk_in_place(
-    maybe_pickled_blob, filename, start, end, download_kwargs, crc32c_checksum
+    maybe_pickled_blob,
+    filename,
+    start,
+    end,
+    download_kwargs,
+    crc32c_checksum,
+    _gcs_suppress_metrics=False,
 ):
     """Helper function that runs inside a thread or subprocess.
 
@@ -1310,15 +1524,26 @@ def _download_and_write_chunk_in_place(
 
     Returns a crc if configured (or None) and the size written.
     """
+    suppress_ctx = (
+        _helpers._suppress_internal_metrics()
+        if _gcs_suppress_metrics
+        else nullcontext()
+    )
+    with suppress_ctx:
+        if isinstance(maybe_pickled_blob, Blob):
+            blob = maybe_pickled_blob
+        else:
+            blob = pickle.loads(maybe_pickled_blob)
 
-    if isinstance(maybe_pickled_blob, Blob):
-        blob = maybe_pickled_blob
-    else:
-        blob = pickle.loads(maybe_pickled_blob)
-
-    with _ChecksummingSparseFileWrapper(filename, start, crc32c_checksum) as f:
-        blob._prep_and_do_download(f, start=start, end=end, **download_kwargs)
-        return (f.crc, (end - start) + 1)
+        override_client = download_kwargs.get("client")
+        with _helpers._bind_suboperation_context(
+            _helpers._resolve_operation_client(blob, override_client),
+            "storage.transfer_manager.download_chunks_concurrently",
+            "ReadObject",
+        ):
+            with _ChecksummingSparseFileWrapper(filename, start, crc32c_checksum) as f:
+                blob._prep_and_do_download(f, start=start, end=end, **download_kwargs)
+                return (f.crc, (end - start) + 1)
 
 
 class _ChecksummingSparseFileWrapper:
@@ -1354,6 +1579,14 @@ class _ChecksummingSparseFileWrapper:
         self.f.close()
 
 
+def _invoke_maybe_pickled_blob(maybe_pickled_blob, method_name, *args, **kwargs):
+    if isinstance(maybe_pickled_blob, Blob):
+        blob = maybe_pickled_blob
+    else:
+        blob = pickle.loads(maybe_pickled_blob)
+    return getattr(blob, method_name)(*args, **kwargs)
+
+
 def _call_method_on_maybe_pickled_blob(
     maybe_pickled_blob, method_name, *args, **kwargs
 ):
@@ -1362,12 +1595,19 @@ def _call_method_on_maybe_pickled_blob(
     `maybe_pickled_blob` is either a Blob (for threads) or a specially pickled
     Blob (for processes) because the default pickling mangles Client objects
     which are attached to Blobs."""
-
-    if isinstance(maybe_pickled_blob, Blob):
-        blob = maybe_pickled_blob
-    else:
-        blob = pickle.loads(maybe_pickled_blob)
-    return getattr(blob, method_name)(*args, **kwargs)
+    method_override = kwargs.pop("_gcs_method_override", None)
+    suppress_metrics = kwargs.pop("_gcs_suppress_metrics", False)
+    if suppress_metrics:
+        with _helpers._suppress_internal_metrics():
+            return _invoke_maybe_pickled_blob(
+                maybe_pickled_blob, method_name, *args, **kwargs
+            )
+    if method_override is not None:
+        with _helpers._client_method_override(method_override):
+            return _invoke_maybe_pickled_blob(
+                maybe_pickled_blob, method_name, *args, **kwargs
+            )
+    return _invoke_maybe_pickled_blob(maybe_pickled_blob, method_name, *args, **kwargs)
 
 
 def _reduce_client(cl):
@@ -1485,4 +1725,12 @@ class _LazyClient:
                 args = args[:_REDUCE_CLIENT_POS_ARGS]
             cached_client = Client(*args, **kwargs)
             _cached_clients[id] = cached_client
+            global _cleanup_registered_pid
+            pid = os.getpid()
+            if _cleanup_registered_pid != pid:
+                atexit.register(_cleanup_cached_clients)
+                multiprocessing.util.Finalize(
+                    None, _cleanup_cached_clients, exitpriority=10
+                )
+                _cleanup_registered_pid = pid
             return cached_client
