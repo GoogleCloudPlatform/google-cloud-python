@@ -179,6 +179,46 @@ def _start_storage_operation(client, client_method, operation):
         _ACTIVE_METRICS_RECORDER.reset(rec_token)
 
 
+@contextmanager
+def _bind_suboperation_context(client, client_method, operation):
+    """Binds parent operation attribution without emitting a nested logical operation.
+
+    Used by streaming file I/O (``BlobReader``/``BlobWriter``) and concurrent
+    ``transfer_manager`` chunk workers so physical HTTP attempts and TTFB carry
+    the parent ``gcp.storage.operation`` while per-chunk logical operations and
+    body sizes are suppressed.
+    """
+    if _SUPPRESS_INTERNAL_METRICS.get():
+        yield None
+        return
+
+    recorder = _opentelemetry_metrics.get_active_recorder(client)
+    if recorder is None:
+        yield None
+        return
+
+    resolved_op = _opentelemetry_metrics.normalize_logical_operation(operation)
+    resolved_rpc = _opentelemetry_metrics.resolve_rpc_method(
+        resolved_op, rpc_method=operation
+    )
+    op_state = _opentelemetry_metrics._OperationState(
+        client_method=client_method,
+        operation=resolved_op,
+        rpc_method=resolved_rpc,
+        suppressed=False,
+    )
+    op_token = _opentelemetry_metrics._OP_STATE.set(op_state)
+    rec_token = _ACTIVE_METRICS_RECORDER.set(recorder)
+    body_token = _SUPPRESS_BODY_SIZE.set(True)
+    try:
+        yield op_state
+    finally:
+        op_state.finished = True
+        _SUPPRESS_BODY_SIZE.reset(body_token)
+        _ACTIVE_METRICS_RECORDER.reset(rec_token)
+        _opentelemetry_metrics._OP_STATE.reset(op_token)
+
+
 STORAGE_EMULATOR_ENV_VAR = "STORAGE_EMULATOR_HOST"  # Despite name, includes scheme.
 """Environment variable defining host for Storage emulator."""
 

@@ -44,6 +44,7 @@ from google.cloud.storage._helpers import (
     _add_etag_match_headers,
     _add_generation_match_parameters,
     _bucket_bound_hostname_url,
+    _client_method_override,
     _get_default_headers,
     _get_default_storage_base_url,
     _PropertyMixin,
@@ -81,7 +82,11 @@ from google.cloud.storage.constants import (
     STANDARD_STORAGE_CLASS,
 )
 from google.cloud.storage.exceptions import DataCorruption, InvalidResponse
-from google.cloud.storage.fileio import BlobReader, BlobWriter
+from google.cloud.storage.fileio import (
+    BlobReader,
+    BlobWriter,
+    _MetricsTextIOWrapper,
+)
 from google.cloud.storage.retry import (
     DEFAULT_RETRY,
     DEFAULT_RETRY_IF_ETAG_IN_JSON,
@@ -4610,56 +4615,96 @@ class Blob(_PropertyMixin):
             of those classes, depending on the 'mode' argument.
         """
         with self._create_trace_span(name="Storage.Blob.open"):
-            if mode == "rb":
-                if encoding or errors or newline:
-                    raise ValueError(
-                        "encoding, errors and newline arguments are for text mode only"
-                    )
-                if ignore_flush:
-                    raise ValueError(
-                        "ignore_flush argument is for non-text write mode only"
-                    )
-                return BlobReader(self, chunk_size=chunk_size, **kwargs)
-            elif mode == "wb":
-                if encoding or errors or newline:
-                    raise ValueError(
-                        "encoding, errors and newline arguments are for text mode only"
-                    )
-                return BlobWriter(
-                    self,
-                    chunk_size=chunk_size,
-                    ignore_flush=ignore_flush,
-                    **kwargs,
-                )
-            elif mode in ("r", "rt"):
-                if ignore_flush:
-                    raise ValueError(
-                        "ignore_flush argument is for non-text write mode only"
-                    )
-                return TextIOWrapper(
-                    BlobReader(self, chunk_size=chunk_size, **kwargs),
-                    encoding=encoding,
-                    errors=errors,
-                    newline=newline,
-                )
-            elif mode in ("w", "wt"):
-                if ignore_flush is False:
-                    raise ValueError(
-                        "ignore_flush is required for text mode writing and "
-                        "cannot be set to False"
-                    )
-                return TextIOWrapper(
-                    BlobWriter(
-                        self, chunk_size=chunk_size, ignore_flush=True, **kwargs
-                    ),
-                    encoding=encoding,
-                    errors=errors,
-                    newline=newline,
-                )
+            op_client = _resolve_operation_client(self)
+            if isinstance(mode, str) and mode.startswith("r"):
+                op_name = "ReadObject"
+            elif isinstance(mode, str) and mode.startswith("w"):
+                op_name = "WriteObject"
             else:
-                raise NotImplementedError(
-                    "Supported modes strings are 'r', 'rb', 'rt', 'w', 'wb', and 'wt' only."
-                )
+                op_name = "UNKNOWN"
+
+            try:
+                if mode == "rb":
+                    if encoding or errors or newline:
+                        raise ValueError(
+                            "encoding, errors and newline arguments are for text mode only"
+                        )
+                    if ignore_flush:
+                        raise ValueError(
+                            "ignore_flush argument is for non-text write mode only"
+                        )
+                elif mode == "wb":
+                    if encoding or errors or newline:
+                        raise ValueError(
+                            "encoding, errors and newline arguments are for text mode only"
+                        )
+                elif mode in ("r", "rt"):
+                    if ignore_flush:
+                        raise ValueError(
+                            "ignore_flush argument is for non-text write mode only"
+                        )
+                elif mode in ("w", "wt"):
+                    if ignore_flush is False:
+                        raise ValueError(
+                            "ignore_flush is required for text mode writing and "
+                            "cannot be set to False"
+                        )
+                else:
+                    raise NotImplementedError(
+                        "Supported modes strings are 'r', 'rb', 'rt', 'w', 'wb', and 'wt' only."
+                    )
+            except BaseException:
+                with _start_storage_operation(op_client, "storage.Blob.open", op_name):
+                    raise
+
+            with _client_method_override("storage.Blob.open"):
+                if mode == "rb":
+                    return BlobReader(self, chunk_size=chunk_size, **kwargs)
+                elif mode == "wb":
+                    return BlobWriter(
+                        self,
+                        chunk_size=chunk_size,
+                        ignore_flush=ignore_flush,
+                        **kwargs,
+                    )
+                elif mode in ("r", "rt"):
+                    raw_reader = BlobReader(self, chunk_size=chunk_size, **kwargs)
+                    wrapper_cls = (
+                        _MetricsTextIOWrapper
+                        if raw_reader._metrics_recorder is not None
+                        else TextIOWrapper
+                    )
+                    try:
+                        return wrapper_cls(
+                            raw_reader,
+                            encoding=encoding,
+                            errors=errors,
+                            newline=newline,
+                        )
+                    except BaseException as exc:
+                        raw_reader._buffer.close()
+                        raw_reader._finalize_metrics(exc=exc, record_body=False)
+                        raise
+                else:
+                    raw_writer = BlobWriter(
+                        self, chunk_size=chunk_size, ignore_flush=True, **kwargs
+                    )
+                    wrapper_cls = (
+                        _MetricsTextIOWrapper
+                        if raw_writer._metrics_recorder is not None
+                        else TextIOWrapper
+                    )
+                    try:
+                        return wrapper_cls(
+                            raw_writer,
+                            encoding=encoding,
+                            errors=errors,
+                            newline=newline,
+                        )
+                    except BaseException as exc:
+                        raw_writer._buffer.close()
+                        raw_writer._finalize_metrics(exc=exc, record_body=False)
+                        raise
 
     cache_control = _scalar_property("cacheControl")
     """HTTP 'Cache-Control' header for this object.
