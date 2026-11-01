@@ -40,6 +40,7 @@ from google.cloud.exceptions import NotFound
 from google.cloud import exceptions
 from google.cloud.storage._helpers import (
     _API_VERSION,
+    _SUPPRESS_BODY_SIZE,
     _add_etag_match_headers,
     _add_generation_match_parameters,
     _bucket_bound_hostname_url,
@@ -47,9 +48,11 @@ from google.cloud.storage._helpers import (
     _get_default_storage_base_url,
     _PropertyMixin,
     _raise_if_more_than_one_set,
+    _record_primary_exception,
     _resolve_operation_client,
     _scalar_property,
     _start_storage_operation,
+    _suppress_internal_metrics,
     _virtual_hosted_style_base_url,
 )
 from google.cloud.storage._media.requests import (
@@ -59,6 +62,9 @@ from google.cloud.storage._media.requests import (
     RawChunkedDownload,
     RawDownload,
     ResumableUpload,
+)
+from google.cloud.storage._media.requests import (
+    _request_helpers as _media_request_helpers,
 )
 from google.cloud.storage._opentelemetry_tracing import (
     _get_opentelemetry_attributes_from_url,
@@ -1157,6 +1163,13 @@ class Blob(_PropertyMixin):
                         self.name,
                     )
 
+        if not _SUPPRESS_BODY_SIZE.get():
+            recorder = _media_request_helpers.resolve_transport_recorder(transport)
+            if recorder is not None:
+                received = getattr(download, "_bytes_downloaded", 0)
+                if isinstance(received, int) and not isinstance(received, bool):
+                    recorder.record_response_body_size(received, operation="ReadObject")
+
     def download_to_file(
         self,
         file_obj,
@@ -1309,24 +1322,33 @@ class Blob(_PropertyMixin):
 
         For *args and **kwargs, refer to the documentation for download_to_filename() for more information.
         """
+        default_method = (
+            "storage.transfer_manager.download_many"
+            if kwargs.get("command") == "tm.download_many"
+            else "storage.Blob.download_to_filename"
+        )
+        with _start_storage_operation(
+            _resolve_operation_client(self, kwargs.get("client")),
+            default_method,
+            "ReadObject",
+        ):
+            try:
+                with open(filename, "wb") as file_obj:
+                    self._prep_and_do_download(
+                        file_obj,
+                        *args,
+                        **kwargs,
+                    )
 
-        try:
-            with open(filename, "wb") as file_obj:
-                self._prep_and_do_download(
-                    file_obj,
-                    *args,
-                    **kwargs,
-                )
+            except (DataCorruption, NotFound):
+                # Delete the corrupt or empty downloaded file.
+                os.remove(filename)
+                raise
 
-        except (DataCorruption, NotFound):
-            # Delete the corrupt or empty downloaded file.
-            os.remove(filename)
-            raise
-
-        updated = self.updated
-        if updated is not None:
-            mtime = updated.timestamp()
-            os.utime(file_obj.name, (mtime, mtime))
+            updated = self.updated
+            if updated is not None:
+                mtime = updated.timestamp()
+                os.utime(file_obj.name, (mtime, mtime))
 
     def download_to_filename(
         self,
@@ -2120,6 +2142,12 @@ class Blob(_PropertyMixin):
             response = upload.transmit(
                 transport, data, object_metadata, content_type, timeout=timeout
             )
+            if not _SUPPRESS_BODY_SIZE.get():
+                recorder = _media_request_helpers.resolve_transport_recorder(transport)
+                if recorder is not None:
+                    recorder.record_request_body_size(
+                        len(data), operation="WriteObject"
+                    )
 
             return response
 
@@ -2520,10 +2548,23 @@ class Blob(_PropertyMixin):
             while not upload.finished:
                 try:
                     response = upload.transmit_next_chunk(transport, timeout=timeout)
-                except DataCorruption:
+                except DataCorruption as exc:
                     # Attempt to delete the corrupted object.
-                    self.delete()
+                    try:
+                        with _suppress_internal_metrics():
+                            self.delete()
+                    except BaseException as cleanup_exc:
+                        _record_primary_exception(exc, cleanup_exc)
+                        raise
                     raise
+            if not _SUPPRESS_BODY_SIZE.get():
+                recorder = _media_request_helpers.resolve_transport_recorder(transport)
+                if recorder is not None:
+                    uploaded = getattr(upload, "bytes_uploaded", 0)
+                    if isinstance(uploaded, int) and not isinstance(uploaded, bool):
+                        recorder.record_request_body_size(
+                            uploaded, operation="WriteObject"
+                        )
             return response
 
     def _do_upload(
@@ -2887,29 +2928,39 @@ class Blob(_PropertyMixin):
         :raises: :class:`~google.cloud.exceptions.GoogleCloudError`
                  if the upload response returns an error status.
         """
-        _maybe_rewind(file_obj, rewind=rewind)
-        predefined_acl = ACL.validate_predefined(predefined_acl)
+        default_method = (
+            "storage.transfer_manager.upload_many"
+            if command == "tm.upload_many"
+            else "storage.Blob.upload_from_file"
+        )
+        with _start_storage_operation(
+            _resolve_operation_client(self, client),
+            default_method,
+            "WriteObject",
+        ):
+            _maybe_rewind(file_obj, rewind=rewind)
+            predefined_acl = ACL.validate_predefined(predefined_acl)
 
-        try:
-            created_json = self._do_upload(
-                client,
-                file_obj,
-                content_type,
-                size,
-                predefined_acl,
-                if_generation_match,
-                if_generation_not_match,
-                if_metageneration_match,
-                if_metageneration_not_match,
-                timeout=timeout,
-                checksum=checksum,
-                retry=retry,
-                command=command,
-                crc32c_checksum_value=crc32c_checksum_value,
-            )
-            self._set_properties(created_json)
-        except InvalidResponse as exc:
-            _raise_from_invalid_response(exc)
+            try:
+                created_json = self._do_upload(
+                    client,
+                    file_obj,
+                    content_type,
+                    size,
+                    predefined_acl,
+                    if_generation_match,
+                    if_generation_not_match,
+                    if_metageneration_match,
+                    if_metageneration_not_match,
+                    timeout=timeout,
+                    checksum=checksum,
+                    retry=retry,
+                    command=command,
+                    crc32c_checksum_value=crc32c_checksum_value,
+                )
+                self._set_properties(created_json)
+            except InvalidResponse as exc:
+                _raise_from_invalid_response(exc)
 
     def upload_from_file(
         self,
@@ -3104,18 +3155,27 @@ class Blob(_PropertyMixin):
 
         For *args and **kwargs, refer to the documentation for upload_from_filename() for more information.
         """
+        default_method = (
+            "storage.transfer_manager.upload_many"
+            if kwargs.get("command") == "tm.upload_many"
+            else "storage.Blob.upload_from_filename"
+        )
+        with _start_storage_operation(
+            _resolve_operation_client(self, kwargs.get("client")),
+            default_method,
+            "WriteObject",
+        ):
+            content_type = self._get_content_type(content_type, filename=filename)
 
-        content_type = self._get_content_type(content_type, filename=filename)
-
-        with open(filename, "rb") as file_obj:
-            total_bytes = os.fstat(file_obj.fileno()).st_size
-            self._prep_and_do_upload(
-                file_obj,
-                content_type=content_type,
-                size=total_bytes,
-                *args,
-                **kwargs,
-            )
+            with open(filename, "rb") as file_obj:
+                total_bytes = os.fstat(file_obj.fileno()).st_size
+                self._prep_and_do_upload(
+                    file_obj,
+                    content_type=content_type,
+                    size=total_bytes,
+                    *args,
+                    **kwargs,
+                )
 
     def upload_from_filename(
         self,
@@ -4775,59 +4835,71 @@ class Blob(_PropertyMixin):
             to be included in the X-Goog-API-Client header. Please leave as None
             unless otherwise directed.
         """
-        # Handle ConditionalRetryPolicy.
-        if isinstance(retry, ConditionalRetryPolicy):
-            # Conditional retries are designed for non-media calls, which change
-            # arguments into query_params dictionaries. Media operations work
-            # differently, so here we make a "fake" query_params to feed to the
-            # ConditionalRetryPolicy.
-            query_params = {
-                "ifGenerationMatch": if_generation_match,
-                "ifMetagenerationMatch": if_metageneration_match,
-            }
-            retry = retry.get_retry_policy_if_conditions_met(query_params=query_params)
-
-        client = self._require_client(client)
-
-        download_url = self._get_download_url(
-            client,
-            if_generation_match=if_generation_match,
-            if_generation_not_match=if_generation_not_match,
-            if_metageneration_match=if_metageneration_match,
-            if_metageneration_not_match=if_metageneration_not_match,
+        default_method = (
+            "storage.transfer_manager.download_many"
+            if command == "tm.download_many"
+            else "storage.Blob.download_to_file"
         )
-        headers = _get_encryption_headers(self._encryption_key)
-        headers["accept-encoding"] = "gzip"
-        _add_etag_match_headers(
-            headers,
-            if_etag_match=if_etag_match,
-            if_etag_not_match=if_etag_not_match,
-        )
-        # Add any client attached custom headers to be sent with the request.
-        headers = {
-            **_get_default_headers(client._connection.user_agent, command=command),
-            **headers,
-            **getattr(client, "_extra_headers", {}),
-        }
+        with _start_storage_operation(
+            _resolve_operation_client(self, client),
+            default_method,
+            "ReadObject",
+        ):
+            # Handle ConditionalRetryPolicy.
+            if isinstance(retry, ConditionalRetryPolicy):
+                # Conditional retries are designed for non-media calls, which change
+                # arguments into query_params dictionaries. Media operations work
+                # differently, so here we make a "fake" query_params to feed to the
+                # ConditionalRetryPolicy.
+                query_params = {
+                    "ifGenerationMatch": if_generation_match,
+                    "ifMetagenerationMatch": if_metageneration_match,
+                }
+                retry = retry.get_retry_policy_if_conditions_met(
+                    query_params=query_params
+                )
 
-        transport = client._http
+            client = self._require_client(client)
 
-        try:
-            self._do_download(
-                transport,
-                file_obj,
-                download_url,
-                headers,
-                start,
-                end,
-                raw_download,
-                timeout=timeout,
-                checksum=checksum,
-                retry=retry,
-                single_shot_download=single_shot_download,
+            download_url = self._get_download_url(
+                client,
+                if_generation_match=if_generation_match,
+                if_generation_not_match=if_generation_not_match,
+                if_metageneration_match=if_metageneration_match,
+                if_metageneration_not_match=if_metageneration_not_match,
             )
-        except InvalidResponse as exc:
-            _raise_from_invalid_response(exc)
+            headers = _get_encryption_headers(self._encryption_key)
+            headers["accept-encoding"] = "gzip"
+            _add_etag_match_headers(
+                headers,
+                if_etag_match=if_etag_match,
+                if_etag_not_match=if_etag_not_match,
+            )
+            # Add any client attached custom headers to be sent with the request.
+            headers = {
+                **_get_default_headers(client._connection.user_agent, command=command),
+                **headers,
+                **getattr(client, "_extra_headers", {}),
+            }
+
+            transport = client._http
+
+            try:
+                self._do_download(
+                    transport,
+                    file_obj,
+                    download_url,
+                    headers,
+                    start,
+                    end,
+                    raw_download,
+                    timeout=timeout,
+                    checksum=checksum,
+                    retry=retry,
+                    single_shot_download=single_shot_download,
+                )
+            except InvalidResponse as exc:
+                _raise_from_invalid_response(exc)
 
     @property
     def component_count(self):

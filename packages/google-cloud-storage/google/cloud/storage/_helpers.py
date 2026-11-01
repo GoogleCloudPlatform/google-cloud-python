@@ -116,6 +116,19 @@ _NON_BATCHABLE_OPERATIONS = frozenset(
 )
 
 
+def _record_primary_exception(exc, cleanup_exc):
+    """Pins ``exc`` on the active root operation when ``cleanup_exc`` escapes."""
+    op = _opentelemetry_metrics.get_current_operation()
+    if op is not None:
+        prev_cleanup = getattr(op, "_pinned_cleanup_exc", None)
+        if prev_cleanup is None or not any(
+            item is prev_cleanup
+            for item in _opentelemetry_metrics._iter_exception_chain(cleanup_exc)
+        ):
+            op._pinned_exc = exc
+            op._pinned_cleanup_exc = cleanup_exc
+
+
 @contextmanager
 def _start_storage_operation(client, client_method, operation):
     """Starts a logical GCS standard metrics operation if enabled on ``client``."""
@@ -137,14 +150,31 @@ def _start_storage_operation(client, client_method, operation):
         return
 
     effective_method = _CLIENT_METHOD_OVERRIDE.get() or client_method
+    is_root = _opentelemetry_metrics.get_current_operation() is None
     rec_token = _ACTIVE_METRICS_RECORDER.set(recorder)
     try:
-        with _opentelemetry_metrics.start_operation(
+        cm = _opentelemetry_metrics.start_operation(
             recorder=recorder,
             client_method=effective_method,
             operation=operation,
-        ) as state:
+        )
+        state = cm.__enter__()
+        try:
             yield state
+        except BaseException as exc:
+            metric_exc = exc
+            if is_root:
+                pinned = getattr(state, "_pinned_exc", None)
+                cleanup_exc = getattr(state, "_pinned_cleanup_exc", None)
+                if pinned is not None and any(
+                    item is cleanup_exc
+                    for item in _opentelemetry_metrics._iter_exception_chain(exc)
+                ):
+                    metric_exc = pinned
+            cm.__exit__(type(metric_exc), metric_exc, metric_exc.__traceback__)
+            raise
+        else:
+            cm.__exit__(None, None, None)
     finally:
         _ACTIVE_METRICS_RECORDER.reset(rec_token)
 
