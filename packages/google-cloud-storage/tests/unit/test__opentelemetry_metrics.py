@@ -998,7 +998,7 @@ def test_start_operation_exception_and_suppression(monkeypatch):
             assert child_suppressed is not None
             assert child_suppressed.suppressed is True
             assert child_suppressed.client_method == "storage.Blob.open"
-            # Prefetch body size and TTFB are suppressed inside child_suppressed
+            # Prefetch body size is suppressed inside child_suppressed, while attempt-scoped TTFB is recorded
             recorder.record_response_body_size(40 * 1024 * 1024)
             recorder.record_ttfb(0.05)
         # Outside the suppressed prefetch block, actual user bytes are recorded
@@ -1009,7 +1009,13 @@ def test_start_operation_exception_and_suppression(monkeypatch):
 
     recorder.response_body_size.record.assert_called_once()
     assert recorder.response_body_size.record.call_args[0][0] == 1024
-    recorder.operation_ttfb.record.assert_not_called()
+    recorder.ttfb.record.assert_called_once()
+    ttfb_val, ttfb_kw = (
+        recorder.ttfb.record.call_args[0][0],
+        recorder.ttfb.record.call_args[1],
+    )
+    assert ttfb_val == 0.05
+    assert ttfb_kw["attributes"]["gcp.storage.operation"] == "storage.objects.get"
     recorder.operations_counter.add.assert_called_once()
 
 
@@ -1454,7 +1460,11 @@ def test_normalize_logical_operation_and_resolve_rpc_method():
     )
     assert (
         _opentelemetry_metrics.resolve_rpc_method("GetNotificationConfig")
-        == "google.storage.v1.Storage/GetNotificationConfig"
+        == "google.storage.v2.Storage/GetNotificationConfig"
+    )
+    assert (
+        _opentelemetry_metrics.resolve_rpc_method("RestoreBucket")
+        == "google.storage.v2.Storage/RestoreBucket"
     )
     assert (
         _opentelemetry_metrics.resolve_rpc_method("storage.objects.get")

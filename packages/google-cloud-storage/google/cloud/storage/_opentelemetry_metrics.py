@@ -31,7 +31,6 @@ from typing import (
     Any,
     Deque,
     Dict,
-    FrozenSet,
     Iterator,
     List,
     Optional,
@@ -748,35 +747,6 @@ _GRPC_LOGICAL_OPERATION_OVERRIDES: Dict[str, str] = {
     "BidiWriteObject": "WriteObject",
 }
 
-_RPC_V2_METHODS: FrozenSet[str] = frozenset(
-    {
-        "BidiReadObject",
-        "BidiWriteObject",
-        "CancelResumableWrite",
-        "ComposeObject",
-        "CreateBucket",
-        "DeleteBucket",
-        "DeleteObject",
-        "GetBucket",
-        "GetIamPolicy",
-        "GetObject",
-        "ListBuckets",
-        "ListObjects",
-        "LockBucketRetentionPolicy",
-        "MoveObject",
-        "QueryWriteStatus",
-        "ReadObject",
-        "RestoreObject",
-        "RewriteObject",
-        "SetIamPolicy",
-        "StartResumableWrite",
-        "TestIamPermissions",
-        "UpdateBucket",
-        "UpdateObject",
-        "WriteObject",
-    }
-)
-
 
 def normalize_logical_operation(operation: Optional[str]) -> str:
     """Normalizes an RPC path or method name into a short logical ``gcp.storage.operation``."""
@@ -799,13 +769,9 @@ def resolve_rpc_method(
     cleaned = raw.strip().strip("/")
     if not cleaned or cleaned == "UNKNOWN":
         return "UNKNOWN"
-    if "/" in cleaned:
+    if "/" in cleaned or "." in cleaned:
         return cleaned
-    if cleaned in _RPC_V2_METHODS:
-        return f"google.storage.v2.Storage/{cleaned}"
-    if "." in cleaned:
-        return cleaned
-    return f"google.storage.v1.Storage/{cleaned}"
+    return f"google.storage.v2.Storage/{cleaned}"
 
 
 @dataclass
@@ -1387,8 +1353,6 @@ class _MetricsRecorder:
         if not self.standard_enabled or self.meter is None:
             return
         current_op = get_current_operation()
-        if current_op is not None and current_op.suppressed:
-            return
         raw_op = operation or (current_op.operation if current_op else None)
         attrs: Dict[str, Any] = self._base_attributes.copy()
         if raw_op is not None:
