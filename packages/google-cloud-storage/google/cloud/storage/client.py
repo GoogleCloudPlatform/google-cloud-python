@@ -37,6 +37,7 @@ from google.cloud.storage._bucket_metadata_cache import BucketMetadataCache
 from google.cloud.storage._helpers import (
     _DEFAULT_SCHEME,
     _DEFAULT_UNIVERSE_DOMAIN,
+    _LIST_METRICS_CONTEXT,
     _NOW,
     _STORAGE_HOST_TEMPLATE,
     _UTC,
@@ -45,6 +46,7 @@ from google.cloud.storage._helpers import (
     _get_api_endpoint_override,
     _get_environ_project,
     _get_storage_emulator_override,
+    _start_storage_operation,
     _virtual_hosted_style_base_url,
     create_trace_span_helper,
 )
@@ -140,6 +142,14 @@ class Client(ClientWithProject):
         metrics. If ``None``, falls back to the
         ``GCP_STORAGE_PYTHON_ENABLE_OTEL_DEBUG_METRICS`` environment variable,
         or ``False`` if unset.
+
+    :type meter_provider: :class:`opentelemetry.metrics.MeterProvider` or None
+    :param meter_provider:
+        (Optional, Experimental) Custom OpenTelemetry ``MeterProvider`` for
+        recording client metrics. If ``None``, falls back to the global
+        OpenTelemetry ``MeterProvider``. Note that custom ``MeterProvider``
+        instances are not serialized across ``ProcessPoolExecutor`` workers in
+        :mod:`~google.cloud.storage.transfer_manager`.
     """
 
     SCOPE = (
@@ -162,6 +172,7 @@ class Client(ClientWithProject):
         api_key=None,
         enable_metrics=None,
         enable_debug_metrics=None,
+        meter_provider=None,
     ):
         self._base_connection = None
 
@@ -181,12 +192,7 @@ class Client(ClientWithProject):
         self._extra_headers = extra_headers
         self._enable_metrics = enable_metrics
         self._enable_debug_metrics = enable_debug_metrics
-        self._metrics_enabled = _opentelemetry_metrics.is_metrics_enabled(
-            enable_metrics
-        )
-        self._debug_metrics_enabled = _opentelemetry_metrics.is_debug_metrics_enabled(
-            enable_debug_metrics
-        )
+        self._meter_provider = meter_provider
 
         connection_kw_args = {"client_info": client_info}
 
@@ -317,19 +323,50 @@ class Client(ClientWithProject):
         self._connection = connection
         self._batch_stack = _LocalStack()
         self._bucket_metadata_cache = BucketMetadataCache(self)
+        self._metrics_recorder = _opentelemetry_metrics._MetricsRecorder(
+            enable_metrics=enable_metrics,
+            enable_debug_metrics=enable_debug_metrics,
+            meter_provider=meter_provider,
+            api_endpoint=self.api_endpoint,
+            rpc_system="http",
+        )
+        if getattr(self, "_http_internal", None) is not None:
+            try:
+                self._http_internal._gcs_metrics_recorder = self._metrics_recorder
+            except Exception:
+                pass
+
+    @property
+    def _http(self):
+        http = super(Client, self)._http
+        recorder = getattr(self, "_metrics_recorder", None)
+        if (
+            http is not None
+            and recorder is not None
+            and getattr(http, "_gcs_metrics_recorder", None) is not recorder
+        ):
+            try:
+                http._gcs_metrics_recorder = recorder
+            except Exception:
+                pass
+        return http
 
     @property
     def metrics_enabled(self) -> bool:
         """(Experimental) Returns ``True`` if OpenTelemetry metrics recording is active for this client."""
-        return self._metrics_enabled
+        recorder = getattr(self, "_metrics_recorder", None)
+        return bool(recorder is not None and recorder.standard_enabled)
 
     @property
     def debug_metrics_enabled(self) -> bool:
         """(Experimental) Returns ``True`` if debug metrics recording is active for this client."""
-        return self._debug_metrics_enabled
+        recorder = getattr(self, "_metrics_recorder", None)
+        return bool(recorder is not None and recorder.debug_enabled)
 
     def close(self):
         """Close the client and clear any cached metadata or active connections."""
+        if hasattr(self, "_metrics_recorder") and self._metrics_recorder is not None:
+            self._metrics_recorder.shutdown()
         if hasattr(self, "_bucket_metadata_cache") and self._bucket_metadata_cache:
             self._bucket_metadata_cache.clear()
         if hasattr(self._http, "close"):
@@ -603,9 +640,21 @@ class Client(ClientWithProject):
             api_request=kwargs,
             retry=retry,
         ):
-            api_request = functools.partial(
+            raw_api_request = functools.partial(
                 self._connection.api_request, timeout=timeout, retry=retry
             )
+            list_ctx = _LIST_METRICS_CONTEXT.get()
+            if (
+                list_ctx is not None
+                and _opentelemetry_metrics.get_active_recorder(self) is not None
+            ):
+                client_method, operation = list_ctx
+
+                def api_request(*args, **kw):
+                    with _start_storage_operation(self, client_method, operation):
+                        return raw_api_request(*args, **kw)
+            else:
+                api_request = raw_api_request
         return page_iterator.HTTPIterator(
             client=self,
             api_request=api_request,
