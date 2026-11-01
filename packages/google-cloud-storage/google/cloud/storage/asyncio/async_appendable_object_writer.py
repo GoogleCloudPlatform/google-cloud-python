@@ -25,8 +25,7 @@ from google.rpc import status_pb2
 from google.cloud import _storage_v2
 from google.cloud._storage_v2.types import BidiWriteObjectRedirectedError
 from google.cloud._storage_v2.types.storage import BidiWriteObjectRequest
-from google.cloud.storage import Blob, _opentelemetry_tracing
-from google.cloud.storage._helpers import create_trace_span_helper
+from google.cloud.storage import Blob
 from google.cloud.storage.asyncio.async_grpc_client import (
     AsyncGrpcClient,
 )
@@ -141,30 +140,6 @@ class Preconditions:
     if_generation_not_match: Optional[int] = None
     if_metageneration_match: Optional[int] = None
     if_metageneration_not_match: Optional[int] = None
-
-
-class _WriterTraceSpanContext:
-    """Async context manager that tracks top-level T2 span state on the writer."""
-
-    __slots__ = ("_writer", "_cm")
-
-    def __init__(self, writer: "AsyncAppendableObjectWriter", cm):
-        self._writer = writer
-        self._cm = cm
-
-    async def __aenter__(self):
-        self._writer._in_t2_span = True
-        try:
-            return await self._cm.__aenter__()
-        except BaseException:
-            self._writer._in_t2_span = False
-            raise
-
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
-        try:
-            return await self._cm.__aexit__(exc_type, exc_val, exc_tb)
-        finally:
-            self._writer._in_t2_span = False
 
 
 class AsyncAppendableObjectWriter:
@@ -340,7 +315,6 @@ class AsyncAppendableObjectWriter:
         self.object_resource: Optional[_storage_v2.Object] = None
         self._flush_count = 0
         self.blob: Optional[Blob] = None
-        self._in_t2_span: bool = False
 
     def _trace_span(
         self,
@@ -348,18 +322,13 @@ class AsyncAppendableObjectWriter:
         attributes: Optional[Dict[str, Union[str, int]]] = None,
     ):
         """Creates a T2 OpenTelemetry span only for top-level public API calls."""
-        if getattr(self, "_in_t2_span", False):
-            return _opentelemetry_tracing._NOOP_TRACE_SPAN_CONTEXT
-        cm = create_trace_span_helper(
+        return _utils.create_top_level_trace_span(
+            self,
             self.client,
             self.bucket_name,
             name,
             attributes=attributes,
-            rpc_system="grpc",
         )
-        if cm is _opentelemetry_tracing._NOOP_TRACE_SPAN_CONTEXT:
-            return cm
-        return _WriterTraceSpanContext(self, cm)
 
     @classmethod
     def from_blob(
@@ -448,14 +417,15 @@ class AsyncAppendableObjectWriter:
         if not self._is_stream_open:
             raise ValueError("Stream is not open. Call open() before state_lookup().")
 
-        await self.write_obj_stream.send(
-            _storage_v2.BidiWriteObjectRequest(
-                state_lookup=True,
+        async with self._trace_span("Storage.AsyncAppendableObjectWriter.stateLookup"):
+            await self.write_obj_stream.send(
+                _storage_v2.BidiWriteObjectRequest(
+                    state_lookup=True,
+                )
             )
-        )
-        response = await self.write_obj_stream.recv()
-        self.persisted_size = response.persisted_size
-        return self.persisted_size
+            response = await self.write_obj_stream.recv()
+            self.persisted_size = response.persisted_size
+            return self.persisted_size
 
     def _on_open_error(self, exc):
         """Extracts routing token and write handle on redirect error during open."""
@@ -610,7 +580,7 @@ class AsyncAppendableObjectWriter:
 
         async with self._trace_span(
             "Storage.AsyncAppendableObjectWriter.append",
-            attributes={"gcp.storage.chunk.size": len(data)},
+            attributes={"gcp.storage.append.bytes": len(data)},
         ):
             if retry_policy is None:
                 retry_policy = AsyncRetry(predicate=_is_write_retryable)
@@ -979,5 +949,8 @@ class AsyncAppendableObjectWriter:
         :param file_obj: A file handle opened in binary mode for reading.
 
         """
-        while block := file_obj.read(block_size):
-            await self.append(block)
+        async with self._trace_span(
+            "Storage.AsyncAppendableObjectWriter.appendFromFile"
+        ):
+            while block := file_obj.read(block_size):
+                await self.append(block)

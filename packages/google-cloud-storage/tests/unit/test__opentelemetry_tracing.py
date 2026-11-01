@@ -35,18 +35,17 @@ def setup():
     except ImportError:  # pragma: NO COVER
         pytest.skip("This test suite requires OpenTelemetry pacakges.")
 
-    trace_api._TRACER_PROVIDER_SET_ONCE._done = False
-    trace_api._TRACER_PROVIDER = None
     tracer_provider = TracerProvider()
     memory_exporter = InMemorySpanExporter()
     span_processor = export.SimpleSpanProcessor(memory_exporter)
     tracer_provider.add_span_processor(span_processor)
-    trace_api.set_tracer_provider(tracer_provider)
+    with mock.patch.object(
+        trace_api, "get_tracer", side_effect=tracer_provider.get_tracer
+    ):
+        importlib.reload(_opentelemetry_tracing)
+        yield memory_exporter
+        memory_exporter.clear()
     importlib.reload(_opentelemetry_tracing)
-    yield memory_exporter
-    memory_exporter.clear()
-    trace_api._TRACER_PROVIDER_SET_ONCE._done = False
-    trace_api._TRACER_PROVIDER = None
 
 
 @pytest.fixture()

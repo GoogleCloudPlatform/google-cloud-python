@@ -22,10 +22,7 @@ from google.api_core import exceptions
 from google.api_core.retry_async import AsyncRetry
 
 from google.cloud import _storage_v2
-from google.cloud.storage._helpers import (
-    create_trace_span_helper,
-    generate_random_56_bit_integer,
-)
+from google.cloud.storage._helpers import generate_random_56_bit_integer
 from google.cloud.storage.asyncio._stream_multiplexer import (
     _StreamEnd,
     _StreamError,
@@ -48,7 +45,7 @@ from google.cloud.storage.asyncio.retry.reads_resumption_strategy import (
 )
 from google.cloud.storage.exceptions import DataCorruption
 
-from ._utils import raise_if_no_fast_crc32c
+from ._utils import create_top_level_trace_span, raise_if_no_fast_crc32c
 
 _MAX_READ_RANGES_PER_BIDI_READ_REQUEST = 100
 _COMMON_READ_RETRYABLE_EXCEPTIONS = (
@@ -274,6 +271,20 @@ class AsyncMultiRangeDownloader:
         self.is_finalized: bool = False
         self.full_obj_server_crc32c: Optional[int] = None
 
+    def _trace_span(
+        self,
+        name: str,
+        attributes: Optional[Dict[str, Union[str, int]]] = None,
+    ):
+        """Creates a T2 OpenTelemetry span only for top-level public API calls."""
+        return create_top_level_trace_span(
+            self,
+            self.client,
+            self.bucket_name,
+            name,
+            attributes=attributes,
+        )
+
     async def __aenter__(self):
         """Opens the underlying bidi-gRPC connection to read from the object."""
         await self.open()
@@ -302,12 +313,7 @@ class AsyncMultiRangeDownloader:
         if self._is_stream_open:
             raise ValueError("Underlying bidi-gRPC stream is already open")
 
-        async with create_trace_span_helper(
-            self.client,
-            self.bucket_name,
-            "Storage.AsyncMultiRangeDownloader.open",
-            rpc_system="grpc",
-        ):
+        async with self._trace_span("Storage.AsyncMultiRangeDownloader.open"):
             if retry_policy is None:
 
                 def on_error_wrapper(exc):
@@ -525,12 +531,9 @@ class AsyncMultiRangeDownloader:
         if not self._is_stream_open:
             raise ValueError("Underlying bidi-gRPC stream is not open")
 
-        async with create_trace_span_helper(
-            self.client,
-            self.bucket_name,
+        async with self._trace_span(
             "Storage.AsyncMultiRangeDownloader.downloadRanges",
             attributes={"gcp.storage.range.count": len(read_ranges)},
-            rpc_system="grpc",
         ):
             if retry_policy is None:
                 retry_policy = AsyncRetry(predicate=_is_read_retryable)
@@ -718,12 +721,7 @@ class AsyncMultiRangeDownloader:
         if not self._is_stream_open:
             raise ValueError("Underlying bidi-gRPC stream is not open")
 
-        async with create_trace_span_helper(
-            self.client,
-            self.bucket_name,
-            "Storage.AsyncMultiRangeDownloader.close",
-            rpc_system="grpc",
-        ):
+        async with self._trace_span("Storage.AsyncMultiRangeDownloader.close"):
             if self._multiplexer:
                 await self._multiplexer.close()
                 self._multiplexer = None

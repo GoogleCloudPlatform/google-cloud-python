@@ -19,7 +19,6 @@ These are *not* part of the API.
 
 import base64
 import datetime
-import inspect
 import logging
 import os
 import secrets
@@ -40,6 +39,7 @@ from google.cloud.storage.retry import (
     DEFAULT_RETRY_IF_METAGENERATION_SPECIFIED,
 )
 
+# Kept as a patch point for unit tests.
 _base_create_trace_span = None
 
 _logger = logging.getLogger(__name__)
@@ -241,48 +241,22 @@ class _TraceSpanHelperContext:
         return self._base_cm.__enter__()
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        if exc_val is not None and isinstance(
-            exc_val, (NotFound, api_exceptions.NotFound)
+        suppressed = False
+        if self._base_cm is not None:
+            suppressed = bool(self._base_cm.__exit__(exc_type, exc_val, exc_tb))
+        if (
+            not suppressed
+            and exc_val is not None
+            and isinstance(exc_val, (NotFound, api_exceptions.NotFound))
         ):
             self._handle_not_found()
-        if self._base_cm is not None:
-            return self._base_cm.__exit__(exc_type, exc_val, exc_tb)
-        return False
+        return suppressed
 
     async def __aenter__(self):
-        self._prepare_base_cm()
-        if isinstance(
-            self._base_cm,
-            (
-                _opentelemetry_tracing._TraceSpanContext,
-                _opentelemetry_tracing._NoOpTraceSpanContext,
-            ),
-        ):
-            return self._base_cm.__enter__()
-        if hasattr(self._base_cm, "__aenter__"):
-            res = self._base_cm.__aenter__()
-            return await res if inspect.isawaitable(res) else res
-        return self._base_cm.__enter__()
+        return self.__enter__()
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        if exc_val is not None and isinstance(
-            exc_val, (NotFound, api_exceptions.NotFound)
-        ):
-            self._handle_not_found()
-        if self._base_cm is not None:
-            if isinstance(
-                self._base_cm,
-                (
-                    _opentelemetry_tracing._TraceSpanContext,
-                    _opentelemetry_tracing._NoOpTraceSpanContext,
-                ),
-            ):
-                return self._base_cm.__exit__(exc_type, exc_val, exc_tb)
-            if hasattr(self._base_cm, "__aexit__"):
-                res = self._base_cm.__aexit__(exc_type, exc_val, exc_tb)
-                return await res if inspect.isawaitable(res) else res
-            return self._base_cm.__exit__(exc_type, exc_val, exc_tb)
-        return False
+        return self.__exit__(exc_type, exc_val, exc_tb)
 
 
 def create_trace_span_helper(client, bucket_name, name, attributes=None, **kwargs):

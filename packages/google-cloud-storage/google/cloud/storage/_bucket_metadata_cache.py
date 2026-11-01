@@ -15,6 +15,7 @@
 """In-memory LRU cache for bucket metadata supporting App-centric Observability (ACO)."""
 
 import asyncio
+import contextvars
 import logging
 import threading
 
@@ -43,12 +44,15 @@ class BucketMetadataCache:
     def _spawn_async_task(self, coro, inflight_set, bucket_name):
         try:
             loop = asyncio.get_running_loop()
-            task = loop.create_task(coro)
-            self._background_tasks.add(task)
-            task.add_done_callback(self._background_tasks.discard)
         except RuntimeError:
             coro.close()
-            inflight_set.discard(bucket_name)
+            with self._lock:
+                inflight_set.discard(bucket_name)
+            return
+        # Detach from the caller's tracing context.
+        task = contextvars.Context().run(loop.create_task, coro)
+        self._background_tasks.add(task)
+        task.add_done_callback(self._background_tasks.discard)
 
     def get(self, bucket_name):
         """Thread-safely retrieve cached metadata without queueing fetch."""
@@ -64,26 +68,26 @@ class BucketMetadataCache:
             cached = self._cache.get(bucket_name)
             if cached is not None:
                 return cached
-            elif bucket_name in self._inflight_fetches:
+            if bucket_name in self._inflight_fetches:
                 # This handles a thundering herd where 'n' threads
                 # simultaneously experience a cache miss while 1 is already
                 # fetching metadata. The remaining n - 1 threads should
                 # bypass starting duplicate fetches.
                 return None
-            else:
-                # fire a background fetch and get bucket metadata.
-                self._inflight_fetches.add(bucket_name)
-                if getattr(self._client, "_is_async_grpc_client", False) is True:
-                    self._spawn_async_task(
-                        self._fetch_background_async(bucket_name),
-                        self._inflight_fetches,
-                        bucket_name,
-                    )
-                else:
-                    threading.Thread(
-                        target=self._fetch_background, args=(bucket_name,), daemon=True
-                    ).start()
-                return None
+            # fire a background fetch and get bucket metadata.
+            self._inflight_fetches.add(bucket_name)
+
+        if getattr(self._client, "_is_async_grpc_client", False) is True:
+            self._spawn_async_task(
+                self._fetch_background_async(bucket_name),
+                self._inflight_fetches,
+                bucket_name,
+            )
+        else:
+            threading.Thread(
+                target=self._fetch_background, args=(bucket_name,), daemon=True
+            ).start()
+        return None
 
     def check_and_evict(self, bucket_name):
         """Asynchronously verify if a bucket exists on 404 and evict if deleted."""
@@ -93,18 +97,19 @@ class BucketMetadataCache:
             if bucket_name in self._inflight_checks:
                 return
             self._inflight_checks.add(bucket_name)
-            if getattr(self._client, "_is_async_grpc_client", False) is True:
-                self._spawn_async_task(
-                    self._verify_existence_background_async(bucket_name),
-                    self._inflight_checks,
-                    bucket_name,
-                )
-            else:
-                threading.Thread(
-                    target=self._verify_existence_background,
-                    args=(bucket_name,),
-                    daemon=True,
-                ).start()
+
+        if getattr(self._client, "_is_async_grpc_client", False) is True:
+            self._spawn_async_task(
+                self._verify_existence_background_async(bucket_name),
+                self._inflight_checks,
+                bucket_name,
+            )
+        else:
+            threading.Thread(
+                target=self._verify_existence_background,
+                args=(bucket_name,),
+                daemon=True,
+            ).start()
 
     def _verify_existence_background(self, bucket_name):
         try:
