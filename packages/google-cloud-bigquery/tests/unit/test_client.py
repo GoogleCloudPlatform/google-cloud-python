@@ -5927,7 +5927,7 @@ class TestClient(unittest.TestCase):
                         "formatOptions.useInt64Timestamp": True,
                         "location": "my-jobs-location",
                     },
-                    timeout=None,
+                    timeout=google.cloud.bigquery.retry.DEFAULT_GET_JOB_TIMEOUT,
                 ),
             ]
         )

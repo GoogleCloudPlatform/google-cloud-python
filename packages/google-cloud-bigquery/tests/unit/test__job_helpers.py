@@ -1079,7 +1079,7 @@ def test_query_and_wait_incomplete_query():
             "maxResults": 0,
             "location": "response-location",
         },
-        timeout=None,
+        timeout=retry.DEFAULT_GET_JOB_TIMEOUT,
     )
 
     # Fetch the job metadata in case the RowIterator needs the destination table.

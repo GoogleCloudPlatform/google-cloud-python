@@ -227,13 +227,13 @@ def test_retry_connection_error_with_default_retries_and_successful_first_job(
                 method="GET",
                 path="/projects/PROJECT/queries/1",
                 query_params={"maxResults": 0, "location": "test-loc"},
-                timeout=None,
+                timeout=google.cloud.bigquery.retry.DEFAULT_GET_JOB_TIMEOUT,
             ),
             mock.call(
                 method="GET",
                 path="/projects/PROJECT/queries/1",
                 query_params={"maxResults": 0, "location": "test-loc"},
-                timeout=None,
+                timeout=google.cloud.bigquery.retry.DEFAULT_GET_JOB_TIMEOUT,
             ),
             # jobs.get -- is_job_done checking again
             mock.call(
@@ -247,7 +247,7 @@ def test_retry_connection_error_with_default_retries_and_successful_first_job(
                 method="GET",
                 path="/projects/PROJECT/queries/1",
                 query_params={"maxResults": 0, "location": "test-loc"},
-                timeout=None,
+                timeout=google.cloud.bigquery.retry.DEFAULT_GET_JOB_TIMEOUT,
             ),
         ],
     )
@@ -358,13 +358,13 @@ def test_query_retry_with_default_retry_and_ambiguous_errors_only_retries_with_f
                 method="GET",
                 path="/projects/PROJECT/queries/1",
                 query_params={"maxResults": 0, "location": "test-loc"},
-                timeout=None,
+                timeout=google.cloud.bigquery.retry.DEFAULT_GET_JOB_TIMEOUT,
             ),
             mock.call(
                 method="GET",
                 path="/projects/PROJECT/queries/1",
                 query_params={"maxResults": 0, "location": "test-loc"},
-                timeout=None,
+                timeout=google.cloud.bigquery.retry.DEFAULT_GET_JOB_TIMEOUT,
             ),
             # jobs.get -- verify that the job has failed
             mock.call(
@@ -401,7 +401,7 @@ def test_query_retry_with_default_retry_and_ambiguous_errors_only_retries_with_f
                 method="GET",
                 path="/projects/PROJECT/queries/2",
                 query_params={"maxResults": 0, "location": "test-loc"},
-                timeout=None,
+                timeout=google.cloud.bigquery.retry.DEFAULT_GET_JOB_TIMEOUT,
             ),
             # jobs.get
             mock.call(
