@@ -27,6 +27,18 @@ STANDARD_STORAGE_CLASS = "STANDARD"
 See: https://cloud.google.com/storage/docs/storage-classes
 """
 
+STANDARD_ENTERPRISE_STORAGE_CLASS = "STANDARD_ENTERPRISE"
+"""Enterprise storage class for standard storage.
+
+See: https://cloud.google.com/storage/docs/storage-classes
+"""
+
+STANDARD_FLEXBACKUP_ENTERPRISE_STORAGE_CLASS = "STANDARD_FLEXBACKUP_ENTERPRISE"
+"""Enterprise storage class for standard flexbackup storage.
+
+See: https://cloud.google.com/storage/docs/storage-classes
+"""
+
 NEARLINE_STORAGE_CLASS = "NEARLINE"
 """Storage class for objects accessed at most once per month.
 
@@ -41,6 +53,12 @@ See: https://cloud.google.com/storage/docs/storage-classes
 
 ARCHIVE_STORAGE_CLASS = "ARCHIVE"
 """Storage class for objects accessed less frequently than once per year.
+
+See: https://cloud.google.com/storage/docs/storage-classes
+"""
+
+LR_STANDARD_ENTERPRISE_STORAGE_CLASS = "LR_STANDARD_ENTERPRISE"
+"""Enterprise storage class for locally redundant standard storage.
 
 See: https://cloud.google.com/storage/docs/storage-classes
 """
