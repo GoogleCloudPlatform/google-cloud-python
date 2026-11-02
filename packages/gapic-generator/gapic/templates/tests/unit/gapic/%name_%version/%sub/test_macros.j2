@@ -1028,9 +1028,7 @@ def test_{{ method_name }}_raw_page_lro():
 {% endmacro %}
 
 {% macro rest_required_tests(api, method, service, numeric_enums=False, full_extended_lro=False) %}
-{% with method_name = method.client_method_name|snake_case + "_unary" if method.extended_lro and not full_extended_lro else method.client_method_name|snake_case, method_output = method.extended_lro.operation_type if method.extended_lro and not full_extended_lro else method.output %}{% if method.http_options %}
-{# TODO(kbandes): remove this if condition when lro and client streaming are supported. #}
-{% if not method.client_streaming %}
+{% with method_name = method.client_method_name|snake_case + "_unary" if method.extended_lro and not full_extended_lro else method.client_method_name|snake_case, method_output = method.extended_lro.operation_type if method.extended_lro and not full_extended_lro else method.output %}
 def test_{{ method_name }}_rest_use_cached_wrapped_rpc():
     # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
     # instead of constructing them on each call
@@ -1080,6 +1078,8 @@ def test_{{ method_name }}_rest_use_cached_wrapped_rpc():
         assert mock_rpc.call_count == 2
 
 
+{% if method.http_options %}
+{% if not method.client_streaming %}
     {% if method.input.required_fields %}
 def test_{{ method_name }}_rest_required_fields(request_type={{ method.input.ident }}):
     transport_class = transports.{{ service.rest_transport_name }}
@@ -1323,6 +1323,38 @@ def test_{{ method_name }}_rest_flattened():
         {% endwith %}
         {# TODO(kbandes) - reverse-transcode request args to check all request fields #}
 
+    {% if method.flattened_oneof_fields() %}
+    # Verify flattened oneof fields on the constructed request without
+    # conflicting with HTTP path template transcoding.
+    with mock.patch.object(
+        type(client.transport.{{ method.transport_safe_name|snake_case }}),
+        "__call__",
+    ) as call:
+        {% if method.void %}
+        call.return_value = None
+        {% elif method.lro %}
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        {% elif method.server_streaming %}
+        call.return_value = iter([{{ method.output.ident }}()])
+        {% elif method.is_resumable_upload %}
+        call.return_value = {{ method.client_output.ident }}()
+        {% else %}
+        call.return_value = {{ method.output.ident }}()
+        {% endif %}
+        client.{{ method_name }}(
+            {% for field in method.flattened_fields.values() %}
+            {{ field.name }}={{ field.mock_value }},
+            {% endfor %}
+        )
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        {% for oneofs in method.flattened_oneof_fields().values() %}
+        {% with field = oneofs[-1] %}
+        assert args[0].{{ method.flattened_field_to_key[field.name] }} == {{ field.mock_value }}
+        {% endwith %}
+        {% endfor %}
+    {% endif %}
+
 
 def test_{{ method_name }}_rest_flattened_error(transport: str = 'rest'):
     client = {{ service.client_name }}(
@@ -1473,6 +1505,11 @@ def test_{{ method_name }}_rest_pager(transport: str = 'rest'):
         for page_, token in zip(pages, ['abc','def','ghi', '']):
             assert page_.raw_page.next_page_token == token
 
+
+{% elif method.lro and "next_page_token" in method.lro.response_type.fields.keys() %}
+def test_{{ method_name }}_rest_raw_page_lro():
+    response = {{ method.lro.response_type.ident }}()
+    assert response.raw_page is response
 
 {%- endif %}{# paged_result_field #}
 
@@ -1753,6 +1790,7 @@ def test_unsupported_parameter_rest_asyncio():
 {% if 'rest' in transport %}
 {{ bad_request_mixins_test(service, api, name, sig, transport, is_async) }}
 {{ call_success_mixins_test(service, api, name, sig, transport, is_async) }}
+{{ empty_call_mixins_test(service, api, name, sig, transport, is_async) }}
 {% endif %}{# if 'rest' in transport #}
 {% endfor %}
 {{ initialize_client_with_transport_test(service, transport, is_async) }}
@@ -2253,6 +2291,35 @@ def test_initialize_client_w_{{transport_name}}():
     {% endif %}
 {% endif %}{# if 'grpc' in transport #}
 {% endmacro %}{# call_success_mixins_test #}
+
+{% macro empty_call_mixins_test(service, api, name, sig, transport, is_async=False) %}
+{% set await_prefix = get_await_prefix(is_async) %}
+{% set async_prefix = get_async_prefix(is_async) %}
+{% set async_decorator = get_async_decorator(is_async) %}
+{% set transport_name = get_transport_name(transport, is_async) %}
+{% set method_name = name|snake_case %}
+{{ async_decorator }}
+{{ async_prefix }}def test_{{ method_name }}_empty_call_{{ transport_name }}():
+    {% if transport_name == 'rest_asyncio' %}
+    if not HAS_ASYNC_REST_EXTRA:
+        pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
+    {% endif %}
+    client = {{ get_client(service=service, is_async=is_async) }}(
+        credentials={{ get_credentials(is_async=is_async) }},
+        transport="{{ transport_name }}",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.{{ method_name }}), "__call__"
+    ) as call:
+        {{ await_prefix }}client.{{ method_name }}(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == {{ sig.request_type }}()
+{% endmacro %}{# empty_call_mixins_test #}
 
 {% macro empty_call_test(service, api, transport, is_async) %}
 {% for method in service.methods.values() %}{# method #}

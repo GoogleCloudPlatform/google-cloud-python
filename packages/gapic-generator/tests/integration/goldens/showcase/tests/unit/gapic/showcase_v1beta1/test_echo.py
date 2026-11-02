@@ -3924,6 +3924,40 @@ def test_expand_rest_flattened_error(transport: str = 'rest'):
         )
 
 
+def test_collect_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = EchoClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert client._transport.collect in client._transport._wrapped_methods
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = "foo" # operation_request.operation in compute client(s) expect a string.
+        client._transport._wrapped_methods[client._transport.collect] = mock_rpc
+
+        request = [{}]
+        client.collect(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.collect(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
 def test_collect_rest_unimplemented():
     client = EchoClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -3933,6 +3967,40 @@ def test_collect_rest_unimplemented():
     requests = [request]
     with pytest.raises(NotImplementedError):
         client.collect(requests)
+
+
+def test_chat_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = EchoClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert client._transport.chat in client._transport._wrapped_methods
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = "foo" # operation_request.operation in compute client(s) expect a string.
+        client._transport._wrapped_methods[client._transport.chat] = mock_rpc
+
+        request = [{}]
+        client.chat(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.chat(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
 
 
 def test_chat_rest_no_http_options():
@@ -6683,6 +6751,24 @@ def test_list_locations_rest(request_type):
     assert isinstance(response, locations_pb2.ListLocationsResponse)
 
 
+def test_list_locations_empty_call_rest():
+    client = EchoClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_locations), "__call__"
+    ) as call:
+        client.list_locations(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == locations_pb2.ListLocationsRequest()
+
+
 def test_get_location_rest_bad_request(request_type=locations_pb2.GetLocationRequest):
     client = EchoClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -6734,6 +6820,24 @@ def test_get_location_rest(request_type):
 
     # Establish that the response is the type that we expect.
     assert isinstance(response, locations_pb2.Location)
+
+
+def test_get_location_empty_call_rest():
+    client = EchoClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_location), "__call__"
+    ) as call:
+        client.get_location(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == locations_pb2.GetLocationRequest()
 
 
 def test_set_iam_policy_rest_bad_request(request_type=iam_policy_pb2.SetIamPolicyRequest):
@@ -6789,6 +6893,24 @@ def test_set_iam_policy_rest(request_type):
     assert isinstance(response, policy_pb2.Policy)
 
 
+def test_set_iam_policy_empty_call_rest():
+    client = EchoClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.set_iam_policy), "__call__"
+    ) as call:
+        client.set_iam_policy(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == iam_policy_pb2.SetIamPolicyRequest()
+
+
 def test_get_iam_policy_rest_bad_request(request_type=iam_policy_pb2.GetIamPolicyRequest):
     client = EchoClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -6840,6 +6962,24 @@ def test_get_iam_policy_rest(request_type):
 
     # Establish that the response is the type that we expect.
     assert isinstance(response, policy_pb2.Policy)
+
+
+def test_get_iam_policy_empty_call_rest():
+    client = EchoClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_iam_policy), "__call__"
+    ) as call:
+        client.get_iam_policy(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == iam_policy_pb2.GetIamPolicyRequest()
 
 
 def test_test_iam_permissions_rest_bad_request(request_type=iam_policy_pb2.TestIamPermissionsRequest):
@@ -6895,6 +7035,24 @@ def test_test_iam_permissions_rest(request_type):
     assert isinstance(response, iam_policy_pb2.TestIamPermissionsResponse)
 
 
+def test_test_iam_permissions_empty_call_rest():
+    client = EchoClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.test_iam_permissions), "__call__"
+    ) as call:
+        client.test_iam_permissions(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == iam_policy_pb2.TestIamPermissionsRequest()
+
+
 def test_list_operations_rest_bad_request(request_type=operations_pb2.ListOperationsRequest):
     client = EchoClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -6946,6 +7104,24 @@ def test_list_operations_rest(request_type):
 
     # Establish that the response is the type that we expect.
     assert isinstance(response, operations_pb2.ListOperationsResponse)
+
+
+def test_list_operations_empty_call_rest():
+    client = EchoClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_operations), "__call__"
+    ) as call:
+        client.list_operations(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == operations_pb2.ListOperationsRequest()
 
 
 def test_get_operation_rest_bad_request(request_type=operations_pb2.GetOperationRequest):
@@ -7001,6 +7177,24 @@ def test_get_operation_rest(request_type):
     assert isinstance(response, operations_pb2.Operation)
 
 
+def test_get_operation_empty_call_rest():
+    client = EchoClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_operation), "__call__"
+    ) as call:
+        client.get_operation(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == operations_pb2.GetOperationRequest()
+
+
 def test_delete_operation_rest_bad_request(request_type=operations_pb2.DeleteOperationRequest):
     client = EchoClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -7054,6 +7248,24 @@ def test_delete_operation_rest(request_type):
     assert response is None
 
 
+def test_delete_operation_empty_call_rest():
+    client = EchoClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_operation), "__call__"
+    ) as call:
+        client.delete_operation(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == operations_pb2.DeleteOperationRequest()
+
+
 def test_cancel_operation_rest_bad_request(request_type=operations_pb2.CancelOperationRequest):
     client = EchoClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -7105,6 +7317,24 @@ def test_cancel_operation_rest(request_type):
 
     # Establish that the response is the type that we expect.
     assert response is None
+
+
+def test_cancel_operation_empty_call_rest():
+    client = EchoClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.cancel_operation), "__call__"
+    ) as call:
+        client.cancel_operation(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == operations_pb2.CancelOperationRequest()
 
 def test_initialize_client_w_rest():
     client = EchoClient(
@@ -7638,6 +7868,16 @@ def test_echo_base_transport_with_adc():
         adc.return_value = (ga_credentials.AnonymousCredentials(), None)
         transport = transports.EchoTransport()
         adc.assert_called_once()
+
+    # Test _ignore_credentials=True skips ADC and host without port defaults to :443.
+    class IgnoreCredsTransport(transports.EchoTransport):
+        _ignore_credentials = True
+
+    with mock.patch.object(google.auth, 'default', autospec=True) as adc:
+        transport = IgnoreCredsTransport(host="squid.clam.whelk")
+        adc.assert_not_called()
+        assert transport._credentials is None
+        assert transport.host == "squid.clam.whelk:443"
 
 
 def test_echo_auth_adc():

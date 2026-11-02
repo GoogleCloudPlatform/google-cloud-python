@@ -29568,6 +29568,24 @@ def test_get_location_rest(request_type):
     assert isinstance(response, locations_pb2.Location)
 
 
+def test_get_location_empty_call_rest():
+    client = EventarcClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_location), "__call__"
+    ) as call:
+        client.get_location(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == locations_pb2.GetLocationRequest()
+
+
 def test_list_locations_rest_bad_request(request_type=locations_pb2.ListLocationsRequest):
     client = EventarcClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -29619,6 +29637,24 @@ def test_list_locations_rest(request_type):
 
     # Establish that the response is the type that we expect.
     assert isinstance(response, locations_pb2.ListLocationsResponse)
+
+
+def test_list_locations_empty_call_rest():
+    client = EventarcClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_locations), "__call__"
+    ) as call:
+        client.list_locations(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == locations_pb2.ListLocationsRequest()
 
 
 def test_get_iam_policy_rest_bad_request(request_type=iam_policy_pb2.GetIamPolicyRequest):
@@ -29674,6 +29710,24 @@ def test_get_iam_policy_rest(request_type):
     assert isinstance(response, policy_pb2.Policy)
 
 
+def test_get_iam_policy_empty_call_rest():
+    client = EventarcClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_iam_policy), "__call__"
+    ) as call:
+        client.get_iam_policy(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == iam_policy_pb2.GetIamPolicyRequest()
+
+
 def test_set_iam_policy_rest_bad_request(request_type=iam_policy_pb2.SetIamPolicyRequest):
     client = EventarcClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -29725,6 +29779,24 @@ def test_set_iam_policy_rest(request_type):
 
     # Establish that the response is the type that we expect.
     assert isinstance(response, policy_pb2.Policy)
+
+
+def test_set_iam_policy_empty_call_rest():
+    client = EventarcClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.set_iam_policy), "__call__"
+    ) as call:
+        client.set_iam_policy(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == iam_policy_pb2.SetIamPolicyRequest()
 
 
 def test_test_iam_permissions_rest_bad_request(request_type=iam_policy_pb2.TestIamPermissionsRequest):
@@ -29780,6 +29852,24 @@ def test_test_iam_permissions_rest(request_type):
     assert isinstance(response, iam_policy_pb2.TestIamPermissionsResponse)
 
 
+def test_test_iam_permissions_empty_call_rest():
+    client = EventarcClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.test_iam_permissions), "__call__"
+    ) as call:
+        client.test_iam_permissions(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == iam_policy_pb2.TestIamPermissionsRequest()
+
+
 def test_cancel_operation_rest_bad_request(request_type=operations_pb2.CancelOperationRequest):
     client = EventarcClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -29831,6 +29921,24 @@ def test_cancel_operation_rest(request_type):
 
     # Establish that the response is the type that we expect.
     assert response is None
+
+
+def test_cancel_operation_empty_call_rest():
+    client = EventarcClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.cancel_operation), "__call__"
+    ) as call:
+        client.cancel_operation(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == operations_pb2.CancelOperationRequest()
 
 
 def test_delete_operation_rest_bad_request(request_type=operations_pb2.DeleteOperationRequest):
@@ -29886,6 +29994,24 @@ def test_delete_operation_rest(request_type):
     assert response is None
 
 
+def test_delete_operation_empty_call_rest():
+    client = EventarcClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_operation), "__call__"
+    ) as call:
+        client.delete_operation(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == operations_pb2.DeleteOperationRequest()
+
+
 def test_get_operation_rest_bad_request(request_type=operations_pb2.GetOperationRequest):
     client = EventarcClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -29939,6 +30065,24 @@ def test_get_operation_rest(request_type):
     assert isinstance(response, operations_pb2.Operation)
 
 
+def test_get_operation_empty_call_rest():
+    client = EventarcClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_operation), "__call__"
+    ) as call:
+        client.get_operation(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == operations_pb2.GetOperationRequest()
+
+
 def test_list_operations_rest_bad_request(request_type=operations_pb2.ListOperationsRequest):
     client = EventarcClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -29990,6 +30134,24 @@ def test_list_operations_rest(request_type):
 
     # Establish that the response is the type that we expect.
     assert isinstance(response, operations_pb2.ListOperationsResponse)
+
+
+def test_list_operations_empty_call_rest():
+    client = EventarcClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_operations), "__call__"
+    ) as call:
+        client.list_operations(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == operations_pb2.ListOperationsRequest()
 
 def test_initialize_client_w_rest():
     client = EventarcClient(
@@ -30959,6 +31121,16 @@ def test_eventarc_base_transport_with_adc():
         adc.return_value = (ga_credentials.AnonymousCredentials(), None)
         transport = transports.EventarcTransport()
         adc.assert_called_once()
+
+    # Test _ignore_credentials=True skips ADC and host without port defaults to :443.
+    class IgnoreCredsTransport(transports.EventarcTransport):
+        _ignore_credentials = True
+
+    with mock.patch.object(google.auth, 'default', autospec=True) as adc:
+        transport = IgnoreCredsTransport(host="squid.clam.whelk")
+        adc.assert_not_called()
+        assert transport._credentials is None
+        assert transport.host == "squid.clam.whelk:443"
 
 
 def test_eventarc_auth_adc():

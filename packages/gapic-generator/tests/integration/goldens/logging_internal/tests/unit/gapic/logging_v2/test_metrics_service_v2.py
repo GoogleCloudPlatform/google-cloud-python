@@ -3269,6 +3269,16 @@ def test_metrics_service_v2_base_transport_with_adc():
         transport = transports.MetricsServiceV2Transport()
         adc.assert_called_once()
 
+    # Test _ignore_credentials=True skips ADC and host without port defaults to :443.
+    class IgnoreCredsTransport(transports.MetricsServiceV2Transport):
+        _ignore_credentials = True
+
+    with mock.patch.object(google.auth, 'default', autospec=True) as adc:
+        transport = IgnoreCredsTransport(host="squid.clam.whelk")
+        adc.assert_not_called()
+        assert transport._credentials is None
+        assert transport.host == "squid.clam.whelk:443"
+
 
 def test_metrics_service_v2_auth_adc():
     # If no credentials are provided, we should use ADC credentials.

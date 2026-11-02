@@ -16910,6 +16910,24 @@ def test_get_operation_rest(request_type):
     # Establish that the response is the type that we expect.
     assert isinstance(response, operations_pb2.Operation)
 
+
+def test_get_operation_empty_call_rest():
+    client = AssetServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_operation), "__call__"
+    ) as call:
+        client.get_operation(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == operations_pb2.GetOperationRequest()
+
 def test_initialize_client_w_rest():
     client = AssetServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -17518,6 +17536,16 @@ def test_asset_service_base_transport_with_adc():
         adc.return_value = (ga_credentials.AnonymousCredentials(), None)
         transport = transports.AssetServiceTransport()
         adc.assert_called_once()
+
+    # Test _ignore_credentials=True skips ADC and host without port defaults to :443.
+    class IgnoreCredsTransport(transports.AssetServiceTransport):
+        _ignore_credentials = True
+
+    with mock.patch.object(google.auth, 'default', autospec=True) as adc:
+        transport = IgnoreCredsTransport(host="squid.clam.whelk")
+        adc.assert_not_called()
+        assert transport._credentials is None
+        assert transport.host == "squid.clam.whelk:443"
 
 
 def test_asset_service_auth_adc():
