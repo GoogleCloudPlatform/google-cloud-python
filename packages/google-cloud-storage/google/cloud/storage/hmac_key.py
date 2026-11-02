@@ -20,6 +20,7 @@ See [HMAC keys documentation](https://cloud.google.com/storage/docs/authenticati
 from google.cloud._helpers import _rfc3339_nanos_to_datetime
 from google.cloud.exceptions import NotFound
 
+from google.cloud.storage._helpers import _start_storage_operation
 from google.cloud.storage._opentelemetry_tracing import create_trace_span
 from google.cloud.storage.constants import _DEFAULT_TIMEOUT
 from google.cloud.storage.retry import DEFAULT_RETRY, DEFAULT_RETRY_IF_ETAG_IN_JSON
@@ -203,22 +204,25 @@ class HMACKeyMetadata(object):
         :returns: True if the key exists in Cloud Storage.
         """
         with create_trace_span(name="Storage.HmacKey.exists"):
-            try:
-                qs_params = {}
+            with _start_storage_operation(
+                self._client, "storage.HMACKeyMetadata.exists", "GetHMACKey"
+            ):
+                try:
+                    qs_params = {}
 
-                if self.user_project is not None:
-                    qs_params["userProject"] = self.user_project
+                    if self.user_project is not None:
+                        qs_params["userProject"] = self.user_project
 
-                self._client._get_resource(
-                    self.path,
-                    query_params=qs_params,
-                    timeout=timeout,
-                    retry=retry,
-                )
-            except NotFound:
-                return False
-            else:
-                return True
+                    self._client._get_resource(
+                        self.path,
+                        query_params=qs_params,
+                        timeout=timeout,
+                        retry=retry,
+                    )
+                except NotFound:
+                    return False
+                else:
+                    return True
 
     def reload(self, timeout=_DEFAULT_TIMEOUT, retry=DEFAULT_RETRY):
         """Reload properties from Cloud Storage.
@@ -236,17 +240,20 @@ class HMACKeyMetadata(object):
             if the key does not exist on the back-end.
         """
         with create_trace_span(name="Storage.HmacKey.reload"):
-            qs_params = {}
+            with _start_storage_operation(
+                self._client, "storage.HMACKeyMetadata.reload", "GetHMACKey"
+            ):
+                qs_params = {}
 
-            if self.user_project is not None:
-                qs_params["userProject"] = self.user_project
+                if self.user_project is not None:
+                    qs_params["userProject"] = self.user_project
 
-            self._properties = self._client._get_resource(
-                self.path,
-                query_params=qs_params,
-                timeout=timeout,
-                retry=retry,
-            )
+                self._properties = self._client._get_resource(
+                    self.path,
+                    query_params=qs_params,
+                    timeout=timeout,
+                    retry=retry,
+                )
 
     def update(self, timeout=_DEFAULT_TIMEOUT, retry=DEFAULT_RETRY_IF_ETAG_IN_JSON):
         """Save writable properties to Cloud Storage.
@@ -264,18 +271,21 @@ class HMACKeyMetadata(object):
             if the key does not exist on the back-end.
         """
         with create_trace_span(name="Storage.HmacKey.update"):
-            qs_params = {}
-            if self.user_project is not None:
-                qs_params["userProject"] = self.user_project
+            with _start_storage_operation(
+                self._client, "storage.HMACKeyMetadata.update", "UpdateHMACKey"
+            ):
+                qs_params = {}
+                if self.user_project is not None:
+                    qs_params["userProject"] = self.user_project
 
-            payload = {"state": self.state}
-            self._properties = self._client._put_resource(
-                self.path,
-                payload,
-                query_params=qs_params,
-                timeout=timeout,
-                retry=retry,
-            )
+                payload = {"state": self.state}
+                self._properties = self._client._put_resource(
+                    self.path,
+                    payload,
+                    query_params=qs_params,
+                    timeout=timeout,
+                    retry=retry,
+                )
 
     def delete(self, timeout=_DEFAULT_TIMEOUT, retry=DEFAULT_RETRY):
         """Delete the key from Cloud Storage.
@@ -293,13 +303,16 @@ class HMACKeyMetadata(object):
             if the key does not exist on the back-end.
         """
         with create_trace_span(name="Storage.HmacKey.delete"):
-            qs_params = {}
-            if self.user_project is not None:
-                qs_params["userProject"] = self.user_project
+            with _start_storage_operation(
+                self._client, "storage.HMACKeyMetadata.delete", "DeleteHMACKey"
+            ):
+                qs_params = {}
+                if self.user_project is not None:
+                    qs_params["userProject"] = self.user_project
 
-            self._client._delete_resource(
-                self.path,
-                query_params=qs_params,
-                timeout=timeout,
-                retry=retry,
-            )
+                self._client._delete_resource(
+                    self.path,
+                    query_params=qs_params,
+                    timeout=timeout,
+                    retry=retry,
+                )

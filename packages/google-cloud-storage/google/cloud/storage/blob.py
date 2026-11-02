@@ -40,14 +40,20 @@ from google.cloud.exceptions import NotFound
 from google.cloud import exceptions
 from google.cloud.storage._helpers import (
     _API_VERSION,
+    _SUPPRESS_BODY_SIZE,
     _add_etag_match_headers,
     _add_generation_match_parameters,
     _bucket_bound_hostname_url,
+    _client_method_override,
     _get_default_headers,
     _get_default_storage_base_url,
     _PropertyMixin,
     _raise_if_more_than_one_set,
+    _record_primary_exception,
+    _resolve_operation_client,
     _scalar_property,
+    _start_storage_operation,
+    _suppress_internal_metrics,
     _virtual_hosted_style_base_url,
 )
 from google.cloud.storage._media.requests import (
@@ -57,6 +63,9 @@ from google.cloud.storage._media.requests import (
     RawChunkedDownload,
     RawDownload,
     ResumableUpload,
+)
+from google.cloud.storage._media.requests import (
+    _request_helpers as _media_request_helpers,
 )
 from google.cloud.storage._opentelemetry_tracing import (
     _get_opentelemetry_attributes_from_url,
@@ -73,7 +82,11 @@ from google.cloud.storage.constants import (
     STANDARD_STORAGE_CLASS,
 )
 from google.cloud.storage.exceptions import DataCorruption, InvalidResponse
-from google.cloud.storage.fileio import BlobReader, BlobWriter
+from google.cloud.storage.fileio import (
+    BlobReader,
+    BlobWriter,
+    _MetricsTextIOWrapper,
+)
 from google.cloud.storage.retry import (
     DEFAULT_RETRY,
     DEFAULT_RETRY_IF_ETAG_IN_JSON,
@@ -188,6 +201,10 @@ class Blob(_PropertyMixin):
     _chunk_size = None  # Default value for each instance.
     _CHUNK_SIZE_MULTIPLE = 256 * 1024
     """Number (256 KB, in bytes) that must divide the chunk size."""
+
+    _METRICS_CLASS_NAME = "Blob"
+    _METRICS_GET_OP = "GetObject"
+    _METRICS_UPDATE_OP = "UpdateObject"
 
     STORAGE_CLASSES = (
         STANDARD_STORAGE_CLASS,
@@ -745,45 +762,46 @@ class Blob(_PropertyMixin):
         """
         with self._create_trace_span(name="Storage.Blob.exists"):
             client = self._require_client(client)
-            # We only need the status code (200 or not) so we seek to
-            # minimize the returned payload.
-            query_params = self._query_params
-            query_params["fields"] = "name"
-            if soft_deleted is not None:
-                query_params["softDeleted"] = soft_deleted
+            with _start_storage_operation(client, "storage.Blob.exists", "GetObject"):
+                # We only need the status code (200 or not) so we seek to
+                # minimize the returned payload.
+                query_params = self._query_params
+                query_params["fields"] = "name"
+                if soft_deleted is not None:
+                    query_params["softDeleted"] = soft_deleted
 
-            _add_generation_match_parameters(
-                query_params,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-            )
-
-            headers = {}
-            _add_etag_match_headers(
-                headers,
-                if_etag_match=if_etag_match,
-                if_etag_not_match=if_etag_not_match,
-            )
-
-            try:
-                # We intentionally pass `_target_object=None` since fields=name
-                # would limit the local properties.
-                client._get_resource(
-                    self.path,
-                    query_params=query_params,
-                    headers=headers,
-                    timeout=timeout,
-                    retry=retry,
-                    _target_object=None,
+                _add_generation_match_parameters(
+                    query_params,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
                 )
-            except NotFound:
-                # NOTE: This will not fail immediately in a batch. However, when
-                #       Batch.finish() is called, the resulting `NotFound` will be
-                #       raised.
-                return False
-            return True
+
+                headers = {}
+                _add_etag_match_headers(
+                    headers,
+                    if_etag_match=if_etag_match,
+                    if_etag_not_match=if_etag_not_match,
+                )
+
+                try:
+                    # We intentionally pass `_target_object=None` since fields=name
+                    # would limit the local properties.
+                    client._get_resource(
+                        self.path,
+                        query_params=query_params,
+                        headers=headers,
+                        timeout=timeout,
+                        retry=retry,
+                        _target_object=None,
+                    )
+                except NotFound:
+                    # NOTE: This will not fail immediately in a batch. However, when
+                    #       Batch.finish() is called, the resulting `NotFound` will be
+                    #       raised.
+                    return False
+                return True
 
     def delete(
         self,
@@ -848,17 +866,22 @@ class Blob(_PropertyMixin):
                  :meth:`google.cloud.storage.bucket.Bucket.delete_blob`).
         """
         with self._create_trace_span(name="Storage.Blob.delete"):
-            self.bucket.delete_blob(
-                self.name,
-                client=client,
-                generation=self.generation,
-                timeout=timeout,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                retry=retry,
-            )
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Blob.delete",
+                "DeleteObject",
+            ):
+                self.bucket.delete_blob(
+                    self.name,
+                    client=client,
+                    generation=self.generation,
+                    timeout=timeout,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    retry=retry,
+                )
 
     def _get_transport(self, client):
         """Return the client's transport.
@@ -1145,6 +1168,13 @@ class Blob(_PropertyMixin):
                         self.name,
                     )
 
+        if not _SUPPRESS_BODY_SIZE.get():
+            recorder = _media_request_helpers.resolve_transport_recorder(transport)
+            if recorder is not None:
+                received = getattr(download, "_bytes_downloaded", 0)
+                if isinstance(received, int) and not isinstance(received, bool):
+                    recorder.record_response_body_size(received, operation="ReadObject")
+
     def download_to_file(
         self,
         file_obj,
@@ -1266,23 +1296,28 @@ class Blob(_PropertyMixin):
         :raises: :class:`google.cloud.exceptions.NotFound`
         """
         with self._create_trace_span(name="Storage.Blob.downloadToFile"):
-            self._prep_and_do_download(
-                file_obj,
-                client=client,
-                start=start,
-                end=end,
-                raw_download=raw_download,
-                if_etag_match=if_etag_match,
-                if_etag_not_match=if_etag_not_match,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                timeout=timeout,
-                checksum=checksum,
-                retry=retry,
-                single_shot_download=single_shot_download,
-            )
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Blob.download_to_file",
+                "ReadObject",
+            ):
+                self._prep_and_do_download(
+                    file_obj,
+                    client=client,
+                    start=start,
+                    end=end,
+                    raw_download=raw_download,
+                    if_etag_match=if_etag_match,
+                    if_etag_not_match=if_etag_not_match,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    timeout=timeout,
+                    checksum=checksum,
+                    retry=retry,
+                    single_shot_download=single_shot_download,
+                )
 
     def _handle_filename_and_download(self, filename, *args, **kwargs):
         """Download the contents of this blob into a named file.
@@ -1292,24 +1327,33 @@ class Blob(_PropertyMixin):
 
         For *args and **kwargs, refer to the documentation for download_to_filename() for more information.
         """
+        default_method = (
+            "storage.transfer_manager.download_many"
+            if kwargs.get("command") == "tm.download_many"
+            else "storage.Blob.download_to_filename"
+        )
+        with _start_storage_operation(
+            _resolve_operation_client(self, kwargs.get("client")),
+            default_method,
+            "ReadObject",
+        ):
+            try:
+                with open(filename, "wb") as file_obj:
+                    self._prep_and_do_download(
+                        file_obj,
+                        *args,
+                        **kwargs,
+                    )
 
-        try:
-            with open(filename, "wb") as file_obj:
-                self._prep_and_do_download(
-                    file_obj,
-                    *args,
-                    **kwargs,
-                )
+            except (DataCorruption, NotFound):
+                # Delete the corrupt or empty downloaded file.
+                os.remove(filename)
+                raise
 
-        except (DataCorruption, NotFound):
-            # Delete the corrupt or empty downloaded file.
-            os.remove(filename)
-            raise
-
-        updated = self.updated
-        if updated is not None:
-            mtime = updated.timestamp()
-            os.utime(file_obj.name, (mtime, mtime))
+            updated = self.updated
+            if updated is not None:
+                mtime = updated.timestamp()
+                os.utime(file_obj.name, (mtime, mtime))
 
     def download_to_filename(
         self,
@@ -1422,23 +1466,28 @@ class Blob(_PropertyMixin):
         :raises: :class:`google.cloud.exceptions.NotFound`
         """
         with self._create_trace_span(name="Storage.Blob.downloadToFilename"):
-            self._handle_filename_and_download(
-                filename,
-                client=client,
-                start=start,
-                end=end,
-                raw_download=raw_download,
-                if_etag_match=if_etag_match,
-                if_etag_not_match=if_etag_not_match,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                timeout=timeout,
-                checksum=checksum,
-                retry=retry,
-                single_shot_download=single_shot_download,
-            )
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Blob.download_to_filename",
+                "ReadObject",
+            ):
+                self._handle_filename_and_download(
+                    filename,
+                    client=client,
+                    start=start,
+                    end=end,
+                    raw_download=raw_download,
+                    if_etag_match=if_etag_match,
+                    if_etag_not_match=if_etag_not_match,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    timeout=timeout,
+                    checksum=checksum,
+                    retry=retry,
+                    single_shot_download=single_shot_download,
+                )
 
     def download_as_bytes(
         self,
@@ -1547,26 +1596,31 @@ class Blob(_PropertyMixin):
         :raises: :class:`google.cloud.exceptions.NotFound`
         """
         with self._create_trace_span(name="Storage.Blob.downloadAsBytes"):
-            string_buffer = BytesIO()
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Blob.download_as_bytes",
+                "ReadObject",
+            ):
+                string_buffer = BytesIO()
 
-            self._prep_and_do_download(
-                string_buffer,
-                client=client,
-                start=start,
-                end=end,
-                raw_download=raw_download,
-                if_etag_match=if_etag_match,
-                if_etag_not_match=if_etag_not_match,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                timeout=timeout,
-                checksum=checksum,
-                retry=retry,
-                single_shot_download=single_shot_download,
-            )
-            return string_buffer.getvalue()
+                self._prep_and_do_download(
+                    string_buffer,
+                    client=client,
+                    start=start,
+                    end=end,
+                    raw_download=raw_download,
+                    if_etag_match=if_etag_match,
+                    if_etag_not_match=if_etag_not_match,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    timeout=timeout,
+                    checksum=checksum,
+                    retry=retry,
+                    single_shot_download=single_shot_download,
+                )
+                return string_buffer.getvalue()
 
     def download_as_string(
         self,
@@ -1670,21 +1724,26 @@ class Blob(_PropertyMixin):
             stacklevel=2,
         )
         with self._create_trace_span(name="Storage.Blob.downloadAsString"):
-            return self.download_as_bytes(
-                client=client,
-                start=start,
-                end=end,
-                raw_download=raw_download,
-                if_etag_match=if_etag_match,
-                if_etag_not_match=if_etag_not_match,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                timeout=timeout,
-                retry=retry,
-                single_shot_download=single_shot_download,
-            )
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Blob.download_as_string",
+                "ReadObject",
+            ):
+                return self.download_as_bytes(
+                    client=client,
+                    start=start,
+                    end=end,
+                    raw_download=raw_download,
+                    if_etag_match=if_etag_match,
+                    if_etag_not_match=if_etag_not_match,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    timeout=timeout,
+                    retry=retry,
+                    single_shot_download=single_shot_download,
+                )
 
     def download_as_text(
         self,
@@ -1784,32 +1843,37 @@ class Blob(_PropertyMixin):
         :returns: The data stored in this blob, decoded to text.
         """
         with self._create_trace_span(name="Storage.Blob.downloadAsText"):
-            data = self.download_as_bytes(
-                client=client,
-                start=start,
-                end=end,
-                raw_download=raw_download,
-                if_etag_match=if_etag_match,
-                if_etag_not_match=if_etag_not_match,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                timeout=timeout,
-                retry=retry,
-                single_shot_download=single_shot_download,
-            )
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Blob.download_as_text",
+                "ReadObject",
+            ):
+                data = self.download_as_bytes(
+                    client=client,
+                    start=start,
+                    end=end,
+                    raw_download=raw_download,
+                    if_etag_match=if_etag_match,
+                    if_etag_not_match=if_etag_not_match,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    timeout=timeout,
+                    retry=retry,
+                    single_shot_download=single_shot_download,
+                )
 
-            if encoding is not None:
-                return data.decode(encoding)
+                if encoding is not None:
+                    return data.decode(encoding)
 
-            if self.content_type is not None:
-                msg = HeaderParser().parsestr("Content-Type: " + self.content_type)
-                params = dict(msg.get_params()[1:])
-                if "charset" in params:
-                    return data.decode(params["charset"])
+                if self.content_type is not None:
+                    msg = HeaderParser().parsestr("Content-Type: " + self.content_type)
+                    params = dict(msg.get_params()[1:])
+                    if "charset" in params:
+                        return data.decode(params["charset"])
 
-            return data.decode("utf-8")
+                return data.decode("utf-8")
 
     def _get_content_type(self, content_type, filename=None):
         """Determine the content type from the current object.
@@ -2083,6 +2147,12 @@ class Blob(_PropertyMixin):
             response = upload.transmit(
                 transport, data, object_metadata, content_type, timeout=timeout
             )
+            if not _SUPPRESS_BODY_SIZE.get():
+                recorder = _media_request_helpers.resolve_transport_recorder(transport)
+                if recorder is not None:
+                    recorder.record_request_body_size(
+                        len(data), operation="WriteObject"
+                    )
 
             return response
 
@@ -2483,10 +2553,23 @@ class Blob(_PropertyMixin):
             while not upload.finished:
                 try:
                     response = upload.transmit_next_chunk(transport, timeout=timeout)
-                except DataCorruption:
+                except DataCorruption as exc:
                     # Attempt to delete the corrupted object.
-                    self.delete()
+                    try:
+                        with _suppress_internal_metrics():
+                            self.delete()
+                    except BaseException as cleanup_exc:
+                        _record_primary_exception(exc, cleanup_exc)
+                        raise
                     raise
+            if not _SUPPRESS_BODY_SIZE.get():
+                recorder = _media_request_helpers.resolve_transport_recorder(transport)
+                if recorder is not None:
+                    uploaded = getattr(upload, "bytes_uploaded", 0)
+                    if isinstance(uploaded, int) and not isinstance(uploaded, bool):
+                        recorder.record_request_body_size(
+                            uploaded, operation="WriteObject"
+                        )
             return response
 
     def _do_upload(
@@ -2850,29 +2933,39 @@ class Blob(_PropertyMixin):
         :raises: :class:`~google.cloud.exceptions.GoogleCloudError`
                  if the upload response returns an error status.
         """
-        _maybe_rewind(file_obj, rewind=rewind)
-        predefined_acl = ACL.validate_predefined(predefined_acl)
+        default_method = (
+            "storage.transfer_manager.upload_many"
+            if command == "tm.upload_many"
+            else "storage.Blob.upload_from_file"
+        )
+        with _start_storage_operation(
+            _resolve_operation_client(self, client),
+            default_method,
+            "WriteObject",
+        ):
+            _maybe_rewind(file_obj, rewind=rewind)
+            predefined_acl = ACL.validate_predefined(predefined_acl)
 
-        try:
-            created_json = self._do_upload(
-                client,
-                file_obj,
-                content_type,
-                size,
-                predefined_acl,
-                if_generation_match,
-                if_generation_not_match,
-                if_metageneration_match,
-                if_metageneration_not_match,
-                timeout=timeout,
-                checksum=checksum,
-                retry=retry,
-                command=command,
-                crc32c_checksum_value=crc32c_checksum_value,
-            )
-            self._set_properties(created_json)
-        except InvalidResponse as exc:
-            _raise_from_invalid_response(exc)
+            try:
+                created_json = self._do_upload(
+                    client,
+                    file_obj,
+                    content_type,
+                    size,
+                    predefined_acl,
+                    if_generation_match,
+                    if_generation_not_match,
+                    if_metageneration_match,
+                    if_metageneration_not_match,
+                    timeout=timeout,
+                    checksum=checksum,
+                    retry=retry,
+                    command=command,
+                    crc32c_checksum_value=crc32c_checksum_value,
+                )
+                self._set_properties(created_json)
+            except InvalidResponse as exc:
+                _raise_from_invalid_response(exc)
 
     def upload_from_file(
         self,
@@ -3034,22 +3127,27 @@ class Blob(_PropertyMixin):
                  if the upload response returns an error status.
         """
         with self._create_trace_span(name="Storage.Blob.uploadFromFile"):
-            self._prep_and_do_upload(
-                file_obj,
-                rewind=rewind,
-                size=size,
-                content_type=content_type,
-                client=client,
-                predefined_acl=predefined_acl,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                timeout=timeout,
-                checksum=checksum,
-                retry=retry,
-                crc32c_checksum_value=crc32c_checksum_value,
-            )
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Blob.upload_from_file",
+                "WriteObject",
+            ):
+                self._prep_and_do_upload(
+                    file_obj,
+                    rewind=rewind,
+                    size=size,
+                    content_type=content_type,
+                    client=client,
+                    predefined_acl=predefined_acl,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    timeout=timeout,
+                    checksum=checksum,
+                    retry=retry,
+                    crc32c_checksum_value=crc32c_checksum_value,
+                )
 
     def _handle_filename_and_upload(self, filename, content_type=None, *args, **kwargs):
         """Upload this blob's contents from the content of a named file.
@@ -3062,18 +3160,27 @@ class Blob(_PropertyMixin):
 
         For *args and **kwargs, refer to the documentation for upload_from_filename() for more information.
         """
+        default_method = (
+            "storage.transfer_manager.upload_many"
+            if kwargs.get("command") == "tm.upload_many"
+            else "storage.Blob.upload_from_filename"
+        )
+        with _start_storage_operation(
+            _resolve_operation_client(self, kwargs.get("client")),
+            default_method,
+            "WriteObject",
+        ):
+            content_type = self._get_content_type(content_type, filename=filename)
 
-        content_type = self._get_content_type(content_type, filename=filename)
-
-        with open(filename, "rb") as file_obj:
-            total_bytes = os.fstat(file_obj.fileno()).st_size
-            self._prep_and_do_upload(
-                file_obj,
-                content_type=content_type,
-                size=total_bytes,
-                *args,
-                **kwargs,
-            )
+            with open(filename, "rb") as file_obj:
+                total_bytes = os.fstat(file_obj.fileno()).st_size
+                self._prep_and_do_upload(
+                    file_obj,
+                    content_type=content_type,
+                    size=total_bytes,
+                    *args,
+                    **kwargs,
+                )
 
     def upload_from_filename(
         self,
@@ -3217,20 +3324,25 @@ class Blob(_PropertyMixin):
             base64: https://datatracker.ietf.org/doc/html/rfc4648#section-4
         """
         with self._create_trace_span(name="Storage.Blob.uploadFromFilename"):
-            self._handle_filename_and_upload(
-                filename,
-                content_type=content_type,
-                client=client,
-                predefined_acl=predefined_acl,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                timeout=timeout,
-                checksum=checksum,
-                retry=retry,
-                crc32c_checksum_value=crc32c_checksum_value,
-            )
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Blob.upload_from_filename",
+                "WriteObject",
+            ):
+                self._handle_filename_and_upload(
+                    filename,
+                    content_type=content_type,
+                    client=client,
+                    predefined_acl=predefined_acl,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    timeout=timeout,
+                    checksum=checksum,
+                    retry=retry,
+                    crc32c_checksum_value=crc32c_checksum_value,
+                )
 
     def upload_from_string(
         self,
@@ -3366,23 +3478,28 @@ class Blob(_PropertyMixin):
             base64: https://datatracker.ietf.org/doc/html/rfc4648#section-4
         """
         with self._create_trace_span(name="Storage.Blob.uploadFromString"):
-            data = _to_bytes(data, encoding="utf-8")
-            string_buffer = BytesIO(data)
-            self.upload_from_file(
-                file_obj=string_buffer,
-                size=len(data),
-                content_type=content_type,
-                client=client,
-                predefined_acl=predefined_acl,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                timeout=timeout,
-                checksum=checksum,
-                retry=retry,
-                crc32c_checksum_value=crc32c_checksum_value,
-            )
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Blob.upload_from_string",
+                "WriteObject",
+            ):
+                data = _to_bytes(data, encoding="utf-8")
+                string_buffer = BytesIO(data)
+                self.upload_from_file(
+                    file_obj=string_buffer,
+                    size=len(data),
+                    content_type=content_type,
+                    client=client,
+                    predefined_acl=predefined_acl,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    timeout=timeout,
+                    checksum=checksum,
+                    retry=retry,
+                    crc32c_checksum_value=crc32c_checksum_value,
+                )
 
     def create_resumable_upload_session(
         self,
@@ -3518,51 +3635,56 @@ class Blob(_PropertyMixin):
                  if the session creation response returns an error status.
         """
         with self._create_trace_span(name="Storage.Blob.createResumableUploadSession"):
-            # Handle ConditionalRetryPolicy.
-            if isinstance(retry, ConditionalRetryPolicy):
-                # Conditional retries are designed for non-media calls, which change
-                # arguments into query_params dictionaries. Media operations work
-                # differently, so here we make a "fake" query_params to feed to the
-                # ConditionalRetryPolicy.
-                query_params = {
-                    "ifGenerationMatch": if_generation_match,
-                    "ifMetagenerationMatch": if_metageneration_match,
-                }
-                retry = retry.get_retry_policy_if_conditions_met(
-                    query_params=query_params
-                )
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Blob.create_resumable_upload_session",
+                "StartResumableWrite",
+            ):
+                # Handle ConditionalRetryPolicy.
+                if isinstance(retry, ConditionalRetryPolicy):
+                    # Conditional retries are designed for non-media calls, which change
+                    # arguments into query_params dictionaries. Media operations work
+                    # differently, so here we make a "fake" query_params to feed to the
+                    # ConditionalRetryPolicy.
+                    query_params = {
+                        "ifGenerationMatch": if_generation_match,
+                        "ifMetagenerationMatch": if_metageneration_match,
+                    }
+                    retry = retry.get_retry_policy_if_conditions_met(
+                        query_params=query_params
+                    )
 
-            extra_headers = {}
-            if origin is not None:
-                # This header is specifically for client-side uploads, it
-                # determines the origins allowed for CORS.
-                extra_headers["Origin"] = origin
+                extra_headers = {}
+                if origin is not None:
+                    # This header is specifically for client-side uploads, it
+                    # determines the origins allowed for CORS.
+                    extra_headers["Origin"] = origin
 
-            try:
-                fake_stream = BytesIO(b"")
-                # Send a fake the chunk size which we **know** will be acceptable
-                # to the `ResumableUpload` constructor. The chunk size only
-                # matters when **sending** bytes to an upload.
-                upload, _ = self._initiate_resumable_upload(
-                    client,
-                    fake_stream,
-                    content_type,
-                    size,
-                    predefined_acl=predefined_acl,
-                    if_generation_match=if_generation_match,
-                    if_generation_not_match=if_generation_not_match,
-                    if_metageneration_match=if_metageneration_match,
-                    if_metageneration_not_match=if_metageneration_not_match,
-                    extra_headers=extra_headers,
-                    chunk_size=self._CHUNK_SIZE_MULTIPLE,
-                    timeout=timeout,
-                    checksum=checksum,
-                    retry=retry,
-                )
+                try:
+                    fake_stream = BytesIO(b"")
+                    # Send a fake the chunk size which we **know** will be acceptable
+                    # to the `ResumableUpload` constructor. The chunk size only
+                    # matters when **sending** bytes to an upload.
+                    upload, _ = self._initiate_resumable_upload(
+                        client,
+                        fake_stream,
+                        content_type,
+                        size,
+                        predefined_acl=predefined_acl,
+                        if_generation_match=if_generation_match,
+                        if_generation_not_match=if_generation_not_match,
+                        if_metageneration_match=if_metageneration_match,
+                        if_metageneration_not_match=if_metageneration_not_match,
+                        extra_headers=extra_headers,
+                        chunk_size=self._CHUNK_SIZE_MULTIPLE,
+                        timeout=timeout,
+                        checksum=checksum,
+                        retry=retry,
+                    )
 
-                return upload.resumable_url
-            except InvalidResponse as exc:
-                _raise_from_invalid_response(exc)
+                    return upload.resumable_url
+                except InvalidResponse as exc:
+                    _raise_from_invalid_response(exc)
 
     def get_iam_policy(
         self,
@@ -3615,23 +3737,27 @@ class Blob(_PropertyMixin):
         """
         with self._create_trace_span(name="Storage.Blob.getIamPolicy"):
             client = self._require_client(client)
+            with _start_storage_operation(
+                client, "storage.Blob.get_iam_policy", "GetIamPolicy"
+            ):
+                query_params = {}
 
-            query_params = {}
+                if self.user_project is not None:
+                    query_params["userProject"] = self.user_project
 
-            if self.user_project is not None:
-                query_params["userProject"] = self.user_project
+                if requested_policy_version is not None:
+                    query_params["optionsRequestedPolicyVersion"] = (
+                        requested_policy_version
+                    )
 
-            if requested_policy_version is not None:
-                query_params["optionsRequestedPolicyVersion"] = requested_policy_version
-
-            info = client._get_resource(
-                f"{self.path}/iam",
-                query_params=query_params,
-                timeout=timeout,
-                retry=retry,
-                _target_object=None,
-            )
-            return Policy.from_api_repr(info)
+                info = client._get_resource(
+                    f"{self.path}/iam",
+                    query_params=query_params,
+                    timeout=timeout,
+                    retry=retry,
+                    _target_object=None,
+                )
+                return Policy.from_api_repr(info)
 
     def set_iam_policy(
         self,
@@ -3676,24 +3802,26 @@ class Blob(_PropertyMixin):
         """
         with self._create_trace_span(name="Storage.Blob.setIamPolicy"):
             client = self._require_client(client)
+            with _start_storage_operation(
+                client, "storage.Blob.set_iam_policy", "SetIamPolicy"
+            ):
+                query_params = {}
 
-            query_params = {}
+                if self.user_project is not None:
+                    query_params["userProject"] = self.user_project
 
-            if self.user_project is not None:
-                query_params["userProject"] = self.user_project
-
-            path = f"{self.path}/iam"
-            resource = policy.to_api_repr()
-            resource["resourceId"] = self.path
-            info = client._put_resource(
-                path,
-                resource,
-                query_params=query_params,
-                timeout=timeout,
-                retry=retry,
-                _target_object=None,
-            )
-            return Policy.from_api_repr(info)
+                path = f"{self.path}/iam"
+                resource = policy.to_api_repr()
+                resource["resourceId"] = self.path
+                info = client._put_resource(
+                    path,
+                    resource,
+                    query_params=query_params,
+                    timeout=timeout,
+                    retry=retry,
+                    _target_object=None,
+                )
+                return Policy.from_api_repr(info)
 
     def test_iam_permissions(
         self,
@@ -3738,21 +3866,26 @@ class Blob(_PropertyMixin):
         """
         with self._create_trace_span(name="Storage.Blob.testIamPermissions"):
             client = self._require_client(client)
-            query_params = {"permissions": permissions}
+            with _start_storage_operation(
+                client,
+                "storage.Blob.test_iam_permissions",
+                "TestIamPermissions",
+            ):
+                query_params = {"permissions": permissions}
 
-            if self.user_project is not None:
-                query_params["userProject"] = self.user_project
+                if self.user_project is not None:
+                    query_params["userProject"] = self.user_project
 
-            path = f"{self.path}/iam/testPermissions"
-            resp = client._get_resource(
-                path,
-                query_params=query_params,
-                timeout=timeout,
-                retry=retry,
-                _target_object=None,
-            )
+                path = f"{self.path}/iam/testPermissions"
+                resp = client._get_resource(
+                    path,
+                    query_params=query_params,
+                    timeout=timeout,
+                    retry=retry,
+                    _target_object=None,
+                )
 
-            return resp.get("permissions", [])
+                return resp.get("permissions", [])
 
     def make_public(
         self,
@@ -3797,16 +3930,21 @@ class Blob(_PropertyMixin):
             (Optional) How to retry the RPC. See: :ref:`configuring_retries`
         """
         with self._create_trace_span(name="Storage.Blob.makePublic"):
-            self.acl.all().grant_read()
-            self.acl.save(
-                client=client,
-                timeout=timeout,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                retry=retry,
-            )
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Blob.make_public",
+                "UpdateObjectACL",
+            ):
+                self.acl.all().grant_read()
+                self.acl.save(
+                    client=client,
+                    timeout=timeout,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    retry=retry,
+                )
 
     def make_private(
         self,
@@ -3851,16 +3989,21 @@ class Blob(_PropertyMixin):
             (Optional) How to retry the RPC. See: :ref:`configuring_retries`
         """
         with self._create_trace_span(name="Storage.Blob.makePrivate"):
-            self.acl.all().revoke_read()
-            self.acl.save(
-                client=client,
-                timeout=timeout,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                retry=retry,
-            )
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Blob.make_private",
+                "UpdateObjectACL",
+            ):
+                self.acl.all().revoke_read()
+                self.acl.save(
+                    client=client,
+                    timeout=timeout,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    retry=retry,
+                )
 
     def compose(
         self,
@@ -3944,89 +4087,96 @@ class Blob(_PropertyMixin):
             successful composition.
         """
         with self._create_trace_span(name="Storage.Blob.compose"):
-            sources_len = len(sources)
-            client = self._require_client(client)
-            query_params = {}
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Blob.compose",
+                "ComposeObject",
+            ):
+                sources_len = len(sources)
+                client = self._require_client(client)
+                query_params = {}
 
-            if isinstance(if_generation_match, list):
-                warnings.warn(
-                    _COMPOSE_IF_GENERATION_LIST_DEPRECATED,
-                    DeprecationWarning,
-                    stacklevel=2,
-                )
-
-                if if_source_generation_match is not None:
-                    raise ValueError(
-                        _COMPOSE_IF_GENERATION_LIST_AND_IF_SOURCE_GENERATION_ERROR
+                if isinstance(if_generation_match, list):
+                    warnings.warn(
+                        _COMPOSE_IF_GENERATION_LIST_DEPRECATED,
+                        DeprecationWarning,
+                        stacklevel=2,
                     )
 
-                if_source_generation_match = if_generation_match
-                if_generation_match = None
+                    if if_source_generation_match is not None:
+                        raise ValueError(
+                            _COMPOSE_IF_GENERATION_LIST_AND_IF_SOURCE_GENERATION_ERROR
+                        )
 
-            if isinstance(if_metageneration_match, list):
-                warnings.warn(
-                    _COMPOSE_IF_METAGENERATION_LIST_DEPRECATED,
-                    DeprecationWarning,
-                    stacklevel=2,
-                )
+                    if_source_generation_match = if_generation_match
+                    if_generation_match = None
 
-                if_metageneration_match = None
+                if isinstance(if_metageneration_match, list):
+                    warnings.warn(
+                        _COMPOSE_IF_METAGENERATION_LIST_DEPRECATED,
+                        DeprecationWarning,
+                        stacklevel=2,
+                    )
 
-            if if_source_generation_match is None:
-                if_source_generation_match = [None] * sources_len
-            if len(if_source_generation_match) != sources_len:
-                raise ValueError(_COMPOSE_IF_SOURCE_GENERATION_MISMATCH_ERROR)
+                    if_metageneration_match = None
 
-            source_objects = []
-            for source, source_generation in zip(sources, if_source_generation_match):
-                source_object = {
-                    "name": source.name,
-                    "generation": source.generation,
+                if if_source_generation_match is None:
+                    if_source_generation_match = [None] * sources_len
+                if len(if_source_generation_match) != sources_len:
+                    raise ValueError(_COMPOSE_IF_SOURCE_GENERATION_MISMATCH_ERROR)
+
+                source_objects = []
+                for source, source_generation in zip(
+                    sources, if_source_generation_match
+                ):
+                    source_object = {
+                        "name": source.name,
+                        "generation": source.generation,
+                    }
+
+                    preconditions = {}
+                    if source_generation is not None:
+                        preconditions["ifGenerationMatch"] = source_generation
+
+                    if preconditions:
+                        source_object["objectPreconditions"] = preconditions
+
+                    source_objects.append(source_object)
+
+                if destination_contexts is not None:
+                    if isinstance(destination_contexts, ObjectContexts):
+                        self.contexts = destination_contexts
+                    else:
+                        raise ValueError(
+                            "destination_contexts must be an ObjectContexts object"
+                        )
+
+                request = {
+                    "sourceObjects": source_objects,
+                    "destination": self._properties.copy(),
                 }
 
-                preconditions = {}
-                if source_generation is not None:
-                    preconditions["ifGenerationMatch"] = source_generation
+                if delete_source_objects is not None:
+                    request["deleteSourceObjects"] = delete_source_objects
 
-                if preconditions:
-                    source_object["objectPreconditions"] = preconditions
+                if self.user_project is not None:
+                    query_params["userProject"] = self.user_project
 
-                source_objects.append(source_object)
+                _add_generation_match_parameters(
+                    query_params,
+                    if_generation_match=if_generation_match,
+                    if_metageneration_match=if_metageneration_match,
+                )
 
-            if destination_contexts is not None:
-                if isinstance(destination_contexts, ObjectContexts):
-                    self.contexts = destination_contexts
-                else:
-                    raise ValueError(
-                        "destination_contexts must be an ObjectContexts object"
-                    )
-
-            request = {
-                "sourceObjects": source_objects,
-                "destination": self._properties.copy(),
-            }
-
-            if delete_source_objects is not None:
-                request["deleteSourceObjects"] = delete_source_objects
-
-            if self.user_project is not None:
-                query_params["userProject"] = self.user_project
-
-            _add_generation_match_parameters(
-                query_params,
-                if_generation_match=if_generation_match,
-                if_metageneration_match=if_metageneration_match,
-            )
-
-            api_response = client._post_resource(
-                f"{self.path}/compose",
-                request,
-                query_params=query_params,
-                timeout=timeout,
-                retry=retry,
-                _target_object=self,
-            )
-            self._set_properties(api_response)
+                api_response = client._post_resource(
+                    f"{self.path}/compose",
+                    request,
+                    query_params=query_params,
+                    timeout=timeout,
+                    retry=retry,
+                    _target_object=self,
+                )
+                self._set_properties(api_response)
 
     def rewrite(
         self,
@@ -4141,71 +4291,76 @@ class Blob(_PropertyMixin):
         """
         with self._create_trace_span(name="Storage.Blob.rewrite"):
             client = self._require_client(client)
-            headers = _get_encryption_headers(self._encryption_key)
-            headers.update(_get_encryption_headers(source._encryption_key, source=True))
-
-            query_params = self._query_params
-            if "generation" in query_params:
-                del query_params["generation"]
-
-            if token:
-                query_params["rewriteToken"] = token
-
-            if source.generation:
-                query_params["sourceGeneration"] = source.generation
-
-            # When a Customer Managed Encryption Key is used to encrypt Cloud Storage object
-            # at rest, object resource metadata will store the version of the Key Management
-            # Service cryptographic material. If a Blob instance with KMS Key metadata set is
-            # used to rewrite the object, then the existing kmsKeyName version
-            # value can't be used in the rewrite request and the client instead ignores it.
-            if (
-                self.kms_key_name is not None
-                and "cryptoKeyVersions" not in self.kms_key_name
+            with _start_storage_operation(
+                client, "storage.Blob.rewrite", "RewriteObject"
             ):
-                query_params["destinationKmsKeyName"] = self.kms_key_name
+                headers = _get_encryption_headers(self._encryption_key)
+                headers.update(
+                    _get_encryption_headers(source._encryption_key, source=True)
+                )
 
-            _add_generation_match_parameters(
-                query_params,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                if_source_generation_match=if_source_generation_match,
-                if_source_generation_not_match=if_source_generation_not_match,
-                if_source_metageneration_match=if_source_metageneration_match,
-                if_source_metageneration_not_match=if_source_metageneration_not_match,
-            )
+                query_params = self._query_params
+                if "generation" in query_params:
+                    del query_params["generation"]
 
-            if destination_contexts is not None:
-                if isinstance(destination_contexts, ObjectContexts):
-                    self.contexts = destination_contexts
-                else:
-                    raise ValueError(
-                        "destination_contexts must be an ObjectContexts object"
-                    )
+                if token:
+                    query_params["rewriteToken"] = token
 
-            path = f"{source.path}/rewriteTo{self.path}"
-            api_response = client._post_resource(
-                path,
-                self._properties,
-                query_params=query_params,
-                headers=headers,
-                timeout=timeout,
-                retry=retry,
-                _target_object=self,
-            )
-            rewritten = int(api_response["totalBytesRewritten"])
-            size = int(api_response["objectSize"])
+                if source.generation:
+                    query_params["sourceGeneration"] = source.generation
 
-            # The resource key is set if and only if the API response is
-            # completely done. Additionally, there is no rewrite token to return
-            # in this case.
-            if api_response["done"]:
-                self._set_properties(api_response["resource"])
-                return None, rewritten, size
+                # When a Customer Managed Encryption Key is used to encrypt Cloud Storage object
+                # at rest, object resource metadata will store the version of the Key Management
+                # Service cryptographic material. If a Blob instance with KMS Key metadata set is
+                # used to rewrite the object, then the existing kmsKeyName version
+                # value can't be used in the rewrite request and the client instead ignores it.
+                if (
+                    self.kms_key_name is not None
+                    and "cryptoKeyVersions" not in self.kms_key_name
+                ):
+                    query_params["destinationKmsKeyName"] = self.kms_key_name
 
-            return api_response["rewriteToken"], rewritten, size
+                _add_generation_match_parameters(
+                    query_params,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    if_source_generation_match=if_source_generation_match,
+                    if_source_generation_not_match=if_source_generation_not_match,
+                    if_source_metageneration_match=if_source_metageneration_match,
+                    if_source_metageneration_not_match=if_source_metageneration_not_match,
+                )
+
+                if destination_contexts is not None:
+                    if isinstance(destination_contexts, ObjectContexts):
+                        self.contexts = destination_contexts
+                    else:
+                        raise ValueError(
+                            "destination_contexts must be an ObjectContexts object"
+                        )
+
+                path = f"{source.path}/rewriteTo{self.path}"
+                api_response = client._post_resource(
+                    path,
+                    self._properties,
+                    query_params=query_params,
+                    headers=headers,
+                    timeout=timeout,
+                    retry=retry,
+                    _target_object=self,
+                )
+                rewritten = int(api_response["totalBytesRewritten"])
+                size = int(api_response["objectSize"])
+
+                # The resource key is set if and only if the API response is
+                # completely done. Additionally, there is no rewrite token to return
+                # in this case.
+                if api_response["done"]:
+                    self._set_properties(api_response["resource"])
+                    return None, rewritten, size
+
+                return api_response["rewriteToken"], rewritten, size
 
     def update_storage_class(
         self,
@@ -4308,27 +4463,18 @@ class Blob(_PropertyMixin):
             See [Configuring Retries](https://cloud.google.com/python/docs/reference/storage/latest/retry_timeout).
         """
         with self._create_trace_span(name="Storage.Blob.updateStorageClass"):
-            # Update current blob's storage class prior to rewrite
-            self._patch_property("storageClass", new_class)
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Blob.update_storage_class",
+                "RewriteObject",
+            ):
+                # Update current blob's storage class prior to rewrite
+                self._patch_property("storageClass", new_class)
+                extra_rewrite_kw = {"client": client} if client is not None else {}
 
-            # Execute consecutive rewrite operations until operation is done
-            token, _, _ = self.rewrite(
-                self,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                if_source_generation_match=if_source_generation_match,
-                if_source_generation_not_match=if_source_generation_not_match,
-                if_source_metageneration_match=if_source_metageneration_match,
-                if_source_metageneration_not_match=if_source_metageneration_not_match,
-                timeout=timeout,
-                retry=retry,
-            )
-            while token is not None:
+                # Execute consecutive rewrite operations until operation is done
                 token, _, _ = self.rewrite(
                     self,
-                    token=token,
                     if_generation_match=if_generation_match,
                     if_generation_not_match=if_generation_not_match,
                     if_metageneration_match=if_metageneration_match,
@@ -4339,7 +4485,24 @@ class Blob(_PropertyMixin):
                     if_source_metageneration_not_match=if_source_metageneration_not_match,
                     timeout=timeout,
                     retry=retry,
+                    **extra_rewrite_kw,
                 )
+                while token is not None:
+                    token, _, _ = self.rewrite(
+                        self,
+                        token=token,
+                        if_generation_match=if_generation_match,
+                        if_generation_not_match=if_generation_not_match,
+                        if_metageneration_match=if_metageneration_match,
+                        if_metageneration_not_match=if_metageneration_not_match,
+                        if_source_generation_match=if_source_generation_match,
+                        if_source_generation_not_match=if_source_generation_not_match,
+                        if_source_metageneration_match=if_source_metageneration_match,
+                        if_source_metageneration_not_match=if_source_metageneration_not_match,
+                        timeout=timeout,
+                        retry=retry,
+                        **extra_rewrite_kw,
+                    )
 
     def open(
         self,
@@ -4452,56 +4615,96 @@ class Blob(_PropertyMixin):
             of those classes, depending on the 'mode' argument.
         """
         with self._create_trace_span(name="Storage.Blob.open"):
-            if mode == "rb":
-                if encoding or errors or newline:
-                    raise ValueError(
-                        "encoding, errors and newline arguments are for text mode only"
-                    )
-                if ignore_flush:
-                    raise ValueError(
-                        "ignore_flush argument is for non-text write mode only"
-                    )
-                return BlobReader(self, chunk_size=chunk_size, **kwargs)
-            elif mode == "wb":
-                if encoding or errors or newline:
-                    raise ValueError(
-                        "encoding, errors and newline arguments are for text mode only"
-                    )
-                return BlobWriter(
-                    self,
-                    chunk_size=chunk_size,
-                    ignore_flush=ignore_flush,
-                    **kwargs,
-                )
-            elif mode in ("r", "rt"):
-                if ignore_flush:
-                    raise ValueError(
-                        "ignore_flush argument is for non-text write mode only"
-                    )
-                return TextIOWrapper(
-                    BlobReader(self, chunk_size=chunk_size, **kwargs),
-                    encoding=encoding,
-                    errors=errors,
-                    newline=newline,
-                )
-            elif mode in ("w", "wt"):
-                if ignore_flush is False:
-                    raise ValueError(
-                        "ignore_flush is required for text mode writing and "
-                        "cannot be set to False"
-                    )
-                return TextIOWrapper(
-                    BlobWriter(
-                        self, chunk_size=chunk_size, ignore_flush=True, **kwargs
-                    ),
-                    encoding=encoding,
-                    errors=errors,
-                    newline=newline,
-                )
+            op_client = _resolve_operation_client(self)
+            if isinstance(mode, str) and mode.startswith("r"):
+                op_name = "ReadObject"
+            elif isinstance(mode, str) and mode.startswith("w"):
+                op_name = "WriteObject"
             else:
-                raise NotImplementedError(
-                    "Supported modes strings are 'r', 'rb', 'rt', 'w', 'wb', and 'wt' only."
-                )
+                op_name = "UNKNOWN"
+
+            try:
+                if mode == "rb":
+                    if encoding or errors or newline:
+                        raise ValueError(
+                            "encoding, errors and newline arguments are for text mode only"
+                        )
+                    if ignore_flush:
+                        raise ValueError(
+                            "ignore_flush argument is for non-text write mode only"
+                        )
+                elif mode == "wb":
+                    if encoding or errors or newline:
+                        raise ValueError(
+                            "encoding, errors and newline arguments are for text mode only"
+                        )
+                elif mode in ("r", "rt"):
+                    if ignore_flush:
+                        raise ValueError(
+                            "ignore_flush argument is for non-text write mode only"
+                        )
+                elif mode in ("w", "wt"):
+                    if ignore_flush is False:
+                        raise ValueError(
+                            "ignore_flush is required for text mode writing and "
+                            "cannot be set to False"
+                        )
+                else:
+                    raise NotImplementedError(
+                        "Supported modes strings are 'r', 'rb', 'rt', 'w', 'wb', and 'wt' only."
+                    )
+            except BaseException:
+                with _start_storage_operation(op_client, "storage.Blob.open", op_name):
+                    raise
+
+            with _client_method_override("storage.Blob.open"):
+                if mode == "rb":
+                    return BlobReader(self, chunk_size=chunk_size, **kwargs)
+                elif mode == "wb":
+                    return BlobWriter(
+                        self,
+                        chunk_size=chunk_size,
+                        ignore_flush=ignore_flush,
+                        **kwargs,
+                    )
+                elif mode in ("r", "rt"):
+                    raw_reader = BlobReader(self, chunk_size=chunk_size, **kwargs)
+                    wrapper_cls = (
+                        _MetricsTextIOWrapper
+                        if raw_reader._metrics_recorder is not None
+                        else TextIOWrapper
+                    )
+                    try:
+                        return wrapper_cls(
+                            raw_reader,
+                            encoding=encoding,
+                            errors=errors,
+                            newline=newline,
+                        )
+                    except BaseException as exc:
+                        raw_reader._buffer.close()
+                        raw_reader._finalize_metrics(exc=exc, record_body=False)
+                        raise
+                else:
+                    raw_writer = BlobWriter(
+                        self, chunk_size=chunk_size, ignore_flush=True, **kwargs
+                    )
+                    wrapper_cls = (
+                        _MetricsTextIOWrapper
+                        if raw_writer._metrics_recorder is not None
+                        else TextIOWrapper
+                    )
+                    try:
+                        return wrapper_cls(
+                            raw_writer,
+                            encoding=encoding,
+                            errors=errors,
+                            newline=newline,
+                        )
+                    except BaseException as exc:
+                        raw_writer._buffer.close()
+                        raw_writer._finalize_metrics(exc=exc, record_body=False)
+                        raise
 
     cache_control = _scalar_property("cacheControl")
     """HTTP 'Cache-Control' header for this object.
@@ -4677,59 +4880,71 @@ class Blob(_PropertyMixin):
             to be included in the X-Goog-API-Client header. Please leave as None
             unless otherwise directed.
         """
-        # Handle ConditionalRetryPolicy.
-        if isinstance(retry, ConditionalRetryPolicy):
-            # Conditional retries are designed for non-media calls, which change
-            # arguments into query_params dictionaries. Media operations work
-            # differently, so here we make a "fake" query_params to feed to the
-            # ConditionalRetryPolicy.
-            query_params = {
-                "ifGenerationMatch": if_generation_match,
-                "ifMetagenerationMatch": if_metageneration_match,
-            }
-            retry = retry.get_retry_policy_if_conditions_met(query_params=query_params)
-
-        client = self._require_client(client)
-
-        download_url = self._get_download_url(
-            client,
-            if_generation_match=if_generation_match,
-            if_generation_not_match=if_generation_not_match,
-            if_metageneration_match=if_metageneration_match,
-            if_metageneration_not_match=if_metageneration_not_match,
+        default_method = (
+            "storage.transfer_manager.download_many"
+            if command == "tm.download_many"
+            else "storage.Blob.download_to_file"
         )
-        headers = _get_encryption_headers(self._encryption_key)
-        headers["accept-encoding"] = "gzip"
-        _add_etag_match_headers(
-            headers,
-            if_etag_match=if_etag_match,
-            if_etag_not_match=if_etag_not_match,
-        )
-        # Add any client attached custom headers to be sent with the request.
-        headers = {
-            **_get_default_headers(client._connection.user_agent, command=command),
-            **headers,
-            **getattr(client, "_extra_headers", {}),
-        }
+        with _start_storage_operation(
+            _resolve_operation_client(self, client),
+            default_method,
+            "ReadObject",
+        ):
+            # Handle ConditionalRetryPolicy.
+            if isinstance(retry, ConditionalRetryPolicy):
+                # Conditional retries are designed for non-media calls, which change
+                # arguments into query_params dictionaries. Media operations work
+                # differently, so here we make a "fake" query_params to feed to the
+                # ConditionalRetryPolicy.
+                query_params = {
+                    "ifGenerationMatch": if_generation_match,
+                    "ifMetagenerationMatch": if_metageneration_match,
+                }
+                retry = retry.get_retry_policy_if_conditions_met(
+                    query_params=query_params
+                )
 
-        transport = client._http
+            client = self._require_client(client)
 
-        try:
-            self._do_download(
-                transport,
-                file_obj,
-                download_url,
-                headers,
-                start,
-                end,
-                raw_download,
-                timeout=timeout,
-                checksum=checksum,
-                retry=retry,
-                single_shot_download=single_shot_download,
+            download_url = self._get_download_url(
+                client,
+                if_generation_match=if_generation_match,
+                if_generation_not_match=if_generation_not_match,
+                if_metageneration_match=if_metageneration_match,
+                if_metageneration_not_match=if_metageneration_not_match,
             )
-        except InvalidResponse as exc:
-            _raise_from_invalid_response(exc)
+            headers = _get_encryption_headers(self._encryption_key)
+            headers["accept-encoding"] = "gzip"
+            _add_etag_match_headers(
+                headers,
+                if_etag_match=if_etag_match,
+                if_etag_not_match=if_etag_not_match,
+            )
+            # Add any client attached custom headers to be sent with the request.
+            headers = {
+                **_get_default_headers(client._connection.user_agent, command=command),
+                **headers,
+                **getattr(client, "_extra_headers", {}),
+            }
+
+            transport = client._http
+
+            try:
+                self._do_download(
+                    transport,
+                    file_obj,
+                    download_url,
+                    headers,
+                    start,
+                    end,
+                    raw_download,
+                    timeout=timeout,
+                    checksum=checksum,
+                    retry=retry,
+                    single_shot_download=single_shot_download,
+                )
+            except InvalidResponse as exc:
+                _raise_from_invalid_response(exc)
 
     @property
     def component_count(self):

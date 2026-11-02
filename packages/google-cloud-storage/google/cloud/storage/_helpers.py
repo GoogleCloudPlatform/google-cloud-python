@@ -23,7 +23,8 @@ import logging
 import os
 import secrets
 import sys
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
+from contextvars import ContextVar
 from hashlib import md5
 from urllib.parse import urlsplit, urlunsplit
 from uuid import uuid4
@@ -32,6 +33,7 @@ from google.api_core import exceptions as api_exceptions
 from google.auth import environment_vars
 from google.cloud.exceptions import NotFound
 
+from google.cloud.storage import _opentelemetry_metrics
 from google.cloud.storage._opentelemetry_tracing import (
     _is_bucket_metadata_disabled,
 )
@@ -45,6 +47,177 @@ from google.cloud.storage.retry import (
 )
 
 _logger = logging.getLogger(__name__)
+
+_SUPPRESS_INTERNAL_METRICS = ContextVar("_gcs_suppress_internal_metrics", default=False)
+_SUPPRESS_BODY_SIZE = ContextVar("_gcs_suppress_body_size", default=False)
+_LIST_METRICS_CONTEXT = ContextVar("_gcs_list_metrics_context", default=None)
+_CLIENT_METHOD_OVERRIDE = ContextVar("_gcs_client_method_override", default=None)
+_ACTIVE_METRICS_RECORDER = ContextVar("_gcs_active_metrics_recorder", default=None)
+
+
+def _resolve_operation_client(obj, client=None):
+    """Best-effort resolution of a client instance without raising if unbound."""
+    if client is not None:
+        return client
+    try:
+        return obj.client
+    except Exception:
+        return getattr(obj, "_client", None)
+
+
+@contextmanager
+def _suppress_internal_metrics():
+    """Suppresses all GCS standard metrics within internal background/cleanup calls."""
+    token = _SUPPRESS_INTERNAL_METRICS.set(True)
+    try:
+        yield
+    finally:
+        _SUPPRESS_INTERNAL_METRICS.reset(token)
+
+
+@contextmanager
+def _suppress_body_size():
+    """Suppresses per-chunk body-size emission while keeping TTFB/attempts active."""
+    token = _SUPPRESS_BODY_SIZE.set(True)
+    try:
+        yield
+    finally:
+        _SUPPRESS_BODY_SIZE.reset(token)
+
+
+@contextmanager
+def _list_metrics_context(client_method, operation):
+    """Propagates outermost list Veneer attribution into ``Client._list_resource``."""
+    if _LIST_METRICS_CONTEXT.get() is not None:
+        yield
+        return
+    token = _LIST_METRICS_CONTEXT.set((client_method, operation))
+    try:
+        yield
+    finally:
+        _LIST_METRICS_CONTEXT.reset(token)
+
+
+@contextmanager
+def _client_method_override(client_method):
+    """Overrides ``gcp.client.method`` for outermost composite helpers (e.g. ``transfer_manager``)."""
+    if _CLIENT_METHOD_OVERRIDE.get() is not None:
+        yield
+        return
+    token = _CLIENT_METHOD_OVERRIDE.set(client_method)
+    try:
+        yield
+    finally:
+        _CLIENT_METHOD_OVERRIDE.reset(token)
+
+
+_NON_BATCHABLE_OPERATIONS = frozenset(
+    {"Batch", "ReadObject", "WriteObject", "StartResumableWrite"}
+)
+
+
+def _record_primary_exception(exc, cleanup_exc):
+    """Pins ``exc`` on the active root operation when ``cleanup_exc`` escapes."""
+    op = _opentelemetry_metrics.get_current_operation()
+    if op is not None:
+        prev_cleanup = getattr(op, "_pinned_cleanup_exc", None)
+        if prev_cleanup is None or not any(
+            item is prev_cleanup
+            for item in _opentelemetry_metrics._iter_exception_chain(cleanup_exc)
+        ):
+            op._pinned_exc = exc
+            op._pinned_cleanup_exc = cleanup_exc
+
+
+@contextmanager
+def _start_storage_operation(client, client_method, operation):
+    """Starts a logical GCS standard metrics operation if enabled on ``client``."""
+    if _SUPPRESS_INTERNAL_METRICS.get():
+        yield None
+        return
+
+    recorder = _opentelemetry_metrics.get_active_recorder(client)
+    if recorder is None:
+        yield None
+        return
+
+    current_batch = getattr(client, "current_batch", None)
+    if (
+        operation not in _NON_BATCHABLE_OPERATIONS
+        and getattr(current_batch, "_IS_BATCH", False) is True
+    ):
+        yield None
+        return
+
+    effective_method = _CLIENT_METHOD_OVERRIDE.get() or client_method
+    is_root = _opentelemetry_metrics.get_current_operation() is None
+    rec_token = _ACTIVE_METRICS_RECORDER.set(recorder)
+    try:
+        cm = _opentelemetry_metrics.start_operation(
+            recorder=recorder,
+            client_method=effective_method,
+            operation=operation,
+        )
+        state = cm.__enter__()
+        try:
+            yield state
+        except BaseException as exc:
+            metric_exc = exc
+            if is_root:
+                pinned = getattr(state, "_pinned_exc", None)
+                cleanup_exc = getattr(state, "_pinned_cleanup_exc", None)
+                if pinned is not None and any(
+                    item is cleanup_exc
+                    for item in _opentelemetry_metrics._iter_exception_chain(exc)
+                ):
+                    metric_exc = pinned
+            cm.__exit__(type(metric_exc), metric_exc, metric_exc.__traceback__)
+            raise
+        else:
+            cm.__exit__(None, None, None)
+    finally:
+        _ACTIVE_METRICS_RECORDER.reset(rec_token)
+
+
+@contextmanager
+def _bind_suboperation_context(client, client_method, operation):
+    """Binds parent operation attribution without emitting a nested logical operation.
+
+    Used by streaming file I/O (``BlobReader``/``BlobWriter``) and concurrent
+    ``transfer_manager`` chunk workers so physical HTTP attempts and TTFB carry
+    the parent ``gcp.storage.operation`` while per-chunk logical operations and
+    body sizes are suppressed.
+    """
+    if _SUPPRESS_INTERNAL_METRICS.get():
+        yield None
+        return
+
+    recorder = _opentelemetry_metrics.get_active_recorder(client)
+    if recorder is None:
+        yield None
+        return
+
+    resolved_op = _opentelemetry_metrics.normalize_logical_operation(operation)
+    resolved_rpc = _opentelemetry_metrics.resolve_rpc_method(
+        resolved_op, rpc_method=operation
+    )
+    op_state = _opentelemetry_metrics._OperationState(
+        client_method=client_method,
+        operation=resolved_op,
+        rpc_method=resolved_rpc,
+        suppressed=False,
+    )
+    op_token = _opentelemetry_metrics._OP_STATE.set(op_state)
+    rec_token = _ACTIVE_METRICS_RECORDER.set(recorder)
+    body_token = _SUPPRESS_BODY_SIZE.set(True)
+    try:
+        yield op_state
+    finally:
+        op_state.finished = True
+        _SUPPRESS_BODY_SIZE.reset(body_token)
+        _ACTIVE_METRICS_RECORDER.reset(rec_token)
+        _opentelemetry_metrics._OP_STATE.reset(op_token)
+
 
 STORAGE_EMULATOR_ENV_VAR = "STORAGE_EMULATOR_HOST"  # Despite name, includes scheme.
 """Environment variable defining host for Storage emulator."""
@@ -219,6 +392,10 @@ class _PropertyMixin(object):
                  number or letter.
     """
 
+    _METRICS_CLASS_NAME = None
+    _METRICS_GET_OP = None
+    _METRICS_UPDATE_OP = None
+
     def __init__(self, name=None):
         self.name = name
         self._properties = {}
@@ -377,35 +554,47 @@ class _PropertyMixin(object):
             See: https://cloud.google.com/storage/docs/soft-delete
         """
         client = self._require_client(client)
-        query_params = self._query_params
-        # Pass only '?projection=noAcl' here because 'acl' and related
-        # are handled via custom endpoints.
-        query_params["projection"] = projection
-        _add_generation_match_parameters(
-            query_params,
-            if_generation_match=if_generation_match,
-            if_generation_not_match=if_generation_not_match,
-            if_metageneration_match=if_metageneration_match,
-            if_metageneration_not_match=if_metageneration_not_match,
-        )
-        if soft_deleted is not None:
-            query_params["softDeleted"] = soft_deleted
-            # Soft delete reload requires a generation, even for targets
-            # that don't include them in default query params (buckets).
-            query_params["generation"] = self.generation
-        headers = self._encryption_headers()
-        _add_etag_match_headers(
-            headers, if_etag_match=if_etag_match, if_etag_not_match=if_etag_not_match
-        )
-        api_response = client._get_resource(
-            self.path,
-            query_params=query_params,
-            headers=headers,
-            timeout=timeout,
-            retry=retry,
-            _target_object=self,
-        )
-        self._set_properties(api_response)
+        op_name = self._METRICS_GET_OP
+        if op_name is not None:
+            cls_name = self._METRICS_CLASS_NAME or type(self).__name__
+            op_ctx = _start_storage_operation(
+                client, f"storage.{cls_name}.reload", op_name
+            )
+        else:
+            op_ctx = nullcontext()
+
+        with op_ctx:
+            query_params = self._query_params
+            # Pass only '?projection=noAcl' here because 'acl' and related
+            # are handled via custom endpoints.
+            query_params["projection"] = projection
+            _add_generation_match_parameters(
+                query_params,
+                if_generation_match=if_generation_match,
+                if_generation_not_match=if_generation_not_match,
+                if_metageneration_match=if_metageneration_match,
+                if_metageneration_not_match=if_metageneration_not_match,
+            )
+            if soft_deleted is not None:
+                query_params["softDeleted"] = soft_deleted
+                # Soft delete reload requires a generation, even for targets
+                # that don't include them in default query params (buckets).
+                query_params["generation"] = self.generation
+            headers = self._encryption_headers()
+            _add_etag_match_headers(
+                headers,
+                if_etag_match=if_etag_match,
+                if_etag_not_match=if_etag_not_match,
+            )
+            api_response = client._get_resource(
+                self.path,
+                query_params=query_params,
+                headers=headers,
+                timeout=timeout,
+                retry=retry,
+                _target_object=self,
+            )
+            self._set_properties(api_response)
 
     def _patch_property(self, name, value):
         """Update field of this object's properties.
@@ -490,31 +679,41 @@ class _PropertyMixin(object):
             https://cloud.google.com/storage/docs/json_api/v1/objects/patch
         """
         client = self._require_client(client)
-        query_params = self._query_params
-        # Pass '?projection=full' here because 'PATCH' documented not
-        # to work properly w/ 'noAcl'.
-        query_params["projection"] = "full"
-        if override_unlocked_retention:
-            query_params["overrideUnlockedRetention"] = override_unlocked_retention
-        _add_generation_match_parameters(
-            query_params,
-            if_generation_match=if_generation_match,
-            if_generation_not_match=if_generation_not_match,
-            if_metageneration_match=if_metageneration_match,
-            if_metageneration_not_match=if_metageneration_not_match,
-        )
-        update_properties = {key: self._properties[key] for key in self._changes}
+        op_name = self._METRICS_UPDATE_OP
+        if op_name is not None:
+            cls_name = self._METRICS_CLASS_NAME or type(self).__name__
+            op_ctx = _start_storage_operation(
+                client, f"storage.{cls_name}.patch", op_name
+            )
+        else:
+            op_ctx = nullcontext()
 
-        # Make the API call.
-        api_response = client._patch_resource(
-            self.path,
-            update_properties,
-            query_params=query_params,
-            _target_object=self,
-            timeout=timeout,
-            retry=retry,
-        )
-        self._set_properties(api_response)
+        with op_ctx:
+            query_params = self._query_params
+            # Pass '?projection=full' here because 'PATCH' documented not
+            # to work properly w/ 'noAcl'.
+            query_params["projection"] = "full"
+            if override_unlocked_retention:
+                query_params["overrideUnlockedRetention"] = override_unlocked_retention
+            _add_generation_match_parameters(
+                query_params,
+                if_generation_match=if_generation_match,
+                if_generation_not_match=if_generation_not_match,
+                if_metageneration_match=if_metageneration_match,
+                if_metageneration_not_match=if_metageneration_not_match,
+            )
+            update_properties = {key: self._properties[key] for key in self._changes}
+
+            # Make the API call.
+            api_response = client._patch_resource(
+                self.path,
+                update_properties,
+                query_params=query_params,
+                _target_object=self,
+                timeout=timeout,
+                retry=retry,
+            )
+            self._set_properties(api_response)
 
     def update(
         self,
@@ -571,28 +770,37 @@ class _PropertyMixin(object):
             https://cloud.google.com/storage/docs/json_api/v1/objects/patch
         """
         client = self._require_client(client)
+        op_name = self._METRICS_UPDATE_OP
+        if op_name is not None:
+            cls_name = self._METRICS_CLASS_NAME or type(self).__name__
+            op_ctx = _start_storage_operation(
+                client, f"storage.{cls_name}.update", op_name
+            )
+        else:
+            op_ctx = nullcontext()
 
-        query_params = self._query_params
-        query_params["projection"] = "full"
-        if override_unlocked_retention:
-            query_params["overrideUnlockedRetention"] = override_unlocked_retention
-        _add_generation_match_parameters(
-            query_params,
-            if_generation_match=if_generation_match,
-            if_generation_not_match=if_generation_not_match,
-            if_metageneration_match=if_metageneration_match,
-            if_metageneration_not_match=if_metageneration_not_match,
-        )
+        with op_ctx:
+            query_params = self._query_params
+            query_params["projection"] = "full"
+            if override_unlocked_retention:
+                query_params["overrideUnlockedRetention"] = override_unlocked_retention
+            _add_generation_match_parameters(
+                query_params,
+                if_generation_match=if_generation_match,
+                if_generation_not_match=if_generation_not_match,
+                if_metageneration_match=if_metageneration_match,
+                if_metageneration_not_match=if_metageneration_not_match,
+            )
 
-        api_response = client._put_resource(
-            self.path,
-            self._properties,
-            query_params=query_params,
-            timeout=timeout,
-            retry=retry,
-            _target_object=self,
-        )
-        self._set_properties(api_response)
+            api_response = client._put_resource(
+                self.path,
+                self._properties,
+                query_params=query_params,
+                timeout=timeout,
+                retry=retry,
+                _target_object=self,
+            )
+            self._set_properties(api_response)
 
 
 def _scalar_property(fieldname):
