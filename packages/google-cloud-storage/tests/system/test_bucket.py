@@ -49,6 +49,37 @@ def test_bucket_create_w_alt_storage_class(storage_client, buckets_to_delete):
     assert created.storage_class == constants.ARCHIVE_STORAGE_CLASS
 
 
+def test_bucket_create_w_enterprise_storage_class(storage_client, buckets_to_delete):
+    from google.cloud.storage import constants
+
+    for storage_class, suffix in (
+        (constants.STANDARD_ENTERPRISE_STORAGE_CLASS, "std-ent"),
+        (constants.LR_STANDARD_ENTERPRISE_STORAGE_CLASS, "lr-std-ent"),
+    ):
+        bucket_name = _helpers.unique_name(f"bucket-w-{suffix}")
+
+        with pytest.raises(exceptions.NotFound):
+            storage_client.get_bucket(bucket_name)
+
+        bucket = storage_client.bucket(bucket_name)
+        bucket.storage_class = storage_class
+
+        try:
+            _helpers.retry_429_503(bucket.create)(location="us-central1")
+        except exceptions.BadRequest as exc:
+            if "is not allowed for project" in str(
+                exc
+            ) or "may not create storageClass" in str(exc):
+                pytest.skip(
+                    f"Project not allowlisted for enterprise storage class: {exc}"
+                )
+            raise
+        buckets_to_delete.append(bucket)
+
+        created = storage_client.get_bucket(bucket_name)
+        assert created.storage_class == storage_class
+
+
 def test_bucket_lifecycle_rules(storage_client, buckets_to_delete):
     from google.cloud.storage import constants
     from google.cloud.storage.bucket import (
