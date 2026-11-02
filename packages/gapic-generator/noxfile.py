@@ -243,6 +243,7 @@ def showcase_library(
     retry_config=True,
     rest_async_io_enabled=False,
     install_async_rest_extra=False,
+    transport="grpc+rest",
 ):
     """Install the generated library into the session for showcase tests.
 
@@ -348,7 +349,7 @@ def showcase_library(
                 other_opts
                 + (
                     f"{template_opt}",
-                    "transport=grpc+rest",
+                    f"transport={transport}",
                     f"service-yaml={tmp_dir}/showcase_v1beta1.yaml",
                     f"retry-config={tmp_dir}/showcase_grpc_service_config.json",
                 )
@@ -645,12 +646,20 @@ def run_showcase_unit_tests(
 
 
 @nox.session(python=ALL_PYTHON)
-@nox.parametrize("install_async_rest_extra", [False, True])
+@nox.parametrize(
+    "install_async_rest_extra,transport",
+    [
+        (False, "grpc+rest"),
+        (False, "rest"),
+        (True, "grpc+rest"),
+    ],
+)
 def showcase_unit(
     session,
     install_async_rest_extra=False,
     templates="DEFAULT",
     other_opts: typing.Iterable[str] = (),
+    transport: str = None,
 ):
     """Run the generated unit tests against the Showcase library."""
     with showcase_library(
@@ -658,6 +667,7 @@ def showcase_unit(
         templates=templates,
         other_opts=other_opts,
         install_async_rest_extra=install_async_rest_extra,
+        transport=transport,
     ) as lib:
         session.chdir(lib)
         run_showcase_unit_tests(
