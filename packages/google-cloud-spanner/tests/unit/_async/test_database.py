@@ -6,6 +6,7 @@ from unittest import IsolatedAsyncioTestCase
 import mock
 import pytest
 from google.api_core import gapic_v1
+from google.api_core.client_options import ClientOptions
 from google.api_core.retry import Retry
 from google.protobuf.field_mask_pb2 import FieldMask
 
@@ -4405,15 +4406,10 @@ class _Client(object):
         self.database_admin_api = _make_database_admin_api()
         self.instance_admin_api = _make_instance_api()
         self._client_info = gapic_v1.client_info.ClientInfo()
-        self._client_options = CrossSync.Mock()
-        self._client_options.universe_domain = "googleapis.com"
-        self._client_options.api_key = None
-        self._client_options.client_cert_source = None
-        self._client_options.credentials_file = None
-        self._client_options.scopes = None
-        self._client_options.quota_project_id = None
-        self._client_options.api_audience = None
-        self._client_options.api_endpoint = "spanner.googleapis.com"
+        self._client_options = ClientOptions(
+            api_endpoint="spanner.googleapis.com",
+            universe_domain="googleapis.com",
+        )
         self._experimental_host = None
         self._client_context = ""
         self._query_options = ExecuteSqlRequest.QueryOptions(optimizer_version="1")
