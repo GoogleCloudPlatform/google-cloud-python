@@ -163,6 +163,7 @@ class Batch(Connection):
     """
 
     _MAX_BATCH_SIZE = 1000
+    _IS_BATCH = True
 
     def __init__(self, client, raise_exception=True):
         api_endpoint = client._connection.API_BASE_URL
