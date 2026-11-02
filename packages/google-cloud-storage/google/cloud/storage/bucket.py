@@ -58,6 +58,7 @@ from google.cloud.storage.constants import (
     REGION_LOCATION_TYPE,
     REGIONAL_LEGACY_STORAGE_CLASS,
     STANDARD_ENTERPRISE_STORAGE_CLASS,
+    STANDARD_FLEXBACKUP_ENTERPRISE_STORAGE_CLASS,
     STANDARD_STORAGE_CLASS,
 )
 from google.cloud.storage.ip_filter import IPFilter
@@ -653,6 +654,7 @@ class Bucket(_PropertyMixin):
     STORAGE_CLASSES = (
         STANDARD_STORAGE_CLASS,
         STANDARD_ENTERPRISE_STORAGE_CLASS,
+        STANDARD_FLEXBACKUP_ENTERPRISE_STORAGE_CLASS,
         NEARLINE_STORAGE_CLASS,
         COLDLINE_STORAGE_CLASS,
         ARCHIVE_STORAGE_CLASS,
@@ -3086,6 +3088,7 @@ class Bucket(_PropertyMixin):
             :attr:`~google.cloud.storage.constants.ARCHIVE_STORAGE_CLASS`,
             :attr:`~google.cloud.storage.constants.STANDARD_STORAGE_CLASS`,
             :attr:`~google.cloud.storage.constants.STANDARD_ENTERPRISE_STORAGE_CLASS`,
+            :attr:`~google.cloud.storage.constants.STANDARD_FLEXBACKUP_ENTERPRISE_STORAGE_CLASS`,
             :attr:`~google.cloud.storage.constants.LR_STANDARD_ENTERPRISE_STORAGE_CLASS`,
             :attr:`~google.cloud.storage.constants.MULTI_REGIONAL_LEGACY_STORAGE_CLASS`,
             :attr:`~google.cloud.storage.constants.REGIONAL_LEGACY_STORAGE_CLASS`,
@@ -3109,6 +3112,7 @@ class Bucket(_PropertyMixin):
             :attr:`~google.cloud.storage.constants.ARCHIVE_STORAGE_CLASS`,
             :attr:`~google.cloud.storage.constants.STANDARD_STORAGE_CLASS`,
             :attr:`~google.cloud.storage.constants.STANDARD_ENTERPRISE_STORAGE_CLASS`,
+            :attr:`~google.cloud.storage.constants.STANDARD_FLEXBACKUP_ENTERPRISE_STORAGE_CLASS`,
             :attr:`~google.cloud.storage.constants.LR_STANDARD_ENTERPRISE_STORAGE_CLASS`,
             :attr:`~google.cloud.storage.constants.MULTI_REGIONAL_LEGACY_STORAGE_CLASS`,
             :attr:`~google.cloud.storage.constants.REGIONAL_LEGACY_STORAGE_CLASS`,

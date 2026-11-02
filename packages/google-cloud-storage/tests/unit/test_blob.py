@@ -6201,15 +6201,20 @@ class Test_Blob(unittest.TestCase):
         from google.cloud.storage.constants import (
             LR_STANDARD_ENTERPRISE_STORAGE_CLASS,
             STANDARD_ENTERPRISE_STORAGE_CLASS,
+            STANDARD_FLEXBACKUP_ENTERPRISE_STORAGE_CLASS,
         )
 
         blob_name = "blob-name"
         bucket = _Bucket()
         blob = self._make_one(blob_name, bucket=bucket)
         self.assertIn(STANDARD_ENTERPRISE_STORAGE_CLASS, blob.STORAGE_CLASSES)
+        self.assertIn(
+            STANDARD_FLEXBACKUP_ENTERPRISE_STORAGE_CLASS, blob.STORAGE_CLASSES
+        )
         self.assertIn(LR_STANDARD_ENTERPRISE_STORAGE_CLASS, blob.STORAGE_CLASSES)
         for storage_class in (
             STANDARD_ENTERPRISE_STORAGE_CLASS,
+            STANDARD_FLEXBACKUP_ENTERPRISE_STORAGE_CLASS,
             LR_STANDARD_ENTERPRISE_STORAGE_CLASS,
         ):
             blob.storage_class = storage_class
