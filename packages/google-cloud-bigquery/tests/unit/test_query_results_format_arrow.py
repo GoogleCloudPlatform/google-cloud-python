@@ -1083,20 +1083,9 @@ def _arrow_query_response(**fields):
     }
 
 
-@pytest.mark.parametrize(
-    "response",
-    [
-        _arrow_query_response(pageRowCount="10", totalRows="25", pageToken="next"),
-        _arrow_query_response(jobComplete=False),
-        # A cache hit too large to return inline has no pageRowCount and
-        # totalRows is 0, but it still has a pageToken.
-        _arrow_query_response(totalRows="0", pageToken="next"),
-    ],
-    ids=["some_rows_inline", "no_rows_inline", "cache_hit_no_rows_inline"],
-)
-def test_query_and_wait_arrow_waits_without_fetching_rows(response):
+def test_query_and_wait_arrow_waits_without_fetching_rows():
     client = mock.MagicMock(spec=Client)
-    client._call_api.return_value = response
+    client._call_api.return_value = _arrow_query_response(jobComplete=False)
 
     with (
         mock.patch.object(_job_helpers, "_to_query_job") as to_query_job,
@@ -1109,6 +1098,69 @@ def test_query_and_wait_arrow_waits_without_fetching_rows(response):
     assert wait_or_cancel.call_args.kwargs["page_size"] == 0
     # page_size still sets the size of the first page from jobs.query.
     assert client._call_api.call_args.kwargs["data"]["maxResults"] == 10
+
+
+@pytest.mark.parametrize(
+    "response",
+    [
+        _arrow_query_response(pageRowCount="10", totalRows="25", pageToken="next"),
+        # A cache hit too large to return inline has no rows, but it still has
+        # a pageToken. Older BigQuery versions send totalRows "0" and newer
+        # ones leave it out.
+        _arrow_query_response(totalRows="0", pageToken="next"),
+        _arrow_query_response(pageToken="next"),
+    ],
+    ids=["some_rows_inline", "cache_hit_total_rows_0", "cache_hit_no_total_rows"],
+)
+def test_query_and_wait_arrow_complete_with_page_token_doesnt_wait(response):
+    client = mock.MagicMock(spec=Client)
+    client._call_api.return_value = response
+
+    with mock.patch.object(_job_helpers, "_wait_or_cancel") as wait_or_cancel:
+        rows = _query_and_wait(client, query_results_format="ARROW")
+
+    wait_or_cancel.assert_not_called()
+    # Not an _EmptyRowIterator: the rows after the first page come from the
+    # job's stream.
+    assert type(rows) is RowIterator
+    assert rows.job_id == "j"
+    assert rows._first_page_response["pageToken"] == "next"
+
+
+def test_query_and_wait_arrow_cache_hit_without_total_rows_reads_the_stream():
+    schema, batches = _arrow_pages(5)
+    client = mock.MagicMock(spec=Client)
+    client._call_api.return_value = {
+        "jobReference": {"projectId": "p", "jobId": "j", "location": "us"},
+        "jobComplete": True,
+        "cacheHit": True,
+        "pageToken": "next",
+    }
+    reader = mock.MagicMock()
+    reader.__iter__.return_value = iter(
+        [
+            mock.Mock(
+                arrow_schema=mock.Mock(serialized_schema=schema),
+                arrow_record_batch=mock.Mock(serialized_record_batch=batches[0]),
+            )
+        ]
+    )
+    bqstorage_client = mock.MagicMock()
+    bqstorage_client.read_rows.return_value = reader
+
+    with mock.patch.object(
+        _job_helpers,
+        "_wait_or_cancel",
+        side_effect=AssertionError("a finished query shouldn't wait on its job"),
+    ):
+        rows = _query_and_wait(client, query_results_format="ARROW")
+    received = list(rows.to_arrow_iterable(bqstorage_client=bqstorage_client))
+
+    assert _values(received) == [1, 2, 3, 4, 5]
+    assert bqstorage_client.read_rows.call_args.args[0] == (
+        "projects/p/locations/us/jobs/j/streams/_default"
+    )
+    assert bqstorage_client.read_rows.call_args.kwargs["offset"] == 0
 
 
 def test_query_and_wait_arrow_all_rows_inline_doesnt_wait():
