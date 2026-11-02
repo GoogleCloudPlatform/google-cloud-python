@@ -15,9 +15,11 @@
 """Module for file-like access of blobs, usually invoked via Blob.open()."""
 
 import io
+import time
 
 from google.api_core.exceptions import RequestRangeNotSatisfiable
 
+from google.cloud.storage import _helpers, _opentelemetry_metrics
 from google.cloud.storage.retry import DEFAULT_RETRY, ConditionalRetryPolicy
 
 # Resumable uploads require a chunk size of precisely a multiple of 256 KiB.
@@ -52,7 +54,82 @@ VALID_UPLOAD_KWARGS = {
 }
 
 
-class BlobReader(io.BufferedIOBase):
+class _StreamMetricsMixin(object):
+    """Tracks stream-lifetime logical operation and payload size metrics."""
+
+    def _init_stream_metrics(self, blob, default_client_method, operation):
+        self._metrics_client = _helpers._resolve_operation_client(blob)
+        if (
+            _helpers._SUPPRESS_INTERNAL_METRICS.get()
+            or _opentelemetry_metrics.get_current_operation() is not None
+        ):
+            self._metrics_recorder = None
+        else:
+            self._metrics_recorder = _opentelemetry_metrics.get_active_recorder(
+                self._metrics_client
+            )
+        self._metrics_client_method = (
+            _helpers._CLIENT_METHOD_OVERRIDE.get() or default_client_method
+        )
+        self._metrics_operation = operation
+        self._metrics_start = time.perf_counter()
+        self._metrics_finalized = False
+        self._stream_error = None
+
+    def _stream_metrics_context(self):
+        return _helpers._bind_suboperation_context(
+            self._metrics_client,
+            self._metrics_client_method,
+            self._metrics_operation,
+        )
+
+    def _finalize_metrics(
+        self,
+        exc=None,
+        default_error_type="OK",
+        record_body=False,
+        body_bytes=0,
+        is_read=True,
+    ):
+        if self._metrics_finalized:
+            return
+        self._metrics_finalized = True
+        recorder = self._metrics_recorder
+        if recorder is None:
+            return
+        if record_body:
+            if is_read:
+                recorder.record_response_body_size(
+                    body_bytes,
+                    operation=self._metrics_operation,
+                    client_method=self._metrics_client_method,
+                )
+            else:
+                recorder.record_request_body_size(
+                    body_bytes,
+                    operation=self._metrics_operation,
+                    client_method=self._metrics_client_method,
+                )
+        error_type = (
+            _opentelemetry_metrics.classify_error_type(exc)
+            if exc is not None
+            else default_error_type
+        )
+        recorder.record_logical_operation(
+            duration=time.perf_counter() - self._metrics_start,
+            client_method=self._metrics_client_method,
+            operation=self._metrics_operation,
+            error_type=error_type,
+        )
+
+    def __del__(self):
+        self._metrics_finalized = True
+        buf = getattr(self, "_buffer", None)
+        if buf is not None:
+            buf.close()
+
+
+class BlobReader(_StreamMetricsMixin, io.BufferedIOBase):
     """A file-like object that reads from a blob.
 
     :type blob: 'google.cloud.storage.blob.Blob'
@@ -106,15 +183,22 @@ class BlobReader(io.BufferedIOBase):
     """
 
     def __init__(self, blob, chunk_size=None, retry=DEFAULT_RETRY, **download_kwargs):
-        for kwarg in download_kwargs:
-            if kwarg not in VALID_DOWNLOAD_KWARGS:
-                raise ValueError(
-                    f"BlobReader does not support keyword argument {kwarg}."
-                )
-
         self._blob = blob
         self._pos = 0
         self._buffer = io.BytesIO()
+        self._bytes_read = 0
+        self._init_stream_metrics(blob, "storage.fileio.BlobReader", "ReadObject")
+        try:
+            for kwarg in download_kwargs:
+                if kwarg not in VALID_DOWNLOAD_KWARGS:
+                    raise ValueError(
+                        f"BlobReader does not support keyword argument {kwarg}."
+                    )
+        except BaseException as exc:
+            self._buffer.close()
+            self._finalize_metrics(exc=exc, record_body=False, is_read=True)
+            raise
+
         self._chunk_size = chunk_size or blob.chunk_size or DEFAULT_CHUNK_SIZE
         self._retry = retry
         self._download_kwargs = download_kwargs
@@ -142,17 +226,21 @@ class BlobReader(io.BufferedIOBase):
             # chunked downloads, and the server only knows the checksum of the
             # entire file.
             try:
-                result += self._blob.download_as_bytes(
-                    start=fetch_start,
-                    end=fetch_end,
-                    checksum=None,
-                    retry=self._retry,
-                    **self._download_kwargs,
-                )
+                with self._stream_metrics_context():
+                    result += self._blob.download_as_bytes(
+                        start=fetch_start,
+                        end=fetch_end,
+                        checksum=None,
+                        retry=self._retry,
+                        **self._download_kwargs,
+                    )
             except RequestRangeNotSatisfiable:
                 # We've reached the end of the file. Python file objects should
                 # return an empty response in this case, not raise an error.
                 pass
+            except BaseException as exc:
+                self._stream_error = exc
+                raise
 
             # If more bytes were read than is immediately needed, buffer the
             # remainder and then trim the result.
@@ -162,6 +250,8 @@ class BlobReader(io.BufferedIOBase):
                 result = result[:size]
             # Increment relative offset by true amount read.
             self._pos += len(result) - read_size
+        self._bytes_read += len(result)
+        self._stream_error = None
         return result
 
     def read1(self, size=-1):
@@ -182,7 +272,12 @@ class BlobReader(io.BufferedIOBase):
                 for k, v in self._download_kwargs.items()
                 if (k != "raw_download" and k != "single_shot_download")
             }
-            self._blob.reload(**reload_kwargs)
+            try:
+                with self._stream_metrics_context():
+                    self._blob.reload(**reload_kwargs)
+            except BaseException as exc:
+                self._stream_error = exc
+                raise
 
         initial_offset = self._pos + self._buffer.tell()
 
@@ -193,7 +288,9 @@ class BlobReader(io.BufferedIOBase):
         elif whence == 2:
             target_pos = self._blob.size + pos
         if whence not in {0, 1, 2}:
-            raise ValueError("invalid whence value")
+            exc = ValueError("invalid whence value")
+            self._stream_error = exc
+            raise exc
 
         if target_pos > self._blob.size:
             target_pos = self._blob.size
@@ -210,10 +307,17 @@ class BlobReader(io.BufferedIOBase):
             # relative offset <= target position <= size of file.
             difference = target_pos - initial_offset
             new_pos = self._pos + self._buffer.seek(difference, 1)
+        self._stream_error = None
         return new_pos
 
     def close(self):
         self._buffer.close()
+        self._finalize_metrics(
+            exc=self._stream_error,
+            record_body=(self._stream_error is None or self._bytes_read > 0),
+            body_bytes=self._bytes_read,
+            is_read=True,
+        )
 
     @property
     def closed(self):
@@ -229,7 +333,7 @@ class BlobReader(io.BufferedIOBase):
         return True
 
 
-class BlobWriter(io.BufferedIOBase):
+class BlobWriter(_StreamMetricsMixin, io.BufferedIOBase):
     """A file-like object that writes to a blob.
 
     :type blob: 'google.cloud.storage.blob.Blob'
@@ -302,17 +406,24 @@ class BlobWriter(io.BufferedIOBase):
         retry=DEFAULT_RETRY,
         **upload_kwargs,
     ):
-        for kwarg in upload_kwargs:
-            if kwarg not in VALID_UPLOAD_KWARGS:
-                raise ValueError(
-                    f"BlobWriter does not support keyword argument {kwarg}."
-                )
         self._blob = blob
         self._buffer = SlidingBuffer()
         self._upload_and_transport = None
-        # Resumable uploads require a chunk size of a multiple of 256KiB.
-        # self._chunk_size must not be changed after the upload is initiated.
-        self._chunk_size = chunk_size or blob.chunk_size or DEFAULT_CHUNK_SIZE
+        self._bytes_written = 0
+        self._init_stream_metrics(blob, "storage.fileio.BlobWriter", "WriteObject")
+        try:
+            for kwarg in upload_kwargs:
+                if kwarg not in VALID_UPLOAD_KWARGS:
+                    raise ValueError(
+                        f"BlobWriter does not support keyword argument {kwarg}."
+                    )
+            # Resumable uploads require a chunk size of a multiple of 256KiB.
+            # self._chunk_size must not be changed after the upload is initiated.
+            self._chunk_size = chunk_size or blob.chunk_size or DEFAULT_CHUNK_SIZE
+        except BaseException as exc:
+            self._buffer.close()
+            self._finalize_metrics(exc=exc, record_body=False, is_read=False)
+            raise
         self._ignore_flush = ignore_flush
         self._retry = retry
         self._upload_kwargs = upload_kwargs
@@ -346,11 +457,17 @@ class BlobWriter(io.BufferedIOBase):
         self._checkClosed()  # Raises ValueError if closed.
 
         pos = self._buffer.write(b)
+        self._bytes_written += pos
 
         # If there is enough content, upload chunks.
         num_chunks = len(self._buffer) // self._chunk_size
         if num_chunks:
-            self._upload_chunks_from_buffer(num_chunks)
+            try:
+                with self._stream_metrics_context():
+                    self._upload_chunks_from_buffer(num_chunks)
+            except BaseException as exc:
+                self._stream_error = exc
+                raise
 
         return pos
 
@@ -403,6 +520,7 @@ class BlobWriter(io.BufferedIOBase):
 
         # Wipe the buffer of chunks uploaded, preserving any remaining data.
         self._buffer.flush()
+        self._stream_error = None
 
     def tell(self):
         return self._buffer.tell() + len(self._buffer)
@@ -419,15 +537,42 @@ class BlobWriter(io.BufferedIOBase):
 
     def close(self):
         if not self._buffer.closed:
-            self._upload_chunks_from_buffer(1)
+            try:
+                with self._stream_metrics_context():
+                    self._upload_chunks_from_buffer(1)
+            except BaseException as exc:
+                if self._stream_error is None or not isinstance(exc, ValueError):
+                    self._stream_error = exc
+                self._buffer.close()
+                self._finalize_metrics(
+                    exc=self._stream_error, record_body=False, is_read=False
+                )
+                raise
+            self._buffer.close()
+            self._finalize_metrics(
+                exc=None,
+                record_body=True,
+                body_bytes=self._bytes_written,
+                is_read=False,
+            )
+            return
         self._buffer.close()
 
     def terminate(self):
         """Cancel the ResumableUpload."""
-        if self._upload_and_transport:
-            upload, transport = self._upload_and_transport
-            transport.delete(upload.upload_url)
-        self._buffer.close()
+        try:
+            if self._upload_and_transport:
+                upload, transport = self._upload_and_transport
+                with _helpers._suppress_internal_metrics():
+                    transport.delete(upload.upload_url)
+        finally:
+            self._buffer.close()
+            self._finalize_metrics(
+                exc=self._stream_error,
+                default_error_type="CANCELLED",
+                record_body=False,
+                is_read=False,
+            )
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if exc_type is not None:
@@ -548,3 +693,63 @@ class SlidingBuffer(object):
     @property
     def closed(self):
         return self._buffer.closed
+
+
+class _MetricsTextIOWrapper(io.TextIOWrapper):
+    """TextIOWrapper subclass propagating text-layer errors and context-exit aborts."""
+
+    def _capture_text_op(self, fn, *args, **kwargs):
+        try:
+            result = fn(*args, **kwargs)
+        except BaseException as exc:
+            raw = self.buffer
+            if raw is not None:
+                raw._stream_error = exc
+            raise
+        self.buffer._stream_error = None
+        return result
+
+    def read(self, *args, **kwargs):
+        return self._capture_text_op(super().read, *args, **kwargs)
+
+    def readline(self, *args, **kwargs):
+        return self._capture_text_op(super().readline, *args, **kwargs)
+
+    def __next__(self):
+        try:
+            line = super().__next__()
+        except StopIteration:
+            self.buffer._stream_error = None
+            raise
+        except BaseException as exc:
+            raw = self.buffer
+            if raw is not None:
+                raw._stream_error = exc
+            raise
+        self.buffer._stream_error = None
+        return line
+
+    def write(self, *args, **kwargs):
+        return self._capture_text_op(super().write, *args, **kwargs)
+
+    def writelines(self, *args, **kwargs):
+        return self._capture_text_op(super().writelines, *args, **kwargs)
+
+    def seek(self, *args, **kwargs):
+        return self._capture_text_op(super().seek, *args, **kwargs)
+
+    def truncate(self, *args, **kwargs):
+        return self._capture_text_op(super().truncate, *args, **kwargs)
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        raw = self.buffer
+        if exc_type is not None and isinstance(raw, BlobWriter) and not raw.closed:
+            raw.terminate()
+            return
+        super().__exit__(exc_type, exc_val, exc_tb)
+
+    def __del__(self):
+        raw = self.buffer
+        if raw is not None and not raw.closed:
+            raw._metrics_finalized = True
+            raw._buffer.close()

@@ -70,15 +70,26 @@ class SimpleUpload(_request_helpers.RequestsMixin, _upload.SimpleUpload):
 
         # Wrap the request business logic in a function to be retried.
         def retriable_request():
-            result = transport.request(
-                method, url, data=payload, headers=headers, timeout=timeout
+            result = _request_helpers.transport_request(
+                transport,
+                method,
+                url,
+                data=payload,
+                headers=headers,
+                timeout=timeout,
             )
 
             self._process_response(result)
 
             return result
 
-        return _request_helpers.wait_and_retry(retriable_request, self._retry_strategy)
+        return _request_helpers.wait_and_retry(
+            retriable_request,
+            self._retry_strategy,
+            transport=transport,
+            method=method,
+            url=url,
+        )
 
 
 class MultipartUpload(_request_helpers.RequestsMixin, _upload.MultipartUpload):
@@ -149,15 +160,26 @@ class MultipartUpload(_request_helpers.RequestsMixin, _upload.MultipartUpload):
 
         # Wrap the request business logic in a function to be retried.
         def retriable_request():
-            result = transport.request(
-                method, url, data=payload, headers=headers, timeout=timeout
+            result = _request_helpers.transport_request(
+                transport,
+                method,
+                url,
+                data=payload,
+                headers=headers,
+                timeout=timeout,
             )
 
             self._process_response(result)
 
             return result
 
-        return _request_helpers.wait_and_retry(retriable_request, self._retry_strategy)
+        return _request_helpers.wait_and_retry(
+            retriable_request,
+            self._retry_strategy,
+            transport=transport,
+            method=method,
+            url=url,
+        )
 
 
 class ResumableUpload(_request_helpers.RequestsMixin, _upload.ResumableUpload):
@@ -423,15 +445,26 @@ class ResumableUpload(_request_helpers.RequestsMixin, _upload.ResumableUpload):
 
         # Wrap the request business logic in a function to be retried.
         def retriable_request():
-            result = transport.request(
-                method, url, data=payload, headers=headers, timeout=timeout
+            result = _request_helpers.transport_request(
+                transport,
+                method,
+                url,
+                data=payload,
+                headers=headers,
+                timeout=timeout,
             )
 
             self._process_initiate_response(result)
 
             return result
 
-        return _request_helpers.wait_and_retry(retriable_request, self._retry_strategy)
+        return _request_helpers.wait_and_retry(
+            retriable_request,
+            self._retry_strategy,
+            transport=transport,
+            method=method,
+            url=url,
+        )
 
     def transmit_next_chunk(
         self,
@@ -516,15 +549,26 @@ class ResumableUpload(_request_helpers.RequestsMixin, _upload.ResumableUpload):
 
         # Wrap the request business logic in a function to be retried.
         def retriable_request():
-            result = transport.request(
-                method, url, data=payload, headers=headers, timeout=timeout
+            result = _request_helpers.transport_request(
+                transport,
+                method,
+                url,
+                data=payload,
+                headers=headers,
+                timeout=timeout,
             )
 
             self._process_resumable_response(result, len(payload))
 
             return result
 
-        return _request_helpers.wait_and_retry(retriable_request, self._retry_strategy)
+        return _request_helpers.wait_and_retry(
+            retriable_request,
+            self._retry_strategy,
+            transport=transport,
+            method=method,
+            url=url,
+        )
 
     def recover(self, transport):
         """Recover from a failure and check the status of the current upload.
@@ -554,15 +598,26 @@ class ResumableUpload(_request_helpers.RequestsMixin, _upload.ResumableUpload):
 
         # Wrap the request business logic in a function to be retried.
         def retriable_request():
-            result = transport.request(
-                method, url, data=payload, headers=headers, timeout=timeout
+            result = _request_helpers.transport_request(
+                transport,
+                method,
+                url,
+                data=payload,
+                headers=headers,
+                timeout=timeout,
             )
 
             self._process_recover_response(result)
 
             return result
 
-        return _request_helpers.wait_and_retry(retriable_request, self._retry_strategy)
+        return _request_helpers.wait_and_retry(
+            retriable_request,
+            self._retry_strategy,
+            transport=transport,
+            method=method,
+            url=url,
+        )
 
 
 class XMLMPUContainer(_request_helpers.RequestsMixin, _upload.XMLMPUContainer):
@@ -641,15 +696,26 @@ class XMLMPUContainer(_request_helpers.RequestsMixin, _upload.XMLMPUContainer):
 
         # Wrap the request business logic in a function to be retried.
         def retriable_request():
-            result = transport.request(
-                method, url, data=payload, headers=headers, timeout=timeout
+            result = _request_helpers.transport_request(
+                transport,
+                method,
+                url,
+                data=payload,
+                headers=headers,
+                timeout=timeout,
             )
 
             self._process_initiate_response(result)
 
             return result
 
-        return _request_helpers.wait_and_retry(retriable_request, self._retry_strategy)
+        return _request_helpers.wait_and_retry(
+            retriable_request,
+            self._retry_strategy,
+            transport=transport,
+            method=method,
+            url=url,
+        )
 
     def finalize(
         self,
@@ -679,15 +745,26 @@ class XMLMPUContainer(_request_helpers.RequestsMixin, _upload.XMLMPUContainer):
 
         # Wrap the request business logic in a function to be retried.
         def retriable_request():
-            result = transport.request(
-                method, url, data=payload, headers=headers, timeout=timeout
+            result = _request_helpers.transport_request(
+                transport,
+                method,
+                url,
+                data=payload,
+                headers=headers,
+                timeout=timeout,
             )
 
             self._process_finalize_response(result)
 
             return result
 
-        return _request_helpers.wait_and_retry(retriable_request, self._retry_strategy)
+        return _request_helpers.wait_and_retry(
+            retriable_request,
+            self._retry_strategy,
+            transport=transport,
+            method=method,
+            url=url,
+        )
 
     def cancel(
         self,
@@ -719,15 +796,26 @@ class XMLMPUContainer(_request_helpers.RequestsMixin, _upload.XMLMPUContainer):
 
         # Wrap the request business logic in a function to be retried.
         def retriable_request():
-            result = transport.request(
-                method, url, data=payload, headers=headers, timeout=timeout
+            result = _request_helpers.transport_request(
+                transport,
+                method,
+                url,
+                data=payload,
+                headers=headers,
+                timeout=timeout,
             )
 
             self._process_cancel_response(result)
 
             return result
 
-        return _request_helpers.wait_and_retry(retriable_request, self._retry_strategy)
+        return _request_helpers.wait_and_retry(
+            retriable_request,
+            self._retry_strategy,
+            transport=transport,
+            method=method,
+            url=url,
+        )
 
 
 class XMLMPUPart(_request_helpers.RequestsMixin, _upload.XMLMPUPart):
@@ -767,12 +855,23 @@ class XMLMPUPart(_request_helpers.RequestsMixin, _upload.XMLMPUPart):
 
         # Wrap the request business logic in a function to be retried.
         def retriable_request():
-            result = transport.request(
-                method, url, data=payload, headers=headers, timeout=timeout
+            result = _request_helpers.transport_request(
+                transport,
+                method,
+                url,
+                data=payload,
+                headers=headers,
+                timeout=timeout,
             )
 
             self._process_upload_response(result)
 
             return result
 
-        return _request_helpers.wait_and_retry(retriable_request, self._retry_strategy)
+        return _request_helpers.wait_and_retry(
+            retriable_request,
+            self._retry_strategy,
+            transport=transport,
+            method=method,
+            url=url,
+        )

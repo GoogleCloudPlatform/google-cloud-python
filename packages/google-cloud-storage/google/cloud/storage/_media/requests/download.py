@@ -136,7 +136,18 @@ class Download(_request_helpers.RequestsMixin, _download.Download):
             # This is useful for smaller files, or when the user wants to
             # download the entire file in one go.
             if self.single_shot_download:
-                content = response.raw.read(decode_content=True)
+                if _request_helpers._MEDIA_ATTEMPT_STATE.get() is not None:
+                    first = response.raw.read(
+                        _request_helpers._SINGLE_GET_CHUNK_SIZE,
+                        decode_content=True,
+                    )
+                    if first:
+                        _request_helpers.record_streaming_ttfb()
+                    rest = response.raw.read(decode_content=True)
+                    _request_helpers.record_streaming_ttfb()
+                    content = first + rest
+                else:
+                    content = response.raw.read(decode_content=True)
                 self._stream.write(content)
                 self._bytes_downloaded += len(content)
                 local_checksum_object.update(content)
@@ -147,9 +158,11 @@ class Download(_request_helpers.RequestsMixin, _download.Download):
                     decode_unicode=False,
                 )
                 for chunk in body_iter:
+                    _request_helpers.record_streaming_ttfb()
                     self._stream.write(chunk)
                     self._bytes_downloaded += len(chunk)
                     local_checksum_object.update(chunk)
+                _request_helpers.record_streaming_ttfb()
 
         # Don't validate the checksum for partial responses.
         if (
@@ -250,7 +263,9 @@ class Download(_request_helpers.RequestsMixin, _download.Download):
                     query_param = {"generation": self._object_generation}
                     url = _helpers.add_query_parameters(self.media_url, query_param)
 
-            result = transport.request(method, url, **request_kwargs)
+            result = _request_helpers.transport_request(
+                transport, method, url, **request_kwargs
+            )
 
             # If a generation hasn't been specified, and this is the first response we get, let's record the
             # generation. In future requests we'll specify the generation query param to avoid data races.
@@ -277,7 +292,14 @@ class Download(_request_helpers.RequestsMixin, _download.Download):
 
             return result
 
-        return _request_helpers.wait_and_retry(retriable_request, self._retry_strategy)
+        return _request_helpers.wait_and_retry(
+            retriable_request,
+            self._retry_strategy,
+            transport=transport,
+            method=method,
+            url=self.media_url,
+            streaming=self._stream is not None,
+        )
 
 
 class RawDownload(_request_helpers.RawRequestsMixin, _download.Download):
@@ -359,7 +381,15 @@ class RawDownload(_request_helpers.RawRequestsMixin, _download.Download):
             # This is useful for smaller files, or when the user wants to
             # download the entire file in one go.
             if self.single_shot_download:
-                content = response.raw.read()
+                if _request_helpers._MEDIA_ATTEMPT_STATE.get() is not None:
+                    first = response.raw.read(_request_helpers._SINGLE_GET_CHUNK_SIZE)
+                    if first:
+                        _request_helpers.record_streaming_ttfb()
+                    rest = response.raw.read()
+                    _request_helpers.record_streaming_ttfb()
+                    content = first + rest
+                else:
+                    content = response.raw.read()
                 self._stream.write(content)
                 self._bytes_downloaded += len(content)
                 checksum_object.update(content)
@@ -368,9 +398,11 @@ class RawDownload(_request_helpers.RawRequestsMixin, _download.Download):
                     _request_helpers._SINGLE_GET_CHUNK_SIZE, decode_content=False
                 )
                 for chunk in body_iter:
+                    _request_helpers.record_streaming_ttfb()
                     self._stream.write(chunk)
                     self._bytes_downloaded += len(chunk)
                     checksum_object.update(chunk)
+                _request_helpers.record_streaming_ttfb()
             response._content_consumed = True
 
         # Don't validate the checksum for partial responses.
@@ -472,7 +504,9 @@ class RawDownload(_request_helpers.RawRequestsMixin, _download.Download):
                     query_param = {"generation": self._object_generation}
                     url = _helpers.add_query_parameters(self.media_url, query_param)
 
-            result = transport.request(method, url, **request_kwargs)
+            result = _request_helpers.transport_request(
+                transport, method, url, **request_kwargs
+            )
 
             # If a generation hasn't been specified, and this is the first response we get, let's record the
             # generation. In future requests we'll specify the generation query param to avoid data races.
@@ -499,7 +533,14 @@ class RawDownload(_request_helpers.RawRequestsMixin, _download.Download):
 
             return result
 
-        return _request_helpers.wait_and_retry(retriable_request, self._retry_strategy)
+        return _request_helpers.wait_and_retry(
+            retriable_request,
+            self._retry_strategy,
+            transport=transport,
+            method=method,
+            url=self.media_url,
+            streaming=self._stream is not None,
+        )
 
 
 class ChunkedDownload(_request_helpers.RequestsMixin, _download.ChunkedDownload):
@@ -566,21 +607,39 @@ class ChunkedDownload(_request_helpers.RequestsMixin, _download.ChunkedDownload)
             ValueError: If the current download has finished.
         """
         method, url, payload, headers = self._prepare_request()
+        metrics_active = (
+            _request_helpers.resolve_transport_recorder(transport) is not None
+        )
+        extra_req_kwargs = {"stream": True} if metrics_active else {}
 
         # Wrap the request business logic in a function to be retried.
         def retriable_request():
             # NOTE: We assume "payload is None" but pass it along anyway.
-            result = transport.request(
+            result = _request_helpers.transport_request(
+                transport,
                 method,
                 url,
                 data=payload,
                 headers=headers,
                 timeout=timeout,
+                **extra_req_kwargs,
             )
-            self._process_response(result)
+            try:
+                self._process_response(result)
+            except BaseException:
+                if metrics_active:
+                    result.close()
+                raise
             return result
 
-        return _request_helpers.wait_and_retry(retriable_request, self._retry_strategy)
+        return _request_helpers.wait_and_retry(
+            retriable_request,
+            self._retry_strategy,
+            transport=transport,
+            method=method,
+            url=url,
+            streaming=metrics_active,
+        )
 
 
 class RawChunkedDownload(_request_helpers.RawRequestsMixin, _download.ChunkedDownload):
@@ -651,7 +710,8 @@ class RawChunkedDownload(_request_helpers.RawRequestsMixin, _download.ChunkedDow
         # Wrap the request business logic in a function to be retried.
         def retriable_request():
             # NOTE: We assume "payload is None" but pass it along anyway.
-            result = transport.request(
+            result = _request_helpers.transport_request(
+                transport,
                 method,
                 url,
                 data=payload,
@@ -662,7 +722,14 @@ class RawChunkedDownload(_request_helpers.RawRequestsMixin, _download.ChunkedDow
             self._process_response(result)
             return result
 
-        return _request_helpers.wait_and_retry(retriable_request, self._retry_strategy)
+        return _request_helpers.wait_and_retry(
+            retriable_request,
+            self._retry_strategy,
+            transport=transport,
+            method=method,
+            url=url,
+            streaming=True,
+        )
 
 
 def _add_decoder(response_raw, checksum):
