@@ -327,3 +327,209 @@ class UnnestOptions:
 
     def __repr__(self):
         return f"{self.__class__.__name__}(index_field={self.index_field.path!r})"
+
+
+class WindowBound(str, Enum):
+    """Enumeration of symbolic window frame boundary keywords."""
+
+    CURRENT = "current"
+    UNBOUNDED = "unbounded"
+
+
+class DocumentWindowFrame:
+    """Defines a document-count based window frame relative to the current document.
+
+    Args:
+        preceding: The lower bound of the frame (an integer offset, `WindowBound`, or `Expression`).
+            A positive integer includes up to that many documents before the current document.
+            A negative integer indicates a boundary following the current document.
+        following: The upper bound of the frame (an integer offset, `WindowBound`, or `Expression`).
+            A positive integer includes up to that many documents after the current document.
+            A negative integer indicates a boundary preceding the current document.
+    """
+
+    def __init__(
+        self,
+        preceding: Optional[
+            WindowBound | str | int | pipeline_expressions.Expression
+        ] = None,
+        following: Optional[
+            WindowBound | str | int | pipeline_expressions.Expression
+        ] = None,
+    ):
+        self.preceding = preceding
+        self.following = following
+
+    def __eq__(self, other):
+        if not isinstance(other, type(self)):
+            return False
+        return self._to_pb() == other._to_pb()
+
+    def __repr__(self):
+        args = []
+        if self.preceding is not None:
+            args.append(f"preceding={self.preceding!r}")
+        if self.following is not None:
+            args.append(f"following={self.following!r}")
+        return f"{self.__class__.__name__}({', '.join(args)})"
+
+    def _to_pb(self) -> Value:
+        fields: dict[str, Value] = {}
+        if self.preceding is not None:
+            fields["preceding"] = (
+                pipeline_expressions.Expression._cast_to_expr_or_convert_to_constant(
+                    self.preceding
+                )._to_pb()
+            )
+        if self.following is not None:
+            fields["following"] = (
+                pipeline_expressions.Expression._cast_to_expr_or_convert_to_constant(
+                    self.following
+                )._to_pb()
+            )
+        return Value(map_value={"fields": fields})
+
+
+class RangeWindowFrame:
+    """Defines a value-based or time-range window frame relative to the current document's sort value.
+
+    Args:
+        preceding: The lower bound of the frame (a numeric offset, `WindowBound`, or `Expression`).
+        following: The upper bound of the frame (a numeric offset, `WindowBound`, or `Expression`).
+        unit: Optional duration unit for time-range frames (e.g., `TimeUnit.DAY`, `TimeGranularity.MONTH`,
+            `"day"`, or an `Expression`).
+    """
+
+    def __init__(
+        self,
+        preceding: Optional[
+            WindowBound | str | int | float | pipeline_expressions.Expression
+        ] = None,
+        following: Optional[
+            WindowBound | str | int | float | pipeline_expressions.Expression
+        ] = None,
+        unit: Optional[
+            TimeUnit | TimeGranularity | str | pipeline_expressions.Expression
+        ] = None,
+    ):
+        self.preceding = preceding
+        self.following = following
+        self.unit = unit
+
+    def __eq__(self, other):
+        if not isinstance(other, type(self)):
+            return False
+        return self._to_pb() == other._to_pb()
+
+    def __repr__(self):
+        args = []
+        if self.preceding is not None:
+            args.append(f"preceding={self.preceding!r}")
+        if self.following is not None:
+            args.append(f"following={self.following!r}")
+        if self.unit is not None:
+            args.append(f"unit={self.unit!r}")
+        return f"{self.__class__.__name__}({', '.join(args)})"
+
+    def _to_pb(self) -> Value:
+        fields: dict[str, Value] = {}
+        if self.preceding is not None:
+            fields["preceding"] = (
+                pipeline_expressions.Expression._cast_to_expr_or_convert_to_constant(
+                    self.preceding
+                )._to_pb()
+            )
+        if self.following is not None:
+            fields["following"] = (
+                pipeline_expressions.Expression._cast_to_expr_or_convert_to_constant(
+                    self.following
+                )._to_pb()
+            )
+        if self.unit is not None:
+            fields["unit"] = (
+                pipeline_expressions.Expression._cast_to_expr_or_convert_to_constant(
+                    self.unit
+                )._to_pb()
+            )
+        return Value(map_value={"fields": fields})
+
+
+class WindowSpec:
+    """Configuration for a window in an `AddWindowFields` pipeline stage or `.over()` expression.
+
+    Args:
+        partition: Field paths or expressions used to partition documents into independent windows.
+        sort: Orderings specifying how documents are sorted within each partition.
+        documents: A `DocumentWindowFrame` defining a document-count window frame.
+            Mutually exclusive with `range`.
+        range: A `RangeWindowFrame` defining a value-based or time-range window frame.
+            Mutually exclusive with `documents`.
+    """
+
+    def __init__(
+        self,
+        *,
+        partition: Optional[
+            Sequence[pipeline_expressions.Expression | str]
+            | pipeline_expressions.Expression
+            | str
+        ] = None,
+        sort: Optional[Sequence[Ordering] | Ordering] = None,
+        documents: Optional[DocumentWindowFrame] = None,
+        range: Optional[RangeWindowFrame] = None,
+    ):
+        if partition is None:
+            self.partition: list[pipeline_expressions.Expression] = []
+        else:
+            partition_seq = (
+                [partition]
+                if isinstance(partition, (str, pipeline_expressions.Expression))
+                else list(partition)
+            )
+            self.partition = [
+                p
+                if isinstance(p, pipeline_expressions.Expression)
+                else pipeline_expressions.Field.of(p)
+                for p in partition_seq
+            ]
+
+        if sort is None:
+            self.sort: list[Ordering] = []
+        else:
+            self.sort = [sort] if isinstance(sort, Ordering) else list(sort)
+
+        self.documents: Optional[DocumentWindowFrame] = documents
+        self.range: Optional[RangeWindowFrame] = range
+
+    def __eq__(self, other):
+        if not isinstance(other, type(self)):
+            return False
+        return self._to_pb() == other._to_pb()
+
+    def __repr__(self):
+        args = []
+        if self.partition:
+            args.append(f"partition={self.partition!r}")
+        if self.sort:
+            args.append(f"sort={self.sort!r}")
+        if self.documents is not None:
+            args.append(f"documents={self.documents!r}")
+        if self.range is not None:
+            args.append(f"range={self.range!r}")
+        return f"{self.__class__.__name__}({', '.join(args)})"
+
+    def _to_pb(self) -> Value:
+        fields: dict[str, Value] = {}
+        if self.partition:
+            fields["partition"] = Value(
+                array_value={"values": [p._to_pb() for p in self.partition]}
+            )
+        if self.sort:
+            fields["sort"] = Value(
+                array_value={"values": [s._to_pb() for s in self.sort]}
+            )
+        if self.documents is not None:
+            fields["documents"] = self.documents._to_pb()
+        if self.range is not None:
+            fields["range"] = self.range._to_pb()
+        return Value(map_value={"fields": fields})

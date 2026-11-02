@@ -25,6 +25,14 @@ from google.cloud.firestore_v1.pipeline_expressions import (
     DocumentMatches,
     Field,
     Ordering,
+    Rank,
+)
+from google.cloud.firestore_v1.pipeline_types import (
+    DocumentWindowFrame,
+    RangeWindowFrame,
+    TimeUnit,
+    WindowBound,
+    WindowSpec,
 )
 from google.cloud.firestore_v1.types.document import Value
 from google.cloud.firestore_v1.vector import Vector
@@ -1064,3 +1072,187 @@ class TestUpdate:
         assert "score" in result.args[0].map_value.fields
         assert "status" in result.args[0].map_value.fields
         assert len(result.options) == 0
+
+
+class TestWindowTypes:
+    def test_document_window_frame(self):
+        frame = DocumentWindowFrame(preceding=1, following=WindowBound.CURRENT)
+        assert frame.preceding == 1
+        assert frame.following == WindowBound.CURRENT
+        assert (
+            repr(frame)
+            == "DocumentWindowFrame(preceding=1, following=<WindowBound.CURRENT: 'current'>)"
+        )
+        assert frame == DocumentWindowFrame(1, WindowBound.CURRENT)
+        assert frame != DocumentWindowFrame(2, WindowBound.CURRENT)
+        assert frame != object()
+
+        pb = frame._to_pb()
+        assert pb.map_value.fields["preceding"] == Value(integer_value=1)
+        assert pb.map_value.fields["following"] == Value(string_value="current")
+
+        expr_frame = DocumentWindowFrame(
+            preceding=Field.of("offset"), following="unbounded"
+        )
+        expr_pb = expr_frame._to_pb()
+        assert expr_pb.map_value.fields["preceding"] == Value(
+            field_reference_value="offset"
+        )
+        assert expr_pb.map_value.fields["following"] == Value(string_value="unbounded")
+
+        empty_frame = DocumentWindowFrame()
+        assert empty_frame._to_pb() == Value(map_value={"fields": {}})
+
+    def test_range_window_frame(self):
+        frame = RangeWindowFrame(
+            preceding=10.5, following=WindowBound.UNBOUNDED, unit=TimeUnit.DAY
+        )
+        assert frame.preceding == 10.5
+        assert frame.following == WindowBound.UNBOUNDED
+        assert frame.unit == TimeUnit.DAY
+        assert (
+            repr(frame)
+            == "RangeWindowFrame(preceding=10.5, following=<WindowBound.UNBOUNDED: 'unbounded'>, unit=<TimeUnit.DAY: 'day'>)"
+        )
+        assert frame == RangeWindowFrame(10.5, WindowBound.UNBOUNDED, TimeUnit.DAY)
+        assert frame != RangeWindowFrame(10.5, WindowBound.UNBOUNDED, "hour")
+        assert frame != object()
+
+        pb = frame._to_pb()
+        assert pb.map_value.fields["preceding"] == Value(double_value=10.5)
+        assert pb.map_value.fields["following"] == Value(string_value="unbounded")
+        assert pb.map_value.fields["unit"] == Value(string_value="day")
+
+        str_unit_frame = RangeWindowFrame(preceding=5, following=0, unit="hour")
+        assert str_unit_frame._to_pb().map_value.fields["unit"] == Value(
+            string_value="hour"
+        )
+
+        expr_unit_frame = RangeWindowFrame(
+            preceding=5, following=0, unit=Constant.of("minute")
+        )
+        assert expr_unit_frame._to_pb().map_value.fields["unit"] == Value(
+            string_value="minute"
+        )
+
+        empty_frame = RangeWindowFrame()
+        assert empty_frame._to_pb() == Value(map_value={"fields": {}})
+
+    def test_window_spec_init_and_coercions(self):
+        # Empty WindowSpec
+        empty = WindowSpec()
+        assert empty.partition == []
+        assert empty.sort == []
+        assert empty.documents is None
+        assert empty.range is None
+        assert repr(empty) == "WindowSpec()"
+        assert empty._to_pb() == Value(map_value={"fields": {}})
+
+        # Single-item partition and sort coercion + DocumentWindowFrame
+        sort_order = Field.of("rating").descending()
+        spec_doc = WindowSpec(
+            partition="genre",
+            sort=sort_order,
+            documents=DocumentWindowFrame(-1, WindowBound.CURRENT),
+        )
+        assert spec_doc.partition == [Field.of("genre")]
+        assert spec_doc.sort == [sort_order]
+        assert spec_doc.documents == DocumentWindowFrame(-1, WindowBound.CURRENT)
+        assert spec_doc.range is None
+        assert (
+            repr(spec_doc)
+            == "WindowSpec(partition=[Field.of('genre')], sort=[Field.of('rating').descending()], documents=DocumentWindowFrame(preceding=-1, following=<WindowBound.CURRENT: 'current'>))"
+        )
+        assert spec_doc == WindowSpec(
+            partition=[Field.of("genre")],
+            sort=[Field.of("rating").descending()],
+            documents=DocumentWindowFrame(-1, WindowBound.CURRENT),
+        )
+        assert spec_doc != empty
+        assert spec_doc != object()
+
+        pb = spec_doc._to_pb()
+        assert list(pb.map_value.fields["partition"].array_value.values) == [
+            Value(field_reference_value="genre")
+        ]
+        assert list(pb.map_value.fields["sort"].array_value.values) == [
+            Field.of("rating").descending()._to_pb()
+        ]
+        assert pb.map_value.fields["documents"].map_value.fields["preceding"] == Value(
+            integer_value=-1
+        )
+        assert pb.map_value.fields["documents"].map_value.fields["following"] == Value(
+            string_value="current"
+        )
+
+        # RangeWindowFrame
+        spec_range = WindowSpec(range=RangeWindowFrame(-5, 5, "day"))
+        assert spec_range.range == RangeWindowFrame(-5, 5, "day")
+        assert (
+            repr(spec_range)
+            == "WindowSpec(range=RangeWindowFrame(preceding=-5, following=5, unit='day'))"
+        )
+        range_pb = spec_range._to_pb()
+        assert range_pb.map_value.fields["range"] == spec_range.range._to_pb()
+
+
+class TestAddWindowFields:
+    def _make_one(self, *args, **kwargs):
+        return stages.AddWindowFields(*args, **kwargs)
+
+    def test_ctor_positional_and_keyword(self):
+        expr1 = Field.of("rating").sum().as_("sum_rating")
+        expr2 = Rank().as_("rank_val")
+
+        # Positional
+        stage1 = self._make_one(expr1, expr2)
+        assert stage1.fields == [expr1, expr2]
+        assert stage1.window == WindowSpec()
+        assert stage1.name == "add_window_fields"
+
+        # Keyword fields + window
+        stage2 = self._make_one(
+            fields=[expr1],
+            window=WindowSpec(
+                partition=["genre"], sort=[Field.of("rating").descending()]
+            ),
+        )
+        assert stage2.fields == [expr1]
+        assert stage2.window == WindowSpec(
+            partition=["genre"], sort=[Field.of("rating").descending()]
+        )
+
+    def test_ctor_errors(self):
+        expr1 = Field.of("rating").sum().as_("sum_rating")
+
+        with pytest.raises(
+            ValueError,
+            match="AddWindowFields stage contains both positional and keyword fields",
+        ):
+            self._make_one(expr1, fields=[expr1])
+
+    def test_repr_and_to_pb(self):
+        expr1 = Field.of("rating").sum().as_("sum_rating")
+        expr2 = (
+            Rank()
+            .over(WindowSpec(sort=Field.of("published").ascending()))
+            .as_("pub_rank")
+        )
+        window = WindowSpec(
+            partition="genre",
+            sort=Field.of("rating").descending(),
+            documents=DocumentWindowFrame(-1, WindowBound.CURRENT),
+        )
+        stage = self._make_one(expr1, expr2, window=window)
+        assert (
+            repr(stage)
+            == f"AddWindowFields(fields={[expr1, expr2]!r}, window={window!r})"
+        )
+
+        pb = stage._to_pb()
+        assert pb.name == "add_window_fields"
+        assert len(pb.options) == 0
+        assert len(pb.args) == 2
+        assert pb.args[0] == window._to_pb()
+        assert pb.args[1].map_value.fields["sum_rating"] == expr1.expr._to_pb()
+        assert pb.args[1].map_value.fields["pub_rank"] == expr2.expr._to_pb()

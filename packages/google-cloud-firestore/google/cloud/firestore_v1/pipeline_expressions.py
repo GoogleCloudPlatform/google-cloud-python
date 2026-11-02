@@ -36,6 +36,7 @@ from google.cloud.firestore_v1.pipeline_types import (
     TimeGranularity,
     TimePart,
     TimeUnit,
+    WindowSpec,
 )
 from google.cloud.firestore_v1.types.document import Pipeline as Pipeline_pb
 from google.cloud.firestore_v1.types.document import Value
@@ -2574,6 +2575,21 @@ class Expression(ABC):
             "is_type", [self, self._cast_to_expr_or_convert_to_constant(type_val)]
         )
 
+    @expose_as_static
+    def over(
+        self,
+        window: WindowSpec,
+    ) -> "WindowFunction":
+        """Configures a window over which this function is evaluated.
+
+        Args:
+            window: A `WindowSpec` specifying the window override for this function.
+
+        Returns:
+            A `WindowFunction` with the specified window override.
+        """
+        return WindowFunction("over", [self, window])  # type: ignore[list-item]
+
 
 class Constant(Expression, Generic[CONSTANT_TYPE]):
     """Represents a constant literal value in an expression."""
@@ -2684,6 +2700,14 @@ class FunctionExpression(Expression):
 
 class AggregateFunction(FunctionExpression):
     """A base class for aggregation functions that operate across multiple inputs."""
+
+    pass
+
+
+class WindowFunction(FunctionExpression):
+    """A base class for window functions that operate over a window of documents."""
+
+    pass
 
 
 class Selectable(Expression):
@@ -3194,6 +3218,31 @@ class CurrentDocument(FunctionExpression):
     def __init__(self):
         super().__init__(
             "current_document",
+            [],
+            repr_function=FunctionExpression._build_standalone_repr(),
+        )
+
+
+class Rank(WindowFunction):
+    """Creates a window function that computes the rank of each document within a window.
+
+    Documents with equal sort values receive the same rank, with gaps in the subsequent
+    ranking numbers.
+
+    Example:
+        >>> # Rank documents by price descending within each category
+        >>> db.pipeline().collection("products").add_window_fields(
+        ...     Rank().as_("price_rank"),
+        ...     window=WindowSpec(
+        ...         partition=["category"],
+        ...         sort=[Field.of("price").descending()],
+        ...     ),
+        ... )
+    """
+
+    def __init__(self):
+        super().__init__(
+            "rank",
             [],
             repr_function=FunctionExpression._build_standalone_repr(),
         )

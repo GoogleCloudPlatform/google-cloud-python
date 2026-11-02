@@ -27,6 +27,9 @@ from google.cloud.firestore_v1.pipeline_expressions import (
     Expression,
     Field,
     Ordering,
+    Rank,
+    WindowFunction,
+    WindowSpec,
 )
 from google.cloud.firestore_v1.types import document as document_pb
 from google.cloud.firestore_v1.types import query as query_pb
@@ -2262,3 +2265,46 @@ class TestExpressionessionMethods:
         assert repr(instance) == "Value.array_index_of_all(Constant.of('comedy'))"
         infix_instance = arg1.array_index_of_all(value)
         assert infix_instance == instance
+
+
+class TestWindowExpressions:
+    def test_over_and_rank(self):
+        agg = Field.of("rating").sum()
+        ws = WindowSpec(
+            partition="genre",
+            sort=Field.of("published").ascending(),
+        )
+        win_fn = agg.over(ws)
+        assert isinstance(win_fn, WindowFunction)
+        assert win_fn.name == "over"
+        assert win_fn.params == [agg, ws]
+        assert repr(win_fn) == f"Field.of('rating').sum().over({ws!r})"
+        assert win_fn == Expression.over(agg, ws)
+
+        pb = win_fn._to_pb()
+        assert pb.function_value.name == "over"
+        assert len(pb.function_value.args) == 2
+        assert pb.function_value.args[0] == agg._to_pb()
+        assert pb.function_value.args[1] == ws._to_pb()
+
+        # Also test with Count() (0-arg AggregateFunction)
+        count_win = expr.Count().over(WindowSpec())
+        assert repr(count_win) == "Count().over(WindowSpec())"
+        count_pb = count_win._to_pb()
+        assert count_pb.function_value.name == "over"
+        assert count_pb.function_value.args[0] == expr.Count()._to_pb()
+
+        # Rank
+        rank = Rank()
+        assert isinstance(rank, WindowFunction)
+        assert rank.name == "rank"
+        assert rank.params == []
+        assert repr(rank) == "Rank()"
+        assert rank._to_pb() == Value(function_value={"name": "rank", "args": []})
+
+        rank_over = rank.over(ws)
+        assert isinstance(rank_over, WindowFunction)
+        assert repr(rank_over) == f"Rank().over({ws!r})"
+        assert rank_over._to_pb() == Value(
+            function_value={"name": "over", "args": [rank._to_pb(), ws._to_pb()]}
+        )

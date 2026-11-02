@@ -69,15 +69,19 @@ from google.cloud.firestore_v1.pipeline_result import (
 )
 from google.cloud.firestore_v1.pipeline_source import PipelineSource
 from google.cloud.firestore_v1.pipeline_types import (
+    DocumentWindowFrame,
     FindNearestOptions,
     Ordering,
     PipelineDataType,
+    RangeWindowFrame,
     SampleOptions,
     SearchOptions,
     TimeGranularity,
     TimePart,
     TimeUnit,
     UnnestOptions,
+    WindowBound,
+    WindowSpec,
 )
 from google.cloud.firestore_v1.query import CollectionGroup, Query
 from google.cloud.firestore_v1.query_profile import (
@@ -175,6 +179,7 @@ __all__: List[str] = [
     "DocumentReference",
     "DocumentSnapshot",
     "DocumentTransform",
+    "DocumentWindowFrame",
     "ExistsOption",
     "ExplainOptions",
     "FieldFilter",
@@ -194,6 +199,7 @@ __all__: List[str] = [
     "PipelineSource",
     "PipelineStream",
     "Query",
+    "RangeWindowFrame",
     "ReadAfterWriteError",
     "SERVER_TIMESTAMP",
     "SampleOptions",
@@ -207,6 +213,8 @@ __all__: List[str] = [
     "types",
     "UnnestOptions",
     "Watch",
+    "WindowBound",
+    "WindowSpec",
     "WriteBatch",
     "WriteOption",
 ]
