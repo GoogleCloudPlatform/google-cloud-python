@@ -20,6 +20,7 @@ import warnings
 from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, rest_helpers, rest_streaming
 from google.api_core import retry as retries
@@ -28,7 +29,10 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
-from google.cloud.bigquery_biglake_v1._compat import transcode_request
+from google.cloud.bigquery_biglake_v1._compat import (
+    trace_http_request,
+    transcode_request,
+)
 from google.cloud.bigquery_biglake_v1.types import metastore
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -878,6 +882,7 @@ class MetastoreServiceRestStub:
     _session: AuthorizedSession
     _host: str
     _interceptor: MetastoreServiceRestInterceptor
+    _client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None
 
 
 class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
@@ -916,6 +921,8 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
         url_scheme: str = "https",
         interceptor: Optional[MetastoreServiceRestInterceptor] = None,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
+        **kwargs,
     ) -> None:
         """Instantiate the transport.
 
@@ -955,6 +962,9 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
         # Run the base constructor
         # TODO(yon-mg): resolve other ctor params i.e. scopes, quota, etc.
@@ -967,6 +977,8 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             always_use_jwt_access=always_use_jwt_access,
             url_scheme=url_scheme,
             api_audience=api_audience,
+            client_options=client_options,
+            **kwargs,
         )
         self._session = AuthorizedSession(
             self._credentials, default_host=self.DEFAULT_HOST
@@ -991,19 +1003,35 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -1083,6 +1111,8 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -1095,7 +1125,6 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             pb_resp = metastore.Catalog.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_catalog(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_catalog_with_metadata(
@@ -1139,19 +1168,35 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -1229,6 +1274,8 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -1241,7 +1288,6 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             pb_resp = metastore.Database.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_database(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_database_with_metadata(
@@ -1285,19 +1331,35 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -1377,6 +1439,8 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -1389,7 +1453,6 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             pb_resp = metastore.Table.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_table(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_table_with_metadata(
@@ -1433,18 +1496,34 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -1523,6 +1602,8 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -1535,7 +1616,6 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             pb_resp = metastore.Catalog.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_delete_catalog(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_delete_catalog_with_metadata(
@@ -1579,18 +1659,34 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -1667,6 +1763,8 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -1679,7 +1777,6 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             pb_resp = metastore.Database.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_delete_database(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_delete_database_with_metadata(
@@ -1723,18 +1820,34 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -1813,6 +1926,8 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -1825,7 +1940,6 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             pb_resp = metastore.Table.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_delete_table(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_delete_table_with_metadata(
@@ -1869,18 +1983,34 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -1961,6 +2091,8 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -1973,7 +2105,6 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             pb_resp = metastore.Catalog.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_catalog(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_catalog_with_metadata(
@@ -2017,18 +2148,34 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2107,6 +2254,8 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -2119,7 +2268,6 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             pb_resp = metastore.Database.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_database(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_database_with_metadata(
@@ -2163,18 +2311,34 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2253,6 +2417,8 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -2265,7 +2431,6 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             pb_resp = metastore.Table.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_table(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_table_with_metadata(
@@ -2309,18 +2474,34 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2401,6 +2582,8 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -2413,7 +2596,6 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             pb_resp = metastore.ListCatalogsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_catalogs(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_catalogs_with_metadata(
@@ -2457,18 +2639,34 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2547,6 +2745,8 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -2559,7 +2759,6 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             pb_resp = metastore.ListDatabasesResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_databases(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_databases_with_metadata(
@@ -2603,18 +2802,34 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2695,6 +2910,8 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -2707,7 +2924,6 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             pb_resp = metastore.ListTablesResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_tables(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_tables_with_metadata(
@@ -2751,19 +2967,35 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2843,6 +3075,8 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -2855,7 +3089,6 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             pb_resp = metastore.Table.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_rename_table(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_rename_table_with_metadata(
@@ -2899,19 +3132,35 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2989,6 +3238,8 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -3001,7 +3252,6 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             pb_resp = metastore.Database.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_update_database(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_database_with_metadata(
@@ -3045,19 +3295,35 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -3137,6 +3403,8 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -3149,7 +3417,6 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
             pb_resp = metastore.Table.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_update_table(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_table_with_metadata(
@@ -3184,7 +3451,12 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
     ) -> Callable[[metastore.CreateCatalogRequest], metastore.Catalog]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateCatalog(self._session, self._host, self._interceptor)  # type: ignore
+        return self._CreateCatalog(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def create_database(
@@ -3192,13 +3464,23 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
     ) -> Callable[[metastore.CreateDatabaseRequest], metastore.Database]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateDatabase(self._session, self._host, self._interceptor)  # type: ignore
+        return self._CreateDatabase(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def create_table(self) -> Callable[[metastore.CreateTableRequest], metastore.Table]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateTable(self._session, self._host, self._interceptor)  # type: ignore
+        return self._CreateTable(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def delete_catalog(
@@ -3206,7 +3488,12 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
     ) -> Callable[[metastore.DeleteCatalogRequest], metastore.Catalog]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteCatalog(self._session, self._host, self._interceptor)  # type: ignore
+        return self._DeleteCatalog(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def delete_database(
@@ -3214,19 +3501,34 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
     ) -> Callable[[metastore.DeleteDatabaseRequest], metastore.Database]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteDatabase(self._session, self._host, self._interceptor)  # type: ignore
+        return self._DeleteDatabase(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def delete_table(self) -> Callable[[metastore.DeleteTableRequest], metastore.Table]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteTable(self._session, self._host, self._interceptor)  # type: ignore
+        return self._DeleteTable(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def get_catalog(self) -> Callable[[metastore.GetCatalogRequest], metastore.Catalog]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetCatalog(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetCatalog(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def get_database(
@@ -3234,13 +3536,23 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
     ) -> Callable[[metastore.GetDatabaseRequest], metastore.Database]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetDatabase(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetDatabase(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def get_table(self) -> Callable[[metastore.GetTableRequest], metastore.Table]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetTable(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetTable(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def list_catalogs(
@@ -3248,7 +3560,12 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
     ) -> Callable[[metastore.ListCatalogsRequest], metastore.ListCatalogsResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListCatalogs(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListCatalogs(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def list_databases(
@@ -3256,7 +3573,12 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
     ) -> Callable[[metastore.ListDatabasesRequest], metastore.ListDatabasesResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListDatabases(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListDatabases(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def list_tables(
@@ -3264,13 +3586,23 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
     ) -> Callable[[metastore.ListTablesRequest], metastore.ListTablesResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListTables(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListTables(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def rename_table(self) -> Callable[[metastore.RenameTableRequest], metastore.Table]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._RenameTable(self._session, self._host, self._interceptor)  # type: ignore
+        return self._RenameTable(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def update_database(
@@ -3278,13 +3610,23 @@ class MetastoreServiceRestTransport(_BaseMetastoreServiceRestTransport):
     ) -> Callable[[metastore.UpdateDatabaseRequest], metastore.Database]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateDatabase(self._session, self._host, self._interceptor)  # type: ignore
+        return self._UpdateDatabase(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def update_table(self) -> Callable[[metastore.UpdateTableRequest], metastore.Table]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateTable(self._session, self._host, self._interceptor)  # type: ignore
+        return self._UpdateTable(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def kind(self) -> str:

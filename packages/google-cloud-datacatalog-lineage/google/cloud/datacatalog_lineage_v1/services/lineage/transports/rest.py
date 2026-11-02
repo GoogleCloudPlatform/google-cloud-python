@@ -21,6 +21,7 @@ from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1, rest_helpers, rest_streaming
 from google.api_core import retry as retries
@@ -30,7 +31,10 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
-from google.cloud.datacatalog_lineage_v1._compat import transcode_request
+from google.cloud.datacatalog_lineage_v1._compat import (
+    trace_http_request,
+    transcode_request,
+)
 from google.cloud.datacatalog_lineage_v1.types import lineage
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1121,6 +1125,7 @@ class LineageRestStub:
     _session: AuthorizedSession
     _host: str
     _interceptor: LineageRestInterceptor
+    _client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None
 
 
 class LineageRestTransport(_BaseLineageRestTransport):
@@ -1153,6 +1158,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
         url_scheme: str = "https",
         interceptor: Optional[LineageRestInterceptor] = None,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
+        **kwargs,
     ) -> None:
         """Instantiate the transport.
 
@@ -1192,6 +1199,9 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
         # Run the base constructor
         # TODO(yon-mg): resolve other ctor params i.e. scopes, quota, etc.
@@ -1204,6 +1214,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
             always_use_jwt_access=always_use_jwt_access,
             url_scheme=url_scheme,
             api_audience=api_audience,
+            client_options=client_options,
+            **kwargs,
         )
         self._session = AuthorizedSession(
             self._credentials, default_host=self.DEFAULT_HOST
@@ -1282,19 +1294,35 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -1377,6 +1405,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -1389,7 +1419,6 @@ class LineageRestTransport(_BaseLineageRestTransport):
             pb_resp = lineage.BatchSearchLinkProcessesResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_batch_search_link_processes(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_batch_search_link_processes_with_metadata(
@@ -1435,19 +1464,35 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -1534,6 +1579,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -1546,7 +1593,6 @@ class LineageRestTransport(_BaseLineageRestTransport):
             pb_resp = lineage.LineageEvent.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_lineage_event(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_lineage_event_with_metadata(
@@ -1588,19 +1634,35 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -1682,6 +1744,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -1694,7 +1758,6 @@ class LineageRestTransport(_BaseLineageRestTransport):
             pb_resp = lineage.Process.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_process(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_process_with_metadata(
@@ -1736,19 +1799,35 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -1829,6 +1908,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -1841,7 +1922,6 @@ class LineageRestTransport(_BaseLineageRestTransport):
             pb_resp = lineage.Run.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_run(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_run_with_metadata(
@@ -1885,18 +1965,34 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -1973,6 +2069,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -1993,18 +2091,34 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2086,6 +2200,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -2096,7 +2212,6 @@ class LineageRestTransport(_BaseLineageRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_delete_process(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_delete_process_with_metadata(
@@ -2138,18 +2253,34 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2229,6 +2360,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -2239,7 +2372,6 @@ class LineageRestTransport(_BaseLineageRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_delete_run(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_delete_run_with_metadata(
@@ -2283,18 +2415,34 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2380,6 +2528,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -2392,7 +2542,6 @@ class LineageRestTransport(_BaseLineageRestTransport):
             pb_resp = lineage.LineageEvent.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_lineage_event(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_lineage_event_with_metadata(
@@ -2434,18 +2583,34 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2524,6 +2689,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -2536,7 +2703,6 @@ class LineageRestTransport(_BaseLineageRestTransport):
             pb_resp = lineage.Process.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_process(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_process_with_metadata(
@@ -2578,18 +2744,34 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2669,6 +2851,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -2681,7 +2865,6 @@ class LineageRestTransport(_BaseLineageRestTransport):
             pb_resp = lineage.Run.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_run(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_run_with_metadata(
@@ -2725,18 +2908,34 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2819,6 +3018,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -2831,7 +3032,6 @@ class LineageRestTransport(_BaseLineageRestTransport):
             pb_resp = lineage.ListLineageEventsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_lineage_events(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_lineage_events_with_metadata(
@@ -2875,18 +3075,34 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2967,6 +3183,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -2979,7 +3197,6 @@ class LineageRestTransport(_BaseLineageRestTransport):
             pb_resp = lineage.ListProcessesResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_processes(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_processes_with_metadata(
@@ -3021,18 +3238,34 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -3111,6 +3344,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -3123,7 +3358,6 @@ class LineageRestTransport(_BaseLineageRestTransport):
             pb_resp = lineage.ListRunsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_runs(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_runs_with_metadata(
@@ -3167,19 +3401,35 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -3262,6 +3512,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -3274,7 +3526,6 @@ class LineageRestTransport(_BaseLineageRestTransport):
             pb_resp = lineage.ProcessOpenLineageRunEventResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_process_open_lineage_run_event(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = (
@@ -3322,20 +3573,36 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                stream=True,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    stream=True,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -3417,6 +3684,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -3428,7 +3697,6 @@ class LineageRestTransport(_BaseLineageRestTransport):
             resp = rest_streaming.ResponseIterator(
                 response, lineage.SearchLineageStreamingResponse
             )
-
             resp = self._interceptor.post_search_lineage_streaming(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_search_lineage_streaming_with_metadata(
@@ -3465,19 +3733,35 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -3559,6 +3843,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -3571,7 +3857,6 @@ class LineageRestTransport(_BaseLineageRestTransport):
             pb_resp = lineage.SearchLinksResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_search_links(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_search_links_with_metadata(
@@ -3613,19 +3898,35 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -3707,6 +4008,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -3719,7 +4022,6 @@ class LineageRestTransport(_BaseLineageRestTransport):
             pb_resp = lineage.Process.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_update_process(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_process_with_metadata(
@@ -3761,19 +4063,35 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -3854,6 +4172,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -3866,7 +4186,6 @@ class LineageRestTransport(_BaseLineageRestTransport):
             pb_resp = lineage.Run.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_update_run(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_run_with_metadata(
@@ -3905,7 +4224,10 @@ class LineageRestTransport(_BaseLineageRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._BatchSearchLinkProcesses(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -3914,7 +4236,12 @@ class LineageRestTransport(_BaseLineageRestTransport):
     ) -> Callable[[lineage.CreateLineageEventRequest], lineage.LineageEvent]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateLineageEvent(self._session, self._host, self._interceptor)  # type: ignore
+        return self._CreateLineageEvent(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def create_process(
@@ -3922,13 +4249,23 @@ class LineageRestTransport(_BaseLineageRestTransport):
     ) -> Callable[[lineage.CreateProcessRequest], lineage.Process]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateProcess(self._session, self._host, self._interceptor)  # type: ignore
+        return self._CreateProcess(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def create_run(self) -> Callable[[lineage.CreateRunRequest], lineage.Run]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateRun(self._session, self._host, self._interceptor)  # type: ignore
+        return self._CreateRun(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def delete_lineage_event(
@@ -3936,7 +4273,12 @@ class LineageRestTransport(_BaseLineageRestTransport):
     ) -> Callable[[lineage.DeleteLineageEventRequest], empty_pb2.Empty]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteLineageEvent(self._session, self._host, self._interceptor)  # type: ignore
+        return self._DeleteLineageEvent(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def delete_process(
@@ -3944,7 +4286,12 @@ class LineageRestTransport(_BaseLineageRestTransport):
     ) -> Callable[[lineage.DeleteProcessRequest], operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteProcess(self._session, self._host, self._interceptor)  # type: ignore
+        return self._DeleteProcess(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def delete_run(
@@ -3952,7 +4299,12 @@ class LineageRestTransport(_BaseLineageRestTransport):
     ) -> Callable[[lineage.DeleteRunRequest], operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteRun(self._session, self._host, self._interceptor)  # type: ignore
+        return self._DeleteRun(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def get_lineage_event(
@@ -3960,19 +4312,34 @@ class LineageRestTransport(_BaseLineageRestTransport):
     ) -> Callable[[lineage.GetLineageEventRequest], lineage.LineageEvent]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetLineageEvent(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetLineageEvent(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def get_process(self) -> Callable[[lineage.GetProcessRequest], lineage.Process]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetProcess(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetProcess(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def get_run(self) -> Callable[[lineage.GetRunRequest], lineage.Run]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetRun(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetRun(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def list_lineage_events(
@@ -3982,7 +4349,12 @@ class LineageRestTransport(_BaseLineageRestTransport):
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListLineageEvents(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListLineageEvents(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def list_processes(
@@ -3990,7 +4362,12 @@ class LineageRestTransport(_BaseLineageRestTransport):
     ) -> Callable[[lineage.ListProcessesRequest], lineage.ListProcessesResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListProcesses(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListProcesses(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def list_runs(
@@ -3998,7 +4375,12 @@ class LineageRestTransport(_BaseLineageRestTransport):
     ) -> Callable[[lineage.ListRunsRequest], lineage.ListRunsResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListRuns(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListRuns(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def process_open_lineage_run_event(
@@ -4010,7 +4392,10 @@ class LineageRestTransport(_BaseLineageRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._ProcessOpenLineageRunEvent(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -4022,7 +4407,10 @@ class LineageRestTransport(_BaseLineageRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._SearchLineageStreaming(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -4031,7 +4419,12 @@ class LineageRestTransport(_BaseLineageRestTransport):
     ) -> Callable[[lineage.SearchLinksRequest], lineage.SearchLinksResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._SearchLinks(self._session, self._host, self._interceptor)  # type: ignore
+        return self._SearchLinks(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def update_process(
@@ -4039,17 +4432,32 @@ class LineageRestTransport(_BaseLineageRestTransport):
     ) -> Callable[[lineage.UpdateProcessRequest], lineage.Process]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateProcess(self._session, self._host, self._interceptor)  # type: ignore
+        return self._UpdateProcess(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def update_run(self) -> Callable[[lineage.UpdateRunRequest], lineage.Run]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateRun(self._session, self._host, self._interceptor)  # type: ignore
+        return self._UpdateRun(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def cancel_operation(self):
-        return self._CancelOperation(self._session, self._host, self._interceptor)  # type: ignore
+        return self._CancelOperation(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     class _CancelOperation(
         _BaseLineageRestTransport._BaseCancelOperation, LineageRestStub
@@ -4066,19 +4474,35 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -4155,6 +4579,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -4166,7 +4592,12 @@ class LineageRestTransport(_BaseLineageRestTransport):
 
     @property
     def delete_operation(self):
-        return self._DeleteOperation(self._session, self._host, self._interceptor)  # type: ignore
+        return self._DeleteOperation(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     class _DeleteOperation(
         _BaseLineageRestTransport._BaseDeleteOperation, LineageRestStub
@@ -4183,18 +4614,34 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -4270,6 +4717,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -4281,7 +4730,12 @@ class LineageRestTransport(_BaseLineageRestTransport):
 
     @property
     def get_operation(self):
-        return self._GetOperation(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetOperation(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     class _GetOperation(_BaseLineageRestTransport._BaseGetOperation, LineageRestStub):
         def __hash__(self):
@@ -4296,18 +4750,34 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -4384,6 +4854,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -4420,7 +4892,12 @@ class LineageRestTransport(_BaseLineageRestTransport):
 
     @property
     def list_operations(self):
-        return self._ListOperations(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListOperations(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     class _ListOperations(
         _BaseLineageRestTransport._BaseListOperations, LineageRestStub
@@ -4437,18 +4914,34 @@ class LineageRestTransport(_BaseLineageRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -4525,6 +5018,8 @@ class LineageRestTransport(_BaseLineageRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception

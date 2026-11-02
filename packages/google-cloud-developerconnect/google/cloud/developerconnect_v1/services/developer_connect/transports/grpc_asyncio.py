@@ -13,16 +13,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async, operations_v1
 from google.api_core import retry_async as retries
@@ -33,6 +42,10 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.developerconnect_v1._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.cloud.developerconnect_v1.types import developer_connect
 
 from .base import DEFAULT_CLIENT_INFO, DeveloperConnectTransport
@@ -190,6 +203,10 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -241,6 +258,12 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -296,6 +319,7 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -317,12 +341,26 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -1130,9 +1168,12 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
         return self._stubs["finish_o_auth"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.list_connections: self._wrap_method(
+            self.list_connections: self._wrap_async_method(
                 self.list_connections,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1145,8 +1186,9 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/ListConnections",
             ),
-            self.get_connection: self._wrap_method(
+            self.get_connection: self._wrap_async_method(
                 self.get_connection,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1159,8 +1201,9 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/GetConnection",
             ),
-            self.create_connection: self._wrap_method(
+            self.create_connection: self._wrap_async_method(
                 self.create_connection,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1173,8 +1216,9 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/CreateConnection",
             ),
-            self.update_connection: self._wrap_method(
+            self.update_connection: self._wrap_async_method(
                 self.update_connection,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1187,8 +1231,9 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/UpdateConnection",
             ),
-            self.delete_connection: self._wrap_method(
+            self.delete_connection: self._wrap_async_method(
                 self.delete_connection,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1201,8 +1246,9 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/DeleteConnection",
             ),
-            self.create_git_repository_link: self._wrap_method(
+            self.create_git_repository_link: self._wrap_async_method(
                 self.create_git_repository_link,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1215,8 +1261,9 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/CreateGitRepositoryLink",
             ),
-            self.delete_git_repository_link: self._wrap_method(
+            self.delete_git_repository_link: self._wrap_async_method(
                 self.delete_git_repository_link,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1229,13 +1276,15 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/DeleteGitRepositoryLink",
             ),
-            self.list_git_repository_links: self._wrap_method(
+            self.list_git_repository_links: self._wrap_async_method(
                 self.list_git_repository_links,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/ListGitRepositoryLinks",
             ),
-            self.get_git_repository_link: self._wrap_method(
+            self.get_git_repository_link: self._wrap_async_method(
                 self.get_git_repository_link,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1248,8 +1297,9 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/GetGitRepositoryLink",
             ),
-            self.fetch_read_write_token: self._wrap_method(
+            self.fetch_read_write_token: self._wrap_async_method(
                 self.fetch_read_write_token,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1262,8 +1312,9 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/FetchReadWriteToken",
             ),
-            self.fetch_read_token: self._wrap_method(
+            self.fetch_read_token: self._wrap_async_method(
                 self.fetch_read_token,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1276,8 +1327,9 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/FetchReadToken",
             ),
-            self.fetch_linkable_git_repositories: self._wrap_method(
+            self.fetch_linkable_git_repositories: self._wrap_async_method(
                 self.fetch_linkable_git_repositories,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1290,8 +1342,9 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/FetchLinkableGitRepositories",
             ),
-            self.fetch_git_hub_installations: self._wrap_method(
+            self.fetch_git_hub_installations: self._wrap_async_method(
                 self.fetch_git_hub_installations,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1304,108 +1357,123 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/FetchGitHubInstallations",
             ),
-            self.fetch_git_refs: self._wrap_method(
+            self.fetch_git_refs: self._wrap_async_method(
                 self.fetch_git_refs,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/FetchGitRefs",
             ),
-            self.list_account_connectors: self._wrap_method(
+            self.list_account_connectors: self._wrap_async_method(
                 self.list_account_connectors,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/ListAccountConnectors",
             ),
-            self.get_account_connector: self._wrap_method(
+            self.get_account_connector: self._wrap_async_method(
                 self.get_account_connector,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/GetAccountConnector",
             ),
-            self.create_account_connector: self._wrap_method(
+            self.create_account_connector: self._wrap_async_method(
                 self.create_account_connector,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/CreateAccountConnector",
             ),
-            self.update_account_connector: self._wrap_method(
+            self.update_account_connector: self._wrap_async_method(
                 self.update_account_connector,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/UpdateAccountConnector",
             ),
-            self.delete_account_connector: self._wrap_method(
+            self.delete_account_connector: self._wrap_async_method(
                 self.delete_account_connector,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/DeleteAccountConnector",
             ),
-            self.fetch_access_token: self._wrap_method(
+            self.fetch_access_token: self._wrap_async_method(
                 self.fetch_access_token,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/FetchAccessToken",
             ),
-            self.list_users: self._wrap_method(
+            self.list_users: self._wrap_async_method(
                 self.list_users,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/ListUsers",
             ),
-            self.delete_user: self._wrap_method(
+            self.delete_user: self._wrap_async_method(
                 self.delete_user,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/DeleteUser",
             ),
-            self.fetch_self: self._wrap_method(
+            self.fetch_self: self._wrap_async_method(
                 self.fetch_self,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/FetchSelf",
             ),
-            self.delete_self: self._wrap_method(
+            self.delete_self: self._wrap_async_method(
                 self.delete_self,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/DeleteSelf",
             ),
-            self.start_o_auth: self._wrap_method(
+            self.start_o_auth: self._wrap_async_method(
                 self.start_o_auth,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/StartOAuth",
             ),
-            self.finish_o_auth: self._wrap_method(
+            self.finish_o_auth: self._wrap_async_method(
                 self.finish_o_auth,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.developerconnect.v1.DeveloperConnect/FinishOAuth",
             ),
-            self.get_location: self._wrap_method(
+            self.get_location: self._wrap_async_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: self._wrap_method(
+            self.list_locations: self._wrap_async_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.cancel_operation: self._wrap_method(
+            self.cancel_operation: self._wrap_async_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: self._wrap_method(
+            self.delete_operation: self._wrap_async_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: self._wrap_method(
+            self.list_operations: self._wrap_async_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

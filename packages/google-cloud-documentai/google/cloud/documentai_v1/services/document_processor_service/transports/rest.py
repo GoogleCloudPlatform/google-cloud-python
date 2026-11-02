@@ -20,6 +20,7 @@ import warnings
 from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1, rest_helpers, rest_streaming
 from google.api_core import retry as retries
@@ -30,7 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
-from google.cloud.documentai_v1._compat import transcode_request
+from google.cloud.documentai_v1._compat import trace_http_request, transcode_request
 from google.cloud.documentai_v1.types import (
     document_processor_service,
     evaluation,
@@ -1485,6 +1486,7 @@ class DocumentProcessorServiceRestStub:
     _session: AuthorizedSession
     _host: str
     _interceptor: DocumentProcessorServiceRestInterceptor
+    _client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None
 
 
 class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTransport):
@@ -1517,6 +1519,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
         url_scheme: str = "https",
         interceptor: Optional[DocumentProcessorServiceRestInterceptor] = None,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
+        **kwargs,
     ) -> None:
         """Instantiate the transport.
 
@@ -1556,6 +1560,9 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
         # Run the base constructor
         # TODO(yon-mg): resolve other ctor params i.e. scopes, quota, etc.
@@ -1568,6 +1575,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             always_use_jwt_access=always_use_jwt_access,
             url_scheme=url_scheme,
             api_audience=api_audience,
+            client_options=client_options,
+            **kwargs,
         )
         self._session = AuthorizedSession(
             self._credentials, default_host=self.DEFAULT_HOST
@@ -1656,19 +1665,35 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -1751,6 +1776,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -1761,7 +1788,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_batch_process_documents(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_batch_process_documents_with_metadata(
@@ -1806,19 +1832,35 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -1907,6 +1949,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                     timeout,
                     transcoded_request,
                     body,
+                    client_options=getattr(self, "_client_options", None),
+                    url_template=http_options[0].get("uri") if http_options else None,
                 )
             )
 
@@ -1920,7 +1964,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             pb_resp = gcd_processor.Processor.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_processor(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_processor_with_metadata(
@@ -1965,18 +2008,34 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2060,6 +2119,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                     self._session,
                     timeout,
                     transcoded_request,
+                    client_options=getattr(self, "_client_options", None),
+                    url_template=http_options[0].get("uri") if http_options else None,
                 )
             )
 
@@ -2071,7 +2132,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_delete_processor(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_delete_processor_with_metadata(
@@ -2116,18 +2176,34 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2210,6 +2286,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -2220,7 +2298,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_delete_processor_version(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_delete_processor_version_with_metadata(
@@ -2265,19 +2342,35 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2361,6 +2454,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -2371,7 +2466,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_deploy_processor_version(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_deploy_processor_version_with_metadata(
@@ -2416,19 +2510,35 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2513,6 +2623,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                     timeout,
                     transcoded_request,
                     body,
+                    client_options=getattr(self, "_client_options", None),
+                    url_template=http_options[0].get("uri") if http_options else None,
                 )
             )
 
@@ -2524,7 +2636,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_disable_processor(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_disable_processor_with_metadata(
@@ -2569,19 +2680,35 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2666,6 +2793,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                     timeout,
                     transcoded_request,
                     body,
+                    client_options=getattr(self, "_client_options", None),
+                    url_template=http_options[0].get("uri") if http_options else None,
                 )
             )
 
@@ -2677,7 +2806,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_enable_processor(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_enable_processor_with_metadata(
@@ -2724,19 +2852,35 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2821,6 +2965,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -2831,7 +2977,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_evaluate_processor_version(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_evaluate_processor_version_with_metadata(
@@ -2876,18 +3021,34 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2971,6 +3132,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -2983,7 +3146,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             pb_resp = document_processor_service.FetchProcessorTypesResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_fetch_processor_types(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_fetch_processor_types_with_metadata(
@@ -3032,18 +3194,34 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -3122,6 +3300,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                     self._session,
                     timeout,
                     transcoded_request,
+                    client_options=getattr(self, "_client_options", None),
+                    url_template=http_options[0].get("uri") if http_options else None,
                 )
             )
 
@@ -3135,7 +3315,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             pb_resp = evaluation.Evaluation.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_evaluation(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_evaluation_with_metadata(
@@ -3180,18 +3359,34 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -3274,6 +3469,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                     self._session,
                     timeout,
                     transcoded_request,
+                    client_options=getattr(self, "_client_options", None),
+                    url_template=http_options[0].get("uri") if http_options else None,
                 )
             )
 
@@ -3287,7 +3484,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             pb_resp = processor.Processor.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_processor(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_processor_with_metadata(
@@ -3332,18 +3528,34 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -3428,6 +3640,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                     self._session,
                     timeout,
                     transcoded_request,
+                    client_options=getattr(self, "_client_options", None),
+                    url_template=http_options[0].get("uri") if http_options else None,
                 )
             )
 
@@ -3441,7 +3655,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             pb_resp = processor_type.ProcessorType.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_processor_type(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_processor_type_with_metadata(
@@ -3486,18 +3699,34 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -3585,6 +3814,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -3597,7 +3828,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             pb_resp = processor.ProcessorVersion.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_processor_version(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_processor_version_with_metadata(
@@ -3642,18 +3872,34 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -3733,6 +3979,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                     self._session,
                     timeout,
                     transcoded_request,
+                    client_options=getattr(self, "_client_options", None),
+                    url_template=http_options[0].get("uri") if http_options else None,
                 )
             )
 
@@ -3746,7 +3994,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             pb_resp = document_processor_service.ListEvaluationsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_evaluations(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_evaluations_with_metadata(
@@ -3795,18 +4042,34 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -3887,6 +4150,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                     self._session,
                     timeout,
                     transcoded_request,
+                    client_options=getattr(self, "_client_options", None),
+                    url_template=http_options[0].get("uri") if http_options else None,
                 )
             )
 
@@ -3900,7 +4165,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             pb_resp = document_processor_service.ListProcessorsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_processors(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_processors_with_metadata(
@@ -3949,18 +4213,34 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -4045,6 +4325,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                     self._session,
                     timeout,
                     transcoded_request,
+                    client_options=getattr(self, "_client_options", None),
+                    url_template=http_options[0].get("uri") if http_options else None,
                 )
             )
 
@@ -4058,7 +4340,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             pb_resp = document_processor_service.ListProcessorTypesResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_processor_types(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_processor_types_with_metadata(
@@ -4107,18 +4388,34 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -4201,6 +4498,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -4213,7 +4512,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             pb_resp = document_processor_service.ListProcessorVersionsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_processor_versions(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_processor_versions_with_metadata(
@@ -4260,19 +4558,35 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -4357,6 +4671,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                     timeout,
                     transcoded_request,
                     body,
+                    client_options=getattr(self, "_client_options", None),
+                    url_template=http_options[0].get("uri") if http_options else None,
                 )
             )
 
@@ -4370,7 +4686,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             pb_resp = document_processor_service.ProcessResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_process_document(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_process_document_with_metadata(
@@ -4417,19 +4732,35 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -4512,6 +4843,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                     timeout,
                     transcoded_request,
                     body,
+                    client_options=getattr(self, "_client_options", None),
+                    url_template=http_options[0].get("uri") if http_options else None,
                 )
             )
 
@@ -4523,7 +4856,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_review_document(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_review_document_with_metadata(
@@ -4570,19 +4902,35 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -4667,6 +5015,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -4677,7 +5027,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_set_default_processor_version(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = (
@@ -4724,19 +5073,35 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -4820,6 +5185,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -4830,7 +5197,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_train_processor_version(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_train_processor_version_with_metadata(
@@ -4877,19 +5243,35 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -4974,6 +5356,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -4984,7 +5368,6 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_undeploy_processor_version(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_undeploy_processor_version_with_metadata(
@@ -5021,7 +5404,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._BatchProcessDocuments(self._session, self._host, self._interceptor)  # type: ignore
+        return self._BatchProcessDocuments(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def create_processor(
@@ -5031,7 +5419,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateProcessor(self._session, self._host, self._interceptor)  # type: ignore
+        return self._CreateProcessor(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def delete_processor(
@@ -5041,7 +5434,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteProcessor(self._session, self._host, self._interceptor)  # type: ignore
+        return self._DeleteProcessor(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def delete_processor_version(
@@ -5053,7 +5451,10 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._DeleteProcessorVersion(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -5066,7 +5467,10 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._DeployProcessorVersion(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -5077,7 +5481,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DisableProcessor(self._session, self._host, self._interceptor)  # type: ignore
+        return self._DisableProcessor(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def enable_processor(
@@ -5087,7 +5496,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._EnableProcessor(self._session, self._host, self._interceptor)  # type: ignore
+        return self._EnableProcessor(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def evaluate_processor_version(
@@ -5099,7 +5513,10 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._EvaluateProcessorVersion(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -5111,7 +5528,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._FetchProcessorTypes(self._session, self._host, self._interceptor)  # type: ignore
+        return self._FetchProcessorTypes(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def get_evaluation(
@@ -5121,7 +5543,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetEvaluation(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetEvaluation(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def get_processor(
@@ -5131,7 +5558,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetProcessor(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetProcessor(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def get_processor_type(
@@ -5142,7 +5574,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetProcessorType(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetProcessorType(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def get_processor_version(
@@ -5153,7 +5590,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetProcessorVersion(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetProcessorVersion(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def list_evaluations(
@@ -5164,7 +5606,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListEvaluations(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListEvaluations(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def list_processors(
@@ -5175,7 +5622,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListProcessors(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListProcessors(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def list_processor_types(
@@ -5186,7 +5638,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListProcessorTypes(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListProcessorTypes(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def list_processor_versions(
@@ -5197,7 +5654,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListProcessorVersions(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListProcessorVersions(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def process_document(
@@ -5208,7 +5670,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ProcessDocument(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ProcessDocument(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def review_document(
@@ -5218,7 +5685,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ReviewDocument(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ReviewDocument(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def set_default_processor_version(
@@ -5230,7 +5702,10 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._SetDefaultProcessorVersion(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -5242,7 +5717,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._TrainProcessorVersion(self._session, self._host, self._interceptor)  # type: ignore
+        return self._TrainProcessorVersion(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def undeploy_processor_version(
@@ -5254,12 +5734,20 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._UndeployProcessorVersion(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
     def get_location(self):
-        return self._GetLocation(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetLocation(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     class _GetLocation(
         _BaseDocumentProcessorServiceRestTransport._BaseGetLocation,
@@ -5277,18 +5765,34 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -5363,6 +5867,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -5399,7 +5905,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
 
     @property
     def list_locations(self):
-        return self._ListLocations(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListLocations(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     class _ListLocations(
         _BaseDocumentProcessorServiceRestTransport._BaseListLocations,
@@ -5417,18 +5928,34 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -5504,6 +6031,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                     self._session,
                     timeout,
                     transcoded_request,
+                    client_options=getattr(self, "_client_options", None),
+                    url_template=http_options[0].get("uri") if http_options else None,
                 )
             )
 
@@ -5541,7 +6070,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
 
     @property
     def cancel_operation(self):
-        return self._CancelOperation(self._session, self._host, self._interceptor)  # type: ignore
+        return self._CancelOperation(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     class _CancelOperation(
         _BaseDocumentProcessorServiceRestTransport._BaseCancelOperation,
@@ -5559,18 +6093,34 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -5645,6 +6195,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                     self._session,
                     timeout,
                     transcoded_request,
+                    client_options=getattr(self, "_client_options", None),
+                    url_template=http_options[0].get("uri") if http_options else None,
                 )
             )
 
@@ -5657,7 +6209,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
 
     @property
     def get_operation(self):
-        return self._GetOperation(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetOperation(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     class _GetOperation(
         _BaseDocumentProcessorServiceRestTransport._BaseGetOperation,
@@ -5675,18 +6232,34 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -5762,6 +6335,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                     self._session,
                     timeout,
                     transcoded_request,
+                    client_options=getattr(self, "_client_options", None),
+                    url_template=http_options[0].get("uri") if http_options else None,
                 )
             )
 
@@ -5799,7 +6374,12 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
 
     @property
     def list_operations(self):
-        return self._ListOperations(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListOperations(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     class _ListOperations(
         _BaseDocumentProcessorServiceRestTransport._BaseListOperations,
@@ -5817,18 +6397,34 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -5904,6 +6500,8 @@ class DocumentProcessorServiceRestTransport(_BaseDocumentProcessorServiceRestTra
                     self._session,
                     timeout,
                     transcoded_request,
+                    client_options=getattr(self, "_client_options", None),
+                    url_template=http_options[0].get("uri") if http_options else None,
                 )
             )
 

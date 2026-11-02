@@ -20,6 +20,7 @@ import warnings
 from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1, rest_helpers, rest_streaming
 from google.api_core import retry as retries
@@ -34,7 +35,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
-from google.cloud.backupdr_v1._compat import transcode_request
+from google.cloud.backupdr_v1._compat import trace_http_request, transcode_request
 from google.cloud.backupdr_v1.types import (
     backupdr,
     backupplan,
@@ -2431,6 +2432,7 @@ class BackupDRRestStub:
     _session: AuthorizedSession
     _host: str
     _interceptor: BackupDRRestInterceptor
+    _client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None
 
 
 class BackupDRRestTransport(_BaseBackupDRRestTransport):
@@ -2459,6 +2461,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         url_scheme: str = "https",
         interceptor: Optional[BackupDRRestInterceptor] = None,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
+        **kwargs,
     ) -> None:
         """Instantiate the transport.
 
@@ -2498,6 +2502,9 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
         # Run the base constructor
         # TODO(yon-mg): resolve other ctor params i.e. scopes, quota, etc.
@@ -2510,6 +2517,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             always_use_jwt_access=always_use_jwt_access,
             url_scheme=url_scheme,
             api_audience=api_audience,
+            client_options=client_options,
+            **kwargs,
         )
         self._session = AuthorizedSession(
             self._credentials, default_host=self.DEFAULT_HOST
@@ -2588,19 +2597,35 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2684,6 +2709,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -2694,7 +2721,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_backup_plan(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_backup_plan_with_metadata(
@@ -2738,19 +2764,35 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2834,6 +2876,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -2844,7 +2888,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_backup_plan_association(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = (
@@ -2890,19 +2933,35 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -2986,6 +3045,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -2996,7 +3057,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_backup_vault(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_backup_vault_with_metadata(
@@ -3040,19 +3100,35 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -3135,6 +3211,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -3145,7 +3223,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_management_server(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_management_server_with_metadata(
@@ -3187,18 +3264,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -3279,6 +3372,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -3289,7 +3384,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_delete_backup(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_delete_backup_with_metadata(
@@ -3333,18 +3427,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -3427,6 +3537,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -3437,7 +3549,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_delete_backup_plan(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_delete_backup_plan_with_metadata(
@@ -3481,18 +3592,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -3575,6 +3702,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -3585,7 +3714,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_delete_backup_plan_association(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = (
@@ -3631,18 +3759,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -3725,6 +3869,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -3735,7 +3881,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_delete_backup_vault(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_delete_backup_vault_with_metadata(
@@ -3779,18 +3924,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -3872,6 +4033,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -3882,7 +4045,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_delete_management_server(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_delete_management_server_with_metadata(
@@ -3929,18 +4091,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -4026,6 +4204,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -4040,7 +4220,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             )
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = (
                 self._interceptor.post_fetch_backup_plan_associations_for_resource_type(
                     resp
@@ -4092,18 +4271,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -4185,6 +4380,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -4197,7 +4394,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             pb_resp = backupvault.FetchBackupsForResourceTypeResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_fetch_backups_for_resource_type(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = (
@@ -4250,18 +4446,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -4347,6 +4559,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -4365,7 +4579,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             )
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = (
                 self._interceptor.post_fetch_data_source_references_for_resource_type(
                     resp
@@ -4417,18 +4630,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -4510,6 +4739,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -4522,7 +4753,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             pb_resp = backupvault.FetchUsableBackupVaultsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_fetch_usable_backup_vaults(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_fetch_usable_backup_vaults_with_metadata(
@@ -4566,18 +4796,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -4653,6 +4899,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -4665,7 +4913,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             pb_resp = backupvault.Backup.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_backup(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_backup_with_metadata(
@@ -4709,18 +4956,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -4803,6 +5066,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -4815,7 +5080,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             pb_resp = backupplan.BackupPlan.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_backup_plan(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_backup_plan_with_metadata(
@@ -4859,18 +5123,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -4954,6 +5234,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -4966,7 +5248,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             pb_resp = backupplanassociation.BackupPlanAssociation.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_backup_plan_association(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_backup_plan_association_with_metadata(
@@ -5012,18 +5293,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -5104,6 +5401,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -5116,7 +5415,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             pb_resp = backupplan.BackupPlanRevision.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_backup_plan_revision(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_backup_plan_revision_with_metadata(
@@ -5160,18 +5458,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -5254,6 +5568,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -5266,7 +5582,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             pb_resp = backupvault.BackupVault.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_backup_vault(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_backup_vault_with_metadata(
@@ -5310,18 +5625,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -5404,6 +5735,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -5416,7 +5749,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             pb_resp = backupvault.DataSource.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_data_source(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_data_source_with_metadata(
@@ -5460,18 +5792,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -5552,6 +5900,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -5564,7 +5914,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             pb_resp = datasourcereference.DataSourceReference.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_data_source_reference(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_data_source_reference_with_metadata(
@@ -5610,18 +5959,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -5704,6 +6069,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -5716,7 +6083,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             pb_resp = backupdr.ManagementServer.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_management_server(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_management_server_with_metadata(
@@ -5760,19 +6126,35 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -5857,6 +6239,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -5867,7 +6251,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_initialize_service(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_initialize_service_with_metadata(
@@ -5911,18 +6294,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -6004,6 +6403,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -6016,7 +6417,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             pb_resp = backupplanassociation.ListBackupPlanAssociationsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_backup_plan_associations(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = (
@@ -6064,18 +6464,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -6157,6 +6573,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -6169,7 +6587,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             pb_resp = backupplan.ListBackupPlanRevisionsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_backup_plan_revisions(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_backup_plan_revisions_with_metadata(
@@ -6215,18 +6632,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -6308,6 +6741,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -6320,7 +6755,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             pb_resp = backupplan.ListBackupPlansResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_backup_plans(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_backup_plans_with_metadata(
@@ -6364,18 +6798,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -6453,6 +6903,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -6465,7 +6917,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             pb_resp = backupvault.ListBackupsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_backups(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_backups_with_metadata(
@@ -6509,18 +6960,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -6603,6 +7070,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -6615,7 +7084,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             pb_resp = backupvault.ListBackupVaultsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_backup_vaults(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_backup_vaults_with_metadata(
@@ -6661,18 +7129,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -6754,6 +7238,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -6766,7 +7252,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             pb_resp = datasourcereference.ListDataSourceReferencesResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_data_source_references(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_data_source_references_with_metadata(
@@ -6814,18 +7299,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -6908,6 +7409,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -6920,7 +7423,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             pb_resp = backupvault.ListDataSourcesResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_data_sources(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_data_sources_with_metadata(
@@ -6966,18 +7468,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -7058,6 +7576,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -7070,7 +7590,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             pb_resp = backupdr.ListManagementServersResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_management_servers(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_management_servers_with_metadata(
@@ -7116,19 +7635,35 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -7211,6 +7746,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -7221,7 +7758,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_restore_backup(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_restore_backup_with_metadata(
@@ -7265,19 +7801,35 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -7360,6 +7912,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -7370,7 +7924,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_trigger_backup(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_trigger_backup_with_metadata(
@@ -7412,19 +7965,35 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -7507,6 +8076,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -7517,7 +8088,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_update_backup(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_backup_with_metadata(
@@ -7561,19 +8131,35 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -7658,6 +8244,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -7668,7 +8256,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_update_backup_plan(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_backup_plan_with_metadata(
@@ -7712,19 +8299,35 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -7808,6 +8411,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -7818,7 +8423,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_update_backup_plan_association(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = (
@@ -7864,19 +8468,35 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -7961,6 +8581,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -7971,7 +8593,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_update_backup_vault(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_backup_vault_with_metadata(
@@ -8015,19 +8636,35 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -8112,6 +8749,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -8122,7 +8761,6 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_update_data_source(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_data_source_with_metadata(
@@ -8157,7 +8795,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ) -> Callable[[backupplan.CreateBackupPlanRequest], operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateBackupPlan(self._session, self._host, self._interceptor)  # type: ignore
+        return self._CreateBackupPlan(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def create_backup_plan_association(
@@ -8169,7 +8812,10 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._CreateBackupPlanAssociation(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -8178,7 +8824,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ) -> Callable[[backupvault.CreateBackupVaultRequest], operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateBackupVault(self._session, self._host, self._interceptor)  # type: ignore
+        return self._CreateBackupVault(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def create_management_server(
@@ -8187,7 +8838,10 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._CreateManagementServer(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -8196,7 +8850,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ) -> Callable[[backupvault.DeleteBackupRequest], operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteBackup(self._session, self._host, self._interceptor)  # type: ignore
+        return self._DeleteBackup(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def delete_backup_plan(
@@ -8204,7 +8863,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ) -> Callable[[backupplan.DeleteBackupPlanRequest], operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteBackupPlan(self._session, self._host, self._interceptor)  # type: ignore
+        return self._DeleteBackupPlan(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def delete_backup_plan_association(
@@ -8216,7 +8880,10 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._DeleteBackupPlanAssociation(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -8225,7 +8892,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ) -> Callable[[backupvault.DeleteBackupVaultRequest], operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteBackupVault(self._session, self._host, self._interceptor)  # type: ignore
+        return self._DeleteBackupVault(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def delete_management_server(
@@ -8234,7 +8906,10 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._DeleteManagementServer(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -8247,7 +8922,10 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._FetchBackupPlanAssociationsForResourceType(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -8260,7 +8938,10 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._FetchBackupsForResourceType(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -8273,7 +8954,10 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._FetchDataSourceReferencesForResourceType(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -8286,7 +8970,10 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._FetchUsableBackupVaults(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -8295,7 +8982,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ) -> Callable[[backupvault.GetBackupRequest], backupvault.Backup]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetBackup(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetBackup(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def get_backup_plan(
@@ -8303,7 +8995,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ) -> Callable[[backupplan.GetBackupPlanRequest], backupplan.BackupPlan]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetBackupPlan(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetBackupPlan(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def get_backup_plan_association(
@@ -8315,7 +9012,10 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._GetBackupPlanAssociation(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -8326,7 +9026,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetBackupPlanRevision(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetBackupPlanRevision(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def get_backup_vault(
@@ -8334,7 +9039,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ) -> Callable[[backupvault.GetBackupVaultRequest], backupvault.BackupVault]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetBackupVault(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetBackupVault(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def get_data_source(
@@ -8342,7 +9052,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ) -> Callable[[backupvault.GetDataSourceRequest], backupvault.DataSource]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetDataSource(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetDataSource(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def get_data_source_reference(
@@ -8354,7 +9069,10 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._GetDataSourceReference(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -8363,7 +9081,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ) -> Callable[[backupdr.GetManagementServerRequest], backupdr.ManagementServer]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetManagementServer(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetManagementServer(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def initialize_service(
@@ -8371,7 +9094,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ) -> Callable[[backupdr.InitializeServiceRequest], operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._InitializeService(self._session, self._host, self._interceptor)  # type: ignore
+        return self._InitializeService(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def list_backup_plan_associations(
@@ -8383,7 +9111,10 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._ListBackupPlanAssociations(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -8396,7 +9127,10 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._ListBackupPlanRevisions(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -8407,7 +9141,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListBackupPlans(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListBackupPlans(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def list_backups(
@@ -8415,7 +9154,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ) -> Callable[[backupvault.ListBackupsRequest], backupvault.ListBackupsResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListBackups(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListBackups(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def list_backup_vaults(
@@ -8425,7 +9169,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListBackupVaults(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListBackupVaults(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def list_data_source_references(
@@ -8437,7 +9186,10 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._ListDataSourceReferences(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -8448,7 +9200,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListDataSources(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListDataSources(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def list_management_servers(
@@ -8458,7 +9215,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListManagementServers(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListManagementServers(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def restore_backup(
@@ -8466,7 +9228,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ) -> Callable[[backupvault.RestoreBackupRequest], operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._RestoreBackup(self._session, self._host, self._interceptor)  # type: ignore
+        return self._RestoreBackup(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def trigger_backup(
@@ -8476,7 +9243,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._TriggerBackup(self._session, self._host, self._interceptor)  # type: ignore
+        return self._TriggerBackup(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def update_backup(
@@ -8484,7 +9256,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ) -> Callable[[backupvault.UpdateBackupRequest], operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateBackup(self._session, self._host, self._interceptor)  # type: ignore
+        return self._UpdateBackup(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def update_backup_plan(
@@ -8492,7 +9269,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ) -> Callable[[backupplan.UpdateBackupPlanRequest], operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateBackupPlan(self._session, self._host, self._interceptor)  # type: ignore
+        return self._UpdateBackupPlan(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def update_backup_plan_association(
@@ -8504,7 +9286,10 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._UpdateBackupPlanAssociation(
-            self._session, self._host, self._interceptor
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
         )  # type: ignore
 
     @property
@@ -8513,7 +9298,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ) -> Callable[[backupvault.UpdateBackupVaultRequest], operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateBackupVault(self._session, self._host, self._interceptor)  # type: ignore
+        return self._UpdateBackupVault(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def update_data_source(
@@ -8521,11 +9311,21 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
     ) -> Callable[[backupvault.UpdateDataSourceRequest], operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateDataSource(self._session, self._host, self._interceptor)  # type: ignore
+        return self._UpdateDataSource(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def get_location(self):
-        return self._GetLocation(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetLocation(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     class _GetLocation(_BaseBackupDRRestTransport._BaseGetLocation, BackupDRRestStub):
         def __hash__(self):
@@ -8540,18 +9340,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -8628,6 +9444,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -8664,7 +9482,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
 
     @property
     def list_locations(self):
-        return self._ListLocations(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListLocations(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     class _ListLocations(
         _BaseBackupDRRestTransport._BaseListLocations, BackupDRRestStub
@@ -8681,18 +9504,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -8769,6 +9608,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -8805,7 +9646,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
 
     @property
     def get_iam_policy(self):
-        return self._GetIamPolicy(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetIamPolicy(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     class _GetIamPolicy(_BaseBackupDRRestTransport._BaseGetIamPolicy, BackupDRRestStub):
         def __hash__(self):
@@ -8820,18 +9666,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -8908,6 +9770,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -8944,7 +9808,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
 
     @property
     def set_iam_policy(self):
-        return self._SetIamPolicy(self._session, self._host, self._interceptor)  # type: ignore
+        return self._SetIamPolicy(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     class _SetIamPolicy(_BaseBackupDRRestTransport._BaseSetIamPolicy, BackupDRRestStub):
         def __hash__(self):
@@ -8959,19 +9828,35 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -9049,6 +9934,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -9085,7 +9972,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
 
     @property
     def test_iam_permissions(self):
-        return self._TestIamPermissions(self._session, self._host, self._interceptor)  # type: ignore
+        return self._TestIamPermissions(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     class _TestIamPermissions(
         _BaseBackupDRRestTransport._BaseTestIamPermissions, BackupDRRestStub
@@ -9102,19 +9994,35 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -9194,6 +10102,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -9230,7 +10140,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
 
     @property
     def cancel_operation(self):
-        return self._CancelOperation(self._session, self._host, self._interceptor)  # type: ignore
+        return self._CancelOperation(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     class _CancelOperation(
         _BaseBackupDRRestTransport._BaseCancelOperation, BackupDRRestStub
@@ -9247,19 +10162,35 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -9336,6 +10267,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 timeout,
                 transcoded_request,
                 body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -9347,7 +10280,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
 
     @property
     def delete_operation(self):
-        return self._DeleteOperation(self._session, self._host, self._interceptor)  # type: ignore
+        return self._DeleteOperation(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     class _DeleteOperation(
         _BaseBackupDRRestTransport._BaseDeleteOperation, BackupDRRestStub
@@ -9364,18 +10302,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -9451,6 +10405,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -9462,7 +10418,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
 
     @property
     def get_operation(self):
-        return self._GetOperation(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetOperation(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     class _GetOperation(_BaseBackupDRRestTransport._BaseGetOperation, BackupDRRestStub):
         def __hash__(self):
@@ -9477,18 +10438,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -9565,6 +10542,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
@@ -9601,7 +10580,12 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
 
     @property
     def list_operations(self):
-        return self._ListOperations(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListOperations(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     class _ListOperations(
         _BaseBackupDRRestTransport._BaseListOperations, BackupDRRestStub
@@ -9618,18 +10602,34 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
             timeout,
             transcoded_request,
             body=None,
+            client_options=None,
+            url_template=None,
         ):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
+
             uri = transcoded_request["uri"]
             method = transcoded_request["method"]
             headers = dict(metadata)
             headers["Content-Type"] = "application/json"
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-            )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(
             self,
@@ -9706,6 +10706,8 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 self._session,
                 timeout,
                 transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
             )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception

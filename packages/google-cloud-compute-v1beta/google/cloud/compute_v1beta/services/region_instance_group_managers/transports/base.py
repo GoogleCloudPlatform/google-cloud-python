@@ -16,16 +16,27 @@
 import abc
 from typing import Any, Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.compute_v1beta import gapic_version as package_version
+from google.cloud.compute_v1beta._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.compute_v1beta._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
 from google.auth import credentials as ga_credentials  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.compute_v1beta import gapic_version as package_version
 from google.cloud.compute_v1beta.services import region_operations
 from google.cloud.compute_v1beta.types import compute
 
@@ -56,6 +67,7 @@ class RegionInstanceGroupManagersTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -86,6 +98,9 @@ class RegionInstanceGroupManagersTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
         self._extended_operations_services: Dict[str, Any] = {}
 
@@ -136,51 +151,137 @@ class RegionInstanceGroupManagersTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.abandon_instances: gapic_v1.method.wrap_method(
+            self.abandon_instances: self._wrap_method(
                 self.abandon_instances,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/AbandonInstances",
             ),
-            self.adopt_instances: gapic_v1.method.wrap_method(
+            self.adopt_instances: self._wrap_method(
                 self.adopt_instances,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/AdoptInstances",
             ),
-            self.apply_updates_to_instances: gapic_v1.method.wrap_method(
+            self.apply_updates_to_instances: self._wrap_method(
                 self.apply_updates_to_instances,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/ApplyUpdatesToInstances",
             ),
-            self.create_instances: gapic_v1.method.wrap_method(
+            self.create_instances: self._wrap_method(
                 self.create_instances,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/CreateInstances",
             ),
-            self.delete: gapic_v1.method.wrap_method(
+            self.delete: self._wrap_method(
                 self.delete,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/Delete",
             ),
-            self.delete_instances: gapic_v1.method.wrap_method(
+            self.delete_instances: self._wrap_method(
                 self.delete_instances,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/DeleteInstances",
             ),
-            self.delete_per_instance_configs: gapic_v1.method.wrap_method(
+            self.delete_per_instance_configs: self._wrap_method(
                 self.delete_per_instance_configs,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/DeletePerInstanceConfigs",
             ),
-            self.get: gapic_v1.method.wrap_method(
+            self.get: self._wrap_method(
                 self.get,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -194,13 +295,15 @@ class RegionInstanceGroupManagersTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/Get",
             ),
-            self.insert: gapic_v1.method.wrap_method(
+            self.insert: self._wrap_method(
                 self.insert,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/Insert",
             ),
-            self.list: gapic_v1.method.wrap_method(
+            self.list: self._wrap_method(
                 self.list,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -214,8 +317,9 @@ class RegionInstanceGroupManagersTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/List",
             ),
-            self.list_errors: gapic_v1.method.wrap_method(
+            self.list_errors: self._wrap_method(
                 self.list_errors,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -229,91 +333,109 @@ class RegionInstanceGroupManagersTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/ListErrors",
             ),
-            self.list_managed_instances: gapic_v1.method.wrap_method(
+            self.list_managed_instances: self._wrap_method(
                 self.list_managed_instances,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/ListManagedInstances",
             ),
-            self.list_per_instance_configs: gapic_v1.method.wrap_method(
+            self.list_per_instance_configs: self._wrap_method(
                 self.list_per_instance_configs,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/ListPerInstanceConfigs",
             ),
-            self.patch: gapic_v1.method.wrap_method(
+            self.patch: self._wrap_method(
                 self.patch,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/Patch",
             ),
-            self.patch_per_instance_configs: gapic_v1.method.wrap_method(
+            self.patch_per_instance_configs: self._wrap_method(
                 self.patch_per_instance_configs,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/PatchPerInstanceConfigs",
             ),
-            self.recreate_instances: gapic_v1.method.wrap_method(
+            self.recreate_instances: self._wrap_method(
                 self.recreate_instances,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/RecreateInstances",
             ),
-            self.resize: gapic_v1.method.wrap_method(
+            self.resize: self._wrap_method(
                 self.resize,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/Resize",
             ),
-            self.resize_advanced: gapic_v1.method.wrap_method(
+            self.resize_advanced: self._wrap_method(
                 self.resize_advanced,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/ResizeAdvanced",
             ),
-            self.resume_instances: gapic_v1.method.wrap_method(
+            self.resume_instances: self._wrap_method(
                 self.resume_instances,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/ResumeInstances",
             ),
-            self.set_auto_healing_policies: gapic_v1.method.wrap_method(
+            self.set_auto_healing_policies: self._wrap_method(
                 self.set_auto_healing_policies,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/SetAutoHealingPolicies",
             ),
-            self.set_instance_template: gapic_v1.method.wrap_method(
+            self.set_instance_template: self._wrap_method(
                 self.set_instance_template,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/SetInstanceTemplate",
             ),
-            self.set_target_pools: gapic_v1.method.wrap_method(
+            self.set_target_pools: self._wrap_method(
                 self.set_target_pools,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/SetTargetPools",
             ),
-            self.start_instances: gapic_v1.method.wrap_method(
+            self.start_instances: self._wrap_method(
                 self.start_instances,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/StartInstances",
             ),
-            self.stop_instances: gapic_v1.method.wrap_method(
+            self.stop_instances: self._wrap_method(
                 self.stop_instances,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/StopInstances",
             ),
-            self.suspend_instances: gapic_v1.method.wrap_method(
+            self.suspend_instances: self._wrap_method(
                 self.suspend_instances,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/SuspendInstances",
             ),
-            self.test_iam_permissions: gapic_v1.method.wrap_method(
+            self.test_iam_permissions: self._wrap_method(
                 self.test_iam_permissions,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/TestIamPermissions",
             ),
-            self.update: gapic_v1.method.wrap_method(
+            self.update: self._wrap_method(
                 self.update,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/Update",
             ),
-            self.update_per_instance_configs: gapic_v1.method.wrap_method(
+            self.update_per_instance_configs: self._wrap_method(
                 self.update_per_instance_configs,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.RegionInstanceGroupManagers/UpdatePerInstanceConfigs",
             ),
         }
 

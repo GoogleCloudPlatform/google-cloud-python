@@ -13,17 +13,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async, operations_v1
 from google.api_core import retry_async as retries
@@ -38,6 +47,10 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.clouddms_v1._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.cloud.clouddms_v1.types import (
     clouddms,
     clouddms_resources,
@@ -199,6 +212,10 @@ class DataMigrationServiceGrpcAsyncIOTransport(DataMigrationServiceTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -250,6 +267,12 @@ class DataMigrationServiceGrpcAsyncIOTransport(DataMigrationServiceTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -305,6 +328,7 @@ class DataMigrationServiceGrpcAsyncIOTransport(DataMigrationServiceTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -326,12 +350,26 @@ class DataMigrationServiceGrpcAsyncIOTransport(DataMigrationServiceTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -1587,264 +1625,312 @@ class DataMigrationServiceGrpcAsyncIOTransport(DataMigrationServiceTransport):
         return self._stubs["fetch_static_ips"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.list_migration_jobs: self._wrap_method(
+            self.list_migration_jobs: self._wrap_async_method(
                 self.list_migration_jobs,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/ListMigrationJobs",
             ),
-            self.get_migration_job: self._wrap_method(
+            self.get_migration_job: self._wrap_async_method(
                 self.get_migration_job,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/GetMigrationJob",
             ),
-            self.create_migration_job: self._wrap_method(
+            self.create_migration_job: self._wrap_async_method(
                 self.create_migration_job,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/CreateMigrationJob",
             ),
-            self.update_migration_job: self._wrap_method(
+            self.update_migration_job: self._wrap_async_method(
                 self.update_migration_job,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/UpdateMigrationJob",
             ),
-            self.delete_migration_job: self._wrap_method(
+            self.delete_migration_job: self._wrap_async_method(
                 self.delete_migration_job,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/DeleteMigrationJob",
             ),
-            self.start_migration_job: self._wrap_method(
+            self.start_migration_job: self._wrap_async_method(
                 self.start_migration_job,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/StartMigrationJob",
             ),
-            self.stop_migration_job: self._wrap_method(
+            self.stop_migration_job: self._wrap_async_method(
                 self.stop_migration_job,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/StopMigrationJob",
             ),
-            self.resume_migration_job: self._wrap_method(
+            self.resume_migration_job: self._wrap_async_method(
                 self.resume_migration_job,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/ResumeMigrationJob",
             ),
-            self.promote_migration_job: self._wrap_method(
+            self.promote_migration_job: self._wrap_async_method(
                 self.promote_migration_job,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/PromoteMigrationJob",
             ),
-            self.verify_migration_job: self._wrap_method(
+            self.verify_migration_job: self._wrap_async_method(
                 self.verify_migration_job,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/VerifyMigrationJob",
             ),
-            self.restart_migration_job: self._wrap_method(
+            self.restart_migration_job: self._wrap_async_method(
                 self.restart_migration_job,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/RestartMigrationJob",
             ),
-            self.generate_ssh_script: self._wrap_method(
+            self.generate_ssh_script: self._wrap_async_method(
                 self.generate_ssh_script,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/GenerateSshScript",
             ),
-            self.generate_tcp_proxy_script: self._wrap_method(
+            self.generate_tcp_proxy_script: self._wrap_async_method(
                 self.generate_tcp_proxy_script,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/GenerateTcpProxyScript",
             ),
-            self.list_connection_profiles: self._wrap_method(
+            self.list_connection_profiles: self._wrap_async_method(
                 self.list_connection_profiles,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/ListConnectionProfiles",
             ),
-            self.get_connection_profile: self._wrap_method(
+            self.get_connection_profile: self._wrap_async_method(
                 self.get_connection_profile,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/GetConnectionProfile",
             ),
-            self.create_connection_profile: self._wrap_method(
+            self.create_connection_profile: self._wrap_async_method(
                 self.create_connection_profile,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/CreateConnectionProfile",
             ),
-            self.update_connection_profile: self._wrap_method(
+            self.update_connection_profile: self._wrap_async_method(
                 self.update_connection_profile,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/UpdateConnectionProfile",
             ),
-            self.delete_connection_profile: self._wrap_method(
+            self.delete_connection_profile: self._wrap_async_method(
                 self.delete_connection_profile,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/DeleteConnectionProfile",
             ),
-            self.create_private_connection: self._wrap_method(
+            self.create_private_connection: self._wrap_async_method(
                 self.create_private_connection,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/CreatePrivateConnection",
             ),
-            self.get_private_connection: self._wrap_method(
+            self.get_private_connection: self._wrap_async_method(
                 self.get_private_connection,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/GetPrivateConnection",
             ),
-            self.list_private_connections: self._wrap_method(
+            self.list_private_connections: self._wrap_async_method(
                 self.list_private_connections,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/ListPrivateConnections",
             ),
-            self.delete_private_connection: self._wrap_method(
+            self.delete_private_connection: self._wrap_async_method(
                 self.delete_private_connection,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/DeletePrivateConnection",
             ),
-            self.get_conversion_workspace: self._wrap_method(
+            self.get_conversion_workspace: self._wrap_async_method(
                 self.get_conversion_workspace,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/GetConversionWorkspace",
             ),
-            self.list_conversion_workspaces: self._wrap_method(
+            self.list_conversion_workspaces: self._wrap_async_method(
                 self.list_conversion_workspaces,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/ListConversionWorkspaces",
             ),
-            self.create_conversion_workspace: self._wrap_method(
+            self.create_conversion_workspace: self._wrap_async_method(
                 self.create_conversion_workspace,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/CreateConversionWorkspace",
             ),
-            self.update_conversion_workspace: self._wrap_method(
+            self.update_conversion_workspace: self._wrap_async_method(
                 self.update_conversion_workspace,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/UpdateConversionWorkspace",
             ),
-            self.delete_conversion_workspace: self._wrap_method(
+            self.delete_conversion_workspace: self._wrap_async_method(
                 self.delete_conversion_workspace,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/DeleteConversionWorkspace",
             ),
-            self.create_mapping_rule: self._wrap_method(
+            self.create_mapping_rule: self._wrap_async_method(
                 self.create_mapping_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/CreateMappingRule",
             ),
-            self.delete_mapping_rule: self._wrap_method(
+            self.delete_mapping_rule: self._wrap_async_method(
                 self.delete_mapping_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/DeleteMappingRule",
             ),
-            self.list_mapping_rules: self._wrap_method(
+            self.list_mapping_rules: self._wrap_async_method(
                 self.list_mapping_rules,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/ListMappingRules",
             ),
-            self.get_mapping_rule: self._wrap_method(
+            self.get_mapping_rule: self._wrap_async_method(
                 self.get_mapping_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/GetMappingRule",
             ),
-            self.seed_conversion_workspace: self._wrap_method(
+            self.seed_conversion_workspace: self._wrap_async_method(
                 self.seed_conversion_workspace,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/SeedConversionWorkspace",
             ),
-            self.import_mapping_rules: self._wrap_method(
+            self.import_mapping_rules: self._wrap_async_method(
                 self.import_mapping_rules,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/ImportMappingRules",
             ),
-            self.convert_conversion_workspace: self._wrap_method(
+            self.convert_conversion_workspace: self._wrap_async_method(
                 self.convert_conversion_workspace,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/ConvertConversionWorkspace",
             ),
-            self.commit_conversion_workspace: self._wrap_method(
+            self.commit_conversion_workspace: self._wrap_async_method(
                 self.commit_conversion_workspace,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/CommitConversionWorkspace",
             ),
-            self.rollback_conversion_workspace: self._wrap_method(
+            self.rollback_conversion_workspace: self._wrap_async_method(
                 self.rollback_conversion_workspace,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/RollbackConversionWorkspace",
             ),
-            self.apply_conversion_workspace: self._wrap_method(
+            self.apply_conversion_workspace: self._wrap_async_method(
                 self.apply_conversion_workspace,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/ApplyConversionWorkspace",
             ),
-            self.describe_database_entities: self._wrap_method(
+            self.describe_database_entities: self._wrap_async_method(
                 self.describe_database_entities,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/DescribeDatabaseEntities",
             ),
-            self.search_background_jobs: self._wrap_method(
+            self.search_background_jobs: self._wrap_async_method(
                 self.search_background_jobs,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/SearchBackgroundJobs",
             ),
-            self.describe_conversion_workspace_revisions: self._wrap_method(
+            self.describe_conversion_workspace_revisions: self._wrap_async_method(
                 self.describe_conversion_workspace_revisions,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/DescribeConversionWorkspaceRevisions",
             ),
-            self.fetch_static_ips: self._wrap_method(
+            self.fetch_static_ips: self._wrap_async_method(
                 self.fetch_static_ips,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.clouddms.v1.DataMigrationService/FetchStaticIps",
             ),
-            self.get_location: self._wrap_method(
+            self.get_location: self._wrap_async_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: self._wrap_method(
+            self.list_locations: self._wrap_async_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.get_iam_policy: self._wrap_method(
+            self.get_iam_policy: self._wrap_async_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/GetIamPolicy",
             ),
-            self.set_iam_policy: self._wrap_method(
+            self.set_iam_policy: self._wrap_async_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/SetIamPolicy",
             ),
-            self.test_iam_permissions: self._wrap_method(
+            self.test_iam_permissions: self._wrap_async_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/TestIamPermissions",
             ),
-            self.cancel_operation: self._wrap_method(
+            self.cancel_operation: self._wrap_async_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: self._wrap_method(
+            self.delete_operation: self._wrap_async_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: self._wrap_method(
+            self.list_operations: self._wrap_async_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

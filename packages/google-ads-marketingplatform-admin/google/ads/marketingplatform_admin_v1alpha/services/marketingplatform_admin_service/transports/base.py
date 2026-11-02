@@ -16,17 +16,28 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.ads.marketingplatform_admin_v1alpha import gapic_version as package_version
+from google.ads.marketingplatform_admin_v1alpha._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.ads.marketingplatform_admin_v1alpha._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
 from google.auth import credentials as ga_credentials  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.ads.marketingplatform_admin_v1alpha import gapic_version as package_version
 from google.ads.marketingplatform_admin_v1alpha.types import (
     marketingplatform_admin,
     resources,
@@ -59,6 +70,7 @@ class MarketingplatformAdminServiceTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -89,6 +101,9 @@ class MarketingplatformAdminServiceTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -138,124 +153,225 @@ class MarketingplatformAdminServiceTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.get_organization: gapic_v1.method.wrap_method(
+            self.get_organization: self._wrap_method(
                 self.get_organization,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/GetOrganization",
             ),
-            self.list_organizations: gapic_v1.method.wrap_method(
+            self.list_organizations: self._wrap_method(
                 self.list_organizations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/ListOrganizations",
             ),
-            self.find_sales_partner_managed_clients: gapic_v1.method.wrap_method(
+            self.find_sales_partner_managed_clients: self._wrap_method(
                 self.find_sales_partner_managed_clients,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/FindSalesPartnerManagedClients",
             ),
-            self.list_analytics_account_links: gapic_v1.method.wrap_method(
+            self.list_analytics_account_links: self._wrap_method(
                 self.list_analytics_account_links,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/ListAnalyticsAccountLinks",
             ),
-            self.create_analytics_account_link: gapic_v1.method.wrap_method(
+            self.create_analytics_account_link: self._wrap_method(
                 self.create_analytics_account_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/CreateAnalyticsAccountLink",
             ),
-            self.delete_analytics_account_link: gapic_v1.method.wrap_method(
+            self.delete_analytics_account_link: self._wrap_method(
                 self.delete_analytics_account_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/DeleteAnalyticsAccountLink",
             ),
-            self.set_property_service_level: gapic_v1.method.wrap_method(
+            self.set_property_service_level: self._wrap_method(
                 self.set_property_service_level,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/SetPropertyServiceLevel",
             ),
-            self.report_property_usage: gapic_v1.method.wrap_method(
+            self.report_property_usage: self._wrap_method(
                 self.report_property_usage,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/ReportPropertyUsage",
             ),
-            self.get_user_group: gapic_v1.method.wrap_method(
+            self.get_user_group: self._wrap_method(
                 self.get_user_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/GetUserGroup",
             ),
-            self.list_user_groups: gapic_v1.method.wrap_method(
+            self.list_user_groups: self._wrap_method(
                 self.list_user_groups,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/ListUserGroups",
             ),
-            self.create_user_group: gapic_v1.method.wrap_method(
+            self.create_user_group: self._wrap_method(
                 self.create_user_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/CreateUserGroup",
             ),
-            self.update_user_group: gapic_v1.method.wrap_method(
+            self.update_user_group: self._wrap_method(
                 self.update_user_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/UpdateUserGroup",
             ),
-            self.delete_user_group: gapic_v1.method.wrap_method(
+            self.delete_user_group: self._wrap_method(
                 self.delete_user_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/DeleteUserGroup",
             ),
-            self.get_user_group_member: gapic_v1.method.wrap_method(
+            self.get_user_group_member: self._wrap_method(
                 self.get_user_group_member,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/GetUserGroupMember",
             ),
-            self.list_user_group_members: gapic_v1.method.wrap_method(
+            self.list_user_group_members: self._wrap_method(
                 self.list_user_group_members,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/ListUserGroupMembers",
             ),
-            self.create_user_group_member: gapic_v1.method.wrap_method(
+            self.create_user_group_member: self._wrap_method(
                 self.create_user_group_member,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/CreateUserGroupMember",
             ),
-            self.update_user_group_member: gapic_v1.method.wrap_method(
+            self.update_user_group_member: self._wrap_method(
                 self.update_user_group_member,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/UpdateUserGroupMember",
             ),
-            self.delete_user_group_member: gapic_v1.method.wrap_method(
+            self.delete_user_group_member: self._wrap_method(
                 self.delete_user_group_member,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/DeleteUserGroupMember",
             ),
-            self.get_admin_access_binding: gapic_v1.method.wrap_method(
+            self.get_admin_access_binding: self._wrap_method(
                 self.get_admin_access_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/GetAdminAccessBinding",
             ),
-            self.list_admin_access_bindings: gapic_v1.method.wrap_method(
+            self.list_admin_access_bindings: self._wrap_method(
                 self.list_admin_access_bindings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/ListAdminAccessBindings",
             ),
-            self.create_admin_access_binding: gapic_v1.method.wrap_method(
+            self.create_admin_access_binding: self._wrap_method(
                 self.create_admin_access_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/CreateAdminAccessBinding",
             ),
-            self.update_admin_access_binding: gapic_v1.method.wrap_method(
+            self.update_admin_access_binding: self._wrap_method(
                 self.update_admin_access_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/UpdateAdminAccessBinding",
             ),
         }
 

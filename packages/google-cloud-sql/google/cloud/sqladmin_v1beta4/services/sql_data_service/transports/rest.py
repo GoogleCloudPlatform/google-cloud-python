@@ -20,6 +20,7 @@ import warnings
 from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, rest_helpers, rest_streaming
 from google.api_core import retry as retries
@@ -30,7 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
-from google.cloud.sqladmin_v1beta4._compat import transcode_request
+from google.cloud.sqladmin_v1beta4._compat import trace_http_request, transcode_request
 from google.cloud.sqladmin_v1beta4.types import cloud_sql_data
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -86,6 +87,7 @@ class SqlDataServiceRestStub:
     _session: AuthorizedSession
     _host: str
     _interceptor: SqlDataServiceRestInterceptor
+    _client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None
 
 
 class SqlDataServiceRestTransport(_BaseSqlDataServiceRestTransport):
@@ -114,6 +116,8 @@ class SqlDataServiceRestTransport(_BaseSqlDataServiceRestTransport):
         url_scheme: str = "https",
         interceptor: Optional[SqlDataServiceRestInterceptor] = None,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
+        **kwargs,
     ) -> None:
         """Instantiate the transport.
 
@@ -153,6 +157,9 @@ class SqlDataServiceRestTransport(_BaseSqlDataServiceRestTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
         # Run the base constructor
         # TODO(yon-mg): resolve other ctor params i.e. scopes, quota, etc.
@@ -165,6 +172,8 @@ class SqlDataServiceRestTransport(_BaseSqlDataServiceRestTransport):
             always_use_jwt_access=always_use_jwt_access,
             url_scheme=url_scheme,
             api_audience=api_audience,
+            client_options=client_options,
+            **kwargs,
         )
         self._session = AuthorizedSession(
             self._credentials, default_host=self.DEFAULT_HOST
@@ -200,7 +209,12 @@ class SqlDataServiceRestTransport(_BaseSqlDataServiceRestTransport):
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._StreamSqlData(self._session, self._host, self._interceptor)  # type: ignore
+        return self._StreamSqlData(
+            self._session,
+            self._host,
+            self._interceptor,
+            getattr(self, "_client_options", None),
+        )  # type: ignore
 
     @property
     def kind(self) -> str:

@@ -47,6 +47,7 @@ from google.oauth2 import service_account  # type: ignore
 
 from google.cloud.discoveryengine_v1beta import gapic_version as package_version
 from google.cloud.discoveryengine_v1beta._compat import (
+    _observability,
     get_api_endpoint,
     get_default_mtls_endpoint,
     get_universe_domain,
@@ -621,18 +622,36 @@ class SiteSearchEngineServiceClient(metaclass=SiteSearchEngineServiceClientMeta)
                 if isinstance(transport, str) or transport is None
                 else cast(Callable[..., SiteSearchEngineServiceTransport], transport)
             )
+            # When OpenTelemetry tracing is enabled, pass client_options to the transport
+            # so it can wire tracing interceptors and method spans.
+            client_options = None
+            if (
+                _observability is not None
+                and _observability.is_otel_capabilities_enabled(self._client_options)
+            ):
+                # NOTE: Coverage tool ignores this line in environments running
+                # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+                # Lifecycle: Can be lifted once lowest constraints require google-api-core >= 2.36.0.
+                client_options = self._client_options  # pragma: NO COVER
+
             # initialize with the provided callable or the passed in class
-            self._transport = transport_init(
-                credentials=credentials,
-                credentials_file=self._client_options.credentials_file,
-                host=self._api_endpoint,
-                scopes=self._client_options.scopes,
-                client_cert_source_for_mtls=self._client_cert_source,
-                quota_project_id=self._client_options.quota_project_id,
-                client_info=client_info,
-                always_use_jwt_access=True,
-                api_audience=self._client_options.api_audience,
-            )
+            transport_kwargs = {
+                "credentials": credentials,
+                "credentials_file": self._client_options.credentials_file,
+                "host": self._api_endpoint,
+                "scopes": self._client_options.scopes,
+                "client_cert_source_for_mtls": self._client_cert_source,
+                "quota_project_id": self._client_options.quota_project_id,
+                "client_info": client_info,
+                "always_use_jwt_access": True,
+                "api_audience": self._client_options.api_audience,
+                **(
+                    {"client_options": client_options}
+                    if client_options is not None
+                    else {}
+                ),
+            }
+            self._transport = transport_init(**transport_kwargs)
 
         if "async" not in str(self._transport):
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -16,10 +16,22 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.datalabeling_v1beta1 import gapic_version as package_version
+from google.cloud.datalabeling_v1beta1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.datalabeling_v1beta1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -27,7 +39,6 @@ from google.auth import credentials as ga_credentials  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.datalabeling_v1beta1 import gapic_version as package_version
 from google.cloud.datalabeling_v1beta1.types import (
     annotation_spec_set,
     data_labeling_service,
@@ -66,6 +77,7 @@ class DataLabelingServiceTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -96,6 +108,9 @@ class DataLabelingServiceTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -145,21 +160,101 @@ class DataLabelingServiceTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.create_dataset: gapic_v1.method.wrap_method(
+            self.create_dataset: self._wrap_method(
                 self.create_dataset,
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/CreateDataset",
             ),
-            self.get_dataset: gapic_v1.method.wrap_method(
+            self.get_dataset: self._wrap_method(
                 self.get_dataset,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -173,8 +268,9 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/GetDataset",
             ),
-            self.list_datasets: gapic_v1.method.wrap_method(
+            self.list_datasets: self._wrap_method(
                 self.list_datasets,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -188,8 +284,9 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/ListDatasets",
             ),
-            self.delete_dataset: gapic_v1.method.wrap_method(
+            self.delete_dataset: self._wrap_method(
                 self.delete_dataset,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -203,13 +300,15 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/DeleteDataset",
             ),
-            self.import_data: gapic_v1.method.wrap_method(
+            self.import_data: self._wrap_method(
                 self.import_data,
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/ImportData",
             ),
-            self.export_data: gapic_v1.method.wrap_method(
+            self.export_data: self._wrap_method(
                 self.export_data,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -223,8 +322,9 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/ExportData",
             ),
-            self.get_data_item: gapic_v1.method.wrap_method(
+            self.get_data_item: self._wrap_method(
                 self.get_data_item,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -238,8 +338,9 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/GetDataItem",
             ),
-            self.list_data_items: gapic_v1.method.wrap_method(
+            self.list_data_items: self._wrap_method(
                 self.list_data_items,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -253,8 +354,9 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/ListDataItems",
             ),
-            self.get_annotated_dataset: gapic_v1.method.wrap_method(
+            self.get_annotated_dataset: self._wrap_method(
                 self.get_annotated_dataset,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -268,8 +370,9 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/GetAnnotatedDataset",
             ),
-            self.list_annotated_datasets: gapic_v1.method.wrap_method(
+            self.list_annotated_datasets: self._wrap_method(
                 self.list_annotated_datasets,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -283,28 +386,33 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/ListAnnotatedDatasets",
             ),
-            self.delete_annotated_dataset: gapic_v1.method.wrap_method(
+            self.delete_annotated_dataset: self._wrap_method(
                 self.delete_annotated_dataset,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/DeleteAnnotatedDataset",
             ),
-            self.label_image: gapic_v1.method.wrap_method(
+            self.label_image: self._wrap_method(
                 self.label_image,
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/LabelImage",
             ),
-            self.label_video: gapic_v1.method.wrap_method(
+            self.label_video: self._wrap_method(
                 self.label_video,
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/LabelVideo",
             ),
-            self.label_text: gapic_v1.method.wrap_method(
+            self.label_text: self._wrap_method(
                 self.label_text,
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/LabelText",
             ),
-            self.get_example: gapic_v1.method.wrap_method(
+            self.get_example: self._wrap_method(
                 self.get_example,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -318,8 +426,9 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/GetExample",
             ),
-            self.list_examples: gapic_v1.method.wrap_method(
+            self.list_examples: self._wrap_method(
                 self.list_examples,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -333,13 +442,15 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/ListExamples",
             ),
-            self.create_annotation_spec_set: gapic_v1.method.wrap_method(
+            self.create_annotation_spec_set: self._wrap_method(
                 self.create_annotation_spec_set,
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/CreateAnnotationSpecSet",
             ),
-            self.get_annotation_spec_set: gapic_v1.method.wrap_method(
+            self.get_annotation_spec_set: self._wrap_method(
                 self.get_annotation_spec_set,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -353,8 +464,9 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/GetAnnotationSpecSet",
             ),
-            self.list_annotation_spec_sets: gapic_v1.method.wrap_method(
+            self.list_annotation_spec_sets: self._wrap_method(
                 self.list_annotation_spec_sets,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -368,8 +480,9 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/ListAnnotationSpecSets",
             ),
-            self.delete_annotation_spec_set: gapic_v1.method.wrap_method(
+            self.delete_annotation_spec_set: self._wrap_method(
                 self.delete_annotation_spec_set,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -383,13 +496,15 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/DeleteAnnotationSpecSet",
             ),
-            self.create_instruction: gapic_v1.method.wrap_method(
+            self.create_instruction: self._wrap_method(
                 self.create_instruction,
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/CreateInstruction",
             ),
-            self.get_instruction: gapic_v1.method.wrap_method(
+            self.get_instruction: self._wrap_method(
                 self.get_instruction,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -403,8 +518,9 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/GetInstruction",
             ),
-            self.list_instructions: gapic_v1.method.wrap_method(
+            self.list_instructions: self._wrap_method(
                 self.list_instructions,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -418,8 +534,9 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/ListInstructions",
             ),
-            self.delete_instruction: gapic_v1.method.wrap_method(
+            self.delete_instruction: self._wrap_method(
                 self.delete_instruction,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -433,8 +550,9 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/DeleteInstruction",
             ),
-            self.get_evaluation: gapic_v1.method.wrap_method(
+            self.get_evaluation: self._wrap_method(
                 self.get_evaluation,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -448,8 +566,9 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/GetEvaluation",
             ),
-            self.search_evaluations: gapic_v1.method.wrap_method(
+            self.search_evaluations: self._wrap_method(
                 self.search_evaluations,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -463,23 +582,27 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/SearchEvaluations",
             ),
-            self.search_example_comparisons: gapic_v1.method.wrap_method(
+            self.search_example_comparisons: self._wrap_method(
                 self.search_example_comparisons,
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/SearchExampleComparisons",
             ),
-            self.create_evaluation_job: gapic_v1.method.wrap_method(
+            self.create_evaluation_job: self._wrap_method(
                 self.create_evaluation_job,
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/CreateEvaluationJob",
             ),
-            self.update_evaluation_job: gapic_v1.method.wrap_method(
+            self.update_evaluation_job: self._wrap_method(
                 self.update_evaluation_job,
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/UpdateEvaluationJob",
             ),
-            self.get_evaluation_job: gapic_v1.method.wrap_method(
+            self.get_evaluation_job: self._wrap_method(
                 self.get_evaluation_job,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -493,18 +616,21 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/GetEvaluationJob",
             ),
-            self.pause_evaluation_job: gapic_v1.method.wrap_method(
+            self.pause_evaluation_job: self._wrap_method(
                 self.pause_evaluation_job,
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/PauseEvaluationJob",
             ),
-            self.resume_evaluation_job: gapic_v1.method.wrap_method(
+            self.resume_evaluation_job: self._wrap_method(
                 self.resume_evaluation_job,
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/ResumeEvaluationJob",
             ),
-            self.delete_evaluation_job: gapic_v1.method.wrap_method(
+            self.delete_evaluation_job: self._wrap_method(
                 self.delete_evaluation_job,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -518,8 +644,9 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/DeleteEvaluationJob",
             ),
-            self.list_evaluation_jobs: gapic_v1.method.wrap_method(
+            self.list_evaluation_jobs: self._wrap_method(
                 self.list_evaluation_jobs,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -533,6 +660,7 @@ class DataLabelingServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.datalabeling.v1beta1.DataLabelingService/ListEvaluationJobs",
             ),
         }
 

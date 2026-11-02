@@ -16,9 +16,21 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.certificate_manager_v1 import gapic_version as package_version
+from google.cloud.certificate_manager_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.certificate_manager_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -27,7 +39,6 @@ from google.cloud.location import locations_pb2  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.certificate_manager_v1 import gapic_version as package_version
 from google.cloud.certificate_manager_v1.types import (
     certificate_issuance_config,
     certificate_manager,
@@ -62,6 +73,7 @@ class CertificateManagerTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -92,6 +104,9 @@ class CertificateManagerTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -141,16 +156,95 @@ class CertificateManagerTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.list_certificates: gapic_v1.method.wrap_method(
+            self.list_certificates: self._wrap_method(
                 self.list_certificates,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -163,8 +257,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/ListCertificates",
             ),
-            self.get_certificate: gapic_v1.method.wrap_method(
+            self.get_certificate: self._wrap_method(
                 self.get_certificate,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -177,8 +272,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/GetCertificate",
             ),
-            self.create_certificate: gapic_v1.method.wrap_method(
+            self.create_certificate: self._wrap_method(
                 self.create_certificate,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -191,8 +287,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/CreateCertificate",
             ),
-            self.update_certificate: gapic_v1.method.wrap_method(
+            self.update_certificate: self._wrap_method(
                 self.update_certificate,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -205,8 +302,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/UpdateCertificate",
             ),
-            self.delete_certificate: gapic_v1.method.wrap_method(
+            self.delete_certificate: self._wrap_method(
                 self.delete_certificate,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -219,8 +317,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/DeleteCertificate",
             ),
-            self.list_certificate_maps: gapic_v1.method.wrap_method(
+            self.list_certificate_maps: self._wrap_method(
                 self.list_certificate_maps,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -233,8 +332,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/ListCertificateMaps",
             ),
-            self.get_certificate_map: gapic_v1.method.wrap_method(
+            self.get_certificate_map: self._wrap_method(
                 self.get_certificate_map,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -247,8 +347,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/GetCertificateMap",
             ),
-            self.create_certificate_map: gapic_v1.method.wrap_method(
+            self.create_certificate_map: self._wrap_method(
                 self.create_certificate_map,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -261,8 +362,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/CreateCertificateMap",
             ),
-            self.update_certificate_map: gapic_v1.method.wrap_method(
+            self.update_certificate_map: self._wrap_method(
                 self.update_certificate_map,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -275,8 +377,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/UpdateCertificateMap",
             ),
-            self.delete_certificate_map: gapic_v1.method.wrap_method(
+            self.delete_certificate_map: self._wrap_method(
                 self.delete_certificate_map,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -289,8 +392,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/DeleteCertificateMap",
             ),
-            self.list_certificate_map_entries: gapic_v1.method.wrap_method(
+            self.list_certificate_map_entries: self._wrap_method(
                 self.list_certificate_map_entries,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -303,8 +407,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/ListCertificateMapEntries",
             ),
-            self.get_certificate_map_entry: gapic_v1.method.wrap_method(
+            self.get_certificate_map_entry: self._wrap_method(
                 self.get_certificate_map_entry,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -317,8 +422,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/GetCertificateMapEntry",
             ),
-            self.create_certificate_map_entry: gapic_v1.method.wrap_method(
+            self.create_certificate_map_entry: self._wrap_method(
                 self.create_certificate_map_entry,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -331,8 +437,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/CreateCertificateMapEntry",
             ),
-            self.update_certificate_map_entry: gapic_v1.method.wrap_method(
+            self.update_certificate_map_entry: self._wrap_method(
                 self.update_certificate_map_entry,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -345,8 +452,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/UpdateCertificateMapEntry",
             ),
-            self.delete_certificate_map_entry: gapic_v1.method.wrap_method(
+            self.delete_certificate_map_entry: self._wrap_method(
                 self.delete_certificate_map_entry,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -359,8 +467,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/DeleteCertificateMapEntry",
             ),
-            self.list_dns_authorizations: gapic_v1.method.wrap_method(
+            self.list_dns_authorizations: self._wrap_method(
                 self.list_dns_authorizations,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -373,8 +482,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/ListDnsAuthorizations",
             ),
-            self.get_dns_authorization: gapic_v1.method.wrap_method(
+            self.get_dns_authorization: self._wrap_method(
                 self.get_dns_authorization,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -387,8 +497,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/GetDnsAuthorization",
             ),
-            self.create_dns_authorization: gapic_v1.method.wrap_method(
+            self.create_dns_authorization: self._wrap_method(
                 self.create_dns_authorization,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -401,8 +512,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/CreateDnsAuthorization",
             ),
-            self.update_dns_authorization: gapic_v1.method.wrap_method(
+            self.update_dns_authorization: self._wrap_method(
                 self.update_dns_authorization,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -415,8 +527,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/UpdateDnsAuthorization",
             ),
-            self.delete_dns_authorization: gapic_v1.method.wrap_method(
+            self.delete_dns_authorization: self._wrap_method(
                 self.delete_dns_authorization,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -429,8 +542,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/DeleteDnsAuthorization",
             ),
-            self.list_certificate_issuance_configs: gapic_v1.method.wrap_method(
+            self.list_certificate_issuance_configs: self._wrap_method(
                 self.list_certificate_issuance_configs,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -443,8 +557,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/ListCertificateIssuanceConfigs",
             ),
-            self.get_certificate_issuance_config: gapic_v1.method.wrap_method(
+            self.get_certificate_issuance_config: self._wrap_method(
                 self.get_certificate_issuance_config,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -457,8 +572,9 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/GetCertificateIssuanceConfig",
             ),
-            self.create_certificate_issuance_config: gapic_v1.method.wrap_method(
+            self.create_certificate_issuance_config: self._wrap_method(
                 self.create_certificate_issuance_config,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -471,13 +587,15 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/CreateCertificateIssuanceConfig",
             ),
-            self.update_certificate_issuance_config: gapic_v1.method.wrap_method(
+            self.update_certificate_issuance_config: self._wrap_method(
                 self.update_certificate_issuance_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/UpdateCertificateIssuanceConfig",
             ),
-            self.delete_certificate_issuance_config: gapic_v1.method.wrap_method(
+            self.delete_certificate_issuance_config: self._wrap_method(
                 self.delete_certificate_issuance_config,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -490,61 +608,73 @@ class CertificateManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/DeleteCertificateIssuanceConfig",
             ),
-            self.list_trust_configs: gapic_v1.method.wrap_method(
+            self.list_trust_configs: self._wrap_method(
                 self.list_trust_configs,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/ListTrustConfigs",
             ),
-            self.get_trust_config: gapic_v1.method.wrap_method(
+            self.get_trust_config: self._wrap_method(
                 self.get_trust_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/GetTrustConfig",
             ),
-            self.create_trust_config: gapic_v1.method.wrap_method(
+            self.create_trust_config: self._wrap_method(
                 self.create_trust_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/CreateTrustConfig",
             ),
-            self.update_trust_config: gapic_v1.method.wrap_method(
+            self.update_trust_config: self._wrap_method(
                 self.update_trust_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/UpdateTrustConfig",
             ),
-            self.delete_trust_config: gapic_v1.method.wrap_method(
+            self.delete_trust_config: self._wrap_method(
                 self.delete_trust_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.certificatemanager.v1.CertificateManager/DeleteTrustConfig",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.cancel_operation: gapic_v1.method.wrap_method(
+            self.cancel_operation: self._wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: gapic_v1.method.wrap_method(
+            self.delete_operation: self._wrap_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
 

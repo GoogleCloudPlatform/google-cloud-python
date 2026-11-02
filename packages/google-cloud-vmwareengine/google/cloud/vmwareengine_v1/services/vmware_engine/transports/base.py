@@ -16,9 +16,21 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.vmwareengine_v1 import gapic_version as package_version
+from google.cloud.vmwareengine_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.vmwareengine_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -31,7 +43,6 @@ from google.iam.v1 import (
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.vmwareengine_v1 import gapic_version as package_version
 from google.cloud.vmwareengine_v1.types import vmwareengine, vmwareengine_resources
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
@@ -58,6 +69,7 @@ class VmwareEngineTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -88,6 +100,9 @@ class VmwareEngineTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -137,16 +152,95 @@ class VmwareEngineTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.list_private_clouds: gapic_v1.method.wrap_method(
+            self.list_private_clouds: self._wrap_method(
                 self.list_private_clouds,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -159,8 +253,9 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/ListPrivateClouds",
             ),
-            self.get_private_cloud: gapic_v1.method.wrap_method(
+            self.get_private_cloud: self._wrap_method(
                 self.get_private_cloud,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -173,28 +268,33 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/GetPrivateCloud",
             ),
-            self.create_private_cloud: gapic_v1.method.wrap_method(
+            self.create_private_cloud: self._wrap_method(
                 self.create_private_cloud,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/CreatePrivateCloud",
             ),
-            self.update_private_cloud: gapic_v1.method.wrap_method(
+            self.update_private_cloud: self._wrap_method(
                 self.update_private_cloud,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/UpdatePrivateCloud",
             ),
-            self.delete_private_cloud: gapic_v1.method.wrap_method(
+            self.delete_private_cloud: self._wrap_method(
                 self.delete_private_cloud,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/DeletePrivateCloud",
             ),
-            self.undelete_private_cloud: gapic_v1.method.wrap_method(
+            self.undelete_private_cloud: self._wrap_method(
                 self.undelete_private_cloud,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/UndeletePrivateCloud",
             ),
-            self.list_clusters: gapic_v1.method.wrap_method(
+            self.list_clusters: self._wrap_method(
                 self.list_clusters,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -207,8 +307,9 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/ListClusters",
             ),
-            self.get_cluster: gapic_v1.method.wrap_method(
+            self.get_cluster: self._wrap_method(
                 self.get_cluster,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -221,23 +322,27 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/GetCluster",
             ),
-            self.create_cluster: gapic_v1.method.wrap_method(
+            self.create_cluster: self._wrap_method(
                 self.create_cluster,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/CreateCluster",
             ),
-            self.update_cluster: gapic_v1.method.wrap_method(
+            self.update_cluster: self._wrap_method(
                 self.update_cluster,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/UpdateCluster",
             ),
-            self.delete_cluster: gapic_v1.method.wrap_method(
+            self.delete_cluster: self._wrap_method(
                 self.delete_cluster,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/DeleteCluster",
             ),
-            self.list_nodes: gapic_v1.method.wrap_method(
+            self.list_nodes: self._wrap_method(
                 self.list_nodes,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -250,8 +355,9 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/ListNodes",
             ),
-            self.get_node: gapic_v1.method.wrap_method(
+            self.get_node: self._wrap_method(
                 self.get_node,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -264,8 +370,9 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/GetNode",
             ),
-            self.list_external_addresses: gapic_v1.method.wrap_method(
+            self.list_external_addresses: self._wrap_method(
                 self.list_external_addresses,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -278,13 +385,15 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/ListExternalAddresses",
             ),
-            self.fetch_network_policy_external_addresses: gapic_v1.method.wrap_method(
+            self.fetch_network_policy_external_addresses: self._wrap_method(
                 self.fetch_network_policy_external_addresses,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/FetchNetworkPolicyExternalAddresses",
             ),
-            self.get_external_address: gapic_v1.method.wrap_method(
+            self.get_external_address: self._wrap_method(
                 self.get_external_address,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -297,23 +406,27 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/GetExternalAddress",
             ),
-            self.create_external_address: gapic_v1.method.wrap_method(
+            self.create_external_address: self._wrap_method(
                 self.create_external_address,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/CreateExternalAddress",
             ),
-            self.update_external_address: gapic_v1.method.wrap_method(
+            self.update_external_address: self._wrap_method(
                 self.update_external_address,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/UpdateExternalAddress",
             ),
-            self.delete_external_address: gapic_v1.method.wrap_method(
+            self.delete_external_address: self._wrap_method(
                 self.delete_external_address,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/DeleteExternalAddress",
             ),
-            self.list_subnets: gapic_v1.method.wrap_method(
+            self.list_subnets: self._wrap_method(
                 self.list_subnets,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -326,8 +439,9 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/ListSubnets",
             ),
-            self.get_subnet: gapic_v1.method.wrap_method(
+            self.get_subnet: self._wrap_method(
                 self.get_subnet,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -340,13 +454,15 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/GetSubnet",
             ),
-            self.update_subnet: gapic_v1.method.wrap_method(
+            self.update_subnet: self._wrap_method(
                 self.update_subnet,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/UpdateSubnet",
             ),
-            self.list_external_access_rules: gapic_v1.method.wrap_method(
+            self.list_external_access_rules: self._wrap_method(
                 self.list_external_access_rules,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -359,8 +475,9 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/ListExternalAccessRules",
             ),
-            self.get_external_access_rule: gapic_v1.method.wrap_method(
+            self.get_external_access_rule: self._wrap_method(
                 self.get_external_access_rule,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -373,23 +490,27 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/GetExternalAccessRule",
             ),
-            self.create_external_access_rule: gapic_v1.method.wrap_method(
+            self.create_external_access_rule: self._wrap_method(
                 self.create_external_access_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/CreateExternalAccessRule",
             ),
-            self.update_external_access_rule: gapic_v1.method.wrap_method(
+            self.update_external_access_rule: self._wrap_method(
                 self.update_external_access_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/UpdateExternalAccessRule",
             ),
-            self.delete_external_access_rule: gapic_v1.method.wrap_method(
+            self.delete_external_access_rule: self._wrap_method(
                 self.delete_external_access_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/DeleteExternalAccessRule",
             ),
-            self.list_logging_servers: gapic_v1.method.wrap_method(
+            self.list_logging_servers: self._wrap_method(
                 self.list_logging_servers,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -402,8 +523,9 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/ListLoggingServers",
             ),
-            self.get_logging_server: gapic_v1.method.wrap_method(
+            self.get_logging_server: self._wrap_method(
                 self.get_logging_server,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -416,23 +538,27 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/GetLoggingServer",
             ),
-            self.create_logging_server: gapic_v1.method.wrap_method(
+            self.create_logging_server: self._wrap_method(
                 self.create_logging_server,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/CreateLoggingServer",
             ),
-            self.update_logging_server: gapic_v1.method.wrap_method(
+            self.update_logging_server: self._wrap_method(
                 self.update_logging_server,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/UpdateLoggingServer",
             ),
-            self.delete_logging_server: gapic_v1.method.wrap_method(
+            self.delete_logging_server: self._wrap_method(
                 self.delete_logging_server,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/DeleteLoggingServer",
             ),
-            self.list_node_types: gapic_v1.method.wrap_method(
+            self.list_node_types: self._wrap_method(
                 self.list_node_types,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -445,8 +571,9 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/ListNodeTypes",
             ),
-            self.get_node_type: gapic_v1.method.wrap_method(
+            self.get_node_type: self._wrap_method(
                 self.get_node_type,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -459,8 +586,9 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/GetNodeType",
             ),
-            self.show_nsx_credentials: gapic_v1.method.wrap_method(
+            self.show_nsx_credentials: self._wrap_method(
                 self.show_nsx_credentials,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -473,8 +601,9 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/ShowNsxCredentials",
             ),
-            self.show_vcenter_credentials: gapic_v1.method.wrap_method(
+            self.show_vcenter_credentials: self._wrap_method(
                 self.show_vcenter_credentials,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -487,18 +616,21 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/ShowVcenterCredentials",
             ),
-            self.reset_nsx_credentials: gapic_v1.method.wrap_method(
+            self.reset_nsx_credentials: self._wrap_method(
                 self.reset_nsx_credentials,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/ResetNsxCredentials",
             ),
-            self.reset_vcenter_credentials: gapic_v1.method.wrap_method(
+            self.reset_vcenter_credentials: self._wrap_method(
                 self.reset_vcenter_credentials,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/ResetVcenterCredentials",
             ),
-            self.get_dns_forwarding: gapic_v1.method.wrap_method(
+            self.get_dns_forwarding: self._wrap_method(
                 self.get_dns_forwarding,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -511,13 +643,15 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/GetDnsForwarding",
             ),
-            self.update_dns_forwarding: gapic_v1.method.wrap_method(
+            self.update_dns_forwarding: self._wrap_method(
                 self.update_dns_forwarding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/UpdateDnsForwarding",
             ),
-            self.get_network_peering: gapic_v1.method.wrap_method(
+            self.get_network_peering: self._wrap_method(
                 self.get_network_peering,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -530,8 +664,9 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/GetNetworkPeering",
             ),
-            self.list_network_peerings: gapic_v1.method.wrap_method(
+            self.list_network_peerings: self._wrap_method(
                 self.list_network_peerings,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -544,23 +679,27 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/ListNetworkPeerings",
             ),
-            self.create_network_peering: gapic_v1.method.wrap_method(
+            self.create_network_peering: self._wrap_method(
                 self.create_network_peering,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/CreateNetworkPeering",
             ),
-            self.delete_network_peering: gapic_v1.method.wrap_method(
+            self.delete_network_peering: self._wrap_method(
                 self.delete_network_peering,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/DeleteNetworkPeering",
             ),
-            self.update_network_peering: gapic_v1.method.wrap_method(
+            self.update_network_peering: self._wrap_method(
                 self.update_network_peering,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/UpdateNetworkPeering",
             ),
-            self.list_peering_routes: gapic_v1.method.wrap_method(
+            self.list_peering_routes: self._wrap_method(
                 self.list_peering_routes,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -573,13 +712,15 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/ListPeeringRoutes",
             ),
-            self.create_hcx_activation_key: gapic_v1.method.wrap_method(
+            self.create_hcx_activation_key: self._wrap_method(
                 self.create_hcx_activation_key,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/CreateHcxActivationKey",
             ),
-            self.list_hcx_activation_keys: gapic_v1.method.wrap_method(
+            self.list_hcx_activation_keys: self._wrap_method(
                 self.list_hcx_activation_keys,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -592,8 +733,9 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/ListHcxActivationKeys",
             ),
-            self.get_hcx_activation_key: gapic_v1.method.wrap_method(
+            self.get_hcx_activation_key: self._wrap_method(
                 self.get_hcx_activation_key,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -606,8 +748,9 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/GetHcxActivationKey",
             ),
-            self.get_network_policy: gapic_v1.method.wrap_method(
+            self.get_network_policy: self._wrap_method(
                 self.get_network_policy,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -620,8 +763,9 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/GetNetworkPolicy",
             ),
-            self.list_network_policies: gapic_v1.method.wrap_method(
+            self.list_network_policies: self._wrap_method(
                 self.list_network_policies,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -634,23 +778,27 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/ListNetworkPolicies",
             ),
-            self.create_network_policy: gapic_v1.method.wrap_method(
+            self.create_network_policy: self._wrap_method(
                 self.create_network_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/CreateNetworkPolicy",
             ),
-            self.update_network_policy: gapic_v1.method.wrap_method(
+            self.update_network_policy: self._wrap_method(
                 self.update_network_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/UpdateNetworkPolicy",
             ),
-            self.delete_network_policy: gapic_v1.method.wrap_method(
+            self.delete_network_policy: self._wrap_method(
                 self.delete_network_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/DeleteNetworkPolicy",
             ),
-            self.list_management_dns_zone_bindings: gapic_v1.method.wrap_method(
+            self.list_management_dns_zone_bindings: self._wrap_method(
                 self.list_management_dns_zone_bindings,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -663,8 +811,9 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/ListManagementDnsZoneBindings",
             ),
-            self.get_management_dns_zone_binding: gapic_v1.method.wrap_method(
+            self.get_management_dns_zone_binding: self._wrap_method(
                 self.get_management_dns_zone_binding,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -677,43 +826,51 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/GetManagementDnsZoneBinding",
             ),
-            self.create_management_dns_zone_binding: gapic_v1.method.wrap_method(
+            self.create_management_dns_zone_binding: self._wrap_method(
                 self.create_management_dns_zone_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/CreateManagementDnsZoneBinding",
             ),
-            self.update_management_dns_zone_binding: gapic_v1.method.wrap_method(
+            self.update_management_dns_zone_binding: self._wrap_method(
                 self.update_management_dns_zone_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/UpdateManagementDnsZoneBinding",
             ),
-            self.delete_management_dns_zone_binding: gapic_v1.method.wrap_method(
+            self.delete_management_dns_zone_binding: self._wrap_method(
                 self.delete_management_dns_zone_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/DeleteManagementDnsZoneBinding",
             ),
-            self.repair_management_dns_zone_binding: gapic_v1.method.wrap_method(
+            self.repair_management_dns_zone_binding: self._wrap_method(
                 self.repair_management_dns_zone_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/RepairManagementDnsZoneBinding",
             ),
-            self.create_vmware_engine_network: gapic_v1.method.wrap_method(
+            self.create_vmware_engine_network: self._wrap_method(
                 self.create_vmware_engine_network,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/CreateVmwareEngineNetwork",
             ),
-            self.update_vmware_engine_network: gapic_v1.method.wrap_method(
+            self.update_vmware_engine_network: self._wrap_method(
                 self.update_vmware_engine_network,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/UpdateVmwareEngineNetwork",
             ),
-            self.delete_vmware_engine_network: gapic_v1.method.wrap_method(
+            self.delete_vmware_engine_network: self._wrap_method(
                 self.delete_vmware_engine_network,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/DeleteVmwareEngineNetwork",
             ),
-            self.get_vmware_engine_network: gapic_v1.method.wrap_method(
+            self.get_vmware_engine_network: self._wrap_method(
                 self.get_vmware_engine_network,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -726,8 +883,9 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/GetVmwareEngineNetwork",
             ),
-            self.list_vmware_engine_networks: gapic_v1.method.wrap_method(
+            self.list_vmware_engine_networks: self._wrap_method(
                 self.list_vmware_engine_networks,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -740,13 +898,15 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/ListVmwareEngineNetworks",
             ),
-            self.create_private_connection: gapic_v1.method.wrap_method(
+            self.create_private_connection: self._wrap_method(
                 self.create_private_connection,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/CreatePrivateConnection",
             ),
-            self.get_private_connection: gapic_v1.method.wrap_method(
+            self.get_private_connection: self._wrap_method(
                 self.get_private_connection,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -759,8 +919,9 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/GetPrivateConnection",
             ),
-            self.list_private_connections: gapic_v1.method.wrap_method(
+            self.list_private_connections: self._wrap_method(
                 self.list_private_connections,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -773,18 +934,21 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/ListPrivateConnections",
             ),
-            self.update_private_connection: gapic_v1.method.wrap_method(
+            self.update_private_connection: self._wrap_method(
                 self.update_private_connection,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/UpdatePrivateConnection",
             ),
-            self.delete_private_connection: gapic_v1.method.wrap_method(
+            self.delete_private_connection: self._wrap_method(
                 self.delete_private_connection,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/DeletePrivateConnection",
             ),
-            self.list_private_connection_peering_routes: gapic_v1.method.wrap_method(
+            self.list_private_connection_peering_routes: self._wrap_method(
                 self.list_private_connection_peering_routes,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -797,13 +961,15 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/ListPrivateConnectionPeeringRoutes",
             ),
-            self.grant_dns_bind_permission: gapic_v1.method.wrap_method(
+            self.grant_dns_bind_permission: self._wrap_method(
                 self.grant_dns_bind_permission,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/GrantDnsBindPermission",
             ),
-            self.get_dns_bind_permission: gapic_v1.method.wrap_method(
+            self.get_dns_bind_permission: self._wrap_method(
                 self.get_dns_bind_permission,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -816,51 +982,61 @@ class VmwareEngineTransport(abc.ABC):
                 ),
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/GetDnsBindPermission",
             ),
-            self.revoke_dns_bind_permission: gapic_v1.method.wrap_method(
+            self.revoke_dns_bind_permission: self._wrap_method(
                 self.revoke_dns_bind_permission,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.vmwareengine.v1.VmwareEngine/RevokeDnsBindPermission",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.get_iam_policy: gapic_v1.method.wrap_method(
+            self.get_iam_policy: self._wrap_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/GetIamPolicy",
             ),
-            self.set_iam_policy: gapic_v1.method.wrap_method(
+            self.set_iam_policy: self._wrap_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/SetIamPolicy",
             ),
-            self.test_iam_permissions: gapic_v1.method.wrap_method(
+            self.test_iam_permissions: self._wrap_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/TestIamPermissions",
             ),
-            self.delete_operation: gapic_v1.method.wrap_method(
+            self.delete_operation: self._wrap_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
 

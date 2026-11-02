@@ -13,17 +13,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async
 from google.api_core import retry_async as retries
@@ -32,6 +41,10 @@ from google.auth.transport.grpc import SslCredentials  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.analytics.admin_v1alpha._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.analytics.admin_v1alpha.types import (
     analytics_admin,
     audience,
@@ -205,6 +218,10 @@ class AnalyticsAdminServiceGrpcAsyncIOTransport(AnalyticsAdminServiceTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -256,6 +273,12 @@ class AnalyticsAdminServiceGrpcAsyncIOTransport(AnalyticsAdminServiceTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -310,6 +333,7 @@ class AnalyticsAdminServiceGrpcAsyncIOTransport(AnalyticsAdminServiceTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -331,12 +355,26 @@ class AnalyticsAdminServiceGrpcAsyncIOTransport(AnalyticsAdminServiceTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -5094,794 +5132,948 @@ class AnalyticsAdminServiceGrpcAsyncIOTransport(AnalyticsAdminServiceTransport):
         return self._stubs["get_user_provided_data_settings"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.get_account: self._wrap_method(
+            self.get_account: self._wrap_async_method(
                 self.get_account,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetAccount",
             ),
-            self.list_accounts: self._wrap_method(
+            self.list_accounts: self._wrap_async_method(
                 self.list_accounts,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListAccounts",
             ),
-            self.delete_account: self._wrap_method(
+            self.delete_account: self._wrap_async_method(
                 self.delete_account,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteAccount",
             ),
-            self.update_account: self._wrap_method(
+            self.update_account: self._wrap_async_method(
                 self.update_account,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateAccount",
             ),
-            self.provision_account_ticket: self._wrap_method(
+            self.provision_account_ticket: self._wrap_async_method(
                 self.provision_account_ticket,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ProvisionAccountTicket",
             ),
-            self.list_account_summaries: self._wrap_method(
+            self.list_account_summaries: self._wrap_async_method(
                 self.list_account_summaries,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListAccountSummaries",
             ),
-            self.get_property: self._wrap_method(
+            self.get_property: self._wrap_async_method(
                 self.get_property,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetProperty",
             ),
-            self.list_properties: self._wrap_method(
+            self.list_properties: self._wrap_async_method(
                 self.list_properties,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListProperties",
             ),
-            self.create_property: self._wrap_method(
+            self.create_property: self._wrap_async_method(
                 self.create_property,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateProperty",
             ),
-            self.delete_property: self._wrap_method(
+            self.delete_property: self._wrap_async_method(
                 self.delete_property,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteProperty",
             ),
-            self.update_property: self._wrap_method(
+            self.update_property: self._wrap_async_method(
                 self.update_property,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateProperty",
             ),
-            self.create_firebase_link: self._wrap_method(
+            self.create_firebase_link: self._wrap_async_method(
                 self.create_firebase_link,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateFirebaseLink",
             ),
-            self.delete_firebase_link: self._wrap_method(
+            self.delete_firebase_link: self._wrap_async_method(
                 self.delete_firebase_link,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteFirebaseLink",
             ),
-            self.list_firebase_links: self._wrap_method(
+            self.list_firebase_links: self._wrap_async_method(
                 self.list_firebase_links,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListFirebaseLinks",
             ),
-            self.get_global_site_tag: self._wrap_method(
+            self.get_global_site_tag: self._wrap_async_method(
                 self.get_global_site_tag,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetGlobalSiteTag",
             ),
-            self.create_google_ads_link: self._wrap_method(
+            self.create_google_ads_link: self._wrap_async_method(
                 self.create_google_ads_link,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateGoogleAdsLink",
             ),
-            self.update_google_ads_link: self._wrap_method(
+            self.update_google_ads_link: self._wrap_async_method(
                 self.update_google_ads_link,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateGoogleAdsLink",
             ),
-            self.delete_google_ads_link: self._wrap_method(
+            self.delete_google_ads_link: self._wrap_async_method(
                 self.delete_google_ads_link,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteGoogleAdsLink",
             ),
-            self.list_google_ads_links: self._wrap_method(
+            self.list_google_ads_links: self._wrap_async_method(
                 self.list_google_ads_links,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListGoogleAdsLinks",
             ),
-            self.get_data_sharing_settings: self._wrap_method(
+            self.get_data_sharing_settings: self._wrap_async_method(
                 self.get_data_sharing_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetDataSharingSettings",
             ),
-            self.get_measurement_protocol_secret: self._wrap_method(
+            self.get_measurement_protocol_secret: self._wrap_async_method(
                 self.get_measurement_protocol_secret,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetMeasurementProtocolSecret",
             ),
-            self.list_measurement_protocol_secrets: self._wrap_method(
+            self.list_measurement_protocol_secrets: self._wrap_async_method(
                 self.list_measurement_protocol_secrets,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListMeasurementProtocolSecrets",
             ),
-            self.create_measurement_protocol_secret: self._wrap_method(
+            self.create_measurement_protocol_secret: self._wrap_async_method(
                 self.create_measurement_protocol_secret,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateMeasurementProtocolSecret",
             ),
-            self.delete_measurement_protocol_secret: self._wrap_method(
+            self.delete_measurement_protocol_secret: self._wrap_async_method(
                 self.delete_measurement_protocol_secret,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteMeasurementProtocolSecret",
             ),
-            self.update_measurement_protocol_secret: self._wrap_method(
+            self.update_measurement_protocol_secret: self._wrap_async_method(
                 self.update_measurement_protocol_secret,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateMeasurementProtocolSecret",
             ),
-            self.acknowledge_user_data_collection: self._wrap_method(
+            self.acknowledge_user_data_collection: self._wrap_async_method(
                 self.acknowledge_user_data_collection,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/AcknowledgeUserDataCollection",
             ),
-            self.get_sk_ad_network_conversion_value_schema: self._wrap_method(
+            self.get_sk_ad_network_conversion_value_schema: self._wrap_async_method(
                 self.get_sk_ad_network_conversion_value_schema,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetSKAdNetworkConversionValueSchema",
             ),
-            self.create_sk_ad_network_conversion_value_schema: self._wrap_method(
+            self.create_sk_ad_network_conversion_value_schema: self._wrap_async_method(
                 self.create_sk_ad_network_conversion_value_schema,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateSKAdNetworkConversionValueSchema",
             ),
-            self.delete_sk_ad_network_conversion_value_schema: self._wrap_method(
+            self.delete_sk_ad_network_conversion_value_schema: self._wrap_async_method(
                 self.delete_sk_ad_network_conversion_value_schema,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteSKAdNetworkConversionValueSchema",
             ),
-            self.update_sk_ad_network_conversion_value_schema: self._wrap_method(
+            self.update_sk_ad_network_conversion_value_schema: self._wrap_async_method(
                 self.update_sk_ad_network_conversion_value_schema,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateSKAdNetworkConversionValueSchema",
             ),
-            self.list_sk_ad_network_conversion_value_schemas: self._wrap_method(
+            self.list_sk_ad_network_conversion_value_schemas: self._wrap_async_method(
                 self.list_sk_ad_network_conversion_value_schemas,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListSKAdNetworkConversionValueSchemas",
             ),
-            self.search_change_history_events: self._wrap_method(
+            self.search_change_history_events: self._wrap_async_method(
                 self.search_change_history_events,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/SearchChangeHistoryEvents",
             ),
-            self.get_google_signals_settings: self._wrap_method(
+            self.get_google_signals_settings: self._wrap_async_method(
                 self.get_google_signals_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetGoogleSignalsSettings",
             ),
-            self.update_google_signals_settings: self._wrap_method(
+            self.update_google_signals_settings: self._wrap_async_method(
                 self.update_google_signals_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateGoogleSignalsSettings",
             ),
-            self.create_conversion_event: self._wrap_method(
+            self.create_conversion_event: self._wrap_async_method(
                 self.create_conversion_event,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateConversionEvent",
             ),
-            self.update_conversion_event: self._wrap_method(
+            self.update_conversion_event: self._wrap_async_method(
                 self.update_conversion_event,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateConversionEvent",
             ),
-            self.get_conversion_event: self._wrap_method(
+            self.get_conversion_event: self._wrap_async_method(
                 self.get_conversion_event,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetConversionEvent",
             ),
-            self.delete_conversion_event: self._wrap_method(
+            self.delete_conversion_event: self._wrap_async_method(
                 self.delete_conversion_event,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteConversionEvent",
             ),
-            self.list_conversion_events: self._wrap_method(
+            self.list_conversion_events: self._wrap_async_method(
                 self.list_conversion_events,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListConversionEvents",
             ),
-            self.create_key_event: self._wrap_method(
+            self.create_key_event: self._wrap_async_method(
                 self.create_key_event,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateKeyEvent",
             ),
-            self.update_key_event: self._wrap_method(
+            self.update_key_event: self._wrap_async_method(
                 self.update_key_event,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateKeyEvent",
             ),
-            self.get_key_event: self._wrap_method(
+            self.get_key_event: self._wrap_async_method(
                 self.get_key_event,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetKeyEvent",
             ),
-            self.delete_key_event: self._wrap_method(
+            self.delete_key_event: self._wrap_async_method(
                 self.delete_key_event,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteKeyEvent",
             ),
-            self.list_key_events: self._wrap_method(
+            self.list_key_events: self._wrap_async_method(
                 self.list_key_events,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListKeyEvents",
             ),
-            self.get_display_video360_advertiser_link: self._wrap_method(
+            self.get_display_video360_advertiser_link: self._wrap_async_method(
                 self.get_display_video360_advertiser_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetDisplayVideo360AdvertiserLink",
             ),
-            self.list_display_video360_advertiser_links: self._wrap_method(
+            self.list_display_video360_advertiser_links: self._wrap_async_method(
                 self.list_display_video360_advertiser_links,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListDisplayVideo360AdvertiserLinks",
             ),
-            self.create_display_video360_advertiser_link: self._wrap_method(
+            self.create_display_video360_advertiser_link: self._wrap_async_method(
                 self.create_display_video360_advertiser_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateDisplayVideo360AdvertiserLink",
             ),
-            self.delete_display_video360_advertiser_link: self._wrap_method(
+            self.delete_display_video360_advertiser_link: self._wrap_async_method(
                 self.delete_display_video360_advertiser_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteDisplayVideo360AdvertiserLink",
             ),
-            self.update_display_video360_advertiser_link: self._wrap_method(
+            self.update_display_video360_advertiser_link: self._wrap_async_method(
                 self.update_display_video360_advertiser_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateDisplayVideo360AdvertiserLink",
             ),
-            self.get_display_video360_advertiser_link_proposal: self._wrap_method(
+            self.get_display_video360_advertiser_link_proposal: self._wrap_async_method(
                 self.get_display_video360_advertiser_link_proposal,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetDisplayVideo360AdvertiserLinkProposal",
             ),
-            self.list_display_video360_advertiser_link_proposals: self._wrap_method(
+            self.list_display_video360_advertiser_link_proposals: self._wrap_async_method(
                 self.list_display_video360_advertiser_link_proposals,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListDisplayVideo360AdvertiserLinkProposals",
             ),
-            self.create_display_video360_advertiser_link_proposal: self._wrap_method(
+            self.create_display_video360_advertiser_link_proposal: self._wrap_async_method(
                 self.create_display_video360_advertiser_link_proposal,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateDisplayVideo360AdvertiserLinkProposal",
             ),
-            self.delete_display_video360_advertiser_link_proposal: self._wrap_method(
+            self.delete_display_video360_advertiser_link_proposal: self._wrap_async_method(
                 self.delete_display_video360_advertiser_link_proposal,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteDisplayVideo360AdvertiserLinkProposal",
             ),
-            self.approve_display_video360_advertiser_link_proposal: self._wrap_method(
+            self.approve_display_video360_advertiser_link_proposal: self._wrap_async_method(
                 self.approve_display_video360_advertiser_link_proposal,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ApproveDisplayVideo360AdvertiserLinkProposal",
             ),
-            self.cancel_display_video360_advertiser_link_proposal: self._wrap_method(
+            self.cancel_display_video360_advertiser_link_proposal: self._wrap_async_method(
                 self.cancel_display_video360_advertiser_link_proposal,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CancelDisplayVideo360AdvertiserLinkProposal",
             ),
-            self.create_custom_dimension: self._wrap_method(
+            self.create_custom_dimension: self._wrap_async_method(
                 self.create_custom_dimension,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateCustomDimension",
             ),
-            self.update_custom_dimension: self._wrap_method(
+            self.update_custom_dimension: self._wrap_async_method(
                 self.update_custom_dimension,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateCustomDimension",
             ),
-            self.list_custom_dimensions: self._wrap_method(
+            self.list_custom_dimensions: self._wrap_async_method(
                 self.list_custom_dimensions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListCustomDimensions",
             ),
-            self.archive_custom_dimension: self._wrap_method(
+            self.archive_custom_dimension: self._wrap_async_method(
                 self.archive_custom_dimension,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ArchiveCustomDimension",
             ),
-            self.get_custom_dimension: self._wrap_method(
+            self.get_custom_dimension: self._wrap_async_method(
                 self.get_custom_dimension,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetCustomDimension",
             ),
-            self.create_custom_metric: self._wrap_method(
+            self.create_custom_metric: self._wrap_async_method(
                 self.create_custom_metric,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateCustomMetric",
             ),
-            self.update_custom_metric: self._wrap_method(
+            self.update_custom_metric: self._wrap_async_method(
                 self.update_custom_metric,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateCustomMetric",
             ),
-            self.list_custom_metrics: self._wrap_method(
+            self.list_custom_metrics: self._wrap_async_method(
                 self.list_custom_metrics,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListCustomMetrics",
             ),
-            self.archive_custom_metric: self._wrap_method(
+            self.archive_custom_metric: self._wrap_async_method(
                 self.archive_custom_metric,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ArchiveCustomMetric",
             ),
-            self.get_custom_metric: self._wrap_method(
+            self.get_custom_metric: self._wrap_async_method(
                 self.get_custom_metric,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetCustomMetric",
             ),
-            self.get_data_retention_settings: self._wrap_method(
+            self.get_data_retention_settings: self._wrap_async_method(
                 self.get_data_retention_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetDataRetentionSettings",
             ),
-            self.update_data_retention_settings: self._wrap_method(
+            self.update_data_retention_settings: self._wrap_async_method(
                 self.update_data_retention_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateDataRetentionSettings",
             ),
-            self.create_data_stream: self._wrap_method(
+            self.create_data_stream: self._wrap_async_method(
                 self.create_data_stream,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateDataStream",
             ),
-            self.delete_data_stream: self._wrap_method(
+            self.delete_data_stream: self._wrap_async_method(
                 self.delete_data_stream,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteDataStream",
             ),
-            self.update_data_stream: self._wrap_method(
+            self.update_data_stream: self._wrap_async_method(
                 self.update_data_stream,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateDataStream",
             ),
-            self.list_data_streams: self._wrap_method(
+            self.list_data_streams: self._wrap_async_method(
                 self.list_data_streams,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListDataStreams",
             ),
-            self.get_data_stream: self._wrap_method(
+            self.get_data_stream: self._wrap_async_method(
                 self.get_data_stream,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetDataStream",
             ),
-            self.get_audience: self._wrap_method(
+            self.get_audience: self._wrap_async_method(
                 self.get_audience,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetAudience",
             ),
-            self.list_audiences: self._wrap_method(
+            self.list_audiences: self._wrap_async_method(
                 self.list_audiences,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListAudiences",
             ),
-            self.create_audience: self._wrap_method(
+            self.create_audience: self._wrap_async_method(
                 self.create_audience,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateAudience",
             ),
-            self.update_audience: self._wrap_method(
+            self.update_audience: self._wrap_async_method(
                 self.update_audience,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateAudience",
             ),
-            self.archive_audience: self._wrap_method(
+            self.archive_audience: self._wrap_async_method(
                 self.archive_audience,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ArchiveAudience",
             ),
-            self.get_search_ads360_link: self._wrap_method(
+            self.get_search_ads360_link: self._wrap_async_method(
                 self.get_search_ads360_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetSearchAds360Link",
             ),
-            self.list_search_ads360_links: self._wrap_method(
+            self.list_search_ads360_links: self._wrap_async_method(
                 self.list_search_ads360_links,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListSearchAds360Links",
             ),
-            self.create_search_ads360_link: self._wrap_method(
+            self.create_search_ads360_link: self._wrap_async_method(
                 self.create_search_ads360_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateSearchAds360Link",
             ),
-            self.delete_search_ads360_link: self._wrap_method(
+            self.delete_search_ads360_link: self._wrap_async_method(
                 self.delete_search_ads360_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteSearchAds360Link",
             ),
-            self.update_search_ads360_link: self._wrap_method(
+            self.update_search_ads360_link: self._wrap_async_method(
                 self.update_search_ads360_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateSearchAds360Link",
             ),
-            self.get_attribution_settings: self._wrap_method(
+            self.get_attribution_settings: self._wrap_async_method(
                 self.get_attribution_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetAttributionSettings",
             ),
-            self.update_attribution_settings: self._wrap_method(
+            self.update_attribution_settings: self._wrap_async_method(
                 self.update_attribution_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateAttributionSettings",
             ),
-            self.run_access_report: self._wrap_method(
+            self.run_access_report: self._wrap_async_method(
                 self.run_access_report,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/RunAccessReport",
             ),
-            self.create_access_binding: self._wrap_method(
+            self.create_access_binding: self._wrap_async_method(
                 self.create_access_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateAccessBinding",
             ),
-            self.get_access_binding: self._wrap_method(
+            self.get_access_binding: self._wrap_async_method(
                 self.get_access_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetAccessBinding",
             ),
-            self.update_access_binding: self._wrap_method(
+            self.update_access_binding: self._wrap_async_method(
                 self.update_access_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateAccessBinding",
             ),
-            self.delete_access_binding: self._wrap_method(
+            self.delete_access_binding: self._wrap_async_method(
                 self.delete_access_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteAccessBinding",
             ),
-            self.list_access_bindings: self._wrap_method(
+            self.list_access_bindings: self._wrap_async_method(
                 self.list_access_bindings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListAccessBindings",
             ),
-            self.batch_create_access_bindings: self._wrap_method(
+            self.batch_create_access_bindings: self._wrap_async_method(
                 self.batch_create_access_bindings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/BatchCreateAccessBindings",
             ),
-            self.batch_get_access_bindings: self._wrap_method(
+            self.batch_get_access_bindings: self._wrap_async_method(
                 self.batch_get_access_bindings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/BatchGetAccessBindings",
             ),
-            self.batch_update_access_bindings: self._wrap_method(
+            self.batch_update_access_bindings: self._wrap_async_method(
                 self.batch_update_access_bindings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/BatchUpdateAccessBindings",
             ),
-            self.batch_delete_access_bindings: self._wrap_method(
+            self.batch_delete_access_bindings: self._wrap_async_method(
                 self.batch_delete_access_bindings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/BatchDeleteAccessBindings",
             ),
-            self.get_expanded_data_set: self._wrap_method(
+            self.get_expanded_data_set: self._wrap_async_method(
                 self.get_expanded_data_set,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetExpandedDataSet",
             ),
-            self.list_expanded_data_sets: self._wrap_method(
+            self.list_expanded_data_sets: self._wrap_async_method(
                 self.list_expanded_data_sets,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListExpandedDataSets",
             ),
-            self.create_expanded_data_set: self._wrap_method(
+            self.create_expanded_data_set: self._wrap_async_method(
                 self.create_expanded_data_set,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateExpandedDataSet",
             ),
-            self.update_expanded_data_set: self._wrap_method(
+            self.update_expanded_data_set: self._wrap_async_method(
                 self.update_expanded_data_set,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateExpandedDataSet",
             ),
-            self.delete_expanded_data_set: self._wrap_method(
+            self.delete_expanded_data_set: self._wrap_async_method(
                 self.delete_expanded_data_set,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteExpandedDataSet",
             ),
-            self.get_channel_group: self._wrap_method(
+            self.get_channel_group: self._wrap_async_method(
                 self.get_channel_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetChannelGroup",
             ),
-            self.list_channel_groups: self._wrap_method(
+            self.list_channel_groups: self._wrap_async_method(
                 self.list_channel_groups,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListChannelGroups",
             ),
-            self.create_channel_group: self._wrap_method(
+            self.create_channel_group: self._wrap_async_method(
                 self.create_channel_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateChannelGroup",
             ),
-            self.update_channel_group: self._wrap_method(
+            self.update_channel_group: self._wrap_async_method(
                 self.update_channel_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateChannelGroup",
             ),
-            self.delete_channel_group: self._wrap_method(
+            self.delete_channel_group: self._wrap_async_method(
                 self.delete_channel_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteChannelGroup",
             ),
-            self.create_big_query_link: self._wrap_method(
+            self.create_big_query_link: self._wrap_async_method(
                 self.create_big_query_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateBigQueryLink",
             ),
-            self.get_big_query_link: self._wrap_method(
+            self.get_big_query_link: self._wrap_async_method(
                 self.get_big_query_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetBigQueryLink",
             ),
-            self.list_big_query_links: self._wrap_method(
+            self.list_big_query_links: self._wrap_async_method(
                 self.list_big_query_links,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListBigQueryLinks",
             ),
-            self.delete_big_query_link: self._wrap_method(
+            self.delete_big_query_link: self._wrap_async_method(
                 self.delete_big_query_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteBigQueryLink",
             ),
-            self.update_big_query_link: self._wrap_method(
+            self.update_big_query_link: self._wrap_async_method(
                 self.update_big_query_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateBigQueryLink",
             ),
-            self.get_enhanced_measurement_settings: self._wrap_method(
+            self.get_enhanced_measurement_settings: self._wrap_async_method(
                 self.get_enhanced_measurement_settings,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetEnhancedMeasurementSettings",
             ),
-            self.update_enhanced_measurement_settings: self._wrap_method(
+            self.update_enhanced_measurement_settings: self._wrap_async_method(
                 self.update_enhanced_measurement_settings,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateEnhancedMeasurementSettings",
             ),
-            self.get_ad_sense_link: self._wrap_method(
+            self.get_ad_sense_link: self._wrap_async_method(
                 self.get_ad_sense_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetAdSenseLink",
             ),
-            self.create_ad_sense_link: self._wrap_method(
+            self.create_ad_sense_link: self._wrap_async_method(
                 self.create_ad_sense_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateAdSenseLink",
             ),
-            self.delete_ad_sense_link: self._wrap_method(
+            self.delete_ad_sense_link: self._wrap_async_method(
                 self.delete_ad_sense_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteAdSenseLink",
             ),
-            self.list_ad_sense_links: self._wrap_method(
+            self.list_ad_sense_links: self._wrap_async_method(
                 self.list_ad_sense_links,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListAdSenseLinks",
             ),
-            self.get_event_create_rule: self._wrap_method(
+            self.get_event_create_rule: self._wrap_async_method(
                 self.get_event_create_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetEventCreateRule",
             ),
-            self.list_event_create_rules: self._wrap_method(
+            self.list_event_create_rules: self._wrap_async_method(
                 self.list_event_create_rules,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListEventCreateRules",
             ),
-            self.create_event_create_rule: self._wrap_method(
+            self.create_event_create_rule: self._wrap_async_method(
                 self.create_event_create_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateEventCreateRule",
             ),
-            self.update_event_create_rule: self._wrap_method(
+            self.update_event_create_rule: self._wrap_async_method(
                 self.update_event_create_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateEventCreateRule",
             ),
-            self.delete_event_create_rule: self._wrap_method(
+            self.delete_event_create_rule: self._wrap_async_method(
                 self.delete_event_create_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteEventCreateRule",
             ),
-            self.get_event_edit_rule: self._wrap_method(
+            self.get_event_edit_rule: self._wrap_async_method(
                 self.get_event_edit_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetEventEditRule",
             ),
-            self.list_event_edit_rules: self._wrap_method(
+            self.list_event_edit_rules: self._wrap_async_method(
                 self.list_event_edit_rules,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListEventEditRules",
             ),
-            self.create_event_edit_rule: self._wrap_method(
+            self.create_event_edit_rule: self._wrap_async_method(
                 self.create_event_edit_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateEventEditRule",
             ),
-            self.update_event_edit_rule: self._wrap_method(
+            self.update_event_edit_rule: self._wrap_async_method(
                 self.update_event_edit_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateEventEditRule",
             ),
-            self.delete_event_edit_rule: self._wrap_method(
+            self.delete_event_edit_rule: self._wrap_async_method(
                 self.delete_event_edit_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteEventEditRule",
             ),
-            self.reorder_event_edit_rules: self._wrap_method(
+            self.reorder_event_edit_rules: self._wrap_async_method(
                 self.reorder_event_edit_rules,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ReorderEventEditRules",
             ),
-            self.update_data_redaction_settings: self._wrap_method(
+            self.update_data_redaction_settings: self._wrap_async_method(
                 self.update_data_redaction_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateDataRedactionSettings",
             ),
-            self.get_data_redaction_settings: self._wrap_method(
+            self.get_data_redaction_settings: self._wrap_async_method(
                 self.get_data_redaction_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetDataRedactionSettings",
             ),
-            self.get_calculated_metric: self._wrap_method(
+            self.get_calculated_metric: self._wrap_async_method(
                 self.get_calculated_metric,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetCalculatedMetric",
             ),
-            self.create_calculated_metric: self._wrap_method(
+            self.create_calculated_metric: self._wrap_async_method(
                 self.create_calculated_metric,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateCalculatedMetric",
             ),
-            self.list_calculated_metrics: self._wrap_method(
+            self.list_calculated_metrics: self._wrap_async_method(
                 self.list_calculated_metrics,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListCalculatedMetrics",
             ),
-            self.update_calculated_metric: self._wrap_method(
+            self.update_calculated_metric: self._wrap_async_method(
                 self.update_calculated_metric,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateCalculatedMetric",
             ),
-            self.delete_calculated_metric: self._wrap_method(
+            self.delete_calculated_metric: self._wrap_async_method(
                 self.delete_calculated_metric,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteCalculatedMetric",
             ),
-            self.create_rollup_property: self._wrap_method(
+            self.create_rollup_property: self._wrap_async_method(
                 self.create_rollup_property,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateRollupProperty",
             ),
-            self.get_rollup_property_source_link: self._wrap_method(
+            self.get_rollup_property_source_link: self._wrap_async_method(
                 self.get_rollup_property_source_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetRollupPropertySourceLink",
             ),
-            self.list_rollup_property_source_links: self._wrap_method(
+            self.list_rollup_property_source_links: self._wrap_async_method(
                 self.list_rollup_property_source_links,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListRollupPropertySourceLinks",
             ),
-            self.create_rollup_property_source_link: self._wrap_method(
+            self.create_rollup_property_source_link: self._wrap_async_method(
                 self.create_rollup_property_source_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateRollupPropertySourceLink",
             ),
-            self.delete_rollup_property_source_link: self._wrap_method(
+            self.delete_rollup_property_source_link: self._wrap_async_method(
                 self.delete_rollup_property_source_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteRollupPropertySourceLink",
             ),
-            self.provision_subproperty: self._wrap_method(
+            self.provision_subproperty: self._wrap_async_method(
                 self.provision_subproperty,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ProvisionSubproperty",
             ),
-            self.create_subproperty_event_filter: self._wrap_method(
+            self.create_subproperty_event_filter: self._wrap_async_method(
                 self.create_subproperty_event_filter,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateSubpropertyEventFilter",
             ),
-            self.get_subproperty_event_filter: self._wrap_method(
+            self.get_subproperty_event_filter: self._wrap_async_method(
                 self.get_subproperty_event_filter,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetSubpropertyEventFilter",
             ),
-            self.list_subproperty_event_filters: self._wrap_method(
+            self.list_subproperty_event_filters: self._wrap_async_method(
                 self.list_subproperty_event_filters,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListSubpropertyEventFilters",
             ),
-            self.update_subproperty_event_filter: self._wrap_method(
+            self.update_subproperty_event_filter: self._wrap_async_method(
                 self.update_subproperty_event_filter,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateSubpropertyEventFilter",
             ),
-            self.delete_subproperty_event_filter: self._wrap_method(
+            self.delete_subproperty_event_filter: self._wrap_async_method(
                 self.delete_subproperty_event_filter,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteSubpropertyEventFilter",
             ),
-            self.create_reporting_data_annotation: self._wrap_method(
+            self.create_reporting_data_annotation: self._wrap_async_method(
                 self.create_reporting_data_annotation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/CreateReportingDataAnnotation",
             ),
-            self.get_reporting_data_annotation: self._wrap_method(
+            self.get_reporting_data_annotation: self._wrap_async_method(
                 self.get_reporting_data_annotation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetReportingDataAnnotation",
             ),
-            self.list_reporting_data_annotations: self._wrap_method(
+            self.list_reporting_data_annotations: self._wrap_async_method(
                 self.list_reporting_data_annotations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListReportingDataAnnotations",
             ),
-            self.update_reporting_data_annotation: self._wrap_method(
+            self.update_reporting_data_annotation: self._wrap_async_method(
                 self.update_reporting_data_annotation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateReportingDataAnnotation",
             ),
-            self.delete_reporting_data_annotation: self._wrap_method(
+            self.delete_reporting_data_annotation: self._wrap_async_method(
                 self.delete_reporting_data_annotation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/DeleteReportingDataAnnotation",
             ),
-            self.submit_user_deletion: self._wrap_method(
+            self.submit_user_deletion: self._wrap_async_method(
                 self.submit_user_deletion,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/SubmitUserDeletion",
             ),
-            self.list_subproperty_sync_configs: self._wrap_method(
+            self.list_subproperty_sync_configs: self._wrap_async_method(
                 self.list_subproperty_sync_configs,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/ListSubpropertySyncConfigs",
             ),
-            self.update_subproperty_sync_config: self._wrap_method(
+            self.update_subproperty_sync_config: self._wrap_async_method(
                 self.update_subproperty_sync_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateSubpropertySyncConfig",
             ),
-            self.get_subproperty_sync_config: self._wrap_method(
+            self.get_subproperty_sync_config: self._wrap_async_method(
                 self.get_subproperty_sync_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetSubpropertySyncConfig",
             ),
-            self.get_reporting_identity_settings: self._wrap_method(
+            self.get_reporting_identity_settings: self._wrap_async_method(
                 self.get_reporting_identity_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetReportingIdentitySettings",
             ),
-            self.update_reporting_identity_settings: self._wrap_method(
+            self.update_reporting_identity_settings: self._wrap_async_method(
                 self.update_reporting_identity_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/UpdateReportingIdentitySettings",
             ),
-            self.get_user_provided_data_settings: self._wrap_method(
+            self.get_user_provided_data_settings: self._wrap_async_method(
                 self.get_user_provided_data_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1alpha.AnalyticsAdminService/GetUserProvidedDataSettings",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

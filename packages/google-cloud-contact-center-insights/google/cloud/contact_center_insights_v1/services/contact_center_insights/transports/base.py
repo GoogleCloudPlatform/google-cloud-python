@@ -16,10 +16,22 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.contact_center_insights_v1 import gapic_version as package_version
+from google.cloud.contact_center_insights_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.contact_center_insights_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -31,7 +43,6 @@ from google.iam.v1 import (
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.contact_center_insights_v1 import gapic_version as package_version
 from google.cloud.contact_center_insights_v1.types import (
     contact_center_insights,
     resources,
@@ -61,6 +72,7 @@ class ContactCenterInsightsTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -91,6 +103,9 @@ class ContactCenterInsightsTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -140,399 +155,555 @@ class ContactCenterInsightsTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.create_conversation: gapic_v1.method.wrap_method(
+            self.create_conversation: self._wrap_method(
                 self.create_conversation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CreateConversation",
             ),
-            self.upload_conversation: gapic_v1.method.wrap_method(
+            self.upload_conversation: self._wrap_method(
                 self.upload_conversation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UploadConversation",
             ),
-            self.update_conversation: gapic_v1.method.wrap_method(
+            self.update_conversation: self._wrap_method(
                 self.update_conversation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UpdateConversation",
             ),
-            self.get_conversation: gapic_v1.method.wrap_method(
+            self.get_conversation: self._wrap_method(
                 self.get_conversation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetConversation",
             ),
-            self.list_conversations: gapic_v1.method.wrap_method(
+            self.list_conversations: self._wrap_method(
                 self.list_conversations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListConversations",
             ),
-            self.delete_conversation: gapic_v1.method.wrap_method(
+            self.delete_conversation: self._wrap_method(
                 self.delete_conversation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeleteConversation",
             ),
-            self.create_analysis: gapic_v1.method.wrap_method(
+            self.create_analysis: self._wrap_method(
                 self.create_analysis,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CreateAnalysis",
             ),
-            self.get_analysis: gapic_v1.method.wrap_method(
+            self.get_analysis: self._wrap_method(
                 self.get_analysis,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetAnalysis",
             ),
-            self.list_analyses: gapic_v1.method.wrap_method(
+            self.list_analyses: self._wrap_method(
                 self.list_analyses,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListAnalyses",
             ),
-            self.delete_analysis: gapic_v1.method.wrap_method(
+            self.delete_analysis: self._wrap_method(
                 self.delete_analysis,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeleteAnalysis",
             ),
-            self.bulk_analyze_conversations: gapic_v1.method.wrap_method(
+            self.bulk_analyze_conversations: self._wrap_method(
                 self.bulk_analyze_conversations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/BulkAnalyzeConversations",
             ),
-            self.bulk_delete_conversations: gapic_v1.method.wrap_method(
+            self.bulk_delete_conversations: self._wrap_method(
                 self.bulk_delete_conversations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/BulkDeleteConversations",
             ),
-            self.ingest_conversations: gapic_v1.method.wrap_method(
+            self.ingest_conversations: self._wrap_method(
                 self.ingest_conversations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/IngestConversations",
             ),
-            self.export_insights_data: gapic_v1.method.wrap_method(
+            self.export_insights_data: self._wrap_method(
                 self.export_insights_data,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ExportInsightsData",
             ),
-            self.create_issue_model: gapic_v1.method.wrap_method(
+            self.create_issue_model: self._wrap_method(
                 self.create_issue_model,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CreateIssueModel",
             ),
-            self.update_issue_model: gapic_v1.method.wrap_method(
+            self.update_issue_model: self._wrap_method(
                 self.update_issue_model,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UpdateIssueModel",
             ),
-            self.get_issue_model: gapic_v1.method.wrap_method(
+            self.get_issue_model: self._wrap_method(
                 self.get_issue_model,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetIssueModel",
             ),
-            self.list_issue_models: gapic_v1.method.wrap_method(
+            self.list_issue_models: self._wrap_method(
                 self.list_issue_models,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListIssueModels",
             ),
-            self.delete_issue_model: gapic_v1.method.wrap_method(
+            self.delete_issue_model: self._wrap_method(
                 self.delete_issue_model,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeleteIssueModel",
             ),
-            self.deploy_issue_model: gapic_v1.method.wrap_method(
+            self.deploy_issue_model: self._wrap_method(
                 self.deploy_issue_model,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeployIssueModel",
             ),
-            self.undeploy_issue_model: gapic_v1.method.wrap_method(
+            self.undeploy_issue_model: self._wrap_method(
                 self.undeploy_issue_model,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UndeployIssueModel",
             ),
-            self.export_issue_model: gapic_v1.method.wrap_method(
+            self.export_issue_model: self._wrap_method(
                 self.export_issue_model,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ExportIssueModel",
             ),
-            self.import_issue_model: gapic_v1.method.wrap_method(
+            self.import_issue_model: self._wrap_method(
                 self.import_issue_model,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ImportIssueModel",
             ),
-            self.get_issue: gapic_v1.method.wrap_method(
+            self.get_issue: self._wrap_method(
                 self.get_issue,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetIssue",
             ),
-            self.list_issues: gapic_v1.method.wrap_method(
+            self.list_issues: self._wrap_method(
                 self.list_issues,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListIssues",
             ),
-            self.update_issue: gapic_v1.method.wrap_method(
+            self.update_issue: self._wrap_method(
                 self.update_issue,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UpdateIssue",
             ),
-            self.delete_issue: gapic_v1.method.wrap_method(
+            self.delete_issue: self._wrap_method(
                 self.delete_issue,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeleteIssue",
             ),
-            self.calculate_issue_model_stats: gapic_v1.method.wrap_method(
+            self.calculate_issue_model_stats: self._wrap_method(
                 self.calculate_issue_model_stats,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CalculateIssueModelStats",
             ),
-            self.create_phrase_matcher: gapic_v1.method.wrap_method(
+            self.create_phrase_matcher: self._wrap_method(
                 self.create_phrase_matcher,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CreatePhraseMatcher",
             ),
-            self.get_phrase_matcher: gapic_v1.method.wrap_method(
+            self.get_phrase_matcher: self._wrap_method(
                 self.get_phrase_matcher,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetPhraseMatcher",
             ),
-            self.list_phrase_matchers: gapic_v1.method.wrap_method(
+            self.list_phrase_matchers: self._wrap_method(
                 self.list_phrase_matchers,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListPhraseMatchers",
             ),
-            self.delete_phrase_matcher: gapic_v1.method.wrap_method(
+            self.delete_phrase_matcher: self._wrap_method(
                 self.delete_phrase_matcher,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeletePhraseMatcher",
             ),
-            self.update_phrase_matcher: gapic_v1.method.wrap_method(
+            self.update_phrase_matcher: self._wrap_method(
                 self.update_phrase_matcher,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UpdatePhraseMatcher",
             ),
-            self.calculate_stats: gapic_v1.method.wrap_method(
+            self.calculate_stats: self._wrap_method(
                 self.calculate_stats,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CalculateStats",
             ),
-            self.get_settings: gapic_v1.method.wrap_method(
+            self.get_settings: self._wrap_method(
                 self.get_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetSettings",
             ),
-            self.update_settings: gapic_v1.method.wrap_method(
+            self.update_settings: self._wrap_method(
                 self.update_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UpdateSettings",
             ),
-            self.create_analysis_rule: gapic_v1.method.wrap_method(
+            self.create_analysis_rule: self._wrap_method(
                 self.create_analysis_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CreateAnalysisRule",
             ),
-            self.get_analysis_rule: gapic_v1.method.wrap_method(
+            self.get_analysis_rule: self._wrap_method(
                 self.get_analysis_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetAnalysisRule",
             ),
-            self.list_analysis_rules: gapic_v1.method.wrap_method(
+            self.list_analysis_rules: self._wrap_method(
                 self.list_analysis_rules,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListAnalysisRules",
             ),
-            self.update_analysis_rule: gapic_v1.method.wrap_method(
+            self.update_analysis_rule: self._wrap_method(
                 self.update_analysis_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UpdateAnalysisRule",
             ),
-            self.delete_analysis_rule: gapic_v1.method.wrap_method(
+            self.delete_analysis_rule: self._wrap_method(
                 self.delete_analysis_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeleteAnalysisRule",
             ),
-            self.get_encryption_spec: gapic_v1.method.wrap_method(
+            self.get_encryption_spec: self._wrap_method(
                 self.get_encryption_spec,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetEncryptionSpec",
             ),
-            self.initialize_encryption_spec: gapic_v1.method.wrap_method(
+            self.initialize_encryption_spec: self._wrap_method(
                 self.initialize_encryption_spec,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/InitializeEncryptionSpec",
             ),
-            self.create_view: gapic_v1.method.wrap_method(
+            self.create_view: self._wrap_method(
                 self.create_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CreateView",
             ),
-            self.get_view: gapic_v1.method.wrap_method(
+            self.get_view: self._wrap_method(
                 self.get_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetView",
             ),
-            self.list_views: gapic_v1.method.wrap_method(
+            self.list_views: self._wrap_method(
                 self.list_views,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListViews",
             ),
-            self.update_view: gapic_v1.method.wrap_method(
+            self.update_view: self._wrap_method(
                 self.update_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UpdateView",
             ),
-            self.delete_view: gapic_v1.method.wrap_method(
+            self.delete_view: self._wrap_method(
                 self.delete_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeleteView",
             ),
-            self.query_metrics: gapic_v1.method.wrap_method(
+            self.query_metrics: self._wrap_method(
                 self.query_metrics,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/QueryMetrics",
             ),
-            self.create_qa_question: gapic_v1.method.wrap_method(
+            self.create_qa_question: self._wrap_method(
                 self.create_qa_question,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CreateQaQuestion",
             ),
-            self.get_qa_question: gapic_v1.method.wrap_method(
+            self.get_qa_question: self._wrap_method(
                 self.get_qa_question,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetQaQuestion",
             ),
-            self.update_qa_question: gapic_v1.method.wrap_method(
+            self.update_qa_question: self._wrap_method(
                 self.update_qa_question,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UpdateQaQuestion",
             ),
-            self.delete_qa_question: gapic_v1.method.wrap_method(
+            self.delete_qa_question: self._wrap_method(
                 self.delete_qa_question,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeleteQaQuestion",
             ),
-            self.list_qa_questions: gapic_v1.method.wrap_method(
+            self.list_qa_questions: self._wrap_method(
                 self.list_qa_questions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListQaQuestions",
             ),
-            self.create_qa_scorecard: gapic_v1.method.wrap_method(
+            self.create_qa_scorecard: self._wrap_method(
                 self.create_qa_scorecard,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CreateQaScorecard",
             ),
-            self.get_qa_scorecard: gapic_v1.method.wrap_method(
+            self.get_qa_scorecard: self._wrap_method(
                 self.get_qa_scorecard,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetQaScorecard",
             ),
-            self.update_qa_scorecard: gapic_v1.method.wrap_method(
+            self.update_qa_scorecard: self._wrap_method(
                 self.update_qa_scorecard,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UpdateQaScorecard",
             ),
-            self.delete_qa_scorecard: gapic_v1.method.wrap_method(
+            self.delete_qa_scorecard: self._wrap_method(
                 self.delete_qa_scorecard,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeleteQaScorecard",
             ),
-            self.list_qa_scorecards: gapic_v1.method.wrap_method(
+            self.list_qa_scorecards: self._wrap_method(
                 self.list_qa_scorecards,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListQaScorecards",
             ),
-            self.create_qa_scorecard_revision: gapic_v1.method.wrap_method(
+            self.create_qa_scorecard_revision: self._wrap_method(
                 self.create_qa_scorecard_revision,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CreateQaScorecardRevision",
             ),
-            self.get_qa_scorecard_revision: gapic_v1.method.wrap_method(
+            self.get_qa_scorecard_revision: self._wrap_method(
                 self.get_qa_scorecard_revision,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetQaScorecardRevision",
             ),
-            self.tune_qa_scorecard_revision: gapic_v1.method.wrap_method(
+            self.tune_qa_scorecard_revision: self._wrap_method(
                 self.tune_qa_scorecard_revision,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/TuneQaScorecardRevision",
             ),
-            self.deploy_qa_scorecard_revision: gapic_v1.method.wrap_method(
+            self.deploy_qa_scorecard_revision: self._wrap_method(
                 self.deploy_qa_scorecard_revision,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeployQaScorecardRevision",
             ),
-            self.undeploy_qa_scorecard_revision: gapic_v1.method.wrap_method(
+            self.undeploy_qa_scorecard_revision: self._wrap_method(
                 self.undeploy_qa_scorecard_revision,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UndeployQaScorecardRevision",
             ),
-            self.delete_qa_scorecard_revision: gapic_v1.method.wrap_method(
+            self.delete_qa_scorecard_revision: self._wrap_method(
                 self.delete_qa_scorecard_revision,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeleteQaScorecardRevision",
             ),
-            self.list_qa_scorecard_revisions: gapic_v1.method.wrap_method(
+            self.list_qa_scorecard_revisions: self._wrap_method(
                 self.list_qa_scorecard_revisions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListQaScorecardRevisions",
             ),
-            self.create_feedback_label: gapic_v1.method.wrap_method(
+            self.create_feedback_label: self._wrap_method(
                 self.create_feedback_label,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CreateFeedbackLabel",
             ),
-            self.list_feedback_labels: gapic_v1.method.wrap_method(
+            self.list_feedback_labels: self._wrap_method(
                 self.list_feedback_labels,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListFeedbackLabels",
             ),
-            self.get_feedback_label: gapic_v1.method.wrap_method(
+            self.get_feedback_label: self._wrap_method(
                 self.get_feedback_label,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetFeedbackLabel",
             ),
-            self.update_feedback_label: gapic_v1.method.wrap_method(
+            self.update_feedback_label: self._wrap_method(
                 self.update_feedback_label,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UpdateFeedbackLabel",
             ),
-            self.delete_feedback_label: gapic_v1.method.wrap_method(
+            self.delete_feedback_label: self._wrap_method(
                 self.delete_feedback_label,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeleteFeedbackLabel",
             ),
-            self.list_all_feedback_labels: gapic_v1.method.wrap_method(
+            self.list_all_feedback_labels: self._wrap_method(
                 self.list_all_feedback_labels,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListAllFeedbackLabels",
             ),
-            self.bulk_upload_feedback_labels: gapic_v1.method.wrap_method(
+            self.bulk_upload_feedback_labels: self._wrap_method(
                 self.bulk_upload_feedback_labels,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/BulkUploadFeedbackLabels",
             ),
-            self.bulk_download_feedback_labels: gapic_v1.method.wrap_method(
+            self.bulk_download_feedback_labels: self._wrap_method(
                 self.bulk_download_feedback_labels,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/BulkDownloadFeedbackLabels",
             ),
-            self.cancel_operation: gapic_v1.method.wrap_method(
+            self.cancel_operation: self._wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
 

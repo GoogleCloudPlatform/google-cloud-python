@@ -16,9 +16,21 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.backupdr_v1beta import gapic_version as package_version
+from google.cloud.backupdr_v1beta._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.backupdr_v1beta._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -31,7 +43,6 @@ from google.iam.v1 import (
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.backupdr_v1beta import gapic_version as package_version
 from google.cloud.backupdr_v1beta.types import (
     appliedautoprotectionpolicy,
     autoprotectionpolicy,
@@ -71,6 +82,7 @@ class BackupDRTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -101,6 +113,9 @@ class BackupDRTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -150,16 +165,95 @@ class BackupDRTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.list_management_servers: gapic_v1.method.wrap_method(
+            self.list_management_servers: self._wrap_method(
                 self.list_management_servers,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -172,8 +266,9 @@ class BackupDRTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/ListManagementServers",
             ),
-            self.get_management_server: gapic_v1.method.wrap_method(
+            self.get_management_server: self._wrap_method(
                 self.get_management_server,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -186,18 +281,21 @@ class BackupDRTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/GetManagementServer",
             ),
-            self.create_management_server: gapic_v1.method.wrap_method(
+            self.create_management_server: self._wrap_method(
                 self.create_management_server,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/CreateManagementServer",
             ),
-            self.delete_management_server: gapic_v1.method.wrap_method(
+            self.delete_management_server: self._wrap_method(
                 self.delete_management_server,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/DeleteManagementServer",
             ),
-            self.create_backup_vault: gapic_v1.method.wrap_method(
+            self.create_backup_vault: self._wrap_method(
                 self.create_backup_vault,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -210,8 +308,9 @@ class BackupDRTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/CreateBackupVault",
             ),
-            self.list_backup_vaults: gapic_v1.method.wrap_method(
+            self.list_backup_vaults: self._wrap_method(
                 self.list_backup_vaults,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -224,8 +323,9 @@ class BackupDRTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/ListBackupVaults",
             ),
-            self.fetch_usable_backup_vaults: gapic_v1.method.wrap_method(
+            self.fetch_usable_backup_vaults: self._wrap_method(
                 self.fetch_usable_backup_vaults,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -238,8 +338,9 @@ class BackupDRTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/FetchUsableBackupVaults",
             ),
-            self.get_backup_vault: gapic_v1.method.wrap_method(
+            self.get_backup_vault: self._wrap_method(
                 self.get_backup_vault,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -252,13 +353,15 @@ class BackupDRTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/GetBackupVault",
             ),
-            self.update_backup_vault: gapic_v1.method.wrap_method(
+            self.update_backup_vault: self._wrap_method(
                 self.update_backup_vault,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/UpdateBackupVault",
             ),
-            self.delete_backup_vault: gapic_v1.method.wrap_method(
+            self.delete_backup_vault: self._wrap_method(
                 self.delete_backup_vault,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -271,8 +374,9 @@ class BackupDRTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/DeleteBackupVault",
             ),
-            self.list_data_sources: gapic_v1.method.wrap_method(
+            self.list_data_sources: self._wrap_method(
                 self.list_data_sources,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -285,8 +389,9 @@ class BackupDRTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/ListDataSources",
             ),
-            self.get_data_source: gapic_v1.method.wrap_method(
+            self.get_data_source: self._wrap_method(
                 self.get_data_source,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -299,13 +404,15 @@ class BackupDRTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/GetDataSource",
             ),
-            self.update_data_source: gapic_v1.method.wrap_method(
+            self.update_data_source: self._wrap_method(
                 self.update_data_source,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/UpdateDataSource",
             ),
-            self.list_backups: gapic_v1.method.wrap_method(
+            self.list_backups: self._wrap_method(
                 self.list_backups,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -318,13 +425,15 @@ class BackupDRTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/ListBackups",
             ),
-            self.fetch_backups_for_resource_type: gapic_v1.method.wrap_method(
+            self.fetch_backups_for_resource_type: self._wrap_method(
                 self.fetch_backups_for_resource_type,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/FetchBackupsForResourceType",
             ),
-            self.get_backup: gapic_v1.method.wrap_method(
+            self.get_backup: self._wrap_method(
                 self.get_backup,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -337,108 +446,129 @@ class BackupDRTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/GetBackup",
             ),
-            self.update_backup: gapic_v1.method.wrap_method(
+            self.update_backup: self._wrap_method(
                 self.update_backup,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/UpdateBackup",
             ),
-            self.delete_backup: gapic_v1.method.wrap_method(
+            self.delete_backup: self._wrap_method(
                 self.delete_backup,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/DeleteBackup",
             ),
-            self.restore_backup: gapic_v1.method.wrap_method(
+            self.restore_backup: self._wrap_method(
                 self.restore_backup,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/RestoreBackup",
             ),
-            self.create_backup_plan: gapic_v1.method.wrap_method(
+            self.create_backup_plan: self._wrap_method(
                 self.create_backup_plan,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/CreateBackupPlan",
             ),
-            self.update_backup_plan: gapic_v1.method.wrap_method(
+            self.update_backup_plan: self._wrap_method(
                 self.update_backup_plan,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/UpdateBackupPlan",
             ),
-            self.get_backup_plan: gapic_v1.method.wrap_method(
+            self.get_backup_plan: self._wrap_method(
                 self.get_backup_plan,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/GetBackupPlan",
             ),
-            self.list_backup_plans: gapic_v1.method.wrap_method(
+            self.list_backup_plans: self._wrap_method(
                 self.list_backup_plans,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/ListBackupPlans",
             ),
-            self.delete_backup_plan: gapic_v1.method.wrap_method(
+            self.delete_backup_plan: self._wrap_method(
                 self.delete_backup_plan,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/DeleteBackupPlan",
             ),
-            self.get_backup_plan_revision: gapic_v1.method.wrap_method(
+            self.get_backup_plan_revision: self._wrap_method(
                 self.get_backup_plan_revision,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/GetBackupPlanRevision",
             ),
-            self.list_backup_plan_revisions: gapic_v1.method.wrap_method(
+            self.list_backup_plan_revisions: self._wrap_method(
                 self.list_backup_plan_revisions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/ListBackupPlanRevisions",
             ),
-            self.create_backup_plan_association: gapic_v1.method.wrap_method(
+            self.create_backup_plan_association: self._wrap_method(
                 self.create_backup_plan_association,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/CreateBackupPlanAssociation",
             ),
-            self.update_backup_plan_association: gapic_v1.method.wrap_method(
+            self.update_backup_plan_association: self._wrap_method(
                 self.update_backup_plan_association,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/UpdateBackupPlanAssociation",
             ),
-            self.get_backup_plan_association: gapic_v1.method.wrap_method(
+            self.get_backup_plan_association: self._wrap_method(
                 self.get_backup_plan_association,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/GetBackupPlanAssociation",
             ),
-            self.list_backup_plan_associations: gapic_v1.method.wrap_method(
+            self.list_backup_plan_associations: self._wrap_method(
                 self.list_backup_plan_associations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/ListBackupPlanAssociations",
             ),
-            self.fetch_backup_plan_associations_for_resource_type: gapic_v1.method.wrap_method(
+            self.fetch_backup_plan_associations_for_resource_type: self._wrap_method(
                 self.fetch_backup_plan_associations_for_resource_type,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/FetchBackupPlanAssociationsForResourceType",
             ),
-            self.delete_backup_plan_association: gapic_v1.method.wrap_method(
+            self.delete_backup_plan_association: self._wrap_method(
                 self.delete_backup_plan_association,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/DeleteBackupPlanAssociation",
             ),
-            self.trigger_backup: gapic_v1.method.wrap_method(
+            self.trigger_backup: self._wrap_method(
                 self.trigger_backup,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/TriggerBackup",
             ),
-            self.get_data_source_reference: gapic_v1.method.wrap_method(
+            self.get_data_source_reference: self._wrap_method(
                 self.get_data_source_reference,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/GetDataSourceReference",
             ),
-            self.list_data_source_references: gapic_v1.method.wrap_method(
+            self.list_data_source_references: self._wrap_method(
                 self.list_data_source_references,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/ListDataSourceReferences",
             ),
-            self.fetch_data_source_references_for_resource_type: gapic_v1.method.wrap_method(
+            self.fetch_data_source_references_for_resource_type: self._wrap_method(
                 self.fetch_data_source_references_for_resource_type,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/FetchDataSourceReferencesForResourceType",
             ),
-            self.initialize_service: gapic_v1.method.wrap_method(
+            self.initialize_service: self._wrap_method(
                 self.initialize_service,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -451,111 +581,133 @@ class BackupDRTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/InitializeService",
             ),
-            self.create_auto_protection_policy: gapic_v1.method.wrap_method(
+            self.create_auto_protection_policy: self._wrap_method(
                 self.create_auto_protection_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/CreateAutoProtectionPolicy",
             ),
-            self.list_auto_protection_policies: gapic_v1.method.wrap_method(
+            self.list_auto_protection_policies: self._wrap_method(
                 self.list_auto_protection_policies,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/ListAutoProtectionPolicies",
             ),
-            self.get_auto_protection_policy: gapic_v1.method.wrap_method(
+            self.get_auto_protection_policy: self._wrap_method(
                 self.get_auto_protection_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/GetAutoProtectionPolicy",
             ),
-            self.update_auto_protection_policy: gapic_v1.method.wrap_method(
+            self.update_auto_protection_policy: self._wrap_method(
                 self.update_auto_protection_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/UpdateAutoProtectionPolicy",
             ),
-            self.delete_auto_protection_policy: gapic_v1.method.wrap_method(
+            self.delete_auto_protection_policy: self._wrap_method(
                 self.delete_auto_protection_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/DeleteAutoProtectionPolicy",
             ),
-            self.create_auto_protection_policy_binding: gapic_v1.method.wrap_method(
+            self.create_auto_protection_policy_binding: self._wrap_method(
                 self.create_auto_protection_policy_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/CreateAutoProtectionPolicyBinding",
             ),
-            self.get_auto_protection_policy_binding: gapic_v1.method.wrap_method(
+            self.get_auto_protection_policy_binding: self._wrap_method(
                 self.get_auto_protection_policy_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/GetAutoProtectionPolicyBinding",
             ),
-            self.list_auto_protection_policy_bindings: gapic_v1.method.wrap_method(
+            self.list_auto_protection_policy_bindings: self._wrap_method(
                 self.list_auto_protection_policy_bindings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/ListAutoProtectionPolicyBindings",
             ),
-            self.list_applied_auto_protection_policies: gapic_v1.method.wrap_method(
+            self.list_applied_auto_protection_policies: self._wrap_method(
                 self.list_applied_auto_protection_policies,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/ListAppliedAutoProtectionPolicies",
             ),
-            self.initiate_delete_auto_protection_policy_binding: gapic_v1.method.wrap_method(
+            self.initiate_delete_auto_protection_policy_binding: self._wrap_method(
                 self.initiate_delete_auto_protection_policy_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/InitiateDeleteAutoProtectionPolicyBinding",
             ),
-            self.get_binding_matching_resource: gapic_v1.method.wrap_method(
+            self.get_binding_matching_resource: self._wrap_method(
                 self.get_binding_matching_resource,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/GetBindingMatchingResource",
             ),
-            self.list_binding_matching_resources: gapic_v1.method.wrap_method(
+            self.list_binding_matching_resources: self._wrap_method(
                 self.list_binding_matching_resources,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.backupdr.v1beta.BackupDR/ListBindingMatchingResources",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.get_iam_policy: gapic_v1.method.wrap_method(
+            self.get_iam_policy: self._wrap_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/GetIamPolicy",
             ),
-            self.set_iam_policy: gapic_v1.method.wrap_method(
+            self.set_iam_policy: self._wrap_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/SetIamPolicy",
             ),
-            self.test_iam_permissions: gapic_v1.method.wrap_method(
+            self.test_iam_permissions: self._wrap_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/TestIamPermissions",
             ),
-            self.cancel_operation: gapic_v1.method.wrap_method(
+            self.cancel_operation: self._wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: gapic_v1.method.wrap_method(
+            self.delete_operation: self._wrap_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
 

@@ -16,9 +16,21 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.gkehub_v1 import gapic_version as package_version
+from google.cloud.gkehub_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.gkehub_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -26,7 +38,6 @@ from google.auth import credentials as ga_credentials  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.gkehub_v1 import gapic_version as package_version
 from google.cloud.gkehub_v1.types import feature, fleet, membership, service
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
@@ -53,6 +64,7 @@ class GkeHubTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -83,6 +95,9 @@ class GkeHubTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -132,234 +147,357 @@ class GkeHubTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.list_memberships: gapic_v1.method.wrap_method(
+            self.list_memberships: self._wrap_method(
                 self.list_memberships,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/ListMemberships",
             ),
-            self.list_bound_memberships: gapic_v1.method.wrap_method(
+            self.list_bound_memberships: self._wrap_method(
                 self.list_bound_memberships,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/ListBoundMemberships",
             ),
-            self.list_features: gapic_v1.method.wrap_method(
+            self.list_features: self._wrap_method(
                 self.list_features,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/ListFeatures",
             ),
-            self.get_membership: gapic_v1.method.wrap_method(
+            self.get_membership: self._wrap_method(
                 self.get_membership,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/GetMembership",
             ),
-            self.get_feature: gapic_v1.method.wrap_method(
+            self.get_feature: self._wrap_method(
                 self.get_feature,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/GetFeature",
             ),
-            self.create_membership: gapic_v1.method.wrap_method(
+            self.create_membership: self._wrap_method(
                 self.create_membership,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/CreateMembership",
             ),
-            self.create_feature: gapic_v1.method.wrap_method(
+            self.create_feature: self._wrap_method(
                 self.create_feature,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/CreateFeature",
             ),
-            self.delete_membership: gapic_v1.method.wrap_method(
+            self.delete_membership: self._wrap_method(
                 self.delete_membership,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/DeleteMembership",
             ),
-            self.delete_feature: gapic_v1.method.wrap_method(
+            self.delete_feature: self._wrap_method(
                 self.delete_feature,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/DeleteFeature",
             ),
-            self.update_membership: gapic_v1.method.wrap_method(
+            self.update_membership: self._wrap_method(
                 self.update_membership,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/UpdateMembership",
             ),
-            self.update_feature: gapic_v1.method.wrap_method(
+            self.update_feature: self._wrap_method(
                 self.update_feature,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/UpdateFeature",
             ),
-            self.generate_connect_manifest: gapic_v1.method.wrap_method(
+            self.generate_connect_manifest: self._wrap_method(
                 self.generate_connect_manifest,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/GenerateConnectManifest",
             ),
-            self.create_fleet: gapic_v1.method.wrap_method(
+            self.create_fleet: self._wrap_method(
                 self.create_fleet,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/CreateFleet",
             ),
-            self.get_fleet: gapic_v1.method.wrap_method(
+            self.get_fleet: self._wrap_method(
                 self.get_fleet,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/GetFleet",
             ),
-            self.update_fleet: gapic_v1.method.wrap_method(
+            self.update_fleet: self._wrap_method(
                 self.update_fleet,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/UpdateFleet",
             ),
-            self.delete_fleet: gapic_v1.method.wrap_method(
+            self.delete_fleet: self._wrap_method(
                 self.delete_fleet,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/DeleteFleet",
             ),
-            self.list_fleets: gapic_v1.method.wrap_method(
+            self.list_fleets: self._wrap_method(
                 self.list_fleets,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/ListFleets",
             ),
-            self.get_scope_namespace: gapic_v1.method.wrap_method(
+            self.get_scope_namespace: self._wrap_method(
                 self.get_scope_namespace,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/GetScopeNamespace",
             ),
-            self.create_scope_namespace: gapic_v1.method.wrap_method(
+            self.create_scope_namespace: self._wrap_method(
                 self.create_scope_namespace,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/CreateScopeNamespace",
             ),
-            self.update_scope_namespace: gapic_v1.method.wrap_method(
+            self.update_scope_namespace: self._wrap_method(
                 self.update_scope_namespace,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/UpdateScopeNamespace",
             ),
-            self.delete_scope_namespace: gapic_v1.method.wrap_method(
+            self.delete_scope_namespace: self._wrap_method(
                 self.delete_scope_namespace,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/DeleteScopeNamespace",
             ),
-            self.list_scope_namespaces: gapic_v1.method.wrap_method(
+            self.list_scope_namespaces: self._wrap_method(
                 self.list_scope_namespaces,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/ListScopeNamespaces",
             ),
-            self.get_scope_rbac_role_binding: gapic_v1.method.wrap_method(
+            self.get_scope_rbac_role_binding: self._wrap_method(
                 self.get_scope_rbac_role_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/GetScopeRBACRoleBinding",
             ),
-            self.create_scope_rbac_role_binding: gapic_v1.method.wrap_method(
+            self.create_scope_rbac_role_binding: self._wrap_method(
                 self.create_scope_rbac_role_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/CreateScopeRBACRoleBinding",
             ),
-            self.update_scope_rbac_role_binding: gapic_v1.method.wrap_method(
+            self.update_scope_rbac_role_binding: self._wrap_method(
                 self.update_scope_rbac_role_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/UpdateScopeRBACRoleBinding",
             ),
-            self.delete_scope_rbac_role_binding: gapic_v1.method.wrap_method(
+            self.delete_scope_rbac_role_binding: self._wrap_method(
                 self.delete_scope_rbac_role_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/DeleteScopeRBACRoleBinding",
             ),
-            self.list_scope_rbac_role_bindings: gapic_v1.method.wrap_method(
+            self.list_scope_rbac_role_bindings: self._wrap_method(
                 self.list_scope_rbac_role_bindings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/ListScopeRBACRoleBindings",
             ),
-            self.get_scope: gapic_v1.method.wrap_method(
+            self.get_scope: self._wrap_method(
                 self.get_scope,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/GetScope",
             ),
-            self.create_scope: gapic_v1.method.wrap_method(
+            self.create_scope: self._wrap_method(
                 self.create_scope,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/CreateScope",
             ),
-            self.update_scope: gapic_v1.method.wrap_method(
+            self.update_scope: self._wrap_method(
                 self.update_scope,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/UpdateScope",
             ),
-            self.delete_scope: gapic_v1.method.wrap_method(
+            self.delete_scope: self._wrap_method(
                 self.delete_scope,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/DeleteScope",
             ),
-            self.list_scopes: gapic_v1.method.wrap_method(
+            self.list_scopes: self._wrap_method(
                 self.list_scopes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/ListScopes",
             ),
-            self.list_permitted_scopes: gapic_v1.method.wrap_method(
+            self.list_permitted_scopes: self._wrap_method(
                 self.list_permitted_scopes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/ListPermittedScopes",
             ),
-            self.get_membership_binding: gapic_v1.method.wrap_method(
+            self.get_membership_binding: self._wrap_method(
                 self.get_membership_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/GetMembershipBinding",
             ),
-            self.create_membership_binding: gapic_v1.method.wrap_method(
+            self.create_membership_binding: self._wrap_method(
                 self.create_membership_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/CreateMembershipBinding",
             ),
-            self.update_membership_binding: gapic_v1.method.wrap_method(
+            self.update_membership_binding: self._wrap_method(
                 self.update_membership_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/UpdateMembershipBinding",
             ),
-            self.delete_membership_binding: gapic_v1.method.wrap_method(
+            self.delete_membership_binding: self._wrap_method(
                 self.delete_membership_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/DeleteMembershipBinding",
             ),
-            self.list_membership_bindings: gapic_v1.method.wrap_method(
+            self.list_membership_bindings: self._wrap_method(
                 self.list_membership_bindings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/ListMembershipBindings",
             ),
-            self.get_membership_rbac_role_binding: gapic_v1.method.wrap_method(
+            self.get_membership_rbac_role_binding: self._wrap_method(
                 self.get_membership_rbac_role_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/GetMembershipRBACRoleBinding",
             ),
-            self.create_membership_rbac_role_binding: gapic_v1.method.wrap_method(
+            self.create_membership_rbac_role_binding: self._wrap_method(
                 self.create_membership_rbac_role_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/CreateMembershipRBACRoleBinding",
             ),
-            self.update_membership_rbac_role_binding: gapic_v1.method.wrap_method(
+            self.update_membership_rbac_role_binding: self._wrap_method(
                 self.update_membership_rbac_role_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/UpdateMembershipRBACRoleBinding",
             ),
-            self.delete_membership_rbac_role_binding: gapic_v1.method.wrap_method(
+            self.delete_membership_rbac_role_binding: self._wrap_method(
                 self.delete_membership_rbac_role_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/DeleteMembershipRBACRoleBinding",
             ),
-            self.list_membership_rbac_role_bindings: gapic_v1.method.wrap_method(
+            self.list_membership_rbac_role_bindings: self._wrap_method(
                 self.list_membership_rbac_role_bindings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/ListMembershipRBACRoleBindings",
             ),
-            self.generate_membership_rbac_role_binding_yaml: gapic_v1.method.wrap_method(
+            self.generate_membership_rbac_role_binding_yaml: self._wrap_method(
                 self.generate_membership_rbac_role_binding_yaml,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/GenerateMembershipRBACRoleBindingYAML",
             ),
         }
 

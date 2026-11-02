@@ -16,16 +16,27 @@
 import abc
 from typing import Any, Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.compute_v1 import gapic_version as package_version
+from google.cloud.compute_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.compute_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
 from google.auth import credentials as ga_credentials  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.compute_v1 import gapic_version as package_version
 from google.cloud.compute_v1.services import zone_operations
 from google.cloud.compute_v1.types import compute
 
@@ -56,6 +67,7 @@ class InstancesTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -86,6 +98,9 @@ class InstancesTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
         self._extended_operations_services: Dict[str, Any] = {}
 
@@ -136,31 +151,113 @@ class InstancesTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.add_access_config: gapic_v1.method.wrap_method(
+            self.add_access_config: self._wrap_method(
                 self.add_access_config,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/AddAccessConfig",
             ),
-            self.add_network_interface: gapic_v1.method.wrap_method(
+            self.add_network_interface: self._wrap_method(
                 self.add_network_interface,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/AddNetworkInterface",
             ),
-            self.add_resource_policies: gapic_v1.method.wrap_method(
+            self.add_resource_policies: self._wrap_method(
                 self.add_resource_policies,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/AddResourcePolicies",
             ),
-            self.aggregated_list: gapic_v1.method.wrap_method(
+            self.aggregated_list: self._wrap_method(
                 self.aggregated_list,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -174,38 +271,45 @@ class InstancesTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/AggregatedList",
             ),
-            self.attach_disk: gapic_v1.method.wrap_method(
+            self.attach_disk: self._wrap_method(
                 self.attach_disk,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/AttachDisk",
             ),
-            self.bulk_insert: gapic_v1.method.wrap_method(
+            self.bulk_insert: self._wrap_method(
                 self.bulk_insert,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/BulkInsert",
             ),
-            self.delete: gapic_v1.method.wrap_method(
+            self.delete: self._wrap_method(
                 self.delete,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/Delete",
             ),
-            self.delete_access_config: gapic_v1.method.wrap_method(
+            self.delete_access_config: self._wrap_method(
                 self.delete_access_config,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/DeleteAccessConfig",
             ),
-            self.delete_network_interface: gapic_v1.method.wrap_method(
+            self.delete_network_interface: self._wrap_method(
                 self.delete_network_interface,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/DeleteNetworkInterface",
             ),
-            self.detach_disk: gapic_v1.method.wrap_method(
+            self.detach_disk: self._wrap_method(
                 self.detach_disk,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/DetachDisk",
             ),
-            self.get: gapic_v1.method.wrap_method(
+            self.get: self._wrap_method(
                 self.get,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -219,8 +323,9 @@ class InstancesTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/Get",
             ),
-            self.get_effective_firewalls: gapic_v1.method.wrap_method(
+            self.get_effective_firewalls: self._wrap_method(
                 self.get_effective_firewalls,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -234,8 +339,9 @@ class InstancesTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/GetEffectiveFirewalls",
             ),
-            self.get_guest_attributes: gapic_v1.method.wrap_method(
+            self.get_guest_attributes: self._wrap_method(
                 self.get_guest_attributes,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -249,8 +355,9 @@ class InstancesTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/GetGuestAttributes",
             ),
-            self.get_iam_policy: gapic_v1.method.wrap_method(
+            self.get_iam_policy: self._wrap_method(
                 self.get_iam_policy,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -264,8 +371,9 @@ class InstancesTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/GetIamPolicy",
             ),
-            self.get_screenshot: gapic_v1.method.wrap_method(
+            self.get_screenshot: self._wrap_method(
                 self.get_screenshot,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -279,8 +387,9 @@ class InstancesTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/GetScreenshot",
             ),
-            self.get_serial_port_output: gapic_v1.method.wrap_method(
+            self.get_serial_port_output: self._wrap_method(
                 self.get_serial_port_output,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -294,8 +403,9 @@ class InstancesTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/GetSerialPortOutput",
             ),
-            self.get_shielded_instance_identity: gapic_v1.method.wrap_method(
+            self.get_shielded_instance_identity: self._wrap_method(
                 self.get_shielded_instance_identity,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -309,13 +419,15 @@ class InstancesTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/GetShieldedInstanceIdentity",
             ),
-            self.insert: gapic_v1.method.wrap_method(
+            self.insert: self._wrap_method(
                 self.insert,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/Insert",
             ),
-            self.list: gapic_v1.method.wrap_method(
+            self.list: self._wrap_method(
                 self.list,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -329,8 +441,9 @@ class InstancesTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/List",
             ),
-            self.list_referrers: gapic_v1.method.wrap_method(
+            self.list_referrers: self._wrap_method(
                 self.list_referrers,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -344,161 +457,193 @@ class InstancesTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/ListReferrers",
             ),
-            self.perform_maintenance: gapic_v1.method.wrap_method(
+            self.perform_maintenance: self._wrap_method(
                 self.perform_maintenance,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/PerformMaintenance",
             ),
-            self.remove_resource_policies: gapic_v1.method.wrap_method(
+            self.remove_resource_policies: self._wrap_method(
                 self.remove_resource_policies,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/RemoveResourcePolicies",
             ),
-            self.report_host_as_faulty: gapic_v1.method.wrap_method(
+            self.report_host_as_faulty: self._wrap_method(
                 self.report_host_as_faulty,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/ReportHostAsFaulty",
             ),
-            self.reset: gapic_v1.method.wrap_method(
+            self.reset: self._wrap_method(
                 self.reset,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/Reset",
             ),
-            self.resume: gapic_v1.method.wrap_method(
+            self.resume: self._wrap_method(
                 self.resume,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/Resume",
             ),
-            self.send_diagnostic_interrupt: gapic_v1.method.wrap_method(
+            self.send_diagnostic_interrupt: self._wrap_method(
                 self.send_diagnostic_interrupt,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/SendDiagnosticInterrupt",
             ),
-            self.set_deletion_protection: gapic_v1.method.wrap_method(
+            self.set_deletion_protection: self._wrap_method(
                 self.set_deletion_protection,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/SetDeletionProtection",
             ),
-            self.set_disk_auto_delete: gapic_v1.method.wrap_method(
+            self.set_disk_auto_delete: self._wrap_method(
                 self.set_disk_auto_delete,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/SetDiskAutoDelete",
             ),
-            self.set_iam_policy: gapic_v1.method.wrap_method(
+            self.set_iam_policy: self._wrap_method(
                 self.set_iam_policy,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/SetIamPolicy",
             ),
-            self.set_labels: gapic_v1.method.wrap_method(
+            self.set_labels: self._wrap_method(
                 self.set_labels,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/SetLabels",
             ),
-            self.set_machine_resources: gapic_v1.method.wrap_method(
+            self.set_machine_resources: self._wrap_method(
                 self.set_machine_resources,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/SetMachineResources",
             ),
-            self.set_machine_type: gapic_v1.method.wrap_method(
+            self.set_machine_type: self._wrap_method(
                 self.set_machine_type,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/SetMachineType",
             ),
-            self.set_metadata: gapic_v1.method.wrap_method(
+            self.set_metadata: self._wrap_method(
                 self.set_metadata,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/SetMetadata",
             ),
-            self.set_min_cpu_platform: gapic_v1.method.wrap_method(
+            self.set_min_cpu_platform: self._wrap_method(
                 self.set_min_cpu_platform,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/SetMinCpuPlatform",
             ),
-            self.set_name: gapic_v1.method.wrap_method(
+            self.set_name: self._wrap_method(
                 self.set_name,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/SetName",
             ),
-            self.set_scheduling: gapic_v1.method.wrap_method(
+            self.set_scheduling: self._wrap_method(
                 self.set_scheduling,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/SetScheduling",
             ),
-            self.set_security_policy: gapic_v1.method.wrap_method(
+            self.set_security_policy: self._wrap_method(
                 self.set_security_policy,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/SetSecurityPolicy",
             ),
-            self.set_service_account: gapic_v1.method.wrap_method(
+            self.set_service_account: self._wrap_method(
                 self.set_service_account,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/SetServiceAccount",
             ),
-            self.set_shielded_instance_integrity_policy: gapic_v1.method.wrap_method(
+            self.set_shielded_instance_integrity_policy: self._wrap_method(
                 self.set_shielded_instance_integrity_policy,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/SetShieldedInstanceIntegrityPolicy",
             ),
-            self.set_tags: gapic_v1.method.wrap_method(
+            self.set_tags: self._wrap_method(
                 self.set_tags,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/SetTags",
             ),
-            self.simulate_maintenance_event: gapic_v1.method.wrap_method(
+            self.simulate_maintenance_event: self._wrap_method(
                 self.simulate_maintenance_event,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/SimulateMaintenanceEvent",
             ),
-            self.start: gapic_v1.method.wrap_method(
+            self.start: self._wrap_method(
                 self.start,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/Start",
             ),
-            self.start_with_encryption_key: gapic_v1.method.wrap_method(
+            self.start_with_encryption_key: self._wrap_method(
                 self.start_with_encryption_key,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/StartWithEncryptionKey",
             ),
-            self.stop: gapic_v1.method.wrap_method(
+            self.stop: self._wrap_method(
                 self.stop,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/Stop",
             ),
-            self.suspend: gapic_v1.method.wrap_method(
+            self.suspend: self._wrap_method(
                 self.suspend,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/Suspend",
             ),
-            self.test_iam_permissions: gapic_v1.method.wrap_method(
+            self.test_iam_permissions: self._wrap_method(
                 self.test_iam_permissions,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/TestIamPermissions",
             ),
-            self.update: gapic_v1.method.wrap_method(
+            self.update: self._wrap_method(
                 self.update,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/Update",
             ),
-            self.update_access_config: gapic_v1.method.wrap_method(
+            self.update_access_config: self._wrap_method(
                 self.update_access_config,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/UpdateAccessConfig",
             ),
-            self.update_display_device: gapic_v1.method.wrap_method(
+            self.update_display_device: self._wrap_method(
                 self.update_display_device,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/UpdateDisplayDevice",
             ),
-            self.update_network_interface: gapic_v1.method.wrap_method(
+            self.update_network_interface: self._wrap_method(
                 self.update_network_interface,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/UpdateNetworkInterface",
             ),
-            self.update_shielded_instance_config: gapic_v1.method.wrap_method(
+            self.update_shielded_instance_config: self._wrap_method(
                 self.update_shielded_instance_config,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Instances/UpdateShieldedInstanceConfig",
             ),
         }
 

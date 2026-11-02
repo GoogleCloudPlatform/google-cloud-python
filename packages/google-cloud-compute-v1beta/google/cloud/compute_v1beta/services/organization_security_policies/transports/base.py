@@ -16,16 +16,27 @@
 import abc
 from typing import Any, Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.compute_v1beta import gapic_version as package_version
+from google.cloud.compute_v1beta._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.compute_v1beta._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
 from google.auth import credentials as ga_credentials  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.compute_v1beta import gapic_version as package_version
 from google.cloud.compute_v1beta.services import global_organization_operations
 from google.cloud.compute_v1beta.types import compute
 
@@ -56,6 +67,7 @@ class OrganizationSecurityPoliciesTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -86,6 +98,9 @@ class OrganizationSecurityPoliciesTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
         self._extended_operations_services: Dict[str, Any] = {}
 
@@ -136,36 +151,119 @@ class OrganizationSecurityPoliciesTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.add_association: gapic_v1.method.wrap_method(
+            self.add_association: self._wrap_method(
                 self.add_association,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.OrganizationSecurityPolicies/AddAssociation",
             ),
-            self.add_rule: gapic_v1.method.wrap_method(
+            self.add_rule: self._wrap_method(
                 self.add_rule,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.OrganizationSecurityPolicies/AddRule",
             ),
-            self.copy_rules: gapic_v1.method.wrap_method(
+            self.copy_rules: self._wrap_method(
                 self.copy_rules,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.OrganizationSecurityPolicies/CopyRules",
             ),
-            self.delete: gapic_v1.method.wrap_method(
+            self.delete: self._wrap_method(
                 self.delete,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.OrganizationSecurityPolicies/Delete",
             ),
-            self.get: gapic_v1.method.wrap_method(
+            self.get: self._wrap_method(
                 self.get,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -179,8 +277,9 @@ class OrganizationSecurityPoliciesTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.OrganizationSecurityPolicies/Get",
             ),
-            self.get_association: gapic_v1.method.wrap_method(
+            self.get_association: self._wrap_method(
                 self.get_association,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -194,8 +293,9 @@ class OrganizationSecurityPoliciesTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.OrganizationSecurityPolicies/GetAssociation",
             ),
-            self.get_rule: gapic_v1.method.wrap_method(
+            self.get_rule: self._wrap_method(
                 self.get_rule,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -209,13 +309,15 @@ class OrganizationSecurityPoliciesTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.OrganizationSecurityPolicies/GetRule",
             ),
-            self.insert: gapic_v1.method.wrap_method(
+            self.insert: self._wrap_method(
                 self.insert,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.OrganizationSecurityPolicies/Insert",
             ),
-            self.list: gapic_v1.method.wrap_method(
+            self.list: self._wrap_method(
                 self.list,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -229,8 +331,9 @@ class OrganizationSecurityPoliciesTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.OrganizationSecurityPolicies/List",
             ),
-            self.list_associations: gapic_v1.method.wrap_method(
+            self.list_associations: self._wrap_method(
                 self.list_associations,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -244,8 +347,9 @@ class OrganizationSecurityPoliciesTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.OrganizationSecurityPolicies/ListAssociations",
             ),
-            self.list_preconfigured_expression_sets: gapic_v1.method.wrap_method(
+            self.list_preconfigured_expression_sets: self._wrap_method(
                 self.list_preconfigured_expression_sets,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -259,31 +363,37 @@ class OrganizationSecurityPoliciesTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.OrganizationSecurityPolicies/ListPreconfiguredExpressionSets",
             ),
-            self.move: gapic_v1.method.wrap_method(
+            self.move: self._wrap_method(
                 self.move,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.OrganizationSecurityPolicies/Move",
             ),
-            self.patch: gapic_v1.method.wrap_method(
+            self.patch: self._wrap_method(
                 self.patch,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.OrganizationSecurityPolicies/Patch",
             ),
-            self.patch_rule: gapic_v1.method.wrap_method(
+            self.patch_rule: self._wrap_method(
                 self.patch_rule,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.OrganizationSecurityPolicies/PatchRule",
             ),
-            self.remove_association: gapic_v1.method.wrap_method(
+            self.remove_association: self._wrap_method(
                 self.remove_association,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.OrganizationSecurityPolicies/RemoveAssociation",
             ),
-            self.remove_rule: gapic_v1.method.wrap_method(
+            self.remove_rule: self._wrap_method(
                 self.remove_rule,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1beta.OrganizationSecurityPolicies/RemoveRule",
             ),
         }
 

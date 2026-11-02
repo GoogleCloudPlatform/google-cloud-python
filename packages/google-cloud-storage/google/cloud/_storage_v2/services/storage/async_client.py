@@ -2548,13 +2548,6 @@ class StorageAsyncClient:
             self._client._transport.bidi_read_object
         ]
 
-        header_params: dict[str, str] = {}
-
-        if header_params:
-            metadata = tuple(metadata) + (
-                gapic_v1.routing_header.to_grpc_metadata(header_params),
-            )
-
         # Validate the universe domain.
         self._client._validate_universe_domain()
 

@@ -16,17 +16,28 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.analytics.admin_v1beta import gapic_version as package_version
+from google.analytics.admin_v1beta._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.analytics.admin_v1beta._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
 from google.auth import credentials as ga_credentials  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.analytics.admin_v1beta import gapic_version as package_version
 from google.analytics.admin_v1beta.types import analytics_admin, resources
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
@@ -56,6 +67,7 @@ class AnalyticsAdminServiceTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -86,6 +98,9 @@ class AnalyticsAdminServiceTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -135,284 +150,417 @@ class AnalyticsAdminServiceTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.get_account: gapic_v1.method.wrap_method(
+            self.get_account: self._wrap_method(
                 self.get_account,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/GetAccount",
             ),
-            self.list_accounts: gapic_v1.method.wrap_method(
+            self.list_accounts: self._wrap_method(
                 self.list_accounts,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/ListAccounts",
             ),
-            self.delete_account: gapic_v1.method.wrap_method(
+            self.delete_account: self._wrap_method(
                 self.delete_account,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/DeleteAccount",
             ),
-            self.update_account: gapic_v1.method.wrap_method(
+            self.update_account: self._wrap_method(
                 self.update_account,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/UpdateAccount",
             ),
-            self.provision_account_ticket: gapic_v1.method.wrap_method(
+            self.provision_account_ticket: self._wrap_method(
                 self.provision_account_ticket,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/ProvisionAccountTicket",
             ),
-            self.list_account_summaries: gapic_v1.method.wrap_method(
+            self.list_account_summaries: self._wrap_method(
                 self.list_account_summaries,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/ListAccountSummaries",
             ),
-            self.get_property: gapic_v1.method.wrap_method(
+            self.get_property: self._wrap_method(
                 self.get_property,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/GetProperty",
             ),
-            self.list_properties: gapic_v1.method.wrap_method(
+            self.list_properties: self._wrap_method(
                 self.list_properties,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/ListProperties",
             ),
-            self.create_property: gapic_v1.method.wrap_method(
+            self.create_property: self._wrap_method(
                 self.create_property,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/CreateProperty",
             ),
-            self.delete_property: gapic_v1.method.wrap_method(
+            self.delete_property: self._wrap_method(
                 self.delete_property,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/DeleteProperty",
             ),
-            self.update_property: gapic_v1.method.wrap_method(
+            self.update_property: self._wrap_method(
                 self.update_property,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/UpdateProperty",
             ),
-            self.create_firebase_link: gapic_v1.method.wrap_method(
+            self.create_firebase_link: self._wrap_method(
                 self.create_firebase_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/CreateFirebaseLink",
             ),
-            self.delete_firebase_link: gapic_v1.method.wrap_method(
+            self.delete_firebase_link: self._wrap_method(
                 self.delete_firebase_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/DeleteFirebaseLink",
             ),
-            self.list_firebase_links: gapic_v1.method.wrap_method(
+            self.list_firebase_links: self._wrap_method(
                 self.list_firebase_links,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/ListFirebaseLinks",
             ),
-            self.create_google_ads_link: gapic_v1.method.wrap_method(
+            self.create_google_ads_link: self._wrap_method(
                 self.create_google_ads_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/CreateGoogleAdsLink",
             ),
-            self.update_google_ads_link: gapic_v1.method.wrap_method(
+            self.update_google_ads_link: self._wrap_method(
                 self.update_google_ads_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/UpdateGoogleAdsLink",
             ),
-            self.delete_google_ads_link: gapic_v1.method.wrap_method(
+            self.delete_google_ads_link: self._wrap_method(
                 self.delete_google_ads_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/DeleteGoogleAdsLink",
             ),
-            self.list_google_ads_links: gapic_v1.method.wrap_method(
+            self.list_google_ads_links: self._wrap_method(
                 self.list_google_ads_links,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/ListGoogleAdsLinks",
             ),
-            self.get_data_sharing_settings: gapic_v1.method.wrap_method(
+            self.get_data_sharing_settings: self._wrap_method(
                 self.get_data_sharing_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/GetDataSharingSettings",
             ),
-            self.get_measurement_protocol_secret: gapic_v1.method.wrap_method(
+            self.get_measurement_protocol_secret: self._wrap_method(
                 self.get_measurement_protocol_secret,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/GetMeasurementProtocolSecret",
             ),
-            self.list_measurement_protocol_secrets: gapic_v1.method.wrap_method(
+            self.list_measurement_protocol_secrets: self._wrap_method(
                 self.list_measurement_protocol_secrets,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/ListMeasurementProtocolSecrets",
             ),
-            self.create_measurement_protocol_secret: gapic_v1.method.wrap_method(
+            self.create_measurement_protocol_secret: self._wrap_method(
                 self.create_measurement_protocol_secret,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/CreateMeasurementProtocolSecret",
             ),
-            self.delete_measurement_protocol_secret: gapic_v1.method.wrap_method(
+            self.delete_measurement_protocol_secret: self._wrap_method(
                 self.delete_measurement_protocol_secret,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/DeleteMeasurementProtocolSecret",
             ),
-            self.update_measurement_protocol_secret: gapic_v1.method.wrap_method(
+            self.update_measurement_protocol_secret: self._wrap_method(
                 self.update_measurement_protocol_secret,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/UpdateMeasurementProtocolSecret",
             ),
-            self.acknowledge_user_data_collection: gapic_v1.method.wrap_method(
+            self.acknowledge_user_data_collection: self._wrap_method(
                 self.acknowledge_user_data_collection,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/AcknowledgeUserDataCollection",
             ),
-            self.search_change_history_events: gapic_v1.method.wrap_method(
+            self.search_change_history_events: self._wrap_method(
                 self.search_change_history_events,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/SearchChangeHistoryEvents",
             ),
-            self.create_conversion_event: gapic_v1.method.wrap_method(
+            self.create_conversion_event: self._wrap_method(
                 self.create_conversion_event,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/CreateConversionEvent",
             ),
-            self.update_conversion_event: gapic_v1.method.wrap_method(
+            self.update_conversion_event: self._wrap_method(
                 self.update_conversion_event,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/UpdateConversionEvent",
             ),
-            self.get_conversion_event: gapic_v1.method.wrap_method(
+            self.get_conversion_event: self._wrap_method(
                 self.get_conversion_event,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/GetConversionEvent",
             ),
-            self.delete_conversion_event: gapic_v1.method.wrap_method(
+            self.delete_conversion_event: self._wrap_method(
                 self.delete_conversion_event,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/DeleteConversionEvent",
             ),
-            self.list_conversion_events: gapic_v1.method.wrap_method(
+            self.list_conversion_events: self._wrap_method(
                 self.list_conversion_events,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/ListConversionEvents",
             ),
-            self.create_key_event: gapic_v1.method.wrap_method(
+            self.create_key_event: self._wrap_method(
                 self.create_key_event,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/CreateKeyEvent",
             ),
-            self.update_key_event: gapic_v1.method.wrap_method(
+            self.update_key_event: self._wrap_method(
                 self.update_key_event,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/UpdateKeyEvent",
             ),
-            self.get_key_event: gapic_v1.method.wrap_method(
+            self.get_key_event: self._wrap_method(
                 self.get_key_event,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/GetKeyEvent",
             ),
-            self.delete_key_event: gapic_v1.method.wrap_method(
+            self.delete_key_event: self._wrap_method(
                 self.delete_key_event,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/DeleteKeyEvent",
             ),
-            self.list_key_events: gapic_v1.method.wrap_method(
+            self.list_key_events: self._wrap_method(
                 self.list_key_events,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/ListKeyEvents",
             ),
-            self.create_custom_dimension: gapic_v1.method.wrap_method(
+            self.create_custom_dimension: self._wrap_method(
                 self.create_custom_dimension,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/CreateCustomDimension",
             ),
-            self.update_custom_dimension: gapic_v1.method.wrap_method(
+            self.update_custom_dimension: self._wrap_method(
                 self.update_custom_dimension,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/UpdateCustomDimension",
             ),
-            self.list_custom_dimensions: gapic_v1.method.wrap_method(
+            self.list_custom_dimensions: self._wrap_method(
                 self.list_custom_dimensions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/ListCustomDimensions",
             ),
-            self.archive_custom_dimension: gapic_v1.method.wrap_method(
+            self.archive_custom_dimension: self._wrap_method(
                 self.archive_custom_dimension,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/ArchiveCustomDimension",
             ),
-            self.get_custom_dimension: gapic_v1.method.wrap_method(
+            self.get_custom_dimension: self._wrap_method(
                 self.get_custom_dimension,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/GetCustomDimension",
             ),
-            self.create_custom_metric: gapic_v1.method.wrap_method(
+            self.create_custom_metric: self._wrap_method(
                 self.create_custom_metric,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/CreateCustomMetric",
             ),
-            self.update_custom_metric: gapic_v1.method.wrap_method(
+            self.update_custom_metric: self._wrap_method(
                 self.update_custom_metric,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/UpdateCustomMetric",
             ),
-            self.list_custom_metrics: gapic_v1.method.wrap_method(
+            self.list_custom_metrics: self._wrap_method(
                 self.list_custom_metrics,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/ListCustomMetrics",
             ),
-            self.archive_custom_metric: gapic_v1.method.wrap_method(
+            self.archive_custom_metric: self._wrap_method(
                 self.archive_custom_metric,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/ArchiveCustomMetric",
             ),
-            self.get_custom_metric: gapic_v1.method.wrap_method(
+            self.get_custom_metric: self._wrap_method(
                 self.get_custom_metric,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/GetCustomMetric",
             ),
-            self.get_data_retention_settings: gapic_v1.method.wrap_method(
+            self.get_data_retention_settings: self._wrap_method(
                 self.get_data_retention_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/GetDataRetentionSettings",
             ),
-            self.update_data_retention_settings: gapic_v1.method.wrap_method(
+            self.update_data_retention_settings: self._wrap_method(
                 self.update_data_retention_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/UpdateDataRetentionSettings",
             ),
-            self.create_data_stream: gapic_v1.method.wrap_method(
+            self.create_data_stream: self._wrap_method(
                 self.create_data_stream,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/CreateDataStream",
             ),
-            self.delete_data_stream: gapic_v1.method.wrap_method(
+            self.delete_data_stream: self._wrap_method(
                 self.delete_data_stream,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/DeleteDataStream",
             ),
-            self.update_data_stream: gapic_v1.method.wrap_method(
+            self.update_data_stream: self._wrap_method(
                 self.update_data_stream,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/UpdateDataStream",
             ),
-            self.list_data_streams: gapic_v1.method.wrap_method(
+            self.list_data_streams: self._wrap_method(
                 self.list_data_streams,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/ListDataStreams",
             ),
-            self.get_data_stream: gapic_v1.method.wrap_method(
+            self.get_data_stream: self._wrap_method(
                 self.get_data_stream,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/GetDataStream",
             ),
-            self.run_access_report: gapic_v1.method.wrap_method(
+            self.run_access_report: self._wrap_method(
                 self.run_access_report,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.admin.v1beta.AnalyticsAdminService/RunAccessReport",
             ),
         }
 

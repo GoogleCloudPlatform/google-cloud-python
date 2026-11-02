@@ -13,17 +13,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async, operations_v1
 from google.api_core import retry_async as retries
@@ -33,6 +42,10 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.asset_v1._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.cloud.asset_v1.types import asset_service
 
 from .base import DEFAULT_CLIENT_INFO, AssetServiceTransport
@@ -190,6 +203,10 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -241,6 +258,12 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -296,6 +319,7 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -317,12 +341,26 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -1121,14 +1159,18 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
         return self._stubs["analyze_org_policy_governed_assets"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.export_assets: self._wrap_method(
+            self.export_assets: self._wrap_async_method(
                 self.export_assets,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/ExportAssets",
             ),
-            self.list_assets: self._wrap_method(
+            self.list_assets: self._wrap_async_method(
                 self.list_assets,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1142,8 +1184,9 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/ListAssets",
             ),
-            self.batch_get_assets_history: self._wrap_method(
+            self.batch_get_assets_history: self._wrap_async_method(
                 self.batch_get_assets_history,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1157,13 +1200,15 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/BatchGetAssetsHistory",
             ),
-            self.create_feed: self._wrap_method(
+            self.create_feed: self._wrap_async_method(
                 self.create_feed,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/CreateFeed",
             ),
-            self.get_feed: self._wrap_method(
+            self.get_feed: self._wrap_async_method(
                 self.get_feed,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1177,8 +1222,9 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/GetFeed",
             ),
-            self.list_feeds: self._wrap_method(
+            self.list_feeds: self._wrap_async_method(
                 self.list_feeds,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1192,13 +1238,15 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/ListFeeds",
             ),
-            self.update_feed: self._wrap_method(
+            self.update_feed: self._wrap_async_method(
                 self.update_feed,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/UpdateFeed",
             ),
-            self.delete_feed: self._wrap_method(
+            self.delete_feed: self._wrap_async_method(
                 self.delete_feed,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1212,8 +1260,9 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/DeleteFeed",
             ),
-            self.search_all_resources: self._wrap_method(
+            self.search_all_resources: self._wrap_async_method(
                 self.search_all_resources,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1226,8 +1275,9 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/SearchAllResources",
             ),
-            self.search_all_iam_policies: self._wrap_method(
+            self.search_all_iam_policies: self._wrap_async_method(
                 self.search_all_iam_policies,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1240,8 +1290,9 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/SearchAllIamPolicies",
             ),
-            self.analyze_iam_policy: self._wrap_method(
+            self.analyze_iam_policy: self._wrap_async_method(
                 self.analyze_iam_policy,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1254,18 +1305,21 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/AnalyzeIamPolicy",
             ),
-            self.analyze_iam_policy_longrunning: self._wrap_method(
+            self.analyze_iam_policy_longrunning: self._wrap_async_method(
                 self.analyze_iam_policy_longrunning,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/AnalyzeIamPolicyLongrunning",
             ),
-            self.analyze_move: self._wrap_method(
+            self.analyze_move: self._wrap_async_method(
                 self.analyze_move,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/AnalyzeMove",
             ),
-            self.query_assets: self._wrap_method(
+            self.query_assets: self._wrap_async_method(
                 self.query_assets,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1278,13 +1332,15 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
                 ),
                 default_timeout=200.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/QueryAssets",
             ),
-            self.create_saved_query: self._wrap_method(
+            self.create_saved_query: self._wrap_async_method(
                 self.create_saved_query,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/CreateSavedQuery",
             ),
-            self.get_saved_query: self._wrap_method(
+            self.get_saved_query: self._wrap_async_method(
                 self.get_saved_query,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1298,8 +1354,9 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/GetSavedQuery",
             ),
-            self.list_saved_queries: self._wrap_method(
+            self.list_saved_queries: self._wrap_async_method(
                 self.list_saved_queries,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1313,13 +1370,15 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/ListSavedQueries",
             ),
-            self.update_saved_query: self._wrap_method(
+            self.update_saved_query: self._wrap_async_method(
                 self.update_saved_query,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/UpdateSavedQuery",
             ),
-            self.delete_saved_query: self._wrap_method(
+            self.delete_saved_query: self._wrap_async_method(
                 self.delete_saved_query,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1333,8 +1392,9 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/DeleteSavedQuery",
             ),
-            self.batch_get_effective_iam_policies: self._wrap_method(
+            self.batch_get_effective_iam_policies: self._wrap_async_method(
                 self.batch_get_effective_iam_policies,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1347,8 +1407,9 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/BatchGetEffectiveIamPolicies",
             ),
-            self.analyze_org_policies: self._wrap_method(
+            self.analyze_org_policies: self._wrap_async_method(
                 self.analyze_org_policies,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1362,8 +1423,9 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/AnalyzeOrgPolicies",
             ),
-            self.analyze_org_policy_governed_containers: self._wrap_method(
+            self.analyze_org_policy_governed_containers: self._wrap_async_method(
                 self.analyze_org_policy_governed_containers,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1377,8 +1439,9 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/AnalyzeOrgPolicyGovernedContainers",
             ),
-            self.analyze_org_policy_governed_assets: self._wrap_method(
+            self.analyze_org_policy_governed_assets: self._wrap_async_method(
                 self.analyze_org_policy_governed_assets,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1392,18 +1455,15 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.asset.v1.AssetService/AnalyzeOrgPolicyGovernedAssets",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

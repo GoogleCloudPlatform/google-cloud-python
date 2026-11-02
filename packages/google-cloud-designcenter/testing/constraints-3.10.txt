@@ -11,4 +11,6 @@ google-auth==2.14.1
 grpcio==1.59.0
 proto-plus==1.26.1
 protobuf==6.33.5
+google-cloud-apphub==0.5.2
+google-cloud-config==0.7.2
 grpc-google-iam-v1==0.14.2

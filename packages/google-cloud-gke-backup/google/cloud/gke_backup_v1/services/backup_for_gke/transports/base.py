@@ -16,9 +16,21 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.gke_backup_v1 import gapic_version as package_version
+from google.cloud.gke_backup_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.gke_backup_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -31,7 +43,6 @@ from google.iam.v1 import (
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.gke_backup_v1 import gapic_version as package_version
 from google.cloud.gke_backup_v1.types import (
     backup,
     backup_channel,
@@ -69,6 +80,7 @@ class BackupForGKETransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -99,6 +111,9 @@ class BackupForGKETransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -148,21 +163,101 @@ class BackupForGKETransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.create_backup_plan: gapic_v1.method.wrap_method(
+            self.create_backup_plan: self._wrap_method(
                 self.create_backup_plan,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/CreateBackupPlan",
             ),
-            self.list_backup_plans: gapic_v1.method.wrap_method(
+            self.list_backup_plans: self._wrap_method(
                 self.list_backup_plans,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -175,8 +270,9 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/ListBackupPlans",
             ),
-            self.get_backup_plan: gapic_v1.method.wrap_method(
+            self.get_backup_plan: self._wrap_method(
                 self.get_backup_plan,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -189,23 +285,27 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/GetBackupPlan",
             ),
-            self.update_backup_plan: gapic_v1.method.wrap_method(
+            self.update_backup_plan: self._wrap_method(
                 self.update_backup_plan,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/UpdateBackupPlan",
             ),
-            self.delete_backup_plan: gapic_v1.method.wrap_method(
+            self.delete_backup_plan: self._wrap_method(
                 self.delete_backup_plan,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/DeleteBackupPlan",
             ),
-            self.create_backup_channel: gapic_v1.method.wrap_method(
+            self.create_backup_channel: self._wrap_method(
                 self.create_backup_channel,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/CreateBackupChannel",
             ),
-            self.list_backup_channels: gapic_v1.method.wrap_method(
+            self.list_backup_channels: self._wrap_method(
                 self.list_backup_channels,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -218,8 +318,9 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/ListBackupChannels",
             ),
-            self.get_backup_channel: gapic_v1.method.wrap_method(
+            self.get_backup_channel: self._wrap_method(
                 self.get_backup_channel,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -232,18 +333,21 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/GetBackupChannel",
             ),
-            self.update_backup_channel: gapic_v1.method.wrap_method(
+            self.update_backup_channel: self._wrap_method(
                 self.update_backup_channel,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/UpdateBackupChannel",
             ),
-            self.delete_backup_channel: gapic_v1.method.wrap_method(
+            self.delete_backup_channel: self._wrap_method(
                 self.delete_backup_channel,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/DeleteBackupChannel",
             ),
-            self.list_backup_plan_bindings: gapic_v1.method.wrap_method(
+            self.list_backup_plan_bindings: self._wrap_method(
                 self.list_backup_plan_bindings,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -256,8 +360,9 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/ListBackupPlanBindings",
             ),
-            self.get_backup_plan_binding: gapic_v1.method.wrap_method(
+            self.get_backup_plan_binding: self._wrap_method(
                 self.get_backup_plan_binding,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -270,13 +375,15 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/GetBackupPlanBinding",
             ),
-            self.create_backup: gapic_v1.method.wrap_method(
+            self.create_backup: self._wrap_method(
                 self.create_backup,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/CreateBackup",
             ),
-            self.list_backups: gapic_v1.method.wrap_method(
+            self.list_backups: self._wrap_method(
                 self.list_backups,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -289,8 +396,9 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/ListBackups",
             ),
-            self.get_backup: gapic_v1.method.wrap_method(
+            self.get_backup: self._wrap_method(
                 self.get_backup,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -303,18 +411,21 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/GetBackup",
             ),
-            self.update_backup: gapic_v1.method.wrap_method(
+            self.update_backup: self._wrap_method(
                 self.update_backup,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/UpdateBackup",
             ),
-            self.delete_backup: gapic_v1.method.wrap_method(
+            self.delete_backup: self._wrap_method(
                 self.delete_backup,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/DeleteBackup",
             ),
-            self.list_volume_backups: gapic_v1.method.wrap_method(
+            self.list_volume_backups: self._wrap_method(
                 self.list_volume_backups,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -327,8 +438,9 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/ListVolumeBackups",
             ),
-            self.get_volume_backup: gapic_v1.method.wrap_method(
+            self.get_volume_backup: self._wrap_method(
                 self.get_volume_backup,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -341,13 +453,15 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/GetVolumeBackup",
             ),
-            self.create_restore_plan: gapic_v1.method.wrap_method(
+            self.create_restore_plan: self._wrap_method(
                 self.create_restore_plan,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/CreateRestorePlan",
             ),
-            self.list_restore_plans: gapic_v1.method.wrap_method(
+            self.list_restore_plans: self._wrap_method(
                 self.list_restore_plans,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -360,8 +474,9 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/ListRestorePlans",
             ),
-            self.get_restore_plan: gapic_v1.method.wrap_method(
+            self.get_restore_plan: self._wrap_method(
                 self.get_restore_plan,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -374,23 +489,27 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/GetRestorePlan",
             ),
-            self.update_restore_plan: gapic_v1.method.wrap_method(
+            self.update_restore_plan: self._wrap_method(
                 self.update_restore_plan,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/UpdateRestorePlan",
             ),
-            self.delete_restore_plan: gapic_v1.method.wrap_method(
+            self.delete_restore_plan: self._wrap_method(
                 self.delete_restore_plan,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/DeleteRestorePlan",
             ),
-            self.create_restore_channel: gapic_v1.method.wrap_method(
+            self.create_restore_channel: self._wrap_method(
                 self.create_restore_channel,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/CreateRestoreChannel",
             ),
-            self.list_restore_channels: gapic_v1.method.wrap_method(
+            self.list_restore_channels: self._wrap_method(
                 self.list_restore_channels,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -403,8 +522,9 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/ListRestoreChannels",
             ),
-            self.get_restore_channel: gapic_v1.method.wrap_method(
+            self.get_restore_channel: self._wrap_method(
                 self.get_restore_channel,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -417,18 +537,21 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/GetRestoreChannel",
             ),
-            self.update_restore_channel: gapic_v1.method.wrap_method(
+            self.update_restore_channel: self._wrap_method(
                 self.update_restore_channel,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/UpdateRestoreChannel",
             ),
-            self.delete_restore_channel: gapic_v1.method.wrap_method(
+            self.delete_restore_channel: self._wrap_method(
                 self.delete_restore_channel,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/DeleteRestoreChannel",
             ),
-            self.list_restore_plan_bindings: gapic_v1.method.wrap_method(
+            self.list_restore_plan_bindings: self._wrap_method(
                 self.list_restore_plan_bindings,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -441,8 +564,9 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/ListRestorePlanBindings",
             ),
-            self.get_restore_plan_binding: gapic_v1.method.wrap_method(
+            self.get_restore_plan_binding: self._wrap_method(
                 self.get_restore_plan_binding,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -455,13 +579,15 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/GetRestorePlanBinding",
             ),
-            self.create_restore: gapic_v1.method.wrap_method(
+            self.create_restore: self._wrap_method(
                 self.create_restore,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/CreateRestore",
             ),
-            self.list_restores: gapic_v1.method.wrap_method(
+            self.list_restores: self._wrap_method(
                 self.list_restores,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -474,8 +600,9 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/ListRestores",
             ),
-            self.get_restore: gapic_v1.method.wrap_method(
+            self.get_restore: self._wrap_method(
                 self.get_restore,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -488,18 +615,21 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/GetRestore",
             ),
-            self.update_restore: gapic_v1.method.wrap_method(
+            self.update_restore: self._wrap_method(
                 self.update_restore,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/UpdateRestore",
             ),
-            self.delete_restore: gapic_v1.method.wrap_method(
+            self.delete_restore: self._wrap_method(
                 self.delete_restore,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/DeleteRestore",
             ),
-            self.list_volume_restores: gapic_v1.method.wrap_method(
+            self.list_volume_restores: self._wrap_method(
                 self.list_volume_restores,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -512,8 +642,9 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/ListVolumeRestores",
             ),
-            self.get_volume_restore: gapic_v1.method.wrap_method(
+            self.get_volume_restore: self._wrap_method(
                 self.get_volume_restore,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -526,8 +657,9 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/GetVolumeRestore",
             ),
-            self.get_backup_index_download_url: gapic_v1.method.wrap_method(
+            self.get_backup_index_download_url: self._wrap_method(
                 self.get_backup_index_download_url,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -540,51 +672,61 @@ class BackupForGKETransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkebackup.v1.BackupForGKE/GetBackupIndexDownloadUrl",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.get_iam_policy: gapic_v1.method.wrap_method(
+            self.get_iam_policy: self._wrap_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/GetIamPolicy",
             ),
-            self.set_iam_policy: gapic_v1.method.wrap_method(
+            self.set_iam_policy: self._wrap_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/SetIamPolicy",
             ),
-            self.test_iam_permissions: gapic_v1.method.wrap_method(
+            self.test_iam_permissions: self._wrap_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/TestIamPermissions",
             ),
-            self.cancel_operation: gapic_v1.method.wrap_method(
+            self.cancel_operation: self._wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: gapic_v1.method.wrap_method(
+            self.delete_operation: self._wrap_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
 

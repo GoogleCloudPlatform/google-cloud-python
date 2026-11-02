@@ -402,10 +402,6 @@ class GroundedGenerationServiceAsyncClient:
             self._client._transport.stream_generate_grounded_content
         ]
 
-        # Certain fields should be provided within the metadata header;
-        # add these here.
-        metadata = tuple(metadata) + (gapic_v1.routing_header.to_grpc_metadata(()),)
-
         # Validate the universe domain.
         self._client._validate_universe_domain()
 

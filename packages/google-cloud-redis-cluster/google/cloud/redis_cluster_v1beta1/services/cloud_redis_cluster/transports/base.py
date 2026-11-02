@@ -16,9 +16,21 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.redis_cluster_v1beta1 import gapic_version as package_version
+from google.cloud.redis_cluster_v1beta1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.redis_cluster_v1beta1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -27,7 +39,6 @@ from google.cloud.location import locations_pb2  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.redis_cluster_v1beta1 import gapic_version as package_version
 from google.cloud.redis_cluster_v1beta1.types import cloud_redis_cluster
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
@@ -54,6 +65,7 @@ class CloudRedisClusterTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -84,6 +96,9 @@ class CloudRedisClusterTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -133,194 +148,309 @@ class CloudRedisClusterTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.list_clusters: gapic_v1.method.wrap_method(
+            self.list_clusters: self._wrap_method(
                 self.list_clusters,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/ListClusters",
             ),
-            self.list_acl_policies: gapic_v1.method.wrap_method(
+            self.list_acl_policies: self._wrap_method(
                 self.list_acl_policies,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/ListAclPolicies",
             ),
-            self.get_cluster: gapic_v1.method.wrap_method(
+            self.get_cluster: self._wrap_method(
                 self.get_cluster,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/GetCluster",
             ),
-            self.get_acl_policy: gapic_v1.method.wrap_method(
+            self.get_acl_policy: self._wrap_method(
                 self.get_acl_policy,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/GetAclPolicy",
             ),
-            self.update_cluster: gapic_v1.method.wrap_method(
+            self.update_cluster: self._wrap_method(
                 self.update_cluster,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/UpdateCluster",
             ),
-            self.update_acl_policy: gapic_v1.method.wrap_method(
+            self.update_acl_policy: self._wrap_method(
                 self.update_acl_policy,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/UpdateAclPolicy",
             ),
-            self.delete_cluster: gapic_v1.method.wrap_method(
+            self.delete_cluster: self._wrap_method(
                 self.delete_cluster,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/DeleteCluster",
             ),
-            self.delete_acl_policy: gapic_v1.method.wrap_method(
+            self.delete_acl_policy: self._wrap_method(
                 self.delete_acl_policy,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/DeleteAclPolicy",
             ),
-            self.get_acl_policy_revision: gapic_v1.method.wrap_method(
+            self.get_acl_policy_revision: self._wrap_method(
                 self.get_acl_policy_revision,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/GetAclPolicyRevision",
             ),
-            self.list_acl_policy_revisions: gapic_v1.method.wrap_method(
+            self.list_acl_policy_revisions: self._wrap_method(
                 self.list_acl_policy_revisions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/ListAclPolicyRevisions",
             ),
-            self.create_cluster: gapic_v1.method.wrap_method(
+            self.create_cluster: self._wrap_method(
                 self.create_cluster,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/CreateCluster",
             ),
-            self.create_acl_policy: gapic_v1.method.wrap_method(
+            self.create_acl_policy: self._wrap_method(
                 self.create_acl_policy,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/CreateAclPolicy",
             ),
-            self.get_cluster_certificate_authority: gapic_v1.method.wrap_method(
+            self.get_cluster_certificate_authority: self._wrap_method(
                 self.get_cluster_certificate_authority,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/GetClusterCertificateAuthority",
             ),
-            self.get_shared_regional_certificate_authority: gapic_v1.method.wrap_method(
+            self.get_shared_regional_certificate_authority: self._wrap_method(
                 self.get_shared_regional_certificate_authority,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/GetSharedRegionalCertificateAuthority",
             ),
-            self.reschedule_cluster_maintenance: gapic_v1.method.wrap_method(
+            self.reschedule_cluster_maintenance: self._wrap_method(
                 self.reschedule_cluster_maintenance,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/RescheduleClusterMaintenance",
             ),
-            self.list_backup_collections: gapic_v1.method.wrap_method(
+            self.list_backup_collections: self._wrap_method(
                 self.list_backup_collections,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/ListBackupCollections",
             ),
-            self.get_backup_collection: gapic_v1.method.wrap_method(
+            self.get_backup_collection: self._wrap_method(
                 self.get_backup_collection,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/GetBackupCollection",
             ),
-            self.list_backups: gapic_v1.method.wrap_method(
+            self.list_backups: self._wrap_method(
                 self.list_backups,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/ListBackups",
             ),
-            self.get_backup: gapic_v1.method.wrap_method(
+            self.get_backup: self._wrap_method(
                 self.get_backup,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/GetBackup",
             ),
-            self.delete_backup: gapic_v1.method.wrap_method(
+            self.delete_backup: self._wrap_method(
                 self.delete_backup,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/DeleteBackup",
             ),
-            self.export_backup: gapic_v1.method.wrap_method(
+            self.export_backup: self._wrap_method(
                 self.export_backup,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/ExportBackup",
             ),
-            self.backup_cluster: gapic_v1.method.wrap_method(
+            self.backup_cluster: self._wrap_method(
                 self.backup_cluster,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/BackupCluster",
             ),
-            self.list_token_auth_users: gapic_v1.method.wrap_method(
+            self.list_token_auth_users: self._wrap_method(
                 self.list_token_auth_users,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/ListTokenAuthUsers",
             ),
-            self.get_token_auth_user: gapic_v1.method.wrap_method(
+            self.get_token_auth_user: self._wrap_method(
                 self.get_token_auth_user,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/GetTokenAuthUser",
             ),
-            self.list_auth_tokens: gapic_v1.method.wrap_method(
+            self.list_auth_tokens: self._wrap_method(
                 self.list_auth_tokens,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/ListAuthTokens",
             ),
-            self.get_auth_token: gapic_v1.method.wrap_method(
+            self.get_auth_token: self._wrap_method(
                 self.get_auth_token,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/GetAuthToken",
             ),
-            self.add_token_auth_user: gapic_v1.method.wrap_method(
+            self.add_token_auth_user: self._wrap_method(
                 self.add_token_auth_user,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/AddTokenAuthUser",
             ),
-            self.delete_token_auth_user: gapic_v1.method.wrap_method(
+            self.delete_token_auth_user: self._wrap_method(
                 self.delete_token_auth_user,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/DeleteTokenAuthUser",
             ),
-            self.add_auth_token: gapic_v1.method.wrap_method(
+            self.add_auth_token: self._wrap_method(
                 self.add_auth_token,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/AddAuthToken",
             ),
-            self.delete_auth_token: gapic_v1.method.wrap_method(
+            self.delete_auth_token: self._wrap_method(
                 self.delete_auth_token,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.redis.cluster.v1beta1.CloudRedisCluster/DeleteAuthToken",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.cancel_operation: gapic_v1.method.wrap_method(
+            self.cancel_operation: self._wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: gapic_v1.method.wrap_method(
+            self.delete_operation: self._wrap_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
 

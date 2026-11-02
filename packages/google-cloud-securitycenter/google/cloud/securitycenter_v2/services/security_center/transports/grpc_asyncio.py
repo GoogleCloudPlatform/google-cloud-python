@@ -13,12 +13,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
 import google.iam.v1.policy_pb2 as policy_pb2  # type: ignore
@@ -26,6 +34,7 @@ import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async, operations_v1
 from google.api_core import retry_async as retries
@@ -35,6 +44,10 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.securitycenter_v2._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.cloud.securitycenter_v2.types import (
     bigquery_export,
     finding,
@@ -213,6 +226,10 @@ class SecurityCenterGrpcAsyncIOTransport(SecurityCenterTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -264,6 +281,12 @@ class SecurityCenterGrpcAsyncIOTransport(SecurityCenterTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -319,6 +342,7 @@ class SecurityCenterGrpcAsyncIOTransport(SecurityCenterTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -340,12 +364,26 @@ class SecurityCenterGrpcAsyncIOTransport(SecurityCenterTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -1588,234 +1626,276 @@ class SecurityCenterGrpcAsyncIOTransport(SecurityCenterTransport):
         return self._stubs["update_source"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.batch_create_resource_value_configs: self._wrap_method(
+            self.batch_create_resource_value_configs: self._wrap_async_method(
                 self.batch_create_resource_value_configs,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/BatchCreateResourceValueConfigs",
             ),
-            self.bulk_mute_findings: self._wrap_method(
+            self.bulk_mute_findings: self._wrap_async_method(
                 self.bulk_mute_findings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/BulkMuteFindings",
             ),
-            self.create_big_query_export: self._wrap_method(
+            self.create_big_query_export: self._wrap_async_method(
                 self.create_big_query_export,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/CreateBigQueryExport",
             ),
-            self.create_finding: self._wrap_method(
+            self.create_finding: self._wrap_async_method(
                 self.create_finding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/CreateFinding",
             ),
-            self.create_mute_config: self._wrap_method(
+            self.create_mute_config: self._wrap_async_method(
                 self.create_mute_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/CreateMuteConfig",
             ),
-            self.create_notification_config: self._wrap_method(
+            self.create_notification_config: self._wrap_async_method(
                 self.create_notification_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/CreateNotificationConfig",
             ),
-            self.create_source: self._wrap_method(
+            self.create_source: self._wrap_async_method(
                 self.create_source,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/CreateSource",
             ),
-            self.delete_big_query_export: self._wrap_method(
+            self.delete_big_query_export: self._wrap_async_method(
                 self.delete_big_query_export,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/DeleteBigQueryExport",
             ),
-            self.delete_mute_config: self._wrap_method(
+            self.delete_mute_config: self._wrap_async_method(
                 self.delete_mute_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/DeleteMuteConfig",
             ),
-            self.delete_notification_config: self._wrap_method(
+            self.delete_notification_config: self._wrap_async_method(
                 self.delete_notification_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/DeleteNotificationConfig",
             ),
-            self.delete_resource_value_config: self._wrap_method(
+            self.delete_resource_value_config: self._wrap_async_method(
                 self.delete_resource_value_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/DeleteResourceValueConfig",
             ),
-            self.get_big_query_export: self._wrap_method(
+            self.get_big_query_export: self._wrap_async_method(
                 self.get_big_query_export,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/GetBigQueryExport",
             ),
-            self.get_simulation: self._wrap_method(
+            self.get_simulation: self._wrap_async_method(
                 self.get_simulation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/GetSimulation",
             ),
-            self.get_valued_resource: self._wrap_method(
+            self.get_valued_resource: self._wrap_async_method(
                 self.get_valued_resource,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/GetValuedResource",
             ),
-            self.get_iam_policy: self._wrap_method(
+            self.get_iam_policy: self._wrap_async_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/GetIamPolicy",
             ),
-            self.get_mute_config: self._wrap_method(
+            self.get_mute_config: self._wrap_async_method(
                 self.get_mute_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/GetMuteConfig",
             ),
-            self.get_notification_config: self._wrap_method(
+            self.get_notification_config: self._wrap_async_method(
                 self.get_notification_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/GetNotificationConfig",
             ),
-            self.get_resource_value_config: self._wrap_method(
+            self.get_resource_value_config: self._wrap_async_method(
                 self.get_resource_value_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/GetResourceValueConfig",
             ),
-            self.get_source: self._wrap_method(
+            self.get_source: self._wrap_async_method(
                 self.get_source,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/GetSource",
             ),
-            self.group_findings: self._wrap_method(
+            self.group_findings: self._wrap_async_method(
                 self.group_findings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/GroupFindings",
             ),
-            self.list_attack_paths: self._wrap_method(
+            self.list_attack_paths: self._wrap_async_method(
                 self.list_attack_paths,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/ListAttackPaths",
             ),
-            self.list_big_query_exports: self._wrap_method(
+            self.list_big_query_exports: self._wrap_async_method(
                 self.list_big_query_exports,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/ListBigQueryExports",
             ),
-            self.list_findings: self._wrap_method(
+            self.list_findings: self._wrap_async_method(
                 self.list_findings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/ListFindings",
             ),
-            self.list_mute_configs: self._wrap_method(
+            self.list_mute_configs: self._wrap_async_method(
                 self.list_mute_configs,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/ListMuteConfigs",
             ),
-            self.list_notification_configs: self._wrap_method(
+            self.list_notification_configs: self._wrap_async_method(
                 self.list_notification_configs,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/ListNotificationConfigs",
             ),
-            self.list_resource_value_configs: self._wrap_method(
+            self.list_resource_value_configs: self._wrap_async_method(
                 self.list_resource_value_configs,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/ListResourceValueConfigs",
             ),
-            self.list_sources: self._wrap_method(
+            self.list_sources: self._wrap_async_method(
                 self.list_sources,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/ListSources",
             ),
-            self.list_valued_resources: self._wrap_method(
+            self.list_valued_resources: self._wrap_async_method(
                 self.list_valued_resources,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/ListValuedResources",
             ),
-            self.set_finding_state: self._wrap_method(
+            self.set_finding_state: self._wrap_async_method(
                 self.set_finding_state,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/SetFindingState",
             ),
-            self.set_iam_policy: self._wrap_method(
+            self.set_iam_policy: self._wrap_async_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/SetIamPolicy",
             ),
-            self.set_mute: self._wrap_method(
+            self.set_mute: self._wrap_async_method(
                 self.set_mute,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/SetMute",
             ),
-            self.test_iam_permissions: self._wrap_method(
+            self.test_iam_permissions: self._wrap_async_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/TestIamPermissions",
             ),
-            self.update_big_query_export: self._wrap_method(
+            self.update_big_query_export: self._wrap_async_method(
                 self.update_big_query_export,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/UpdateBigQueryExport",
             ),
-            self.update_external_system: self._wrap_method(
+            self.update_external_system: self._wrap_async_method(
                 self.update_external_system,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/UpdateExternalSystem",
             ),
-            self.update_finding: self._wrap_method(
+            self.update_finding: self._wrap_async_method(
                 self.update_finding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/UpdateFinding",
             ),
-            self.update_mute_config: self._wrap_method(
+            self.update_mute_config: self._wrap_async_method(
                 self.update_mute_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/UpdateMuteConfig",
             ),
-            self.update_notification_config: self._wrap_method(
+            self.update_notification_config: self._wrap_async_method(
                 self.update_notification_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/UpdateNotificationConfig",
             ),
-            self.update_resource_value_config: self._wrap_method(
+            self.update_resource_value_config: self._wrap_async_method(
                 self.update_resource_value_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/UpdateResourceValueConfig",
             ),
-            self.update_security_marks: self._wrap_method(
+            self.update_security_marks: self._wrap_async_method(
                 self.update_security_marks,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/UpdateSecurityMarks",
             ),
-            self.update_source: self._wrap_method(
+            self.update_source: self._wrap_async_method(
                 self.update_source,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securitycenter.v2.SecurityCenter/UpdateSource",
             ),
-            self.cancel_operation: self._wrap_method(
+            self.cancel_operation: self._wrap_async_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: self._wrap_method(
+            self.delete_operation: self._wrap_async_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: self._wrap_method(
+            self.list_operations: self._wrap_async_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

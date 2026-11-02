@@ -13,17 +13,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async
 from google.api_core import retry_async as retries
@@ -32,6 +41,10 @@ from google.auth.transport.grpc import SslCredentials  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.container_v1._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.cloud.container_v1.types import cluster_service
 
 from .base import DEFAULT_CLIENT_INFO, ClusterManagerTransport
@@ -189,6 +202,10 @@ class ClusterManagerGrpcAsyncIOTransport(ClusterManagerTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -240,6 +257,12 @@ class ClusterManagerGrpcAsyncIOTransport(ClusterManagerTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -294,6 +317,7 @@ class ClusterManagerGrpcAsyncIOTransport(ClusterManagerTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -315,12 +339,26 @@ class ClusterManagerGrpcAsyncIOTransport(ClusterManagerTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -1440,9 +1478,12 @@ class ClusterManagerGrpcAsyncIOTransport(ClusterManagerTransport):
         return self._stubs["complete_control_plane_upgrade"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.list_clusters: self._wrap_method(
+            self.list_clusters: self._wrap_async_method(
                 self.list_clusters,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1456,8 +1497,9 @@ class ClusterManagerGrpcAsyncIOTransport(ClusterManagerTransport):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/ListClusters",
             ),
-            self.get_cluster: self._wrap_method(
+            self.get_cluster: self._wrap_async_method(
                 self.get_cluster,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1471,58 +1513,69 @@ class ClusterManagerGrpcAsyncIOTransport(ClusterManagerTransport):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/GetCluster",
             ),
-            self.create_cluster: self._wrap_method(
+            self.create_cluster: self._wrap_async_method(
                 self.create_cluster,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/CreateCluster",
             ),
-            self.update_cluster: self._wrap_method(
+            self.update_cluster: self._wrap_async_method(
                 self.update_cluster,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/UpdateCluster",
             ),
-            self.update_node_pool: self._wrap_method(
+            self.update_node_pool: self._wrap_async_method(
                 self.update_node_pool,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/UpdateNodePool",
             ),
-            self.set_node_pool_autoscaling: self._wrap_method(
+            self.set_node_pool_autoscaling: self._wrap_async_method(
                 self.set_node_pool_autoscaling,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/SetNodePoolAutoscaling",
             ),
-            self.set_logging_service: self._wrap_method(
+            self.set_logging_service: self._wrap_async_method(
                 self.set_logging_service,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/SetLoggingService",
             ),
-            self.set_monitoring_service: self._wrap_method(
+            self.set_monitoring_service: self._wrap_async_method(
                 self.set_monitoring_service,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/SetMonitoringService",
             ),
-            self.set_addons_config: self._wrap_method(
+            self.set_addons_config: self._wrap_async_method(
                 self.set_addons_config,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/SetAddonsConfig",
             ),
-            self.set_locations: self._wrap_method(
+            self.set_locations: self._wrap_async_method(
                 self.set_locations,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/SetLocations",
             ),
-            self.update_master: self._wrap_method(
+            self.update_master: self._wrap_async_method(
                 self.update_master,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/UpdateMaster",
             ),
-            self.set_master_auth: self._wrap_method(
+            self.set_master_auth: self._wrap_async_method(
                 self.set_master_auth,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/SetMasterAuth",
             ),
-            self.delete_cluster: self._wrap_method(
+            self.delete_cluster: self._wrap_async_method(
                 self.delete_cluster,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1536,8 +1589,9 @@ class ClusterManagerGrpcAsyncIOTransport(ClusterManagerTransport):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/DeleteCluster",
             ),
-            self.list_operations: self._wrap_method(
+            self.list_operations: self._wrap_async_method(
                 self.list_operations,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1551,8 +1605,9 @@ class ClusterManagerGrpcAsyncIOTransport(ClusterManagerTransport):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/ListOperations",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1566,13 +1621,15 @@ class ClusterManagerGrpcAsyncIOTransport(ClusterManagerTransport):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/GetOperation",
             ),
-            self.cancel_operation: self._wrap_method(
+            self.cancel_operation: self._wrap_async_method(
                 self.cancel_operation,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/CancelOperation",
             ),
-            self.get_server_config: self._wrap_method(
+            self.get_server_config: self._wrap_async_method(
                 self.get_server_config,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1586,13 +1643,15 @@ class ClusterManagerGrpcAsyncIOTransport(ClusterManagerTransport):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/GetServerConfig",
             ),
-            self.get_json_web_keys: self._wrap_method(
+            self.get_json_web_keys: self._wrap_async_method(
                 self.get_json_web_keys,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/GetJSONWebKeys",
             ),
-            self.list_node_pools: self._wrap_method(
+            self.list_node_pools: self._wrap_async_method(
                 self.list_node_pools,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1606,8 +1665,9 @@ class ClusterManagerGrpcAsyncIOTransport(ClusterManagerTransport):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/ListNodePools",
             ),
-            self.get_node_pool: self._wrap_method(
+            self.get_node_pool: self._wrap_async_method(
                 self.get_node_pool,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1621,13 +1681,15 @@ class ClusterManagerGrpcAsyncIOTransport(ClusterManagerTransport):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/GetNodePool",
             ),
-            self.create_node_pool: self._wrap_method(
+            self.create_node_pool: self._wrap_async_method(
                 self.create_node_pool,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/CreateNodePool",
             ),
-            self.delete_node_pool: self._wrap_method(
+            self.delete_node_pool: self._wrap_async_method(
                 self.delete_node_pool,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1641,88 +1703,99 @@ class ClusterManagerGrpcAsyncIOTransport(ClusterManagerTransport):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/DeleteNodePool",
             ),
-            self.complete_node_pool_upgrade: self._wrap_method(
+            self.complete_node_pool_upgrade: self._wrap_async_method(
                 self.complete_node_pool_upgrade,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/CompleteNodePoolUpgrade",
             ),
-            self.rollback_node_pool_upgrade: self._wrap_method(
+            self.rollback_node_pool_upgrade: self._wrap_async_method(
                 self.rollback_node_pool_upgrade,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/RollbackNodePoolUpgrade",
             ),
-            self.set_node_pool_management: self._wrap_method(
+            self.set_node_pool_management: self._wrap_async_method(
                 self.set_node_pool_management,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/SetNodePoolManagement",
             ),
-            self.set_labels: self._wrap_method(
+            self.set_labels: self._wrap_async_method(
                 self.set_labels,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/SetLabels",
             ),
-            self.set_legacy_abac: self._wrap_method(
+            self.set_legacy_abac: self._wrap_async_method(
                 self.set_legacy_abac,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/SetLegacyAbac",
             ),
-            self.start_ip_rotation: self._wrap_method(
+            self.start_ip_rotation: self._wrap_async_method(
                 self.start_ip_rotation,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/StartIPRotation",
             ),
-            self.complete_ip_rotation: self._wrap_method(
+            self.complete_ip_rotation: self._wrap_async_method(
                 self.complete_ip_rotation,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/CompleteIPRotation",
             ),
-            self.set_node_pool_size: self._wrap_method(
+            self.set_node_pool_size: self._wrap_async_method(
                 self.set_node_pool_size,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/SetNodePoolSize",
             ),
-            self.set_network_policy: self._wrap_method(
+            self.set_network_policy: self._wrap_async_method(
                 self.set_network_policy,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/SetNetworkPolicy",
             ),
-            self.set_maintenance_policy: self._wrap_method(
+            self.set_maintenance_policy: self._wrap_async_method(
                 self.set_maintenance_policy,
                 default_timeout=45.0,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/SetMaintenancePolicy",
             ),
-            self.list_usable_subnetworks: self._wrap_method(
+            self.list_usable_subnetworks: self._wrap_async_method(
                 self.list_usable_subnetworks,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/ListUsableSubnetworks",
             ),
-            self.check_autopilot_compatibility: self._wrap_method(
+            self.check_autopilot_compatibility: self._wrap_async_method(
                 self.check_autopilot_compatibility,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/CheckAutopilotCompatibility",
             ),
-            self.fetch_cluster_upgrade_info: self._wrap_method(
+            self.fetch_cluster_upgrade_info: self._wrap_async_method(
                 self.fetch_cluster_upgrade_info,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/FetchClusterUpgradeInfo",
             ),
-            self.fetch_node_pool_upgrade_info: self._wrap_method(
+            self.fetch_node_pool_upgrade_info: self._wrap_async_method(
                 self.fetch_node_pool_upgrade_info,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/FetchNodePoolUpgradeInfo",
             ),
-            self.complete_control_plane_upgrade: self._wrap_method(
+            self.complete_control_plane_upgrade: self._wrap_async_method(
                 self.complete_control_plane_upgrade,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.container.v1.ClusterManager/CompleteControlPlaneUpgrade",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

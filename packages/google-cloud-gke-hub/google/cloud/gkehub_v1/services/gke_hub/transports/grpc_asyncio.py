@@ -13,16 +13,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async, operations_v1
 from google.api_core import retry_async as retries
@@ -32,6 +41,10 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.gkehub_v1._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.cloud.gkehub_v1.types import feature, fleet, membership, service
 
 from .base import DEFAULT_CLIENT_INFO, GkeHubTransport
@@ -205,6 +218,10 @@ class GkeHubGrpcAsyncIOTransport(GkeHubTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -256,6 +273,12 @@ class GkeHubGrpcAsyncIOTransport(GkeHubTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -311,6 +334,7 @@ class GkeHubGrpcAsyncIOTransport(GkeHubTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -332,12 +356,26 @@ class GkeHubGrpcAsyncIOTransport(GkeHubTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -1620,234 +1658,276 @@ class GkeHubGrpcAsyncIOTransport(GkeHubTransport):
         return self._stubs["generate_membership_rbac_role_binding_yaml"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.list_memberships: self._wrap_method(
+            self.list_memberships: self._wrap_async_method(
                 self.list_memberships,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/ListMemberships",
             ),
-            self.list_bound_memberships: self._wrap_method(
+            self.list_bound_memberships: self._wrap_async_method(
                 self.list_bound_memberships,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/ListBoundMemberships",
             ),
-            self.list_features: self._wrap_method(
+            self.list_features: self._wrap_async_method(
                 self.list_features,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/ListFeatures",
             ),
-            self.get_membership: self._wrap_method(
+            self.get_membership: self._wrap_async_method(
                 self.get_membership,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/GetMembership",
             ),
-            self.get_feature: self._wrap_method(
+            self.get_feature: self._wrap_async_method(
                 self.get_feature,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/GetFeature",
             ),
-            self.create_membership: self._wrap_method(
+            self.create_membership: self._wrap_async_method(
                 self.create_membership,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/CreateMembership",
             ),
-            self.create_feature: self._wrap_method(
+            self.create_feature: self._wrap_async_method(
                 self.create_feature,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/CreateFeature",
             ),
-            self.delete_membership: self._wrap_method(
+            self.delete_membership: self._wrap_async_method(
                 self.delete_membership,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/DeleteMembership",
             ),
-            self.delete_feature: self._wrap_method(
+            self.delete_feature: self._wrap_async_method(
                 self.delete_feature,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/DeleteFeature",
             ),
-            self.update_membership: self._wrap_method(
+            self.update_membership: self._wrap_async_method(
                 self.update_membership,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/UpdateMembership",
             ),
-            self.update_feature: self._wrap_method(
+            self.update_feature: self._wrap_async_method(
                 self.update_feature,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/UpdateFeature",
             ),
-            self.generate_connect_manifest: self._wrap_method(
+            self.generate_connect_manifest: self._wrap_async_method(
                 self.generate_connect_manifest,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/GenerateConnectManifest",
             ),
-            self.create_fleet: self._wrap_method(
+            self.create_fleet: self._wrap_async_method(
                 self.create_fleet,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/CreateFleet",
             ),
-            self.get_fleet: self._wrap_method(
+            self.get_fleet: self._wrap_async_method(
                 self.get_fleet,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/GetFleet",
             ),
-            self.update_fleet: self._wrap_method(
+            self.update_fleet: self._wrap_async_method(
                 self.update_fleet,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/UpdateFleet",
             ),
-            self.delete_fleet: self._wrap_method(
+            self.delete_fleet: self._wrap_async_method(
                 self.delete_fleet,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/DeleteFleet",
             ),
-            self.list_fleets: self._wrap_method(
+            self.list_fleets: self._wrap_async_method(
                 self.list_fleets,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/ListFleets",
             ),
-            self.get_scope_namespace: self._wrap_method(
+            self.get_scope_namespace: self._wrap_async_method(
                 self.get_scope_namespace,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/GetScopeNamespace",
             ),
-            self.create_scope_namespace: self._wrap_method(
+            self.create_scope_namespace: self._wrap_async_method(
                 self.create_scope_namespace,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/CreateScopeNamespace",
             ),
-            self.update_scope_namespace: self._wrap_method(
+            self.update_scope_namespace: self._wrap_async_method(
                 self.update_scope_namespace,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/UpdateScopeNamespace",
             ),
-            self.delete_scope_namespace: self._wrap_method(
+            self.delete_scope_namespace: self._wrap_async_method(
                 self.delete_scope_namespace,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/DeleteScopeNamespace",
             ),
-            self.list_scope_namespaces: self._wrap_method(
+            self.list_scope_namespaces: self._wrap_async_method(
                 self.list_scope_namespaces,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/ListScopeNamespaces",
             ),
-            self.get_scope_rbac_role_binding: self._wrap_method(
+            self.get_scope_rbac_role_binding: self._wrap_async_method(
                 self.get_scope_rbac_role_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/GetScopeRBACRoleBinding",
             ),
-            self.create_scope_rbac_role_binding: self._wrap_method(
+            self.create_scope_rbac_role_binding: self._wrap_async_method(
                 self.create_scope_rbac_role_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/CreateScopeRBACRoleBinding",
             ),
-            self.update_scope_rbac_role_binding: self._wrap_method(
+            self.update_scope_rbac_role_binding: self._wrap_async_method(
                 self.update_scope_rbac_role_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/UpdateScopeRBACRoleBinding",
             ),
-            self.delete_scope_rbac_role_binding: self._wrap_method(
+            self.delete_scope_rbac_role_binding: self._wrap_async_method(
                 self.delete_scope_rbac_role_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/DeleteScopeRBACRoleBinding",
             ),
-            self.list_scope_rbac_role_bindings: self._wrap_method(
+            self.list_scope_rbac_role_bindings: self._wrap_async_method(
                 self.list_scope_rbac_role_bindings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/ListScopeRBACRoleBindings",
             ),
-            self.get_scope: self._wrap_method(
+            self.get_scope: self._wrap_async_method(
                 self.get_scope,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/GetScope",
             ),
-            self.create_scope: self._wrap_method(
+            self.create_scope: self._wrap_async_method(
                 self.create_scope,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/CreateScope",
             ),
-            self.update_scope: self._wrap_method(
+            self.update_scope: self._wrap_async_method(
                 self.update_scope,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/UpdateScope",
             ),
-            self.delete_scope: self._wrap_method(
+            self.delete_scope: self._wrap_async_method(
                 self.delete_scope,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/DeleteScope",
             ),
-            self.list_scopes: self._wrap_method(
+            self.list_scopes: self._wrap_async_method(
                 self.list_scopes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/ListScopes",
             ),
-            self.list_permitted_scopes: self._wrap_method(
+            self.list_permitted_scopes: self._wrap_async_method(
                 self.list_permitted_scopes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/ListPermittedScopes",
             ),
-            self.get_membership_binding: self._wrap_method(
+            self.get_membership_binding: self._wrap_async_method(
                 self.get_membership_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/GetMembershipBinding",
             ),
-            self.create_membership_binding: self._wrap_method(
+            self.create_membership_binding: self._wrap_async_method(
                 self.create_membership_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/CreateMembershipBinding",
             ),
-            self.update_membership_binding: self._wrap_method(
+            self.update_membership_binding: self._wrap_async_method(
                 self.update_membership_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/UpdateMembershipBinding",
             ),
-            self.delete_membership_binding: self._wrap_method(
+            self.delete_membership_binding: self._wrap_async_method(
                 self.delete_membership_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/DeleteMembershipBinding",
             ),
-            self.list_membership_bindings: self._wrap_method(
+            self.list_membership_bindings: self._wrap_async_method(
                 self.list_membership_bindings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/ListMembershipBindings",
             ),
-            self.get_membership_rbac_role_binding: self._wrap_method(
+            self.get_membership_rbac_role_binding: self._wrap_async_method(
                 self.get_membership_rbac_role_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/GetMembershipRBACRoleBinding",
             ),
-            self.create_membership_rbac_role_binding: self._wrap_method(
+            self.create_membership_rbac_role_binding: self._wrap_async_method(
                 self.create_membership_rbac_role_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/CreateMembershipRBACRoleBinding",
             ),
-            self.update_membership_rbac_role_binding: self._wrap_method(
+            self.update_membership_rbac_role_binding: self._wrap_async_method(
                 self.update_membership_rbac_role_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/UpdateMembershipRBACRoleBinding",
             ),
-            self.delete_membership_rbac_role_binding: self._wrap_method(
+            self.delete_membership_rbac_role_binding: self._wrap_async_method(
                 self.delete_membership_rbac_role_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/DeleteMembershipRBACRoleBinding",
             ),
-            self.list_membership_rbac_role_bindings: self._wrap_method(
+            self.list_membership_rbac_role_bindings: self._wrap_async_method(
                 self.list_membership_rbac_role_bindings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/ListMembershipRBACRoleBindings",
             ),
-            self.generate_membership_rbac_role_binding_yaml: self._wrap_method(
+            self.generate_membership_rbac_role_binding_yaml: self._wrap_async_method(
                 self.generate_membership_rbac_role_binding_yaml,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gkehub.v1.GkeHub/GenerateMembershipRBACRoleBindingYAML",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

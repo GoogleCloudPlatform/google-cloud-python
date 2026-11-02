@@ -13,12 +13,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
 import google.iam.v1.policy_pb2 as policy_pb2  # type: ignore
@@ -26,6 +34,7 @@ import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async, operations_v1
 from google.api_core import retry_async as retries
@@ -35,6 +44,10 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.bigtable_admin_v2._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.cloud.bigtable_admin_v2.types import bigtable_table_admin, table
 from google.cloud.bigtable_admin_v2.types import table as gba_table
 
@@ -197,6 +210,10 @@ class BigtableTableAdminGrpcAsyncIOTransport(BigtableTableAdminTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -248,6 +265,12 @@ class BigtableTableAdminGrpcAsyncIOTransport(BigtableTableAdminTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -303,6 +326,7 @@ class BigtableTableAdminGrpcAsyncIOTransport(BigtableTableAdminTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -324,12 +348,26 @@ class BigtableTableAdminGrpcAsyncIOTransport(BigtableTableAdminTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -1427,19 +1465,24 @@ class BigtableTableAdminGrpcAsyncIOTransport(BigtableTableAdminTransport):
         return self._stubs["delete_schema_bundle"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.create_table: self._wrap_method(
+            self.create_table: self._wrap_async_method(
                 self.create_table,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/CreateTable",
             ),
-            self.create_table_from_snapshot: self._wrap_method(
+            self.create_table_from_snapshot: self._wrap_async_method(
                 self.create_table_from_snapshot,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/CreateTableFromSnapshot",
             ),
-            self.list_tables: self._wrap_method(
+            self.list_tables: self._wrap_async_method(
                 self.list_tables,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1453,8 +1496,9 @@ class BigtableTableAdminGrpcAsyncIOTransport(BigtableTableAdminTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/ListTables",
             ),
-            self.get_table: self._wrap_method(
+            self.get_table: self._wrap_async_method(
                 self.get_table,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1468,58 +1512,69 @@ class BigtableTableAdminGrpcAsyncIOTransport(BigtableTableAdminTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/GetTable",
             ),
-            self.update_table: self._wrap_method(
+            self.update_table: self._wrap_async_method(
                 self.update_table,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/UpdateTable",
             ),
-            self.delete_table: self._wrap_method(
+            self.delete_table: self._wrap_async_method(
                 self.delete_table,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/DeleteTable",
             ),
-            self.undelete_table: self._wrap_method(
+            self.undelete_table: self._wrap_async_method(
                 self.undelete_table,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/UndeleteTable",
             ),
-            self.create_authorized_view: self._wrap_method(
+            self.create_authorized_view: self._wrap_async_method(
                 self.create_authorized_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/CreateAuthorizedView",
             ),
-            self.list_authorized_views: self._wrap_method(
+            self.list_authorized_views: self._wrap_async_method(
                 self.list_authorized_views,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/ListAuthorizedViews",
             ),
-            self.get_authorized_view: self._wrap_method(
+            self.get_authorized_view: self._wrap_async_method(
                 self.get_authorized_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/GetAuthorizedView",
             ),
-            self.update_authorized_view: self._wrap_method(
+            self.update_authorized_view: self._wrap_async_method(
                 self.update_authorized_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/UpdateAuthorizedView",
             ),
-            self.delete_authorized_view: self._wrap_method(
+            self.delete_authorized_view: self._wrap_async_method(
                 self.delete_authorized_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/DeleteAuthorizedView",
             ),
-            self.modify_column_families: self._wrap_method(
+            self.modify_column_families: self._wrap_async_method(
                 self.modify_column_families,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/ModifyColumnFamilies",
             ),
-            self.drop_row_range: self._wrap_method(
+            self.drop_row_range: self._wrap_async_method(
                 self.drop_row_range,
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/DropRowRange",
             ),
-            self.generate_consistency_token: self._wrap_method(
+            self.generate_consistency_token: self._wrap_async_method(
                 self.generate_consistency_token,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1533,8 +1588,9 @@ class BigtableTableAdminGrpcAsyncIOTransport(BigtableTableAdminTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/GenerateConsistencyToken",
             ),
-            self.check_consistency: self._wrap_method(
+            self.check_consistency: self._wrap_async_method(
                 self.check_consistency,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1548,13 +1604,15 @@ class BigtableTableAdminGrpcAsyncIOTransport(BigtableTableAdminTransport):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/CheckConsistency",
             ),
-            self.snapshot_table: self._wrap_method(
+            self.snapshot_table: self._wrap_async_method(
                 self.snapshot_table,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/SnapshotTable",
             ),
-            self.get_snapshot: self._wrap_method(
+            self.get_snapshot: self._wrap_async_method(
                 self.get_snapshot,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1568,8 +1626,9 @@ class BigtableTableAdminGrpcAsyncIOTransport(BigtableTableAdminTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/GetSnapshot",
             ),
-            self.list_snapshots: self._wrap_method(
+            self.list_snapshots: self._wrap_async_method(
                 self.list_snapshots,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1583,18 +1642,21 @@ class BigtableTableAdminGrpcAsyncIOTransport(BigtableTableAdminTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/ListSnapshots",
             ),
-            self.delete_snapshot: self._wrap_method(
+            self.delete_snapshot: self._wrap_async_method(
                 self.delete_snapshot,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/DeleteSnapshot",
             ),
-            self.create_backup: self._wrap_method(
+            self.create_backup: self._wrap_async_method(
                 self.create_backup,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/CreateBackup",
             ),
-            self.get_backup: self._wrap_method(
+            self.get_backup: self._wrap_async_method(
                 self.get_backup,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1608,18 +1670,21 @@ class BigtableTableAdminGrpcAsyncIOTransport(BigtableTableAdminTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/GetBackup",
             ),
-            self.update_backup: self._wrap_method(
+            self.update_backup: self._wrap_async_method(
                 self.update_backup,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/UpdateBackup",
             ),
-            self.delete_backup: self._wrap_method(
+            self.delete_backup: self._wrap_async_method(
                 self.delete_backup,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/DeleteBackup",
             ),
-            self.list_backups: self._wrap_method(
+            self.list_backups: self._wrap_async_method(
                 self.list_backups,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1633,18 +1698,21 @@ class BigtableTableAdminGrpcAsyncIOTransport(BigtableTableAdminTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/ListBackups",
             ),
-            self.restore_table: self._wrap_method(
+            self.restore_table: self._wrap_async_method(
                 self.restore_table,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/RestoreTable",
             ),
-            self.copy_backup: self._wrap_method(
+            self.copy_backup: self._wrap_async_method(
                 self.copy_backup,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/CopyBackup",
             ),
-            self.get_iam_policy: self._wrap_method(
+            self.get_iam_policy: self._wrap_async_method(
                 self.get_iam_policy,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1658,13 +1726,15 @@ class BigtableTableAdminGrpcAsyncIOTransport(BigtableTableAdminTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/GetIamPolicy",
             ),
-            self.set_iam_policy: self._wrap_method(
+            self.set_iam_policy: self._wrap_async_method(
                 self.set_iam_policy,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/SetIamPolicy",
             ),
-            self.test_iam_permissions: self._wrap_method(
+            self.test_iam_permissions: self._wrap_async_method(
                 self.test_iam_permissions,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1678,38 +1748,39 @@ class BigtableTableAdminGrpcAsyncIOTransport(BigtableTableAdminTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/TestIamPermissions",
             ),
-            self.create_schema_bundle: self._wrap_method(
+            self.create_schema_bundle: self._wrap_async_method(
                 self.create_schema_bundle,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/CreateSchemaBundle",
             ),
-            self.update_schema_bundle: self._wrap_method(
+            self.update_schema_bundle: self._wrap_async_method(
                 self.update_schema_bundle,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/UpdateSchemaBundle",
             ),
-            self.get_schema_bundle: self._wrap_method(
+            self.get_schema_bundle: self._wrap_async_method(
                 self.get_schema_bundle,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/GetSchemaBundle",
             ),
-            self.list_schema_bundles: self._wrap_method(
+            self.list_schema_bundles: self._wrap_async_method(
                 self.list_schema_bundles,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/ListSchemaBundles",
             ),
-            self.delete_schema_bundle: self._wrap_method(
+            self.delete_schema_bundle: self._wrap_async_method(
                 self.delete_schema_bundle,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/DeleteSchemaBundle",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

@@ -13,16 +13,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async, operations_v1
 from google.api_core import retry_async as retries
@@ -33,6 +42,10 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.oracledatabase_v1._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.cloud.oracledatabase_v1.types import (
     autonomous_database,
     database,
@@ -230,6 +243,10 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -281,6 +298,12 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -336,6 +359,7 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -357,12 +381,26 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -2967,9 +3005,12 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
         return self._stubs["test_goldengate_connection_assignment"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.list_cloud_exadata_infrastructures: self._wrap_method(
+            self.list_cloud_exadata_infrastructures: self._wrap_async_method(
                 self.list_cloud_exadata_infrastructures,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -2983,8 +3024,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListCloudExadataInfrastructures",
             ),
-            self.get_cloud_exadata_infrastructure: self._wrap_method(
+            self.get_cloud_exadata_infrastructure: self._wrap_async_method(
                 self.get_cloud_exadata_infrastructure,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -2998,23 +3040,27 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/GetCloudExadataInfrastructure",
             ),
-            self.create_cloud_exadata_infrastructure: self._wrap_method(
+            self.create_cloud_exadata_infrastructure: self._wrap_async_method(
                 self.create_cloud_exadata_infrastructure,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/CreateCloudExadataInfrastructure",
             ),
-            self.delete_cloud_exadata_infrastructure: self._wrap_method(
+            self.delete_cloud_exadata_infrastructure: self._wrap_async_method(
                 self.delete_cloud_exadata_infrastructure,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/DeleteCloudExadataInfrastructure",
             ),
-            self.configure_exascale_cloud_exadata_infrastructure: self._wrap_method(
+            self.configure_exascale_cloud_exadata_infrastructure: self._wrap_async_method(
                 self.configure_exascale_cloud_exadata_infrastructure,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ConfigureExascaleCloudExadataInfrastructure",
             ),
-            self.list_cloud_vm_clusters: self._wrap_method(
+            self.list_cloud_vm_clusters: self._wrap_async_method(
                 self.list_cloud_vm_clusters,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3028,8 +3074,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListCloudVmClusters",
             ),
-            self.get_cloud_vm_cluster: self._wrap_method(
+            self.get_cloud_vm_cluster: self._wrap_async_method(
                 self.get_cloud_vm_cluster,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3043,18 +3090,21 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/GetCloudVmCluster",
             ),
-            self.create_cloud_vm_cluster: self._wrap_method(
+            self.create_cloud_vm_cluster: self._wrap_async_method(
                 self.create_cloud_vm_cluster,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/CreateCloudVmCluster",
             ),
-            self.delete_cloud_vm_cluster: self._wrap_method(
+            self.delete_cloud_vm_cluster: self._wrap_async_method(
                 self.delete_cloud_vm_cluster,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/DeleteCloudVmCluster",
             ),
-            self.list_entitlements: self._wrap_method(
+            self.list_entitlements: self._wrap_async_method(
                 self.list_entitlements,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3068,8 +3118,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListEntitlements",
             ),
-            self.list_db_servers: self._wrap_method(
+            self.list_db_servers: self._wrap_async_method(
                 self.list_db_servers,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3083,8 +3134,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListDbServers",
             ),
-            self.list_db_nodes: self._wrap_method(
+            self.list_db_nodes: self._wrap_async_method(
                 self.list_db_nodes,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3098,8 +3150,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListDbNodes",
             ),
-            self.list_gi_versions: self._wrap_method(
+            self.list_gi_versions: self._wrap_async_method(
                 self.list_gi_versions,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3113,8 +3166,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListGiVersions",
             ),
-            self.list_minor_versions: self._wrap_method(
+            self.list_minor_versions: self._wrap_async_method(
                 self.list_minor_versions,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3128,8 +3182,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListMinorVersions",
             ),
-            self.list_db_system_shapes: self._wrap_method(
+            self.list_db_system_shapes: self._wrap_async_method(
                 self.list_db_system_shapes,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3143,8 +3198,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListDbSystemShapes",
             ),
-            self.list_autonomous_databases: self._wrap_method(
+            self.list_autonomous_databases: self._wrap_async_method(
                 self.list_autonomous_databases,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3158,8 +3214,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListAutonomousDatabases",
             ),
-            self.get_autonomous_database: self._wrap_method(
+            self.get_autonomous_database: self._wrap_async_method(
                 self.get_autonomous_database,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3173,33 +3230,39 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/GetAutonomousDatabase",
             ),
-            self.create_autonomous_database: self._wrap_method(
+            self.create_autonomous_database: self._wrap_async_method(
                 self.create_autonomous_database,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/CreateAutonomousDatabase",
             ),
-            self.update_autonomous_database: self._wrap_method(
+            self.update_autonomous_database: self._wrap_async_method(
                 self.update_autonomous_database,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/UpdateAutonomousDatabase",
             ),
-            self.delete_autonomous_database: self._wrap_method(
+            self.delete_autonomous_database: self._wrap_async_method(
                 self.delete_autonomous_database,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/DeleteAutonomousDatabase",
             ),
-            self.restore_autonomous_database: self._wrap_method(
+            self.restore_autonomous_database: self._wrap_async_method(
                 self.restore_autonomous_database,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/RestoreAutonomousDatabase",
             ),
-            self.generate_autonomous_database_wallet: self._wrap_method(
+            self.generate_autonomous_database_wallet: self._wrap_async_method(
                 self.generate_autonomous_database_wallet,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/GenerateAutonomousDatabaseWallet",
             ),
-            self.list_autonomous_db_versions: self._wrap_method(
+            self.list_autonomous_db_versions: self._wrap_async_method(
                 self.list_autonomous_db_versions,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3213,8 +3276,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListAutonomousDbVersions",
             ),
-            self.list_autonomous_database_character_sets: self._wrap_method(
+            self.list_autonomous_database_character_sets: self._wrap_async_method(
                 self.list_autonomous_database_character_sets,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3228,8 +3292,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListAutonomousDatabaseCharacterSets",
             ),
-            self.list_autonomous_database_backups: self._wrap_method(
+            self.list_autonomous_database_backups: self._wrap_async_method(
                 self.list_autonomous_database_backups,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3243,43 +3308,51 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListAutonomousDatabaseBackups",
             ),
-            self.stop_autonomous_database: self._wrap_method(
+            self.stop_autonomous_database: self._wrap_async_method(
                 self.stop_autonomous_database,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/StopAutonomousDatabase",
             ),
-            self.start_autonomous_database: self._wrap_method(
+            self.start_autonomous_database: self._wrap_async_method(
                 self.start_autonomous_database,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/StartAutonomousDatabase",
             ),
-            self.restart_autonomous_database: self._wrap_method(
+            self.restart_autonomous_database: self._wrap_async_method(
                 self.restart_autonomous_database,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/RestartAutonomousDatabase",
             ),
-            self.switchover_autonomous_database: self._wrap_method(
+            self.switchover_autonomous_database: self._wrap_async_method(
                 self.switchover_autonomous_database,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/SwitchoverAutonomousDatabase",
             ),
-            self.failover_autonomous_database: self._wrap_method(
+            self.failover_autonomous_database: self._wrap_async_method(
                 self.failover_autonomous_database,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/FailoverAutonomousDatabase",
             ),
-            self.refresh_autonomous_database: self._wrap_method(
+            self.refresh_autonomous_database: self._wrap_async_method(
                 self.refresh_autonomous_database,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/RefreshAutonomousDatabase",
             ),
-            self.get_autonomous_database_refreshable_clones: self._wrap_method(
+            self.get_autonomous_database_refreshable_clones: self._wrap_async_method(
                 self.get_autonomous_database_refreshable_clones,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/GetAutonomousDatabaseRefreshableClones",
             ),
-            self.list_odb_networks: self._wrap_method(
+            self.list_odb_networks: self._wrap_async_method(
                 self.list_odb_networks,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3293,8 +3366,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListOdbNetworks",
             ),
-            self.get_odb_network: self._wrap_method(
+            self.get_odb_network: self._wrap_async_method(
                 self.get_odb_network,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3308,18 +3382,21 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/GetOdbNetwork",
             ),
-            self.create_odb_network: self._wrap_method(
+            self.create_odb_network: self._wrap_async_method(
                 self.create_odb_network,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/CreateOdbNetwork",
             ),
-            self.delete_odb_network: self._wrap_method(
+            self.delete_odb_network: self._wrap_async_method(
                 self.delete_odb_network,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/DeleteOdbNetwork",
             ),
-            self.list_odb_subnets: self._wrap_method(
+            self.list_odb_subnets: self._wrap_async_method(
                 self.list_odb_subnets,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3333,8 +3410,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListOdbSubnets",
             ),
-            self.get_odb_subnet: self._wrap_method(
+            self.get_odb_subnet: self._wrap_async_method(
                 self.get_odb_subnet,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3348,18 +3426,21 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/GetOdbSubnet",
             ),
-            self.create_odb_subnet: self._wrap_method(
+            self.create_odb_subnet: self._wrap_async_method(
                 self.create_odb_subnet,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/CreateOdbSubnet",
             ),
-            self.delete_odb_subnet: self._wrap_method(
+            self.delete_odb_subnet: self._wrap_async_method(
                 self.delete_odb_subnet,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/DeleteOdbSubnet",
             ),
-            self.list_odb_dns_zones: self._wrap_method(
+            self.list_odb_dns_zones: self._wrap_async_method(
                 self.list_odb_dns_zones,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3373,8 +3454,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListOdbDnsZones",
             ),
-            self.get_odb_dns_zone: self._wrap_method(
+            self.get_odb_dns_zone: self._wrap_async_method(
                 self.get_odb_dns_zone,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3388,18 +3470,21 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/GetOdbDnsZone",
             ),
-            self.create_odb_dns_zone: self._wrap_method(
+            self.create_odb_dns_zone: self._wrap_async_method(
                 self.create_odb_dns_zone,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/CreateOdbDnsZone",
             ),
-            self.delete_odb_dns_zone: self._wrap_method(
+            self.delete_odb_dns_zone: self._wrap_async_method(
                 self.delete_odb_dns_zone,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/DeleteOdbDnsZone",
             ),
-            self.list_exadb_vm_clusters: self._wrap_method(
+            self.list_exadb_vm_clusters: self._wrap_async_method(
                 self.list_exadb_vm_clusters,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3413,8 +3498,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListExadbVmClusters",
             ),
-            self.get_exadb_vm_cluster: self._wrap_method(
+            self.get_exadb_vm_cluster: self._wrap_async_method(
                 self.get_exadb_vm_cluster,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3428,28 +3514,33 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/GetExadbVmCluster",
             ),
-            self.create_exadb_vm_cluster: self._wrap_method(
+            self.create_exadb_vm_cluster: self._wrap_async_method(
                 self.create_exadb_vm_cluster,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/CreateExadbVmCluster",
             ),
-            self.delete_exadb_vm_cluster: self._wrap_method(
+            self.delete_exadb_vm_cluster: self._wrap_async_method(
                 self.delete_exadb_vm_cluster,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/DeleteExadbVmCluster",
             ),
-            self.update_exadb_vm_cluster: self._wrap_method(
+            self.update_exadb_vm_cluster: self._wrap_async_method(
                 self.update_exadb_vm_cluster,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/UpdateExadbVmCluster",
             ),
-            self.remove_virtual_machine_exadb_vm_cluster: self._wrap_method(
+            self.remove_virtual_machine_exadb_vm_cluster: self._wrap_async_method(
                 self.remove_virtual_machine_exadb_vm_cluster,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/RemoveVirtualMachineExadbVmCluster",
             ),
-            self.list_exascale_db_storage_vaults: self._wrap_method(
+            self.list_exascale_db_storage_vaults: self._wrap_async_method(
                 self.list_exascale_db_storage_vaults,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3463,8 +3554,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListExascaleDbStorageVaults",
             ),
-            self.get_exascale_db_storage_vault: self._wrap_method(
+            self.get_exascale_db_storage_vault: self._wrap_async_method(
                 self.get_exascale_db_storage_vault,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3478,18 +3570,21 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/GetExascaleDbStorageVault",
             ),
-            self.create_exascale_db_storage_vault: self._wrap_method(
+            self.create_exascale_db_storage_vault: self._wrap_async_method(
                 self.create_exascale_db_storage_vault,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/CreateExascaleDbStorageVault",
             ),
-            self.delete_exascale_db_storage_vault: self._wrap_method(
+            self.delete_exascale_db_storage_vault: self._wrap_async_method(
                 self.delete_exascale_db_storage_vault,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/DeleteExascaleDbStorageVault",
             ),
-            self.list_db_system_initial_storage_sizes: self._wrap_method(
+            self.list_db_system_initial_storage_sizes: self._wrap_async_method(
                 self.list_db_system_initial_storage_sizes,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3503,8 +3598,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListDbSystemInitialStorageSizes",
             ),
-            self.list_databases: self._wrap_method(
+            self.list_databases: self._wrap_async_method(
                 self.list_databases,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3518,8 +3614,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListDatabases",
             ),
-            self.get_database: self._wrap_method(
+            self.get_database: self._wrap_async_method(
                 self.get_database,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3533,8 +3630,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/GetDatabase",
             ),
-            self.list_pluggable_databases: self._wrap_method(
+            self.list_pluggable_databases: self._wrap_async_method(
                 self.list_pluggable_databases,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3548,8 +3646,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListPluggableDatabases",
             ),
-            self.get_pluggable_database: self._wrap_method(
+            self.get_pluggable_database: self._wrap_async_method(
                 self.get_pluggable_database,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3563,8 +3662,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/GetPluggableDatabase",
             ),
-            self.list_db_systems: self._wrap_method(
+            self.list_db_systems: self._wrap_async_method(
                 self.list_db_systems,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3578,8 +3678,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListDbSystems",
             ),
-            self.get_db_system: self._wrap_method(
+            self.get_db_system: self._wrap_async_method(
                 self.get_db_system,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3593,18 +3694,21 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/GetDbSystem",
             ),
-            self.create_db_system: self._wrap_method(
+            self.create_db_system: self._wrap_async_method(
                 self.create_db_system,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/CreateDbSystem",
             ),
-            self.delete_db_system: self._wrap_method(
+            self.delete_db_system: self._wrap_async_method(
                 self.delete_db_system,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/DeleteDbSystem",
             ),
-            self.list_goldengate_deployments: self._wrap_method(
+            self.list_goldengate_deployments: self._wrap_async_method(
                 self.list_goldengate_deployments,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3618,8 +3722,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListGoldengateDeployments",
             ),
-            self.get_goldengate_deployment: self._wrap_method(
+            self.get_goldengate_deployment: self._wrap_async_method(
                 self.get_goldengate_deployment,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3633,28 +3738,33 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/GetGoldengateDeployment",
             ),
-            self.create_goldengate_deployment: self._wrap_method(
+            self.create_goldengate_deployment: self._wrap_async_method(
                 self.create_goldengate_deployment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/CreateGoldengateDeployment",
             ),
-            self.delete_goldengate_deployment: self._wrap_method(
+            self.delete_goldengate_deployment: self._wrap_async_method(
                 self.delete_goldengate_deployment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/DeleteGoldengateDeployment",
             ),
-            self.stop_goldengate_deployment: self._wrap_method(
+            self.stop_goldengate_deployment: self._wrap_async_method(
                 self.stop_goldengate_deployment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/StopGoldengateDeployment",
             ),
-            self.start_goldengate_deployment: self._wrap_method(
+            self.start_goldengate_deployment: self._wrap_async_method(
                 self.start_goldengate_deployment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/StartGoldengateDeployment",
             ),
-            self.list_goldengate_connections: self._wrap_method(
+            self.list_goldengate_connections: self._wrap_async_method(
                 self.list_goldengate_connections,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3668,8 +3778,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListGoldengateConnections",
             ),
-            self.get_goldengate_connection: self._wrap_method(
+            self.get_goldengate_connection: self._wrap_async_method(
                 self.get_goldengate_connection,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3683,18 +3794,21 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/GetGoldengateConnection",
             ),
-            self.create_goldengate_connection: self._wrap_method(
+            self.create_goldengate_connection: self._wrap_async_method(
                 self.create_goldengate_connection,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/CreateGoldengateConnection",
             ),
-            self.delete_goldengate_connection: self._wrap_method(
+            self.delete_goldengate_connection: self._wrap_async_method(
                 self.delete_goldengate_connection,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/DeleteGoldengateConnection",
             ),
-            self.list_goldengate_deployment_versions: self._wrap_method(
+            self.list_goldengate_deployment_versions: self._wrap_async_method(
                 self.list_goldengate_deployment_versions,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3708,8 +3822,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListGoldengateDeploymentVersions",
             ),
-            self.list_goldengate_deployment_types: self._wrap_method(
+            self.list_goldengate_deployment_types: self._wrap_async_method(
                 self.list_goldengate_deployment_types,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3723,8 +3838,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListGoldengateDeploymentTypes",
             ),
-            self.list_goldengate_deployment_environments: self._wrap_method(
+            self.list_goldengate_deployment_environments: self._wrap_async_method(
                 self.list_goldengate_deployment_environments,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3738,8 +3854,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListGoldengateDeploymentEnvironments",
             ),
-            self.list_goldengate_connection_types: self._wrap_method(
+            self.list_goldengate_connection_types: self._wrap_async_method(
                 self.list_goldengate_connection_types,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3753,8 +3870,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListGoldengateConnectionTypes",
             ),
-            self.list_db_versions: self._wrap_method(
+            self.list_db_versions: self._wrap_async_method(
                 self.list_db_versions,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3768,8 +3886,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListDbVersions",
             ),
-            self.list_database_character_sets: self._wrap_method(
+            self.list_database_character_sets: self._wrap_async_method(
                 self.list_database_character_sets,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3783,8 +3902,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListDatabaseCharacterSets",
             ),
-            self.list_goldengate_connection_assignments: self._wrap_method(
+            self.list_goldengate_connection_assignments: self._wrap_async_method(
                 self.list_goldengate_connection_assignments,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3798,8 +3918,9 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/ListGoldengateConnectionAssignments",
             ),
-            self.get_goldengate_connection_assignment: self._wrap_method(
+            self.get_goldengate_connection_assignment: self._wrap_async_method(
                 self.get_goldengate_connection_assignment,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3813,58 +3934,63 @@ class OracleDatabaseGrpcAsyncIOTransport(OracleDatabaseTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/GetGoldengateConnectionAssignment",
             ),
-            self.create_goldengate_connection_assignment: self._wrap_method(
+            self.create_goldengate_connection_assignment: self._wrap_async_method(
                 self.create_goldengate_connection_assignment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/CreateGoldengateConnectionAssignment",
             ),
-            self.delete_goldengate_connection_assignment: self._wrap_method(
+            self.delete_goldengate_connection_assignment: self._wrap_async_method(
                 self.delete_goldengate_connection_assignment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/DeleteGoldengateConnectionAssignment",
             ),
-            self.test_goldengate_connection_assignment: self._wrap_method(
+            self.test_goldengate_connection_assignment: self._wrap_async_method(
                 self.test_goldengate_connection_assignment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.oracledatabase.v1.OracleDatabase/TestGoldengateConnectionAssignment",
             ),
-            self.get_location: self._wrap_method(
+            self.get_location: self._wrap_async_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: self._wrap_method(
+            self.list_locations: self._wrap_async_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.cancel_operation: self._wrap_method(
+            self.cancel_operation: self._wrap_async_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: self._wrap_method(
+            self.delete_operation: self._wrap_async_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: self._wrap_method(
+            self.list_operations: self._wrap_async_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

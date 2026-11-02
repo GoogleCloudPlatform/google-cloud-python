@@ -13,17 +13,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async, operations_v1
 from google.api_core import retry_async as retries
@@ -37,6 +46,10 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.contact_center_insights_v1._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.cloud.contact_center_insights_v1.types import (
     contact_center_insights,
     resources,
@@ -198,6 +211,10 @@ class ContactCenterInsightsGrpcAsyncIOTransport(ContactCenterInsightsTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -249,6 +266,12 @@ class ContactCenterInsightsGrpcAsyncIOTransport(ContactCenterInsightsTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -304,6 +327,7 @@ class ContactCenterInsightsGrpcAsyncIOTransport(ContactCenterInsightsTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -325,12 +349,26 @@ class ContactCenterInsightsGrpcAsyncIOTransport(ContactCenterInsightsTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -2525,399 +2563,474 @@ class ContactCenterInsightsGrpcAsyncIOTransport(ContactCenterInsightsTransport):
         return self._stubs["bulk_download_feedback_labels"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.create_conversation: self._wrap_method(
+            self.create_conversation: self._wrap_async_method(
                 self.create_conversation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CreateConversation",
             ),
-            self.upload_conversation: self._wrap_method(
+            self.upload_conversation: self._wrap_async_method(
                 self.upload_conversation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UploadConversation",
             ),
-            self.update_conversation: self._wrap_method(
+            self.update_conversation: self._wrap_async_method(
                 self.update_conversation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UpdateConversation",
             ),
-            self.get_conversation: self._wrap_method(
+            self.get_conversation: self._wrap_async_method(
                 self.get_conversation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetConversation",
             ),
-            self.list_conversations: self._wrap_method(
+            self.list_conversations: self._wrap_async_method(
                 self.list_conversations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListConversations",
             ),
-            self.delete_conversation: self._wrap_method(
+            self.delete_conversation: self._wrap_async_method(
                 self.delete_conversation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeleteConversation",
             ),
-            self.create_analysis: self._wrap_method(
+            self.create_analysis: self._wrap_async_method(
                 self.create_analysis,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CreateAnalysis",
             ),
-            self.get_analysis: self._wrap_method(
+            self.get_analysis: self._wrap_async_method(
                 self.get_analysis,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetAnalysis",
             ),
-            self.list_analyses: self._wrap_method(
+            self.list_analyses: self._wrap_async_method(
                 self.list_analyses,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListAnalyses",
             ),
-            self.delete_analysis: self._wrap_method(
+            self.delete_analysis: self._wrap_async_method(
                 self.delete_analysis,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeleteAnalysis",
             ),
-            self.bulk_analyze_conversations: self._wrap_method(
+            self.bulk_analyze_conversations: self._wrap_async_method(
                 self.bulk_analyze_conversations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/BulkAnalyzeConversations",
             ),
-            self.bulk_delete_conversations: self._wrap_method(
+            self.bulk_delete_conversations: self._wrap_async_method(
                 self.bulk_delete_conversations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/BulkDeleteConversations",
             ),
-            self.ingest_conversations: self._wrap_method(
+            self.ingest_conversations: self._wrap_async_method(
                 self.ingest_conversations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/IngestConversations",
             ),
-            self.export_insights_data: self._wrap_method(
+            self.export_insights_data: self._wrap_async_method(
                 self.export_insights_data,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ExportInsightsData",
             ),
-            self.create_issue_model: self._wrap_method(
+            self.create_issue_model: self._wrap_async_method(
                 self.create_issue_model,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CreateIssueModel",
             ),
-            self.update_issue_model: self._wrap_method(
+            self.update_issue_model: self._wrap_async_method(
                 self.update_issue_model,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UpdateIssueModel",
             ),
-            self.get_issue_model: self._wrap_method(
+            self.get_issue_model: self._wrap_async_method(
                 self.get_issue_model,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetIssueModel",
             ),
-            self.list_issue_models: self._wrap_method(
+            self.list_issue_models: self._wrap_async_method(
                 self.list_issue_models,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListIssueModels",
             ),
-            self.delete_issue_model: self._wrap_method(
+            self.delete_issue_model: self._wrap_async_method(
                 self.delete_issue_model,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeleteIssueModel",
             ),
-            self.deploy_issue_model: self._wrap_method(
+            self.deploy_issue_model: self._wrap_async_method(
                 self.deploy_issue_model,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeployIssueModel",
             ),
-            self.undeploy_issue_model: self._wrap_method(
+            self.undeploy_issue_model: self._wrap_async_method(
                 self.undeploy_issue_model,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UndeployIssueModel",
             ),
-            self.export_issue_model: self._wrap_method(
+            self.export_issue_model: self._wrap_async_method(
                 self.export_issue_model,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ExportIssueModel",
             ),
-            self.import_issue_model: self._wrap_method(
+            self.import_issue_model: self._wrap_async_method(
                 self.import_issue_model,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ImportIssueModel",
             ),
-            self.get_issue: self._wrap_method(
+            self.get_issue: self._wrap_async_method(
                 self.get_issue,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetIssue",
             ),
-            self.list_issues: self._wrap_method(
+            self.list_issues: self._wrap_async_method(
                 self.list_issues,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListIssues",
             ),
-            self.update_issue: self._wrap_method(
+            self.update_issue: self._wrap_async_method(
                 self.update_issue,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UpdateIssue",
             ),
-            self.delete_issue: self._wrap_method(
+            self.delete_issue: self._wrap_async_method(
                 self.delete_issue,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeleteIssue",
             ),
-            self.calculate_issue_model_stats: self._wrap_method(
+            self.calculate_issue_model_stats: self._wrap_async_method(
                 self.calculate_issue_model_stats,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CalculateIssueModelStats",
             ),
-            self.create_phrase_matcher: self._wrap_method(
+            self.create_phrase_matcher: self._wrap_async_method(
                 self.create_phrase_matcher,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CreatePhraseMatcher",
             ),
-            self.get_phrase_matcher: self._wrap_method(
+            self.get_phrase_matcher: self._wrap_async_method(
                 self.get_phrase_matcher,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetPhraseMatcher",
             ),
-            self.list_phrase_matchers: self._wrap_method(
+            self.list_phrase_matchers: self._wrap_async_method(
                 self.list_phrase_matchers,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListPhraseMatchers",
             ),
-            self.delete_phrase_matcher: self._wrap_method(
+            self.delete_phrase_matcher: self._wrap_async_method(
                 self.delete_phrase_matcher,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeletePhraseMatcher",
             ),
-            self.update_phrase_matcher: self._wrap_method(
+            self.update_phrase_matcher: self._wrap_async_method(
                 self.update_phrase_matcher,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UpdatePhraseMatcher",
             ),
-            self.calculate_stats: self._wrap_method(
+            self.calculate_stats: self._wrap_async_method(
                 self.calculate_stats,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CalculateStats",
             ),
-            self.get_settings: self._wrap_method(
+            self.get_settings: self._wrap_async_method(
                 self.get_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetSettings",
             ),
-            self.update_settings: self._wrap_method(
+            self.update_settings: self._wrap_async_method(
                 self.update_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UpdateSettings",
             ),
-            self.create_analysis_rule: self._wrap_method(
+            self.create_analysis_rule: self._wrap_async_method(
                 self.create_analysis_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CreateAnalysisRule",
             ),
-            self.get_analysis_rule: self._wrap_method(
+            self.get_analysis_rule: self._wrap_async_method(
                 self.get_analysis_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetAnalysisRule",
             ),
-            self.list_analysis_rules: self._wrap_method(
+            self.list_analysis_rules: self._wrap_async_method(
                 self.list_analysis_rules,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListAnalysisRules",
             ),
-            self.update_analysis_rule: self._wrap_method(
+            self.update_analysis_rule: self._wrap_async_method(
                 self.update_analysis_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UpdateAnalysisRule",
             ),
-            self.delete_analysis_rule: self._wrap_method(
+            self.delete_analysis_rule: self._wrap_async_method(
                 self.delete_analysis_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeleteAnalysisRule",
             ),
-            self.get_encryption_spec: self._wrap_method(
+            self.get_encryption_spec: self._wrap_async_method(
                 self.get_encryption_spec,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetEncryptionSpec",
             ),
-            self.initialize_encryption_spec: self._wrap_method(
+            self.initialize_encryption_spec: self._wrap_async_method(
                 self.initialize_encryption_spec,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/InitializeEncryptionSpec",
             ),
-            self.create_view: self._wrap_method(
+            self.create_view: self._wrap_async_method(
                 self.create_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CreateView",
             ),
-            self.get_view: self._wrap_method(
+            self.get_view: self._wrap_async_method(
                 self.get_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetView",
             ),
-            self.list_views: self._wrap_method(
+            self.list_views: self._wrap_async_method(
                 self.list_views,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListViews",
             ),
-            self.update_view: self._wrap_method(
+            self.update_view: self._wrap_async_method(
                 self.update_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UpdateView",
             ),
-            self.delete_view: self._wrap_method(
+            self.delete_view: self._wrap_async_method(
                 self.delete_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeleteView",
             ),
-            self.query_metrics: self._wrap_method(
+            self.query_metrics: self._wrap_async_method(
                 self.query_metrics,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/QueryMetrics",
             ),
-            self.create_qa_question: self._wrap_method(
+            self.create_qa_question: self._wrap_async_method(
                 self.create_qa_question,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CreateQaQuestion",
             ),
-            self.get_qa_question: self._wrap_method(
+            self.get_qa_question: self._wrap_async_method(
                 self.get_qa_question,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetQaQuestion",
             ),
-            self.update_qa_question: self._wrap_method(
+            self.update_qa_question: self._wrap_async_method(
                 self.update_qa_question,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UpdateQaQuestion",
             ),
-            self.delete_qa_question: self._wrap_method(
+            self.delete_qa_question: self._wrap_async_method(
                 self.delete_qa_question,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeleteQaQuestion",
             ),
-            self.list_qa_questions: self._wrap_method(
+            self.list_qa_questions: self._wrap_async_method(
                 self.list_qa_questions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListQaQuestions",
             ),
-            self.create_qa_scorecard: self._wrap_method(
+            self.create_qa_scorecard: self._wrap_async_method(
                 self.create_qa_scorecard,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CreateQaScorecard",
             ),
-            self.get_qa_scorecard: self._wrap_method(
+            self.get_qa_scorecard: self._wrap_async_method(
                 self.get_qa_scorecard,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetQaScorecard",
             ),
-            self.update_qa_scorecard: self._wrap_method(
+            self.update_qa_scorecard: self._wrap_async_method(
                 self.update_qa_scorecard,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UpdateQaScorecard",
             ),
-            self.delete_qa_scorecard: self._wrap_method(
+            self.delete_qa_scorecard: self._wrap_async_method(
                 self.delete_qa_scorecard,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeleteQaScorecard",
             ),
-            self.list_qa_scorecards: self._wrap_method(
+            self.list_qa_scorecards: self._wrap_async_method(
                 self.list_qa_scorecards,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListQaScorecards",
             ),
-            self.create_qa_scorecard_revision: self._wrap_method(
+            self.create_qa_scorecard_revision: self._wrap_async_method(
                 self.create_qa_scorecard_revision,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CreateQaScorecardRevision",
             ),
-            self.get_qa_scorecard_revision: self._wrap_method(
+            self.get_qa_scorecard_revision: self._wrap_async_method(
                 self.get_qa_scorecard_revision,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetQaScorecardRevision",
             ),
-            self.tune_qa_scorecard_revision: self._wrap_method(
+            self.tune_qa_scorecard_revision: self._wrap_async_method(
                 self.tune_qa_scorecard_revision,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/TuneQaScorecardRevision",
             ),
-            self.deploy_qa_scorecard_revision: self._wrap_method(
+            self.deploy_qa_scorecard_revision: self._wrap_async_method(
                 self.deploy_qa_scorecard_revision,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeployQaScorecardRevision",
             ),
-            self.undeploy_qa_scorecard_revision: self._wrap_method(
+            self.undeploy_qa_scorecard_revision: self._wrap_async_method(
                 self.undeploy_qa_scorecard_revision,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UndeployQaScorecardRevision",
             ),
-            self.delete_qa_scorecard_revision: self._wrap_method(
+            self.delete_qa_scorecard_revision: self._wrap_async_method(
                 self.delete_qa_scorecard_revision,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeleteQaScorecardRevision",
             ),
-            self.list_qa_scorecard_revisions: self._wrap_method(
+            self.list_qa_scorecard_revisions: self._wrap_async_method(
                 self.list_qa_scorecard_revisions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListQaScorecardRevisions",
             ),
-            self.create_feedback_label: self._wrap_method(
+            self.create_feedback_label: self._wrap_async_method(
                 self.create_feedback_label,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/CreateFeedbackLabel",
             ),
-            self.list_feedback_labels: self._wrap_method(
+            self.list_feedback_labels: self._wrap_async_method(
                 self.list_feedback_labels,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListFeedbackLabels",
             ),
-            self.get_feedback_label: self._wrap_method(
+            self.get_feedback_label: self._wrap_async_method(
                 self.get_feedback_label,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/GetFeedbackLabel",
             ),
-            self.update_feedback_label: self._wrap_method(
+            self.update_feedback_label: self._wrap_async_method(
                 self.update_feedback_label,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/UpdateFeedbackLabel",
             ),
-            self.delete_feedback_label: self._wrap_method(
+            self.delete_feedback_label: self._wrap_async_method(
                 self.delete_feedback_label,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/DeleteFeedbackLabel",
             ),
-            self.list_all_feedback_labels: self._wrap_method(
+            self.list_all_feedback_labels: self._wrap_async_method(
                 self.list_all_feedback_labels,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/ListAllFeedbackLabels",
             ),
-            self.bulk_upload_feedback_labels: self._wrap_method(
+            self.bulk_upload_feedback_labels: self._wrap_async_method(
                 self.bulk_upload_feedback_labels,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/BulkUploadFeedbackLabels",
             ),
-            self.bulk_download_feedback_labels: self._wrap_method(
+            self.bulk_download_feedback_labels: self._wrap_async_method(
                 self.bulk_download_feedback_labels,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.contactcenterinsights.v1.ContactCenterInsights/BulkDownloadFeedbackLabels",
             ),
-            self.cancel_operation: self._wrap_method(
+            self.cancel_operation: self._wrap_async_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: self._wrap_method(
+            self.list_operations: self._wrap_async_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

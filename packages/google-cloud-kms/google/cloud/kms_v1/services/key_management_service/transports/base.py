@@ -16,9 +16,21 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.kms_v1 import gapic_version as package_version
+from google.cloud.kms_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.kms_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -31,7 +43,6 @@ from google.iam.v1 import (
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.kms_v1 import gapic_version as package_version
 from google.cloud.kms_v1.types import resources, service
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
@@ -61,6 +72,7 @@ class KeyManagementServiceTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -91,6 +103,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -140,16 +155,95 @@ class KeyManagementServiceTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.list_key_rings: gapic_v1.method.wrap_method(
+            self.list_key_rings: self._wrap_method(
                 self.list_key_rings,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -163,8 +257,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/ListKeyRings",
             ),
-            self.list_crypto_keys: gapic_v1.method.wrap_method(
+            self.list_crypto_keys: self._wrap_method(
                 self.list_crypto_keys,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -178,8 +273,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/ListCryptoKeys",
             ),
-            self.list_crypto_key_versions: gapic_v1.method.wrap_method(
+            self.list_crypto_key_versions: self._wrap_method(
                 self.list_crypto_key_versions,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -193,8 +289,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/ListCryptoKeyVersions",
             ),
-            self.list_import_jobs: gapic_v1.method.wrap_method(
+            self.list_import_jobs: self._wrap_method(
                 self.list_import_jobs,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -208,8 +305,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/ListImportJobs",
             ),
-            self.list_retired_resources: gapic_v1.method.wrap_method(
+            self.list_retired_resources: self._wrap_method(
                 self.list_retired_resources,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -223,8 +321,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/ListRetiredResources",
             ),
-            self.get_key_ring: gapic_v1.method.wrap_method(
+            self.get_key_ring: self._wrap_method(
                 self.get_key_ring,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -238,8 +337,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/GetKeyRing",
             ),
-            self.get_crypto_key: gapic_v1.method.wrap_method(
+            self.get_crypto_key: self._wrap_method(
                 self.get_crypto_key,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -253,8 +353,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/GetCryptoKey",
             ),
-            self.get_crypto_key_version: gapic_v1.method.wrap_method(
+            self.get_crypto_key_version: self._wrap_method(
                 self.get_crypto_key_version,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -268,8 +369,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/GetCryptoKeyVersion",
             ),
-            self.get_public_key: gapic_v1.method.wrap_method(
+            self.get_public_key: self._wrap_method(
                 self.get_public_key,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -283,8 +385,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/GetPublicKey",
             ),
-            self.get_import_job: gapic_v1.method.wrap_method(
+            self.get_import_job: self._wrap_method(
                 self.get_import_job,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -298,8 +401,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/GetImportJob",
             ),
-            self.get_retired_resource: gapic_v1.method.wrap_method(
+            self.get_retired_resource: self._wrap_method(
                 self.get_retired_resource,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -313,8 +417,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/GetRetiredResource",
             ),
-            self.create_key_ring: gapic_v1.method.wrap_method(
+            self.create_key_ring: self._wrap_method(
                 self.create_key_ring,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -328,8 +433,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/CreateKeyRing",
             ),
-            self.create_crypto_key: gapic_v1.method.wrap_method(
+            self.create_crypto_key: self._wrap_method(
                 self.create_crypto_key,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -343,13 +449,15 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/CreateCryptoKey",
             ),
-            self.create_crypto_key_version: gapic_v1.method.wrap_method(
+            self.create_crypto_key_version: self._wrap_method(
                 self.create_crypto_key_version,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/CreateCryptoKeyVersion",
             ),
-            self.delete_crypto_key: gapic_v1.method.wrap_method(
+            self.delete_crypto_key: self._wrap_method(
                 self.delete_crypto_key,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -363,8 +471,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/DeleteCryptoKey",
             ),
-            self.delete_crypto_key_version: gapic_v1.method.wrap_method(
+            self.delete_crypto_key_version: self._wrap_method(
                 self.delete_crypto_key_version,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -378,23 +487,27 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/DeleteCryptoKeyVersion",
             ),
-            self.import_crypto_key_version: gapic_v1.method.wrap_method(
+            self.import_crypto_key_version: self._wrap_method(
                 self.import_crypto_key_version,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/ImportCryptoKeyVersion",
             ),
-            self.import_trusted_key_wrapped_crypto_key_version: gapic_v1.method.wrap_method(
+            self.import_trusted_key_wrapped_crypto_key_version: self._wrap_method(
                 self.import_trusted_key_wrapped_crypto_key_version,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/ImportTrustedKeyWrappedCryptoKeyVersion",
             ),
-            self.export_trusted_key_wrapped_crypto_key_version: gapic_v1.method.wrap_method(
+            self.export_trusted_key_wrapped_crypto_key_version: self._wrap_method(
                 self.export_trusted_key_wrapped_crypto_key_version,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/ExportTrustedKeyWrappedCryptoKeyVersion",
             ),
-            self.create_import_job: gapic_v1.method.wrap_method(
+            self.create_import_job: self._wrap_method(
                 self.create_import_job,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -408,8 +521,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/CreateImportJob",
             ),
-            self.update_crypto_key: gapic_v1.method.wrap_method(
+            self.update_crypto_key: self._wrap_method(
                 self.update_crypto_key,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -423,8 +537,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/UpdateCryptoKey",
             ),
-            self.update_crypto_key_version: gapic_v1.method.wrap_method(
+            self.update_crypto_key_version: self._wrap_method(
                 self.update_crypto_key_version,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -438,8 +553,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/UpdateCryptoKeyVersion",
             ),
-            self.update_crypto_key_primary_version: gapic_v1.method.wrap_method(
+            self.update_crypto_key_primary_version: self._wrap_method(
                 self.update_crypto_key_primary_version,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -453,8 +569,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/UpdateCryptoKeyPrimaryVersion",
             ),
-            self.destroy_crypto_key_version: gapic_v1.method.wrap_method(
+            self.destroy_crypto_key_version: self._wrap_method(
                 self.destroy_crypto_key_version,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -468,8 +585,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/DestroyCryptoKeyVersion",
             ),
-            self.restore_crypto_key_version: gapic_v1.method.wrap_method(
+            self.restore_crypto_key_version: self._wrap_method(
                 self.restore_crypto_key_version,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -483,8 +601,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/RestoreCryptoKeyVersion",
             ),
-            self.encrypt: gapic_v1.method.wrap_method(
+            self.encrypt: self._wrap_method(
                 self.encrypt,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -498,8 +617,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/Encrypt",
             ),
-            self.decrypt: gapic_v1.method.wrap_method(
+            self.decrypt: self._wrap_method(
                 self.decrypt,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -513,18 +633,21 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/Decrypt",
             ),
-            self.raw_encrypt: gapic_v1.method.wrap_method(
+            self.raw_encrypt: self._wrap_method(
                 self.raw_encrypt,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/RawEncrypt",
             ),
-            self.raw_decrypt: gapic_v1.method.wrap_method(
+            self.raw_decrypt: self._wrap_method(
                 self.raw_decrypt,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/RawDecrypt",
             ),
-            self.asymmetric_sign: gapic_v1.method.wrap_method(
+            self.asymmetric_sign: self._wrap_method(
                 self.asymmetric_sign,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -538,8 +661,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/AsymmetricSign",
             ),
-            self.asymmetric_decrypt: gapic_v1.method.wrap_method(
+            self.asymmetric_decrypt: self._wrap_method(
                 self.asymmetric_decrypt,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -553,8 +677,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/AsymmetricDecrypt",
             ),
-            self.mac_sign: gapic_v1.method.wrap_method(
+            self.mac_sign: self._wrap_method(
                 self.mac_sign,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -568,8 +693,9 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/MacSign",
             ),
-            self.mac_verify: gapic_v1.method.wrap_method(
+            self.mac_verify: self._wrap_method(
                 self.mac_verify,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -583,13 +709,15 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/MacVerify",
             ),
-            self.decapsulate: gapic_v1.method.wrap_method(
+            self.decapsulate: self._wrap_method(
                 self.decapsulate,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/Decapsulate",
             ),
-            self.generate_random_bytes: gapic_v1.method.wrap_method(
+            self.generate_random_bytes: self._wrap_method(
                 self.generate_random_bytes,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -603,36 +731,43 @@ class KeyManagementServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/GenerateRandomBytes",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.get_iam_policy: gapic_v1.method.wrap_method(
+            self.get_iam_policy: self._wrap_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/GetIamPolicy",
             ),
-            self.set_iam_policy: gapic_v1.method.wrap_method(
+            self.set_iam_policy: self._wrap_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/SetIamPolicy",
             ),
-            self.test_iam_permissions: gapic_v1.method.wrap_method(
+            self.test_iam_permissions: self._wrap_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/TestIamPermissions",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
         }
 

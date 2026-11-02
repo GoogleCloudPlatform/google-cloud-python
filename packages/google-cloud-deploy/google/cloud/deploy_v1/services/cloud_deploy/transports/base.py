@@ -16,9 +16,21 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.deploy_v1 import gapic_version as package_version
+from google.cloud.deploy_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.deploy_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -31,7 +43,6 @@ from google.iam.v1 import (
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.deploy_v1 import gapic_version as package_version
 from google.cloud.deploy_v1.types import cloud_deploy
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
@@ -58,6 +69,7 @@ class CloudDeployTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -88,6 +100,9 @@ class CloudDeployTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -137,16 +152,95 @@ class CloudDeployTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.list_delivery_pipelines: gapic_v1.method.wrap_method(
+            self.list_delivery_pipelines: self._wrap_method(
                 self.list_delivery_pipelines,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -159,8 +253,9 @@ class CloudDeployTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/ListDeliveryPipelines",
             ),
-            self.get_delivery_pipeline: gapic_v1.method.wrap_method(
+            self.get_delivery_pipeline: self._wrap_method(
                 self.get_delivery_pipeline,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -173,23 +268,27 @@ class CloudDeployTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/GetDeliveryPipeline",
             ),
-            self.create_delivery_pipeline: gapic_v1.method.wrap_method(
+            self.create_delivery_pipeline: self._wrap_method(
                 self.create_delivery_pipeline,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/CreateDeliveryPipeline",
             ),
-            self.update_delivery_pipeline: gapic_v1.method.wrap_method(
+            self.update_delivery_pipeline: self._wrap_method(
                 self.update_delivery_pipeline,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/UpdateDeliveryPipeline",
             ),
-            self.delete_delivery_pipeline: gapic_v1.method.wrap_method(
+            self.delete_delivery_pipeline: self._wrap_method(
                 self.delete_delivery_pipeline,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/DeleteDeliveryPipeline",
             ),
-            self.list_targets: gapic_v1.method.wrap_method(
+            self.list_targets: self._wrap_method(
                 self.list_targets,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -202,13 +301,15 @@ class CloudDeployTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/ListTargets",
             ),
-            self.rollback_target: gapic_v1.method.wrap_method(
+            self.rollback_target: self._wrap_method(
                 self.rollback_target,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/RollbackTarget",
             ),
-            self.get_target: gapic_v1.method.wrap_method(
+            self.get_target: self._wrap_method(
                 self.get_target,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -221,23 +322,27 @@ class CloudDeployTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/GetTarget",
             ),
-            self.create_target: gapic_v1.method.wrap_method(
+            self.create_target: self._wrap_method(
                 self.create_target,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/CreateTarget",
             ),
-            self.update_target: gapic_v1.method.wrap_method(
+            self.update_target: self._wrap_method(
                 self.update_target,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/UpdateTarget",
             ),
-            self.delete_target: gapic_v1.method.wrap_method(
+            self.delete_target: self._wrap_method(
                 self.delete_target,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/DeleteTarget",
             ),
-            self.list_custom_target_types: gapic_v1.method.wrap_method(
+            self.list_custom_target_types: self._wrap_method(
                 self.list_custom_target_types,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -250,8 +355,9 @@ class CloudDeployTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/ListCustomTargetTypes",
             ),
-            self.get_custom_target_type: gapic_v1.method.wrap_method(
+            self.get_custom_target_type: self._wrap_method(
                 self.get_custom_target_type,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -264,23 +370,27 @@ class CloudDeployTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/GetCustomTargetType",
             ),
-            self.create_custom_target_type: gapic_v1.method.wrap_method(
+            self.create_custom_target_type: self._wrap_method(
                 self.create_custom_target_type,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/CreateCustomTargetType",
             ),
-            self.update_custom_target_type: gapic_v1.method.wrap_method(
+            self.update_custom_target_type: self._wrap_method(
                 self.update_custom_target_type,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/UpdateCustomTargetType",
             ),
-            self.delete_custom_target_type: gapic_v1.method.wrap_method(
+            self.delete_custom_target_type: self._wrap_method(
                 self.delete_custom_target_type,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/DeleteCustomTargetType",
             ),
-            self.list_releases: gapic_v1.method.wrap_method(
+            self.list_releases: self._wrap_method(
                 self.list_releases,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -293,8 +403,9 @@ class CloudDeployTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/ListReleases",
             ),
-            self.get_release: gapic_v1.method.wrap_method(
+            self.get_release: self._wrap_method(
                 self.get_release,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -307,33 +418,39 @@ class CloudDeployTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/GetRelease",
             ),
-            self.create_release: gapic_v1.method.wrap_method(
+            self.create_release: self._wrap_method(
                 self.create_release,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/CreateRelease",
             ),
-            self.abandon_release: gapic_v1.method.wrap_method(
+            self.abandon_release: self._wrap_method(
                 self.abandon_release,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/AbandonRelease",
             ),
-            self.create_deploy_policy: gapic_v1.method.wrap_method(
+            self.create_deploy_policy: self._wrap_method(
                 self.create_deploy_policy,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/CreateDeployPolicy",
             ),
-            self.update_deploy_policy: gapic_v1.method.wrap_method(
+            self.update_deploy_policy: self._wrap_method(
                 self.update_deploy_policy,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/UpdateDeployPolicy",
             ),
-            self.delete_deploy_policy: gapic_v1.method.wrap_method(
+            self.delete_deploy_policy: self._wrap_method(
                 self.delete_deploy_policy,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/DeleteDeployPolicy",
             ),
-            self.list_deploy_policies: gapic_v1.method.wrap_method(
+            self.list_deploy_policies: self._wrap_method(
                 self.list_deploy_policies,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -346,8 +463,9 @@ class CloudDeployTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/ListDeployPolicies",
             ),
-            self.get_deploy_policy: gapic_v1.method.wrap_method(
+            self.get_deploy_policy: self._wrap_method(
                 self.get_deploy_policy,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -360,23 +478,27 @@ class CloudDeployTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/GetDeployPolicy",
             ),
-            self.approve_rollout: gapic_v1.method.wrap_method(
+            self.approve_rollout: self._wrap_method(
                 self.approve_rollout,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/ApproveRollout",
             ),
-            self.advance_rollout: gapic_v1.method.wrap_method(
+            self.advance_rollout: self._wrap_method(
                 self.advance_rollout,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/AdvanceRollout",
             ),
-            self.cancel_rollout: gapic_v1.method.wrap_method(
+            self.cancel_rollout: self._wrap_method(
                 self.cancel_rollout,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/CancelRollout",
             ),
-            self.list_rollouts: gapic_v1.method.wrap_method(
+            self.list_rollouts: self._wrap_method(
                 self.list_rollouts,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -389,8 +511,9 @@ class CloudDeployTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/ListRollouts",
             ),
-            self.get_rollout: gapic_v1.method.wrap_method(
+            self.get_rollout: self._wrap_method(
                 self.get_rollout,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -403,23 +526,27 @@ class CloudDeployTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/GetRollout",
             ),
-            self.create_rollout: gapic_v1.method.wrap_method(
+            self.create_rollout: self._wrap_method(
                 self.create_rollout,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/CreateRollout",
             ),
-            self.ignore_job: gapic_v1.method.wrap_method(
+            self.ignore_job: self._wrap_method(
                 self.ignore_job,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/IgnoreJob",
             ),
-            self.retry_job: gapic_v1.method.wrap_method(
+            self.retry_job: self._wrap_method(
                 self.retry_job,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/RetryJob",
             ),
-            self.list_job_runs: gapic_v1.method.wrap_method(
+            self.list_job_runs: self._wrap_method(
                 self.list_job_runs,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -432,8 +559,9 @@ class CloudDeployTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/ListJobRuns",
             ),
-            self.get_job_run: gapic_v1.method.wrap_method(
+            self.get_job_run: self._wrap_method(
                 self.get_job_run,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -446,13 +574,15 @@ class CloudDeployTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/GetJobRun",
             ),
-            self.terminate_job_run: gapic_v1.method.wrap_method(
+            self.terminate_job_run: self._wrap_method(
                 self.terminate_job_run,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/TerminateJobRun",
             ),
-            self.get_config: gapic_v1.method.wrap_method(
+            self.get_config: self._wrap_method(
                 self.get_config,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -465,23 +595,27 @@ class CloudDeployTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/GetConfig",
             ),
-            self.create_automation: gapic_v1.method.wrap_method(
+            self.create_automation: self._wrap_method(
                 self.create_automation,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/CreateAutomation",
             ),
-            self.update_automation: gapic_v1.method.wrap_method(
+            self.update_automation: self._wrap_method(
                 self.update_automation,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/UpdateAutomation",
             ),
-            self.delete_automation: gapic_v1.method.wrap_method(
+            self.delete_automation: self._wrap_method(
                 self.delete_automation,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/DeleteAutomation",
             ),
-            self.get_automation: gapic_v1.method.wrap_method(
+            self.get_automation: self._wrap_method(
                 self.get_automation,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -494,8 +628,9 @@ class CloudDeployTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/GetAutomation",
             ),
-            self.list_automations: gapic_v1.method.wrap_method(
+            self.list_automations: self._wrap_method(
                 self.list_automations,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -508,8 +643,9 @@ class CloudDeployTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/ListAutomations",
             ),
-            self.get_automation_run: gapic_v1.method.wrap_method(
+            self.get_automation_run: self._wrap_method(
                 self.get_automation_run,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -522,8 +658,9 @@ class CloudDeployTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/GetAutomationRun",
             ),
-            self.list_automation_runs: gapic_v1.method.wrap_method(
+            self.list_automation_runs: self._wrap_method(
                 self.list_automation_runs,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -536,56 +673,67 @@ class CloudDeployTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/ListAutomationRuns",
             ),
-            self.cancel_automation_run: gapic_v1.method.wrap_method(
+            self.cancel_automation_run: self._wrap_method(
                 self.cancel_automation_run,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.deploy.v1.CloudDeploy/CancelAutomationRun",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.get_iam_policy: gapic_v1.method.wrap_method(
+            self.get_iam_policy: self._wrap_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/GetIamPolicy",
             ),
-            self.set_iam_policy: gapic_v1.method.wrap_method(
+            self.set_iam_policy: self._wrap_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/SetIamPolicy",
             ),
-            self.test_iam_permissions: gapic_v1.method.wrap_method(
+            self.test_iam_permissions: self._wrap_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/TestIamPermissions",
             ),
-            self.cancel_operation: gapic_v1.method.wrap_method(
+            self.cancel_operation: self._wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: gapic_v1.method.wrap_method(
+            self.delete_operation: self._wrap_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
 

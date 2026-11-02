@@ -16,12 +16,24 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.tasks_v2beta2 import gapic_version as package_version
+from google.cloud.tasks_v2beta2._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.tasks_v2beta2._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
 import google.iam.v1.policy_pb2 as policy_pb2  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
@@ -29,7 +41,6 @@ from google.auth import credentials as ga_credentials  # type: ignore
 from google.cloud.location import locations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.tasks_v2beta2 import gapic_version as package_version
 from google.cloud.tasks_v2beta2.types import cloudtasks, queue, task
 from google.cloud.tasks_v2beta2.types import queue as gct_queue
 from google.cloud.tasks_v2beta2.types import task as gct_task
@@ -58,6 +69,7 @@ class CloudTasksTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -88,6 +100,9 @@ class CloudTasksTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -137,16 +152,95 @@ class CloudTasksTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.list_queues: gapic_v1.method.wrap_method(
+            self.list_queues: self._wrap_method(
                 self.list_queues,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -160,8 +254,9 @@ class CloudTasksTransport(abc.ABC):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/ListQueues",
             ),
-            self.get_queue: gapic_v1.method.wrap_method(
+            self.get_queue: self._wrap_method(
                 self.get_queue,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -175,18 +270,21 @@ class CloudTasksTransport(abc.ABC):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/GetQueue",
             ),
-            self.create_queue: gapic_v1.method.wrap_method(
+            self.create_queue: self._wrap_method(
                 self.create_queue,
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/CreateQueue",
             ),
-            self.update_queue: gapic_v1.method.wrap_method(
+            self.update_queue: self._wrap_method(
                 self.update_queue,
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/UpdateQueue",
             ),
-            self.delete_queue: gapic_v1.method.wrap_method(
+            self.delete_queue: self._wrap_method(
                 self.delete_queue,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -200,28 +298,33 @@ class CloudTasksTransport(abc.ABC):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/DeleteQueue",
             ),
-            self.purge_queue: gapic_v1.method.wrap_method(
+            self.purge_queue: self._wrap_method(
                 self.purge_queue,
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/PurgeQueue",
             ),
-            self.pause_queue: gapic_v1.method.wrap_method(
+            self.pause_queue: self._wrap_method(
                 self.pause_queue,
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/PauseQueue",
             ),
-            self.resume_queue: gapic_v1.method.wrap_method(
+            self.resume_queue: self._wrap_method(
                 self.resume_queue,
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/ResumeQueue",
             ),
-            self.upload_queue_yaml: gapic_v1.method.wrap_method(
+            self.upload_queue_yaml: self._wrap_method(
                 self.upload_queue_yaml,
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/UploadQueueYaml",
             ),
-            self.get_iam_policy: gapic_v1.method.wrap_method(
+            self.get_iam_policy: self._wrap_method(
                 self.get_iam_policy,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -235,13 +338,15 @@ class CloudTasksTransport(abc.ABC):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/GetIamPolicy",
             ),
-            self.set_iam_policy: gapic_v1.method.wrap_method(
+            self.set_iam_policy: self._wrap_method(
                 self.set_iam_policy,
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/SetIamPolicy",
             ),
-            self.test_iam_permissions: gapic_v1.method.wrap_method(
+            self.test_iam_permissions: self._wrap_method(
                 self.test_iam_permissions,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -255,8 +360,9 @@ class CloudTasksTransport(abc.ABC):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/TestIamPermissions",
             ),
-            self.list_tasks: gapic_v1.method.wrap_method(
+            self.list_tasks: self._wrap_method(
                 self.list_tasks,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -270,8 +376,9 @@ class CloudTasksTransport(abc.ABC):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/ListTasks",
             ),
-            self.get_task: gapic_v1.method.wrap_method(
+            self.get_task: self._wrap_method(
                 self.get_task,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -285,13 +392,15 @@ class CloudTasksTransport(abc.ABC):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/GetTask",
             ),
-            self.create_task: gapic_v1.method.wrap_method(
+            self.create_task: self._wrap_method(
                 self.create_task,
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/CreateTask",
             ),
-            self.delete_task: gapic_v1.method.wrap_method(
+            self.delete_task: self._wrap_method(
                 self.delete_task,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -305,41 +414,49 @@ class CloudTasksTransport(abc.ABC):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/DeleteTask",
             ),
-            self.lease_tasks: gapic_v1.method.wrap_method(
+            self.lease_tasks: self._wrap_method(
                 self.lease_tasks,
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/LeaseTasks",
             ),
-            self.acknowledge_task: gapic_v1.method.wrap_method(
+            self.acknowledge_task: self._wrap_method(
                 self.acknowledge_task,
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/AcknowledgeTask",
             ),
-            self.renew_lease: gapic_v1.method.wrap_method(
+            self.renew_lease: self._wrap_method(
                 self.renew_lease,
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/RenewLease",
             ),
-            self.cancel_lease: gapic_v1.method.wrap_method(
+            self.cancel_lease: self._wrap_method(
                 self.cancel_lease,
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/CancelLease",
             ),
-            self.run_task: gapic_v1.method.wrap_method(
+            self.run_task: self._wrap_method(
                 self.run_task,
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.tasks.v2beta2.CloudTasks/RunTask",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
         }
 

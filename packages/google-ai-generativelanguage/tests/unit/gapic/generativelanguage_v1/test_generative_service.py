@@ -60,6 +60,9 @@ from google.ai.generativelanguage_v1.services.generative_service import (
     GenerativeServiceClient,
     transports,
 )
+from google.ai.generativelanguage_v1.services.generative_service.client import (
+    _observability,
+)
 from google.ai.generativelanguage_v1.types import content, generative_service, safety
 from google.ai.generativelanguage_v1.types import content as gag_content
 
@@ -1019,6 +1022,196 @@ def test_generative_service_client_client_options_from_dict():
             always_use_jwt_access=True,
             api_audience=None,
         )
+
+
+@pytest.mark.skipif(
+    _observability is None,
+    reason="Requires google-api-core with OpenTelemetry support (>= 2.36.0)",
+)
+@pytest.mark.parametrize(
+    "capabilities_enabled, expected_options_injected",
+    [
+        pytest.param(True, True, id="otel_injection_enabled"),
+        pytest.param(False, False, id="otel_injection_disabled"),
+    ],
+)
+def test_generative_service_client_otel_channel_injection(
+    capabilities_enabled, expected_options_injected
+):
+    with (
+        mock.patch.object(
+            _observability,
+            "is_otel_capabilities_enabled",
+            return_value=capabilities_enabled,
+            autospec=True,
+        ) as mock_is_otel_enabled,
+        mock.patch.object(
+            transports.GenerativeServiceGrpcTransport, "__init__", return_value=None
+        ) as patched_transport_init,
+    ):
+        client = GenerativeServiceClient(transport="grpc")
+
+        mock_is_otel_enabled.assert_called_once_with(client._client_options)
+        called_kwargs = patched_transport_init.call_args.kwargs
+        if expected_options_injected:
+            assert called_kwargs.get("client_options") == client._client_options
+        else:
+            assert not called_kwargs.get("client_options")
+
+
+def test_generative_service_grpc_transport_channel_interceptors():
+    mock_interceptor = mock.Mock()
+    mock_channel = mock.Mock()
+
+    with (
+        mock.patch.object(
+            transports.GenerativeServiceGrpcTransport,
+            "create_channel",
+            return_value=mock_channel,
+        ),
+        mock.patch.object(
+            grpc_helpers,
+            "apply_channel_interceptors",
+            return_value=mock_channel,
+            create=True,
+        ) as mock_apply_interceptors,
+    ):
+        transport = transports.GenerativeServiceGrpcTransport(
+            credentials=ga_credentials.AnonymousCredentials(),
+            interceptors=[mock_interceptor],
+        )
+
+        mock_apply_interceptors.assert_called_once_with(
+            mock_channel, [mock_interceptor]
+        )
+        assert transport.grpc_channel == mock_channel
+
+
+@pytest.mark.skipif(
+    _observability is None,
+    reason="Requires google-api-core with OpenTelemetry support (>= 2.36.0)",
+)
+def test_generative_service_grpc_transport_otel_channel_interceptor():
+    mock_otel_interceptor = mock.Mock()
+    mock_channel = mock.Mock()
+
+    with (
+        mock.patch.object(
+            _observability,
+            "get_otel_interceptor",
+            return_value=mock_otel_interceptor,
+        ) as mock_get_interceptor,
+        mock.patch.object(
+            transports.GenerativeServiceGrpcTransport,
+            "create_channel",
+            return_value=mock_channel,
+        ),
+        mock.patch.object(
+            grpc_helpers,
+            "apply_channel_interceptors",
+            return_value=mock_channel,
+            create=True,
+        ) as mock_apply_interceptors,
+    ):
+        options = client_options.ClientOptions()
+        transport = transports.GenerativeServiceGrpcTransport(
+            credentials=ga_credentials.AnonymousCredentials(),
+            client_options=options,
+        )
+
+        mock_get_interceptor.assert_called_once_with(options)
+        mock_apply_interceptors.assert_called_once_with(
+            mock_channel, [mock_otel_interceptor]
+        )
+        assert transport.grpc_channel == mock_channel
+
+
+def test_generative_service_grpc_transport_custom_channel_interceptors():
+    mock_interceptor = mock.Mock()
+    mock_custom_channel = mock.Mock(spec=grpc.Channel)
+
+    with mock.patch.object(
+        grpc_helpers,
+        "apply_channel_interceptors",
+        return_value=mock_custom_channel,
+        create=True,
+    ) as mock_apply_interceptors:
+        transport = transports.GenerativeServiceGrpcTransport(
+            channel=mock_custom_channel,
+            interceptors=[mock_interceptor],
+        )
+
+        mock_apply_interceptors.assert_called_once_with(
+            mock_custom_channel, [mock_interceptor]
+        )
+        assert transport.grpc_channel == mock_custom_channel
+
+
+def test_generative_service_grpc_asyncio_transport_channel_interceptors():
+    mock_interceptor = mock.Mock()
+    mock_channel = mock.Mock()
+    mock_channel._unary_unary_interceptors = []
+
+    with mock.patch.object(
+        transports.GenerativeServiceGrpcAsyncIOTransport,
+        "create_channel",
+        return_value=mock_channel,
+    ) as mock_create_channel:
+        transport = transports.GenerativeServiceGrpcAsyncIOTransport(
+            credentials=ga_credentials.AnonymousCredentials(),
+            interceptors=[mock_interceptor],
+        )
+
+        assert mock_create_channel.call_count == 1
+        assert mock_interceptor in transport.grpc_channel._unary_unary_interceptors
+        assert transport.grpc_channel == mock_channel
+
+
+@pytest.mark.skipif(
+    _observability is None
+    or not hasattr(_observability, "apply_otel_async_channel_interceptors"),
+    reason="Requires google-api-core with OpenTelemetry async channel interceptors support (>= v2.43.0)",
+)
+def test_generative_service_grpc_asyncio_transport_otel_channel_interceptor():
+    mock_channel = mock.Mock()
+    mock_channel._unary_unary_interceptors = []
+
+    with (
+        mock.patch.object(
+            _observability,
+            "apply_otel_async_channel_interceptors",
+            return_value=mock_channel,
+        ) as mock_apply_async_interceptors,
+        mock.patch.object(
+            transports.GenerativeServiceGrpcAsyncIOTransport,
+            "create_channel",
+            return_value=mock_channel,
+        ) as mock_create_channel,
+    ):
+        options = client_options.ClientOptions()
+        transport = transports.GenerativeServiceGrpcAsyncIOTransport(
+            credentials=ga_credentials.AnonymousCredentials(),
+            client_options=options,
+        )
+
+        mock_apply_async_interceptors.assert_called_once_with(mock_channel, options)
+        assert mock_create_channel.call_count == 1
+        assert transport.grpc_channel == mock_channel
+
+
+def test_generative_service_grpc_asyncio_transport_custom_channel():
+    mock_custom_channel = mock.Mock(spec=aio.Channel)
+
+    with mock.patch.object(
+        transports.GenerativeServiceGrpcAsyncIOTransport,
+        "create_channel",
+    ) as mock_create_channel:
+        transport = transports.GenerativeServiceGrpcAsyncIOTransport(
+            channel=mock_custom_channel,
+        )
+
+        assert mock_create_channel.call_count == 0
+        assert transport.grpc_channel == mock_custom_channel
 
 
 @pytest.mark.parametrize(
@@ -6446,3 +6639,215 @@ def test_api_key_credentials(client_class, transport_class):
                 always_use_jwt_access=True,
                 api_audience=None,
             )
+
+
+def test_generative_service_base_transport_wrap_method_modern_api_core(monkeypatch):
+    monkeypatch.setattr(transports.base, "_WRAP_METHOD_SUPPORTS_TRACING", True)
+    # 1. Concrete transport: passes client_options=None and kind="grpc"
+    with mock.patch.object(transports.base.gapic_v1.method, "wrap_method") as mock_wrap:
+        transport = transports.GenerativeServiceGrpcTransport(
+            credentials=ga_credentials.AnonymousCredentials()
+        )
+        func = mock.MagicMock()
+        transport._wrap_method(func)
+        assert mock_wrap.call_args.kwargs["kind"] == "grpc"
+        assert "client_options" in mock_wrap.call_args.kwargs
+
+    # 2. Base transport: kind raises NotImplementedError and is cleanly omitted
+    with mock.patch.object(transports.base.gapic_v1.method, "wrap_method") as mock_wrap:
+        base_transport = transports.GenerativeServiceTransport(
+            credentials=ga_credentials.AnonymousCredentials()
+        )
+        func = mock.MagicMock()
+        base_transport._wrap_method(func)
+        assert "kind" not in mock_wrap.call_args.kwargs
+        assert "client_options" in mock_wrap.call_args.kwargs
+
+
+def test_generative_service_base_transport_wrap_method_older_api_core_fallbacks(
+    monkeypatch,
+):
+    monkeypatch.setattr(transports.base, "_WRAP_METHOD_SUPPORTS_TRACING", False)
+    with mock.patch.object(transports.base.gapic_v1.method, "wrap_method"):
+        transport = transports.GenerativeServiceGrpcTransport(
+            credentials=ga_credentials.AnonymousCredentials()
+        )
+
+    # Era 1: Ancient google-api-core (< 2.29.0: can be removed once google-api-core < 2.29.0 is no longer supported)
+    monkeypatch.setattr(transports.base, "_WRAP_METHOD_SUPPORTS_KIND", False)
+    with mock.patch.object(transports.base.gapic_v1.method, "wrap_method") as mock_wrap:
+        func = mock.MagicMock()
+        transport._wrap_method(
+            func,
+            client_options="fake_options",
+            method_name="fake_method",
+            is_streaming=False,
+        )
+        kwargs = mock_wrap.call_args.kwargs
+        assert "kind" not in kwargs
+        assert "client_options" not in kwargs
+        assert "method_name" not in kwargs
+        assert "is_streaming" not in kwargs
+
+    with mock.patch.object(transports.base.gapic_v1.method, "wrap_method") as mock_wrap:
+        base_transport = transports.GenerativeServiceTransport(
+            credentials=ga_credentials.AnonymousCredentials()
+        )
+        func = mock.MagicMock()
+        base_transport._wrap_method(
+            func,
+            client_options="fake_options",
+            method_name="fake_method",
+            is_streaming=False,
+        )
+        kwargs = mock_wrap.call_args.kwargs
+        assert "kind" not in kwargs
+        assert "client_options" not in kwargs
+        assert "method_name" not in kwargs
+        assert "is_streaming" not in kwargs
+
+    # Era 2: Intermediate google-api-core (>= 2.29.0, < 2.36.0: can be removed once google-api-core < 2.36.0 is no longer supported)
+    monkeypatch.setattr(transports.base, "_WRAP_METHOD_SUPPORTS_KIND", True)
+    with mock.patch.object(transports.base.gapic_v1.method, "wrap_method") as mock_wrap:
+        func = mock.MagicMock()
+        transport._wrap_method(
+            func,
+            client_options="fake_options",
+            method_name="fake_method",
+            is_streaming=False,
+        )
+        kwargs = mock_wrap.call_args.kwargs
+        assert kwargs.get("kind") == "grpc"
+        assert "client_options" not in kwargs
+        assert "method_name" not in kwargs
+        assert "is_streaming" not in kwargs
+
+    with mock.patch.object(transports.base.gapic_v1.method, "wrap_method") as mock_wrap:
+        base_transport = transports.GenerativeServiceTransport(
+            credentials=ga_credentials.AnonymousCredentials()
+        )
+        func = mock.MagicMock()
+        base_transport._wrap_method(
+            func,
+            client_options="fake_options",
+            method_name="fake_method",
+            is_streaming=False,
+        )
+        kwargs = mock_wrap.call_args.kwargs
+        assert "kind" not in kwargs
+        assert "client_options" not in kwargs
+        assert "method_name" not in kwargs
+        assert "is_streaming" not in kwargs
+
+
+def test_generative_service_base_transport_wrap_async_method_modern_api_core(
+    monkeypatch,
+):
+    monkeypatch.setattr(transports.base, "_ASYNC_WRAP_METHOD_SUPPORTS_TRACING", True)
+    # 1. Concrete transport: passes client_options=None and kind="grpc_asyncio"
+    with mock.patch.object(
+        transports.base.gapic_v1.method_async, "wrap_method"
+    ) as mock_wrap:
+        transport = transports.GenerativeServiceGrpcAsyncIOTransport(
+            credentials=ga_credentials.AnonymousCredentials()
+        )
+        func = mock.MagicMock()
+        transport._wrap_async_method(func)
+        assert mock_wrap.call_args.kwargs["kind"] == "grpc_asyncio"
+        assert "client_options" in mock_wrap.call_args.kwargs
+
+    # 2. Base transport: kind raises NotImplementedError and is cleanly omitted
+    with mock.patch.object(
+        transports.base.gapic_v1.method_async, "wrap_method"
+    ) as mock_wrap:
+        base_transport = transports.GenerativeServiceTransport(
+            credentials=ga_credentials.AnonymousCredentials()
+        )
+        func = mock.MagicMock()
+        base_transport._wrap_async_method(func)
+        assert "kind" not in mock_wrap.call_args.kwargs
+        assert "client_options" in mock_wrap.call_args.kwargs
+
+
+def test_generative_service_base_transport_wrap_async_method_older_api_core_fallbacks(
+    monkeypatch,
+):
+    monkeypatch.setattr(transports.base, "_ASYNC_WRAP_METHOD_SUPPORTS_TRACING", False)
+    with mock.patch.object(transports.base.gapic_v1.method_async, "wrap_method"):
+        transport = transports.GenerativeServiceGrpcAsyncIOTransport(
+            credentials=ga_credentials.AnonymousCredentials()
+        )
+
+    # Era 1: Ancient google-api-core (< 2.29.0: can be removed once google-api-core < 2.29.0 is no longer supported)
+    monkeypatch.setattr(transports.base, "_ASYNC_WRAP_METHOD_SUPPORTS_KIND", False)
+    with mock.patch.object(
+        transports.base.gapic_v1.method_async, "wrap_method"
+    ) as mock_wrap:
+        func = mock.MagicMock()
+        transport._wrap_async_method(
+            func,
+            client_options="fake_options",
+            method_name="fake_method",
+            is_streaming=False,
+        )
+        kwargs = mock_wrap.call_args.kwargs
+        assert "kind" not in kwargs
+        assert "client_options" not in kwargs
+        assert "method_name" not in kwargs
+        assert "is_streaming" not in kwargs
+
+    with mock.patch.object(
+        transports.base.gapic_v1.method_async, "wrap_method"
+    ) as mock_wrap:
+        base_transport = transports.GenerativeServiceTransport(
+            credentials=ga_credentials.AnonymousCredentials()
+        )
+        func = mock.MagicMock()
+        base_transport._wrap_async_method(
+            func,
+            client_options="fake_options",
+            method_name="fake_method",
+            is_streaming=False,
+        )
+        kwargs = mock_wrap.call_args.kwargs
+        assert "kind" not in kwargs
+        assert "client_options" not in kwargs
+        assert "method_name" not in kwargs
+        assert "is_streaming" not in kwargs
+
+    # Era 2: Intermediate google-api-core (>= 2.29.0, < 2.36.0: can be removed once google-api-core < 2.36.0 is no longer supported)
+    monkeypatch.setattr(transports.base, "_ASYNC_WRAP_METHOD_SUPPORTS_KIND", True)
+    with mock.patch.object(
+        transports.base.gapic_v1.method_async, "wrap_method"
+    ) as mock_wrap:
+        func = mock.MagicMock()
+        transport._wrap_async_method(
+            func,
+            client_options="fake_options",
+            method_name="fake_method",
+            is_streaming=False,
+        )
+        kwargs = mock_wrap.call_args.kwargs
+        assert kwargs.get("kind") == "grpc_asyncio"
+        assert "client_options" not in kwargs
+        assert "method_name" not in kwargs
+        assert "is_streaming" not in kwargs
+
+    with mock.patch.object(
+        transports.base.gapic_v1.method_async, "wrap_method"
+    ) as mock_wrap:
+        base_transport = transports.GenerativeServiceTransport(
+            credentials=ga_credentials.AnonymousCredentials()
+        )
+        func = mock.MagicMock()
+        base_transport._wrap_async_method(
+            func,
+            client_options="fake_options",
+            method_name="fake_method",
+            is_streaming=False,
+        )
+        kwargs = mock_wrap.call_args.kwargs
+        assert "kind" not in kwargs
+        assert "client_options" not in kwargs
+        assert "method_name" not in kwargs
+        assert "is_streaming" not in kwargs

@@ -16,10 +16,22 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.bare_metal_solution_v2 import gapic_version as package_version
+from google.cloud.bare_metal_solution_v2._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.bare_metal_solution_v2._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -32,7 +44,6 @@ from google.iam.v1 import (
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.bare_metal_solution_v2 import gapic_version as package_version
 from google.cloud.bare_metal_solution_v2.types import (
     instance,
     lun,
@@ -77,6 +88,7 @@ class BareMetalSolutionTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -107,6 +119,9 @@ class BareMetalSolutionTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -156,244 +171,369 @@ class BareMetalSolutionTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.list_instances: gapic_v1.method.wrap_method(
+            self.list_instances: self._wrap_method(
                 self.list_instances,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/ListInstances",
             ),
-            self.get_instance: gapic_v1.method.wrap_method(
+            self.get_instance: self._wrap_method(
                 self.get_instance,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/GetInstance",
             ),
-            self.update_instance: gapic_v1.method.wrap_method(
+            self.update_instance: self._wrap_method(
                 self.update_instance,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/UpdateInstance",
             ),
-            self.rename_instance: gapic_v1.method.wrap_method(
+            self.rename_instance: self._wrap_method(
                 self.rename_instance,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/RenameInstance",
             ),
-            self.reset_instance: gapic_v1.method.wrap_method(
+            self.reset_instance: self._wrap_method(
                 self.reset_instance,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/ResetInstance",
             ),
-            self.start_instance: gapic_v1.method.wrap_method(
+            self.start_instance: self._wrap_method(
                 self.start_instance,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/StartInstance",
             ),
-            self.stop_instance: gapic_v1.method.wrap_method(
+            self.stop_instance: self._wrap_method(
                 self.stop_instance,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/StopInstance",
             ),
-            self.enable_interactive_serial_console: gapic_v1.method.wrap_method(
+            self.enable_interactive_serial_console: self._wrap_method(
                 self.enable_interactive_serial_console,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/EnableInteractiveSerialConsole",
             ),
-            self.disable_interactive_serial_console: gapic_v1.method.wrap_method(
+            self.disable_interactive_serial_console: self._wrap_method(
                 self.disable_interactive_serial_console,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/DisableInteractiveSerialConsole",
             ),
-            self.detach_lun: gapic_v1.method.wrap_method(
+            self.detach_lun: self._wrap_method(
                 self.detach_lun,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/DetachLun",
             ),
-            self.list_ssh_keys: gapic_v1.method.wrap_method(
+            self.list_ssh_keys: self._wrap_method(
                 self.list_ssh_keys,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/ListSSHKeys",
             ),
-            self.create_ssh_key: gapic_v1.method.wrap_method(
+            self.create_ssh_key: self._wrap_method(
                 self.create_ssh_key,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/CreateSSHKey",
             ),
-            self.delete_ssh_key: gapic_v1.method.wrap_method(
+            self.delete_ssh_key: self._wrap_method(
                 self.delete_ssh_key,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/DeleteSSHKey",
             ),
-            self.list_volumes: gapic_v1.method.wrap_method(
+            self.list_volumes: self._wrap_method(
                 self.list_volumes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/ListVolumes",
             ),
-            self.get_volume: gapic_v1.method.wrap_method(
+            self.get_volume: self._wrap_method(
                 self.get_volume,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/GetVolume",
             ),
-            self.update_volume: gapic_v1.method.wrap_method(
+            self.update_volume: self._wrap_method(
                 self.update_volume,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/UpdateVolume",
             ),
-            self.rename_volume: gapic_v1.method.wrap_method(
+            self.rename_volume: self._wrap_method(
                 self.rename_volume,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/RenameVolume",
             ),
-            self.evict_volume: gapic_v1.method.wrap_method(
+            self.evict_volume: self._wrap_method(
                 self.evict_volume,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/EvictVolume",
             ),
-            self.resize_volume: gapic_v1.method.wrap_method(
+            self.resize_volume: self._wrap_method(
                 self.resize_volume,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/ResizeVolume",
             ),
-            self.list_networks: gapic_v1.method.wrap_method(
+            self.list_networks: self._wrap_method(
                 self.list_networks,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/ListNetworks",
             ),
-            self.list_network_usage: gapic_v1.method.wrap_method(
+            self.list_network_usage: self._wrap_method(
                 self.list_network_usage,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/ListNetworkUsage",
             ),
-            self.get_network: gapic_v1.method.wrap_method(
+            self.get_network: self._wrap_method(
                 self.get_network,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/GetNetwork",
             ),
-            self.update_network: gapic_v1.method.wrap_method(
+            self.update_network: self._wrap_method(
                 self.update_network,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/UpdateNetwork",
             ),
-            self.create_volume_snapshot: gapic_v1.method.wrap_method(
+            self.create_volume_snapshot: self._wrap_method(
                 self.create_volume_snapshot,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/CreateVolumeSnapshot",
             ),
-            self.restore_volume_snapshot: gapic_v1.method.wrap_method(
+            self.restore_volume_snapshot: self._wrap_method(
                 self.restore_volume_snapshot,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/RestoreVolumeSnapshot",
             ),
-            self.delete_volume_snapshot: gapic_v1.method.wrap_method(
+            self.delete_volume_snapshot: self._wrap_method(
                 self.delete_volume_snapshot,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/DeleteVolumeSnapshot",
             ),
-            self.get_volume_snapshot: gapic_v1.method.wrap_method(
+            self.get_volume_snapshot: self._wrap_method(
                 self.get_volume_snapshot,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/GetVolumeSnapshot",
             ),
-            self.list_volume_snapshots: gapic_v1.method.wrap_method(
+            self.list_volume_snapshots: self._wrap_method(
                 self.list_volume_snapshots,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/ListVolumeSnapshots",
             ),
-            self.get_lun: gapic_v1.method.wrap_method(
+            self.get_lun: self._wrap_method(
                 self.get_lun,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/GetLun",
             ),
-            self.list_luns: gapic_v1.method.wrap_method(
+            self.list_luns: self._wrap_method(
                 self.list_luns,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/ListLuns",
             ),
-            self.evict_lun: gapic_v1.method.wrap_method(
+            self.evict_lun: self._wrap_method(
                 self.evict_lun,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/EvictLun",
             ),
-            self.get_nfs_share: gapic_v1.method.wrap_method(
+            self.get_nfs_share: self._wrap_method(
                 self.get_nfs_share,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/GetNfsShare",
             ),
-            self.list_nfs_shares: gapic_v1.method.wrap_method(
+            self.list_nfs_shares: self._wrap_method(
                 self.list_nfs_shares,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/ListNfsShares",
             ),
-            self.update_nfs_share: gapic_v1.method.wrap_method(
+            self.update_nfs_share: self._wrap_method(
                 self.update_nfs_share,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/UpdateNfsShare",
             ),
-            self.create_nfs_share: gapic_v1.method.wrap_method(
+            self.create_nfs_share: self._wrap_method(
                 self.create_nfs_share,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/CreateNfsShare",
             ),
-            self.rename_nfs_share: gapic_v1.method.wrap_method(
+            self.rename_nfs_share: self._wrap_method(
                 self.rename_nfs_share,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/RenameNfsShare",
             ),
-            self.delete_nfs_share: gapic_v1.method.wrap_method(
+            self.delete_nfs_share: self._wrap_method(
                 self.delete_nfs_share,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/DeleteNfsShare",
             ),
-            self.list_provisioning_quotas: gapic_v1.method.wrap_method(
+            self.list_provisioning_quotas: self._wrap_method(
                 self.list_provisioning_quotas,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/ListProvisioningQuotas",
             ),
-            self.submit_provisioning_config: gapic_v1.method.wrap_method(
+            self.submit_provisioning_config: self._wrap_method(
                 self.submit_provisioning_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/SubmitProvisioningConfig",
             ),
-            self.get_provisioning_config: gapic_v1.method.wrap_method(
+            self.get_provisioning_config: self._wrap_method(
                 self.get_provisioning_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/GetProvisioningConfig",
             ),
-            self.create_provisioning_config: gapic_v1.method.wrap_method(
+            self.create_provisioning_config: self._wrap_method(
                 self.create_provisioning_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/CreateProvisioningConfig",
             ),
-            self.update_provisioning_config: gapic_v1.method.wrap_method(
+            self.update_provisioning_config: self._wrap_method(
                 self.update_provisioning_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/UpdateProvisioningConfig",
             ),
-            self.rename_network: gapic_v1.method.wrap_method(
+            self.rename_network: self._wrap_method(
                 self.rename_network,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/RenameNetwork",
             ),
-            self.list_os_images: gapic_v1.method.wrap_method(
+            self.list_os_images: self._wrap_method(
                 self.list_os_images,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.baremetalsolution.v2.BareMetalSolution/ListOSImages",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
         }
 

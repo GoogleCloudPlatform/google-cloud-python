@@ -16,10 +16,22 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.dlp_v2 import gapic_version as package_version
+from google.cloud.dlp_v2._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.dlp_v2._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
@@ -27,7 +39,6 @@ from google.auth import credentials as ga_credentials  # type: ignore
 from google.cloud.location import locations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.dlp_v2 import gapic_version as package_version
 from google.cloud.dlp_v2.types import dlp
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
@@ -54,6 +65,7 @@ class DlpServiceTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -84,6 +96,9 @@ class DlpServiceTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -133,16 +148,95 @@ class DlpServiceTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.inspect_content: gapic_v1.method.wrap_method(
+            self.inspect_content: self._wrap_method(
                 self.inspect_content,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -156,8 +250,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/InspectContent",
             ),
-            self.redact_image: gapic_v1.method.wrap_method(
+            self.redact_image: self._wrap_method(
                 self.redact_image,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -171,8 +266,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/RedactImage",
             ),
-            self.deidentify_content: gapic_v1.method.wrap_method(
+            self.deidentify_content: self._wrap_method(
                 self.deidentify_content,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -186,8 +282,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/DeidentifyContent",
             ),
-            self.reidentify_content: gapic_v1.method.wrap_method(
+            self.reidentify_content: self._wrap_method(
                 self.reidentify_content,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -201,8 +298,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/ReidentifyContent",
             ),
-            self.list_info_types: gapic_v1.method.wrap_method(
+            self.list_info_types: self._wrap_method(
                 self.list_info_types,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -216,18 +314,21 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/ListInfoTypes",
             ),
-            self.create_inspect_template: gapic_v1.method.wrap_method(
+            self.create_inspect_template: self._wrap_method(
                 self.create_inspect_template,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/CreateInspectTemplate",
             ),
-            self.update_inspect_template: gapic_v1.method.wrap_method(
+            self.update_inspect_template: self._wrap_method(
                 self.update_inspect_template,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/UpdateInspectTemplate",
             ),
-            self.get_inspect_template: gapic_v1.method.wrap_method(
+            self.get_inspect_template: self._wrap_method(
                 self.get_inspect_template,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -241,8 +342,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/GetInspectTemplate",
             ),
-            self.list_inspect_templates: gapic_v1.method.wrap_method(
+            self.list_inspect_templates: self._wrap_method(
                 self.list_inspect_templates,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -256,8 +358,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/ListInspectTemplates",
             ),
-            self.delete_inspect_template: gapic_v1.method.wrap_method(
+            self.delete_inspect_template: self._wrap_method(
                 self.delete_inspect_template,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -271,18 +374,21 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/DeleteInspectTemplate",
             ),
-            self.create_deidentify_template: gapic_v1.method.wrap_method(
+            self.create_deidentify_template: self._wrap_method(
                 self.create_deidentify_template,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/CreateDeidentifyTemplate",
             ),
-            self.update_deidentify_template: gapic_v1.method.wrap_method(
+            self.update_deidentify_template: self._wrap_method(
                 self.update_deidentify_template,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/UpdateDeidentifyTemplate",
             ),
-            self.get_deidentify_template: gapic_v1.method.wrap_method(
+            self.get_deidentify_template: self._wrap_method(
                 self.get_deidentify_template,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -296,8 +402,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/GetDeidentifyTemplate",
             ),
-            self.list_deidentify_templates: gapic_v1.method.wrap_method(
+            self.list_deidentify_templates: self._wrap_method(
                 self.list_deidentify_templates,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -311,8 +418,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/ListDeidentifyTemplates",
             ),
-            self.delete_deidentify_template: gapic_v1.method.wrap_method(
+            self.delete_deidentify_template: self._wrap_method(
                 self.delete_deidentify_template,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -326,23 +434,27 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/DeleteDeidentifyTemplate",
             ),
-            self.create_job_trigger: gapic_v1.method.wrap_method(
+            self.create_job_trigger: self._wrap_method(
                 self.create_job_trigger,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/CreateJobTrigger",
             ),
-            self.update_job_trigger: gapic_v1.method.wrap_method(
+            self.update_job_trigger: self._wrap_method(
                 self.update_job_trigger,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/UpdateJobTrigger",
             ),
-            self.hybrid_inspect_job_trigger: gapic_v1.method.wrap_method(
+            self.hybrid_inspect_job_trigger: self._wrap_method(
                 self.hybrid_inspect_job_trigger,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/HybridInspectJobTrigger",
             ),
-            self.get_job_trigger: gapic_v1.method.wrap_method(
+            self.get_job_trigger: self._wrap_method(
                 self.get_job_trigger,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -356,8 +468,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/GetJobTrigger",
             ),
-            self.list_job_triggers: gapic_v1.method.wrap_method(
+            self.list_job_triggers: self._wrap_method(
                 self.list_job_triggers,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -371,8 +484,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/ListJobTriggers",
             ),
-            self.delete_job_trigger: gapic_v1.method.wrap_method(
+            self.delete_job_trigger: self._wrap_method(
                 self.delete_job_trigger,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -386,23 +500,27 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/DeleteJobTrigger",
             ),
-            self.activate_job_trigger: gapic_v1.method.wrap_method(
+            self.activate_job_trigger: self._wrap_method(
                 self.activate_job_trigger,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/ActivateJobTrigger",
             ),
-            self.create_discovery_config: gapic_v1.method.wrap_method(
+            self.create_discovery_config: self._wrap_method(
                 self.create_discovery_config,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/CreateDiscoveryConfig",
             ),
-            self.update_discovery_config: gapic_v1.method.wrap_method(
+            self.update_discovery_config: self._wrap_method(
                 self.update_discovery_config,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/UpdateDiscoveryConfig",
             ),
-            self.get_discovery_config: gapic_v1.method.wrap_method(
+            self.get_discovery_config: self._wrap_method(
                 self.get_discovery_config,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -416,8 +534,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/GetDiscoveryConfig",
             ),
-            self.list_discovery_configs: gapic_v1.method.wrap_method(
+            self.list_discovery_configs: self._wrap_method(
                 self.list_discovery_configs,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -431,8 +550,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/ListDiscoveryConfigs",
             ),
-            self.delete_discovery_config: gapic_v1.method.wrap_method(
+            self.delete_discovery_config: self._wrap_method(
                 self.delete_discovery_config,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -446,13 +566,15 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/DeleteDiscoveryConfig",
             ),
-            self.create_dlp_job: gapic_v1.method.wrap_method(
+            self.create_dlp_job: self._wrap_method(
                 self.create_dlp_job,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/CreateDlpJob",
             ),
-            self.list_dlp_jobs: gapic_v1.method.wrap_method(
+            self.list_dlp_jobs: self._wrap_method(
                 self.list_dlp_jobs,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -466,8 +588,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/ListDlpJobs",
             ),
-            self.get_dlp_job: gapic_v1.method.wrap_method(
+            self.get_dlp_job: self._wrap_method(
                 self.get_dlp_job,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -481,8 +604,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/GetDlpJob",
             ),
-            self.delete_dlp_job: gapic_v1.method.wrap_method(
+            self.delete_dlp_job: self._wrap_method(
                 self.delete_dlp_job,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -496,23 +620,27 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/DeleteDlpJob",
             ),
-            self.cancel_dlp_job: gapic_v1.method.wrap_method(
+            self.cancel_dlp_job: self._wrap_method(
                 self.cancel_dlp_job,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/CancelDlpJob",
             ),
-            self.create_stored_info_type: gapic_v1.method.wrap_method(
+            self.create_stored_info_type: self._wrap_method(
                 self.create_stored_info_type,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/CreateStoredInfoType",
             ),
-            self.update_stored_info_type: gapic_v1.method.wrap_method(
+            self.update_stored_info_type: self._wrap_method(
                 self.update_stored_info_type,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/UpdateStoredInfoType",
             ),
-            self.get_stored_info_type: gapic_v1.method.wrap_method(
+            self.get_stored_info_type: self._wrap_method(
                 self.get_stored_info_type,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -526,8 +654,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/GetStoredInfoType",
             ),
-            self.list_stored_info_types: gapic_v1.method.wrap_method(
+            self.list_stored_info_types: self._wrap_method(
                 self.list_stored_info_types,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -541,8 +670,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/ListStoredInfoTypes",
             ),
-            self.delete_stored_info_type: gapic_v1.method.wrap_method(
+            self.delete_stored_info_type: self._wrap_method(
                 self.delete_stored_info_type,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -556,8 +686,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/DeleteStoredInfoType",
             ),
-            self.list_project_data_profiles: gapic_v1.method.wrap_method(
+            self.list_project_data_profiles: self._wrap_method(
                 self.list_project_data_profiles,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -571,8 +702,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/ListProjectDataProfiles",
             ),
-            self.list_table_data_profiles: gapic_v1.method.wrap_method(
+            self.list_table_data_profiles: self._wrap_method(
                 self.list_table_data_profiles,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -586,8 +718,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/ListTableDataProfiles",
             ),
-            self.list_column_data_profiles: gapic_v1.method.wrap_method(
+            self.list_column_data_profiles: self._wrap_method(
                 self.list_column_data_profiles,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -601,8 +734,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/ListColumnDataProfiles",
             ),
-            self.get_project_data_profile: gapic_v1.method.wrap_method(
+            self.get_project_data_profile: self._wrap_method(
                 self.get_project_data_profile,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -616,8 +750,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/GetProjectDataProfile",
             ),
-            self.list_file_store_data_profiles: gapic_v1.method.wrap_method(
+            self.list_file_store_data_profiles: self._wrap_method(
                 self.list_file_store_data_profiles,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -631,8 +766,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/ListFileStoreDataProfiles",
             ),
-            self.get_file_store_data_profile: gapic_v1.method.wrap_method(
+            self.get_file_store_data_profile: self._wrap_method(
                 self.get_file_store_data_profile,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -646,8 +782,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/GetFileStoreDataProfile",
             ),
-            self.delete_file_store_data_profile: gapic_v1.method.wrap_method(
+            self.delete_file_store_data_profile: self._wrap_method(
                 self.delete_file_store_data_profile,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -661,8 +798,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/DeleteFileStoreDataProfile",
             ),
-            self.get_table_data_profile: gapic_v1.method.wrap_method(
+            self.get_table_data_profile: self._wrap_method(
                 self.get_table_data_profile,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -676,8 +814,9 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/GetTableDataProfile",
             ),
-            self.get_column_data_profile: gapic_v1.method.wrap_method(
+            self.get_column_data_profile: self._wrap_method(
                 self.get_column_data_profile,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -691,76 +830,91 @@ class DlpServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/GetColumnDataProfile",
             ),
-            self.delete_table_data_profile: gapic_v1.method.wrap_method(
+            self.delete_table_data_profile: self._wrap_method(
                 self.delete_table_data_profile,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/DeleteTableDataProfile",
             ),
-            self.hybrid_inspect_dlp_job: gapic_v1.method.wrap_method(
+            self.hybrid_inspect_dlp_job: self._wrap_method(
                 self.hybrid_inspect_dlp_job,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/HybridInspectDlpJob",
             ),
-            self.finish_dlp_job: gapic_v1.method.wrap_method(
+            self.finish_dlp_job: self._wrap_method(
                 self.finish_dlp_job,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/FinishDlpJob",
             ),
-            self.create_connection: gapic_v1.method.wrap_method(
+            self.create_connection: self._wrap_method(
                 self.create_connection,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/CreateConnection",
             ),
-            self.get_connection: gapic_v1.method.wrap_method(
+            self.get_connection: self._wrap_method(
                 self.get_connection,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/GetConnection",
             ),
-            self.list_connections: gapic_v1.method.wrap_method(
+            self.list_connections: self._wrap_method(
                 self.list_connections,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/ListConnections",
             ),
-            self.search_connections: gapic_v1.method.wrap_method(
+            self.search_connections: self._wrap_method(
                 self.search_connections,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/SearchConnections",
             ),
-            self.delete_connection: gapic_v1.method.wrap_method(
+            self.delete_connection: self._wrap_method(
                 self.delete_connection,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/DeleteConnection",
             ),
-            self.update_connection: gapic_v1.method.wrap_method(
+            self.update_connection: self._wrap_method(
                 self.update_connection,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/UpdateConnection",
             ),
-            self.create_content_policy: gapic_v1.method.wrap_method(
+            self.create_content_policy: self._wrap_method(
                 self.create_content_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/CreateContentPolicy",
             ),
-            self.update_content_policy: gapic_v1.method.wrap_method(
+            self.update_content_policy: self._wrap_method(
                 self.update_content_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/UpdateContentPolicy",
             ),
-            self.get_content_policy: gapic_v1.method.wrap_method(
+            self.get_content_policy: self._wrap_method(
                 self.get_content_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/GetContentPolicy",
             ),
-            self.list_content_policies: gapic_v1.method.wrap_method(
+            self.list_content_policies: self._wrap_method(
                 self.list_content_policies,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/ListContentPolicies",
             ),
-            self.delete_content_policy: gapic_v1.method.wrap_method(
+            self.delete_content_policy: self._wrap_method(
                 self.delete_content_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.privacy.dlp.v2.DlpService/DeleteContentPolicy",
             ),
         }
 

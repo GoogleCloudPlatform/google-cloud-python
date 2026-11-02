@@ -16,12 +16,24 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.spanner_admin_database_v1 import gapic_version as package_version
+from google.cloud.spanner_admin_database_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.spanner_admin_database_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
 import google.iam.v1.policy_pb2 as policy_pb2  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -29,7 +41,6 @@ from google.auth import credentials as ga_credentials  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.spanner_admin_database_v1 import gapic_version as package_version
 from google.cloud.spanner_admin_database_v1.types import (
     backup,
     backup_schedule,
@@ -67,6 +78,7 @@ class DatabaseAdminTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -97,6 +109,9 @@ class DatabaseAdminTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -146,16 +161,95 @@ class DatabaseAdminTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.list_databases: gapic_v1.method.wrap_method(
+            self.list_databases: self._wrap_method(
                 self.list_databases,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -169,13 +263,15 @@ class DatabaseAdminTransport(abc.ABC):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/ListDatabases",
             ),
-            self.create_database: gapic_v1.method.wrap_method(
+            self.create_database: self._wrap_method(
                 self.create_database,
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/CreateDatabase",
             ),
-            self.get_database: gapic_v1.method.wrap_method(
+            self.get_database: self._wrap_method(
                 self.get_database,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -189,8 +285,9 @@ class DatabaseAdminTransport(abc.ABC):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/GetDatabase",
             ),
-            self.update_database: gapic_v1.method.wrap_method(
+            self.update_database: self._wrap_method(
                 self.update_database,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -204,8 +301,9 @@ class DatabaseAdminTransport(abc.ABC):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/UpdateDatabase",
             ),
-            self.update_database_ddl: gapic_v1.method.wrap_method(
+            self.update_database_ddl: self._wrap_method(
                 self.update_database_ddl,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -219,8 +317,9 @@ class DatabaseAdminTransport(abc.ABC):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/UpdateDatabaseDdl",
             ),
-            self.drop_database: gapic_v1.method.wrap_method(
+            self.drop_database: self._wrap_method(
                 self.drop_database,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -234,8 +333,9 @@ class DatabaseAdminTransport(abc.ABC):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/DropDatabase",
             ),
-            self.get_database_ddl: gapic_v1.method.wrap_method(
+            self.get_database_ddl: self._wrap_method(
                 self.get_database_ddl,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -249,13 +349,15 @@ class DatabaseAdminTransport(abc.ABC):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/GetDatabaseDdl",
             ),
-            self.set_iam_policy: gapic_v1.method.wrap_method(
+            self.set_iam_policy: self._wrap_method(
                 self.set_iam_policy,
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/SetIamPolicy",
             ),
-            self.get_iam_policy: gapic_v1.method.wrap_method(
+            self.get_iam_policy: self._wrap_method(
                 self.get_iam_policy,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -269,23 +371,27 @@ class DatabaseAdminTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/GetIamPolicy",
             ),
-            self.test_iam_permissions: gapic_v1.method.wrap_method(
+            self.test_iam_permissions: self._wrap_method(
                 self.test_iam_permissions,
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/TestIamPermissions",
             ),
-            self.create_backup: gapic_v1.method.wrap_method(
+            self.create_backup: self._wrap_method(
                 self.create_backup,
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/CreateBackup",
             ),
-            self.copy_backup: gapic_v1.method.wrap_method(
+            self.copy_backup: self._wrap_method(
                 self.copy_backup,
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/CopyBackup",
             ),
-            self.get_backup: gapic_v1.method.wrap_method(
+            self.get_backup: self._wrap_method(
                 self.get_backup,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -299,8 +405,9 @@ class DatabaseAdminTransport(abc.ABC):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/GetBackup",
             ),
-            self.update_backup: gapic_v1.method.wrap_method(
+            self.update_backup: self._wrap_method(
                 self.update_backup,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -314,8 +421,9 @@ class DatabaseAdminTransport(abc.ABC):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/UpdateBackup",
             ),
-            self.delete_backup: gapic_v1.method.wrap_method(
+            self.delete_backup: self._wrap_method(
                 self.delete_backup,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -329,8 +437,9 @@ class DatabaseAdminTransport(abc.ABC):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/DeleteBackup",
             ),
-            self.list_backups: gapic_v1.method.wrap_method(
+            self.list_backups: self._wrap_method(
                 self.list_backups,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -344,13 +453,15 @@ class DatabaseAdminTransport(abc.ABC):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/ListBackups",
             ),
-            self.restore_database: gapic_v1.method.wrap_method(
+            self.restore_database: self._wrap_method(
                 self.restore_database,
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/RestoreDatabase",
             ),
-            self.list_database_operations: gapic_v1.method.wrap_method(
+            self.list_database_operations: self._wrap_method(
                 self.list_database_operations,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -364,8 +475,9 @@ class DatabaseAdminTransport(abc.ABC):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/ListDatabaseOperations",
             ),
-            self.list_backup_operations: gapic_v1.method.wrap_method(
+            self.list_backup_operations: self._wrap_method(
                 self.list_backup_operations,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -379,8 +491,9 @@ class DatabaseAdminTransport(abc.ABC):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/ListBackupOperations",
             ),
-            self.list_database_roles: gapic_v1.method.wrap_method(
+            self.list_database_roles: self._wrap_method(
                 self.list_database_roles,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -394,8 +507,9 @@ class DatabaseAdminTransport(abc.ABC):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/ListDatabaseRoles",
             ),
-            self.add_split_points: gapic_v1.method.wrap_method(
+            self.add_split_points: self._wrap_method(
                 self.add_split_points,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -409,8 +523,9 @@ class DatabaseAdminTransport(abc.ABC):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/AddSplitPoints",
             ),
-            self.create_backup_schedule: gapic_v1.method.wrap_method(
+            self.create_backup_schedule: self._wrap_method(
                 self.create_backup_schedule,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -424,8 +539,9 @@ class DatabaseAdminTransport(abc.ABC):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/CreateBackupSchedule",
             ),
-            self.get_backup_schedule: gapic_v1.method.wrap_method(
+            self.get_backup_schedule: self._wrap_method(
                 self.get_backup_schedule,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -439,8 +555,9 @@ class DatabaseAdminTransport(abc.ABC):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/GetBackupSchedule",
             ),
-            self.update_backup_schedule: gapic_v1.method.wrap_method(
+            self.update_backup_schedule: self._wrap_method(
                 self.update_backup_schedule,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -454,8 +571,9 @@ class DatabaseAdminTransport(abc.ABC):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/UpdateBackupSchedule",
             ),
-            self.delete_backup_schedule: gapic_v1.method.wrap_method(
+            self.delete_backup_schedule: self._wrap_method(
                 self.delete_backup_schedule,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -469,8 +587,9 @@ class DatabaseAdminTransport(abc.ABC):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/DeleteBackupSchedule",
             ),
-            self.list_backup_schedules: gapic_v1.method.wrap_method(
+            self.list_backup_schedules: self._wrap_method(
                 self.list_backup_schedules,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -484,31 +603,37 @@ class DatabaseAdminTransport(abc.ABC):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/ListBackupSchedules",
             ),
-            self.internal_update_graph_operation: gapic_v1.method.wrap_method(
+            self.internal_update_graph_operation: self._wrap_method(
                 self.internal_update_graph_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.spanner.admin.database.v1.DatabaseAdmin/InternalUpdateGraphOperation",
             ),
-            self.cancel_operation: gapic_v1.method.wrap_method(
+            self.cancel_operation: self._wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: gapic_v1.method.wrap_method(
+            self.delete_operation: self._wrap_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
 

@@ -13,16 +13,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async, operations_v1
 from google.api_core import retry_async as retries
@@ -33,6 +42,10 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.gdchardwaremanagement_v1alpha._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.cloud.gdchardwaremanagement_v1alpha.types import resources, service
 
 from .base import DEFAULT_CLIENT_INFO, GDCHardwareManagementTransport
@@ -190,6 +203,10 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -241,6 +258,12 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -296,6 +319,7 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -317,12 +341,26 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -1338,9 +1376,12 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
         return self._stubs["request_order_date_change"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.list_orders: self._wrap_method(
+            self.list_orders: self._wrap_async_method(
                 self.list_orders,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1353,8 +1394,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/ListOrders",
             ),
-            self.get_order: self._wrap_method(
+            self.get_order: self._wrap_async_method(
                 self.get_order,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1367,13 +1409,15 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/GetOrder",
             ),
-            self.create_order: self._wrap_method(
+            self.create_order: self._wrap_async_method(
                 self.create_order,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/CreateOrder",
             ),
-            self.update_order: self._wrap_method(
+            self.update_order: self._wrap_async_method(
                 self.update_order,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1386,8 +1430,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/UpdateOrder",
             ),
-            self.delete_order: self._wrap_method(
+            self.delete_order: self._wrap_async_method(
                 self.delete_order,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1400,8 +1445,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/DeleteOrder",
             ),
-            self.submit_order: self._wrap_method(
+            self.submit_order: self._wrap_async_method(
                 self.submit_order,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1414,8 +1460,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/SubmitOrder",
             ),
-            self.cancel_order: self._wrap_method(
+            self.cancel_order: self._wrap_async_method(
                 self.cancel_order,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1428,8 +1475,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/CancelOrder",
             ),
-            self.list_sites: self._wrap_method(
+            self.list_sites: self._wrap_async_method(
                 self.list_sites,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1442,8 +1490,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/ListSites",
             ),
-            self.get_site: self._wrap_method(
+            self.get_site: self._wrap_async_method(
                 self.get_site,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1456,13 +1505,15 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/GetSite",
             ),
-            self.create_site: self._wrap_method(
+            self.create_site: self._wrap_async_method(
                 self.create_site,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/CreateSite",
             ),
-            self.update_site: self._wrap_method(
+            self.update_site: self._wrap_async_method(
                 self.update_site,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1475,8 +1526,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/UpdateSite",
             ),
-            self.delete_site: self._wrap_method(
+            self.delete_site: self._wrap_async_method(
                 self.delete_site,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1489,8 +1541,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/DeleteSite",
             ),
-            self.list_hardware_groups: self._wrap_method(
+            self.list_hardware_groups: self._wrap_async_method(
                 self.list_hardware_groups,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1503,8 +1556,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/ListHardwareGroups",
             ),
-            self.get_hardware_group: self._wrap_method(
+            self.get_hardware_group: self._wrap_async_method(
                 self.get_hardware_group,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1517,13 +1571,15 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/GetHardwareGroup",
             ),
-            self.create_hardware_group: self._wrap_method(
+            self.create_hardware_group: self._wrap_async_method(
                 self.create_hardware_group,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/CreateHardwareGroup",
             ),
-            self.update_hardware_group: self._wrap_method(
+            self.update_hardware_group: self._wrap_async_method(
                 self.update_hardware_group,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1536,8 +1592,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/UpdateHardwareGroup",
             ),
-            self.delete_hardware_group: self._wrap_method(
+            self.delete_hardware_group: self._wrap_async_method(
                 self.delete_hardware_group,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1550,8 +1607,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/DeleteHardwareGroup",
             ),
-            self.list_hardware: self._wrap_method(
+            self.list_hardware: self._wrap_async_method(
                 self.list_hardware,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1564,8 +1622,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/ListHardware",
             ),
-            self.get_hardware: self._wrap_method(
+            self.get_hardware: self._wrap_async_method(
                 self.get_hardware,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1578,13 +1637,15 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/GetHardware",
             ),
-            self.create_hardware: self._wrap_method(
+            self.create_hardware: self._wrap_async_method(
                 self.create_hardware,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/CreateHardware",
             ),
-            self.update_hardware: self._wrap_method(
+            self.update_hardware: self._wrap_async_method(
                 self.update_hardware,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1597,8 +1658,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/UpdateHardware",
             ),
-            self.delete_hardware: self._wrap_method(
+            self.delete_hardware: self._wrap_async_method(
                 self.delete_hardware,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1611,8 +1673,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/DeleteHardware",
             ),
-            self.list_comments: self._wrap_method(
+            self.list_comments: self._wrap_async_method(
                 self.list_comments,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1625,8 +1688,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/ListComments",
             ),
-            self.get_comment: self._wrap_method(
+            self.get_comment: self._wrap_async_method(
                 self.get_comment,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1639,18 +1703,21 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/GetComment",
             ),
-            self.create_comment: self._wrap_method(
+            self.create_comment: self._wrap_async_method(
                 self.create_comment,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/CreateComment",
             ),
-            self.record_action_on_comment: self._wrap_method(
+            self.record_action_on_comment: self._wrap_async_method(
                 self.record_action_on_comment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/RecordActionOnComment",
             ),
-            self.list_change_log_entries: self._wrap_method(
+            self.list_change_log_entries: self._wrap_async_method(
                 self.list_change_log_entries,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1663,8 +1730,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/ListChangeLogEntries",
             ),
-            self.get_change_log_entry: self._wrap_method(
+            self.get_change_log_entry: self._wrap_async_method(
                 self.get_change_log_entry,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1677,8 +1745,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/GetChangeLogEntry",
             ),
-            self.list_skus: self._wrap_method(
+            self.list_skus: self._wrap_async_method(
                 self.list_skus,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1691,8 +1760,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/ListSkus",
             ),
-            self.get_sku: self._wrap_method(
+            self.get_sku: self._wrap_async_method(
                 self.get_sku,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1705,8 +1775,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/GetSku",
             ),
-            self.list_zones: self._wrap_method(
+            self.list_zones: self._wrap_async_method(
                 self.list_zones,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1719,8 +1790,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/ListZones",
             ),
-            self.get_zone: self._wrap_method(
+            self.get_zone: self._wrap_async_method(
                 self.get_zone,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1733,13 +1805,15 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/GetZone",
             ),
-            self.create_zone: self._wrap_method(
+            self.create_zone: self._wrap_async_method(
                 self.create_zone,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/CreateZone",
             ),
-            self.update_zone: self._wrap_method(
+            self.update_zone: self._wrap_async_method(
                 self.update_zone,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1752,8 +1826,9 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/UpdateZone",
             ),
-            self.delete_zone: self._wrap_method(
+            self.delete_zone: self._wrap_async_method(
                 self.delete_zone,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1766,53 +1841,57 @@ class GDCHardwareManagementGrpcAsyncIOTransport(GDCHardwareManagementTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/DeleteZone",
             ),
-            self.signal_zone_state: self._wrap_method(
+            self.signal_zone_state: self._wrap_async_method(
                 self.signal_zone_state,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/SignalZoneState",
             ),
-            self.request_order_date_change: self._wrap_method(
+            self.request_order_date_change: self._wrap_async_method(
                 self.request_order_date_change,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.gdchardwaremanagement.v1alpha.GDCHardwareManagement/RequestOrderDateChange",
             ),
-            self.get_location: self._wrap_method(
+            self.get_location: self._wrap_async_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: self._wrap_method(
+            self.list_locations: self._wrap_async_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.cancel_operation: self._wrap_method(
+            self.cancel_operation: self._wrap_async_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: self._wrap_method(
+            self.delete_operation: self._wrap_async_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: self._wrap_method(
+            self.list_operations: self._wrap_async_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

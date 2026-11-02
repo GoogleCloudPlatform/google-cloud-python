@@ -16,10 +16,22 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.migrationcenter_v1 import gapic_version as package_version
+from google.cloud.migrationcenter_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.migrationcenter_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -28,7 +40,6 @@ from google.cloud.location import locations_pb2  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.migrationcenter_v1 import gapic_version as package_version
 from google.cloud.migrationcenter_v1.types import migrationcenter
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
@@ -55,6 +66,7 @@ class MigrationCenterTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -85,6 +97,9 @@ class MigrationCenterTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -134,284 +149,417 @@ class MigrationCenterTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.list_assets: gapic_v1.method.wrap_method(
+            self.list_assets: self._wrap_method(
                 self.list_assets,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/ListAssets",
             ),
-            self.get_asset: gapic_v1.method.wrap_method(
+            self.get_asset: self._wrap_method(
                 self.get_asset,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/GetAsset",
             ),
-            self.update_asset: gapic_v1.method.wrap_method(
+            self.update_asset: self._wrap_method(
                 self.update_asset,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/UpdateAsset",
             ),
-            self.batch_update_assets: gapic_v1.method.wrap_method(
+            self.batch_update_assets: self._wrap_method(
                 self.batch_update_assets,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/BatchUpdateAssets",
             ),
-            self.delete_asset: gapic_v1.method.wrap_method(
+            self.delete_asset: self._wrap_method(
                 self.delete_asset,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/DeleteAsset",
             ),
-            self.batch_delete_assets: gapic_v1.method.wrap_method(
+            self.batch_delete_assets: self._wrap_method(
                 self.batch_delete_assets,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/BatchDeleteAssets",
             ),
-            self.report_asset_frames: gapic_v1.method.wrap_method(
+            self.report_asset_frames: self._wrap_method(
                 self.report_asset_frames,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/ReportAssetFrames",
             ),
-            self.aggregate_assets_values: gapic_v1.method.wrap_method(
+            self.aggregate_assets_values: self._wrap_method(
                 self.aggregate_assets_values,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/AggregateAssetsValues",
             ),
-            self.create_import_job: gapic_v1.method.wrap_method(
+            self.create_import_job: self._wrap_method(
                 self.create_import_job,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/CreateImportJob",
             ),
-            self.list_import_jobs: gapic_v1.method.wrap_method(
+            self.list_import_jobs: self._wrap_method(
                 self.list_import_jobs,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/ListImportJobs",
             ),
-            self.get_import_job: gapic_v1.method.wrap_method(
+            self.get_import_job: self._wrap_method(
                 self.get_import_job,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/GetImportJob",
             ),
-            self.delete_import_job: gapic_v1.method.wrap_method(
+            self.delete_import_job: self._wrap_method(
                 self.delete_import_job,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/DeleteImportJob",
             ),
-            self.update_import_job: gapic_v1.method.wrap_method(
+            self.update_import_job: self._wrap_method(
                 self.update_import_job,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/UpdateImportJob",
             ),
-            self.validate_import_job: gapic_v1.method.wrap_method(
+            self.validate_import_job: self._wrap_method(
                 self.validate_import_job,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/ValidateImportJob",
             ),
-            self.run_import_job: gapic_v1.method.wrap_method(
+            self.run_import_job: self._wrap_method(
                 self.run_import_job,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/RunImportJob",
             ),
-            self.get_import_data_file: gapic_v1.method.wrap_method(
+            self.get_import_data_file: self._wrap_method(
                 self.get_import_data_file,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/GetImportDataFile",
             ),
-            self.list_import_data_files: gapic_v1.method.wrap_method(
+            self.list_import_data_files: self._wrap_method(
                 self.list_import_data_files,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/ListImportDataFiles",
             ),
-            self.create_import_data_file: gapic_v1.method.wrap_method(
+            self.create_import_data_file: self._wrap_method(
                 self.create_import_data_file,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/CreateImportDataFile",
             ),
-            self.delete_import_data_file: gapic_v1.method.wrap_method(
+            self.delete_import_data_file: self._wrap_method(
                 self.delete_import_data_file,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/DeleteImportDataFile",
             ),
-            self.list_groups: gapic_v1.method.wrap_method(
+            self.list_groups: self._wrap_method(
                 self.list_groups,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/ListGroups",
             ),
-            self.get_group: gapic_v1.method.wrap_method(
+            self.get_group: self._wrap_method(
                 self.get_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/GetGroup",
             ),
-            self.create_group: gapic_v1.method.wrap_method(
+            self.create_group: self._wrap_method(
                 self.create_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/CreateGroup",
             ),
-            self.update_group: gapic_v1.method.wrap_method(
+            self.update_group: self._wrap_method(
                 self.update_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/UpdateGroup",
             ),
-            self.delete_group: gapic_v1.method.wrap_method(
+            self.delete_group: self._wrap_method(
                 self.delete_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/DeleteGroup",
             ),
-            self.add_assets_to_group: gapic_v1.method.wrap_method(
+            self.add_assets_to_group: self._wrap_method(
                 self.add_assets_to_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/AddAssetsToGroup",
             ),
-            self.remove_assets_from_group: gapic_v1.method.wrap_method(
+            self.remove_assets_from_group: self._wrap_method(
                 self.remove_assets_from_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/RemoveAssetsFromGroup",
             ),
-            self.list_error_frames: gapic_v1.method.wrap_method(
+            self.list_error_frames: self._wrap_method(
                 self.list_error_frames,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/ListErrorFrames",
             ),
-            self.get_error_frame: gapic_v1.method.wrap_method(
+            self.get_error_frame: self._wrap_method(
                 self.get_error_frame,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/GetErrorFrame",
             ),
-            self.list_sources: gapic_v1.method.wrap_method(
+            self.list_sources: self._wrap_method(
                 self.list_sources,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/ListSources",
             ),
-            self.get_source: gapic_v1.method.wrap_method(
+            self.get_source: self._wrap_method(
                 self.get_source,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/GetSource",
             ),
-            self.create_source: gapic_v1.method.wrap_method(
+            self.create_source: self._wrap_method(
                 self.create_source,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/CreateSource",
             ),
-            self.update_source: gapic_v1.method.wrap_method(
+            self.update_source: self._wrap_method(
                 self.update_source,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/UpdateSource",
             ),
-            self.delete_source: gapic_v1.method.wrap_method(
+            self.delete_source: self._wrap_method(
                 self.delete_source,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/DeleteSource",
             ),
-            self.list_preference_sets: gapic_v1.method.wrap_method(
+            self.list_preference_sets: self._wrap_method(
                 self.list_preference_sets,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/ListPreferenceSets",
             ),
-            self.get_preference_set: gapic_v1.method.wrap_method(
+            self.get_preference_set: self._wrap_method(
                 self.get_preference_set,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/GetPreferenceSet",
             ),
-            self.create_preference_set: gapic_v1.method.wrap_method(
+            self.create_preference_set: self._wrap_method(
                 self.create_preference_set,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/CreatePreferenceSet",
             ),
-            self.update_preference_set: gapic_v1.method.wrap_method(
+            self.update_preference_set: self._wrap_method(
                 self.update_preference_set,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/UpdatePreferenceSet",
             ),
-            self.delete_preference_set: gapic_v1.method.wrap_method(
+            self.delete_preference_set: self._wrap_method(
                 self.delete_preference_set,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/DeletePreferenceSet",
             ),
-            self.get_settings: gapic_v1.method.wrap_method(
+            self.get_settings: self._wrap_method(
                 self.get_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/GetSettings",
             ),
-            self.update_settings: gapic_v1.method.wrap_method(
+            self.update_settings: self._wrap_method(
                 self.update_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/UpdateSettings",
             ),
-            self.create_report_config: gapic_v1.method.wrap_method(
+            self.create_report_config: self._wrap_method(
                 self.create_report_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/CreateReportConfig",
             ),
-            self.get_report_config: gapic_v1.method.wrap_method(
+            self.get_report_config: self._wrap_method(
                 self.get_report_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/GetReportConfig",
             ),
-            self.list_report_configs: gapic_v1.method.wrap_method(
+            self.list_report_configs: self._wrap_method(
                 self.list_report_configs,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/ListReportConfigs",
             ),
-            self.delete_report_config: gapic_v1.method.wrap_method(
+            self.delete_report_config: self._wrap_method(
                 self.delete_report_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/DeleteReportConfig",
             ),
-            self.create_report: gapic_v1.method.wrap_method(
+            self.create_report: self._wrap_method(
                 self.create_report,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/CreateReport",
             ),
-            self.get_report: gapic_v1.method.wrap_method(
+            self.get_report: self._wrap_method(
                 self.get_report,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/GetReport",
             ),
-            self.list_reports: gapic_v1.method.wrap_method(
+            self.list_reports: self._wrap_method(
                 self.list_reports,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/ListReports",
             ),
-            self.delete_report: gapic_v1.method.wrap_method(
+            self.delete_report: self._wrap_method(
                 self.delete_report,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.migrationcenter.v1.MigrationCenter/DeleteReport",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.cancel_operation: gapic_v1.method.wrap_method(
+            self.cancel_operation: self._wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: gapic_v1.method.wrap_method(
+            self.delete_operation: self._wrap_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
 

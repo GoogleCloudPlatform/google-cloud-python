@@ -13,17 +13,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async, operations_v1
 from google.api_core import retry_async as retries
@@ -33,6 +42,10 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.channel_v1._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.cloud.channel_v1.types import (
     channel_partner_links,
     customers,
@@ -219,6 +232,10 @@ class CloudChannelServiceGrpcAsyncIOTransport(CloudChannelServiceTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -270,6 +287,12 @@ class CloudChannelServiceGrpcAsyncIOTransport(CloudChannelServiceTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -325,6 +348,7 @@ class CloudChannelServiceGrpcAsyncIOTransport(CloudChannelServiceTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -346,12 +370,26 @@ class CloudChannelServiceGrpcAsyncIOTransport(CloudChannelServiceTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -2822,279 +2860,330 @@ class CloudChannelServiceGrpcAsyncIOTransport(CloudChannelServiceTransport):
         return self._stubs["list_entitlement_changes"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.list_customers: self._wrap_method(
+            self.list_customers: self._wrap_async_method(
                 self.list_customers,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ListCustomers",
             ),
-            self.get_customer: self._wrap_method(
+            self.get_customer: self._wrap_async_method(
                 self.get_customer,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/GetCustomer",
             ),
-            self.check_cloud_identity_accounts_exist: self._wrap_method(
+            self.check_cloud_identity_accounts_exist: self._wrap_async_method(
                 self.check_cloud_identity_accounts_exist,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/CheckCloudIdentityAccountsExist",
             ),
-            self.create_customer: self._wrap_method(
+            self.create_customer: self._wrap_async_method(
                 self.create_customer,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/CreateCustomer",
             ),
-            self.update_customer: self._wrap_method(
+            self.update_customer: self._wrap_async_method(
                 self.update_customer,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/UpdateCustomer",
             ),
-            self.delete_customer: self._wrap_method(
+            self.delete_customer: self._wrap_async_method(
                 self.delete_customer,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/DeleteCustomer",
             ),
-            self.import_customer: self._wrap_method(
+            self.import_customer: self._wrap_async_method(
                 self.import_customer,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ImportCustomer",
             ),
-            self.provision_cloud_identity: self._wrap_method(
+            self.provision_cloud_identity: self._wrap_async_method(
                 self.provision_cloud_identity,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ProvisionCloudIdentity",
             ),
-            self.list_entitlements: self._wrap_method(
+            self.list_entitlements: self._wrap_async_method(
                 self.list_entitlements,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ListEntitlements",
             ),
-            self.list_transferable_skus: self._wrap_method(
+            self.list_transferable_skus: self._wrap_async_method(
                 self.list_transferable_skus,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ListTransferableSkus",
             ),
-            self.list_transferable_offers: self._wrap_method(
+            self.list_transferable_offers: self._wrap_async_method(
                 self.list_transferable_offers,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ListTransferableOffers",
             ),
-            self.get_entitlement: self._wrap_method(
+            self.get_entitlement: self._wrap_async_method(
                 self.get_entitlement,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/GetEntitlement",
             ),
-            self.create_entitlement: self._wrap_method(
+            self.create_entitlement: self._wrap_async_method(
                 self.create_entitlement,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/CreateEntitlement",
             ),
-            self.change_parameters: self._wrap_method(
+            self.change_parameters: self._wrap_async_method(
                 self.change_parameters,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ChangeParameters",
             ),
-            self.change_renewal_settings: self._wrap_method(
+            self.change_renewal_settings: self._wrap_async_method(
                 self.change_renewal_settings,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ChangeRenewalSettings",
             ),
-            self.change_offer: self._wrap_method(
+            self.change_offer: self._wrap_async_method(
                 self.change_offer,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ChangeOffer",
             ),
-            self.start_paid_service: self._wrap_method(
+            self.start_paid_service: self._wrap_async_method(
                 self.start_paid_service,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/StartPaidService",
             ),
-            self.suspend_entitlement: self._wrap_method(
+            self.suspend_entitlement: self._wrap_async_method(
                 self.suspend_entitlement,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/SuspendEntitlement",
             ),
-            self.cancel_entitlement: self._wrap_method(
+            self.cancel_entitlement: self._wrap_async_method(
                 self.cancel_entitlement,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/CancelEntitlement",
             ),
-            self.activate_entitlement: self._wrap_method(
+            self.activate_entitlement: self._wrap_async_method(
                 self.activate_entitlement,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ActivateEntitlement",
             ),
-            self.transfer_entitlements: self._wrap_method(
+            self.transfer_entitlements: self._wrap_async_method(
                 self.transfer_entitlements,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/TransferEntitlements",
             ),
-            self.transfer_entitlements_to_google: self._wrap_method(
+            self.transfer_entitlements_to_google: self._wrap_async_method(
                 self.transfer_entitlements_to_google,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/TransferEntitlementsToGoogle",
             ),
-            self.list_channel_partner_links: self._wrap_method(
+            self.list_channel_partner_links: self._wrap_async_method(
                 self.list_channel_partner_links,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ListChannelPartnerLinks",
             ),
-            self.get_channel_partner_link: self._wrap_method(
+            self.get_channel_partner_link: self._wrap_async_method(
                 self.get_channel_partner_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/GetChannelPartnerLink",
             ),
-            self.create_channel_partner_link: self._wrap_method(
+            self.create_channel_partner_link: self._wrap_async_method(
                 self.create_channel_partner_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/CreateChannelPartnerLink",
             ),
-            self.update_channel_partner_link: self._wrap_method(
+            self.update_channel_partner_link: self._wrap_async_method(
                 self.update_channel_partner_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/UpdateChannelPartnerLink",
             ),
-            self.get_customer_repricing_config: self._wrap_method(
+            self.get_customer_repricing_config: self._wrap_async_method(
                 self.get_customer_repricing_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/GetCustomerRepricingConfig",
             ),
-            self.list_customer_repricing_configs: self._wrap_method(
+            self.list_customer_repricing_configs: self._wrap_async_method(
                 self.list_customer_repricing_configs,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ListCustomerRepricingConfigs",
             ),
-            self.create_customer_repricing_config: self._wrap_method(
+            self.create_customer_repricing_config: self._wrap_async_method(
                 self.create_customer_repricing_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/CreateCustomerRepricingConfig",
             ),
-            self.update_customer_repricing_config: self._wrap_method(
+            self.update_customer_repricing_config: self._wrap_async_method(
                 self.update_customer_repricing_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/UpdateCustomerRepricingConfig",
             ),
-            self.delete_customer_repricing_config: self._wrap_method(
+            self.delete_customer_repricing_config: self._wrap_async_method(
                 self.delete_customer_repricing_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/DeleteCustomerRepricingConfig",
             ),
-            self.get_channel_partner_repricing_config: self._wrap_method(
+            self.get_channel_partner_repricing_config: self._wrap_async_method(
                 self.get_channel_partner_repricing_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/GetChannelPartnerRepricingConfig",
             ),
-            self.list_channel_partner_repricing_configs: self._wrap_method(
+            self.list_channel_partner_repricing_configs: self._wrap_async_method(
                 self.list_channel_partner_repricing_configs,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ListChannelPartnerRepricingConfigs",
             ),
-            self.create_channel_partner_repricing_config: self._wrap_method(
+            self.create_channel_partner_repricing_config: self._wrap_async_method(
                 self.create_channel_partner_repricing_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/CreateChannelPartnerRepricingConfig",
             ),
-            self.update_channel_partner_repricing_config: self._wrap_method(
+            self.update_channel_partner_repricing_config: self._wrap_async_method(
                 self.update_channel_partner_repricing_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/UpdateChannelPartnerRepricingConfig",
             ),
-            self.delete_channel_partner_repricing_config: self._wrap_method(
+            self.delete_channel_partner_repricing_config: self._wrap_async_method(
                 self.delete_channel_partner_repricing_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/DeleteChannelPartnerRepricingConfig",
             ),
-            self.list_sku_groups: self._wrap_method(
+            self.list_sku_groups: self._wrap_async_method(
                 self.list_sku_groups,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ListSkuGroups",
             ),
-            self.list_sku_group_billable_skus: self._wrap_method(
+            self.list_sku_group_billable_skus: self._wrap_async_method(
                 self.list_sku_group_billable_skus,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ListSkuGroupBillableSkus",
             ),
-            self.lookup_offer: self._wrap_method(
+            self.lookup_offer: self._wrap_async_method(
                 self.lookup_offer,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/LookupOffer",
             ),
-            self.list_products: self._wrap_method(
+            self.list_products: self._wrap_async_method(
                 self.list_products,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ListProducts",
             ),
-            self.list_skus: self._wrap_method(
+            self.list_skus: self._wrap_async_method(
                 self.list_skus,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ListSkus",
             ),
-            self.list_offers: self._wrap_method(
+            self.list_offers: self._wrap_async_method(
                 self.list_offers,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ListOffers",
             ),
-            self.list_purchasable_skus: self._wrap_method(
+            self.list_purchasable_skus: self._wrap_async_method(
                 self.list_purchasable_skus,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ListPurchasableSkus",
             ),
-            self.list_purchasable_offers: self._wrap_method(
+            self.list_purchasable_offers: self._wrap_async_method(
                 self.list_purchasable_offers,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ListPurchasableOffers",
             ),
-            self.query_eligible_billing_accounts: self._wrap_method(
+            self.query_eligible_billing_accounts: self._wrap_async_method(
                 self.query_eligible_billing_accounts,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/QueryEligibleBillingAccounts",
             ),
-            self.register_subscriber: self._wrap_method(
+            self.register_subscriber: self._wrap_async_method(
                 self.register_subscriber,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/RegisterSubscriber",
             ),
-            self.unregister_subscriber: self._wrap_method(
+            self.unregister_subscriber: self._wrap_async_method(
                 self.unregister_subscriber,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/UnregisterSubscriber",
             ),
-            self.list_subscribers: self._wrap_method(
+            self.list_subscribers: self._wrap_async_method(
                 self.list_subscribers,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ListSubscribers",
             ),
-            self.list_entitlement_changes: self._wrap_method(
+            self.list_entitlement_changes: self._wrap_async_method(
                 self.list_entitlement_changes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.channel.v1.CloudChannelService/ListEntitlementChanges",
             ),
-            self.cancel_operation: self._wrap_method(
+            self.cancel_operation: self._wrap_async_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: self._wrap_method(
+            self.delete_operation: self._wrap_async_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: self._wrap_method(
+            self.list_operations: self._wrap_async_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

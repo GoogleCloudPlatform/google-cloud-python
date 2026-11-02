@@ -16,9 +16,21 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.netapp_v1 import gapic_version as package_version
+from google.cloud.netapp_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.netapp_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -27,7 +39,6 @@ from google.cloud.location import locations_pb2  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.netapp_v1 import gapic_version as package_version
 from google.cloud.netapp_v1.types import (
     active_directory,
     backup,
@@ -77,6 +88,7 @@ class NetAppTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -107,6 +119,9 @@ class NetAppTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -156,16 +171,95 @@ class NetAppTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.list_storage_pools: gapic_v1.method.wrap_method(
+            self.list_storage_pools: self._wrap_method(
                 self.list_storage_pools,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -178,13 +272,15 @@ class NetAppTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/ListStoragePools",
             ),
-            self.create_storage_pool: gapic_v1.method.wrap_method(
+            self.create_storage_pool: self._wrap_method(
                 self.create_storage_pool,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/CreateStoragePool",
             ),
-            self.get_storage_pool: gapic_v1.method.wrap_method(
+            self.get_storage_pool: self._wrap_method(
                 self.get_storage_pool,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -197,28 +293,33 @@ class NetAppTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/GetStoragePool",
             ),
-            self.update_storage_pool: gapic_v1.method.wrap_method(
+            self.update_storage_pool: self._wrap_method(
                 self.update_storage_pool,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/UpdateStoragePool",
             ),
-            self.delete_storage_pool: gapic_v1.method.wrap_method(
+            self.delete_storage_pool: self._wrap_method(
                 self.delete_storage_pool,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/DeleteStoragePool",
             ),
-            self.validate_directory_service: gapic_v1.method.wrap_method(
+            self.validate_directory_service: self._wrap_method(
                 self.validate_directory_service,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/ValidateDirectoryService",
             ),
-            self.switch_active_replica_zone: gapic_v1.method.wrap_method(
+            self.switch_active_replica_zone: self._wrap_method(
                 self.switch_active_replica_zone,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/SwitchActiveReplicaZone",
             ),
-            self.list_volumes: gapic_v1.method.wrap_method(
+            self.list_volumes: self._wrap_method(
                 self.list_volumes,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -231,8 +332,9 @@ class NetAppTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/ListVolumes",
             ),
-            self.get_volume: gapic_v1.method.wrap_method(
+            self.get_volume: self._wrap_method(
                 self.get_volume,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -245,43 +347,51 @@ class NetAppTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/GetVolume",
             ),
-            self.create_volume: gapic_v1.method.wrap_method(
+            self.create_volume: self._wrap_method(
                 self.create_volume,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/CreateVolume",
             ),
-            self.update_volume: gapic_v1.method.wrap_method(
+            self.update_volume: self._wrap_method(
                 self.update_volume,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/UpdateVolume",
             ),
-            self.delete_volume: gapic_v1.method.wrap_method(
+            self.delete_volume: self._wrap_method(
                 self.delete_volume,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/DeleteVolume",
             ),
-            self.revert_volume: gapic_v1.method.wrap_method(
+            self.revert_volume: self._wrap_method(
                 self.revert_volume,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/RevertVolume",
             ),
-            self.start_split: gapic_v1.method.wrap_method(
+            self.start_split: self._wrap_method(
                 self.start_split,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/StartSplit",
             ),
-            self.get_split_status: gapic_v1.method.wrap_method(
+            self.get_split_status: self._wrap_method(
                 self.get_split_status,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/GetSplitStatus",
             ),
-            self.establish_volume_peering: gapic_v1.method.wrap_method(
+            self.establish_volume_peering: self._wrap_method(
                 self.establish_volume_peering,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/EstablishVolumePeering",
             ),
-            self.list_snapshots: gapic_v1.method.wrap_method(
+            self.list_snapshots: self._wrap_method(
                 self.list_snapshots,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -294,8 +404,9 @@ class NetAppTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/ListSnapshots",
             ),
-            self.get_snapshot: gapic_v1.method.wrap_method(
+            self.get_snapshot: self._wrap_method(
                 self.get_snapshot,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -308,23 +419,27 @@ class NetAppTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/GetSnapshot",
             ),
-            self.create_snapshot: gapic_v1.method.wrap_method(
+            self.create_snapshot: self._wrap_method(
                 self.create_snapshot,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/CreateSnapshot",
             ),
-            self.delete_snapshot: gapic_v1.method.wrap_method(
+            self.delete_snapshot: self._wrap_method(
                 self.delete_snapshot,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/DeleteSnapshot",
             ),
-            self.update_snapshot: gapic_v1.method.wrap_method(
+            self.update_snapshot: self._wrap_method(
                 self.update_snapshot,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/UpdateSnapshot",
             ),
-            self.list_active_directories: gapic_v1.method.wrap_method(
+            self.list_active_directories: self._wrap_method(
                 self.list_active_directories,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -337,8 +452,9 @@ class NetAppTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/ListActiveDirectories",
             ),
-            self.get_active_directory: gapic_v1.method.wrap_method(
+            self.get_active_directory: self._wrap_method(
                 self.get_active_directory,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -351,23 +467,27 @@ class NetAppTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/GetActiveDirectory",
             ),
-            self.create_active_directory: gapic_v1.method.wrap_method(
+            self.create_active_directory: self._wrap_method(
                 self.create_active_directory,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/CreateActiveDirectory",
             ),
-            self.update_active_directory: gapic_v1.method.wrap_method(
+            self.update_active_directory: self._wrap_method(
                 self.update_active_directory,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/UpdateActiveDirectory",
             ),
-            self.delete_active_directory: gapic_v1.method.wrap_method(
+            self.delete_active_directory: self._wrap_method(
                 self.delete_active_directory,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/DeleteActiveDirectory",
             ),
-            self.list_kms_configs: gapic_v1.method.wrap_method(
+            self.list_kms_configs: self._wrap_method(
                 self.list_kms_configs,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -380,13 +500,15 @@ class NetAppTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/ListKmsConfigs",
             ),
-            self.create_kms_config: gapic_v1.method.wrap_method(
+            self.create_kms_config: self._wrap_method(
                 self.create_kms_config,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/CreateKmsConfig",
             ),
-            self.get_kms_config: gapic_v1.method.wrap_method(
+            self.get_kms_config: self._wrap_method(
                 self.get_kms_config,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -399,28 +521,33 @@ class NetAppTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/GetKmsConfig",
             ),
-            self.update_kms_config: gapic_v1.method.wrap_method(
+            self.update_kms_config: self._wrap_method(
                 self.update_kms_config,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/UpdateKmsConfig",
             ),
-            self.encrypt_volumes: gapic_v1.method.wrap_method(
+            self.encrypt_volumes: self._wrap_method(
                 self.encrypt_volumes,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/EncryptVolumes",
             ),
-            self.verify_kms_config: gapic_v1.method.wrap_method(
+            self.verify_kms_config: self._wrap_method(
                 self.verify_kms_config,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/VerifyKmsConfig",
             ),
-            self.delete_kms_config: gapic_v1.method.wrap_method(
+            self.delete_kms_config: self._wrap_method(
                 self.delete_kms_config,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/DeleteKmsConfig",
             ),
-            self.list_replications: gapic_v1.method.wrap_method(
+            self.list_replications: self._wrap_method(
                 self.list_replications,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -433,8 +560,9 @@ class NetAppTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/ListReplications",
             ),
-            self.get_replication: gapic_v1.method.wrap_method(
+            self.get_replication: self._wrap_method(
                 self.get_replication,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -447,53 +575,63 @@ class NetAppTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/GetReplication",
             ),
-            self.create_replication: gapic_v1.method.wrap_method(
+            self.create_replication: self._wrap_method(
                 self.create_replication,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/CreateReplication",
             ),
-            self.delete_replication: gapic_v1.method.wrap_method(
+            self.delete_replication: self._wrap_method(
                 self.delete_replication,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/DeleteReplication",
             ),
-            self.update_replication: gapic_v1.method.wrap_method(
+            self.update_replication: self._wrap_method(
                 self.update_replication,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/UpdateReplication",
             ),
-            self.stop_replication: gapic_v1.method.wrap_method(
+            self.stop_replication: self._wrap_method(
                 self.stop_replication,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/StopReplication",
             ),
-            self.resume_replication: gapic_v1.method.wrap_method(
+            self.resume_replication: self._wrap_method(
                 self.resume_replication,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/ResumeReplication",
             ),
-            self.reverse_replication_direction: gapic_v1.method.wrap_method(
+            self.reverse_replication_direction: self._wrap_method(
                 self.reverse_replication_direction,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/ReverseReplicationDirection",
             ),
-            self.establish_peering: gapic_v1.method.wrap_method(
+            self.establish_peering: self._wrap_method(
                 self.establish_peering,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/EstablishPeering",
             ),
-            self.sync_replication: gapic_v1.method.wrap_method(
+            self.sync_replication: self._wrap_method(
                 self.sync_replication,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/SyncReplication",
             ),
-            self.create_backup_vault: gapic_v1.method.wrap_method(
+            self.create_backup_vault: self._wrap_method(
                 self.create_backup_vault,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/CreateBackupVault",
             ),
-            self.get_backup_vault: gapic_v1.method.wrap_method(
+            self.get_backup_vault: self._wrap_method(
                 self.get_backup_vault,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -506,8 +644,9 @@ class NetAppTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/GetBackupVault",
             ),
-            self.list_backup_vaults: gapic_v1.method.wrap_method(
+            self.list_backup_vaults: self._wrap_method(
                 self.list_backup_vaults,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -520,23 +659,27 @@ class NetAppTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/ListBackupVaults",
             ),
-            self.update_backup_vault: gapic_v1.method.wrap_method(
+            self.update_backup_vault: self._wrap_method(
                 self.update_backup_vault,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/UpdateBackupVault",
             ),
-            self.delete_backup_vault: gapic_v1.method.wrap_method(
+            self.delete_backup_vault: self._wrap_method(
                 self.delete_backup_vault,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/DeleteBackupVault",
             ),
-            self.create_backup: gapic_v1.method.wrap_method(
+            self.create_backup: self._wrap_method(
                 self.create_backup,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/CreateBackup",
             ),
-            self.get_backup: gapic_v1.method.wrap_method(
+            self.get_backup: self._wrap_method(
                 self.get_backup,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -549,8 +692,9 @@ class NetAppTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/GetBackup",
             ),
-            self.list_backups: gapic_v1.method.wrap_method(
+            self.list_backups: self._wrap_method(
                 self.list_backups,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -563,23 +707,27 @@ class NetAppTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/ListBackups",
             ),
-            self.delete_backup: gapic_v1.method.wrap_method(
+            self.delete_backup: self._wrap_method(
                 self.delete_backup,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/DeleteBackup",
             ),
-            self.update_backup: gapic_v1.method.wrap_method(
+            self.update_backup: self._wrap_method(
                 self.update_backup,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/UpdateBackup",
             ),
-            self.create_backup_policy: gapic_v1.method.wrap_method(
+            self.create_backup_policy: self._wrap_method(
                 self.create_backup_policy,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/CreateBackupPolicy",
             ),
-            self.get_backup_policy: gapic_v1.method.wrap_method(
+            self.get_backup_policy: self._wrap_method(
                 self.get_backup_policy,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -592,8 +740,9 @@ class NetAppTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/GetBackupPolicy",
             ),
-            self.list_backup_policies: gapic_v1.method.wrap_method(
+            self.list_backup_policies: self._wrap_method(
                 self.list_backup_policies,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -606,136 +755,163 @@ class NetAppTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/ListBackupPolicies",
             ),
-            self.update_backup_policy: gapic_v1.method.wrap_method(
+            self.update_backup_policy: self._wrap_method(
                 self.update_backup_policy,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/UpdateBackupPolicy",
             ),
-            self.delete_backup_policy: gapic_v1.method.wrap_method(
+            self.delete_backup_policy: self._wrap_method(
                 self.delete_backup_policy,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/DeleteBackupPolicy",
             ),
-            self.list_quota_rules: gapic_v1.method.wrap_method(
+            self.list_quota_rules: self._wrap_method(
                 self.list_quota_rules,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/ListQuotaRules",
             ),
-            self.get_quota_rule: gapic_v1.method.wrap_method(
+            self.get_quota_rule: self._wrap_method(
                 self.get_quota_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/GetQuotaRule",
             ),
-            self.create_quota_rule: gapic_v1.method.wrap_method(
+            self.create_quota_rule: self._wrap_method(
                 self.create_quota_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/CreateQuotaRule",
             ),
-            self.update_quota_rule: gapic_v1.method.wrap_method(
+            self.update_quota_rule: self._wrap_method(
                 self.update_quota_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/UpdateQuotaRule",
             ),
-            self.delete_quota_rule: gapic_v1.method.wrap_method(
+            self.delete_quota_rule: self._wrap_method(
                 self.delete_quota_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/DeleteQuotaRule",
             ),
-            self.restore_backup_files: gapic_v1.method.wrap_method(
+            self.restore_backup_files: self._wrap_method(
                 self.restore_backup_files,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/RestoreBackupFiles",
             ),
-            self.list_host_groups: gapic_v1.method.wrap_method(
+            self.list_host_groups: self._wrap_method(
                 self.list_host_groups,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/ListHostGroups",
             ),
-            self.get_host_group: gapic_v1.method.wrap_method(
+            self.get_host_group: self._wrap_method(
                 self.get_host_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/GetHostGroup",
             ),
-            self.create_host_group: gapic_v1.method.wrap_method(
+            self.create_host_group: self._wrap_method(
                 self.create_host_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/CreateHostGroup",
             ),
-            self.update_host_group: gapic_v1.method.wrap_method(
+            self.update_host_group: self._wrap_method(
                 self.update_host_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/UpdateHostGroup",
             ),
-            self.delete_host_group: gapic_v1.method.wrap_method(
+            self.delete_host_group: self._wrap_method(
                 self.delete_host_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/DeleteHostGroup",
             ),
-            self.execute_ontap_post: gapic_v1.method.wrap_method(
+            self.execute_ontap_post: self._wrap_method(
                 self.execute_ontap_post,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/ExecuteOntapPost",
             ),
-            self.execute_ontap_get: gapic_v1.method.wrap_method(
+            self.execute_ontap_get: self._wrap_method(
                 self.execute_ontap_get,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/ExecuteOntapGet",
             ),
-            self.execute_ontap_delete: gapic_v1.method.wrap_method(
+            self.execute_ontap_delete: self._wrap_method(
                 self.execute_ontap_delete,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/ExecuteOntapDelete",
             ),
-            self.execute_ontap_patch: gapic_v1.method.wrap_method(
+            self.execute_ontap_patch: self._wrap_method(
                 self.execute_ontap_patch,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/ExecuteOntapPatch",
             ),
-            self.restore_volume: gapic_v1.method.wrap_method(
+            self.restore_volume: self._wrap_method(
                 self.restore_volume,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/RestoreVolume",
             ),
-            self.list_backup_configs: gapic_v1.method.wrap_method(
+            self.list_backup_configs: self._wrap_method(
                 self.list_backup_configs,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/ListBackupConfigs",
             ),
-            self.update_backup_config: gapic_v1.method.wrap_method(
+            self.update_backup_config: self._wrap_method(
                 self.update_backup_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.netapp.v1.NetApp/UpdateBackupConfig",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.cancel_operation: gapic_v1.method.wrap_method(
+            self.cancel_operation: self._wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: gapic_v1.method.wrap_method(
+            self.delete_operation: self._wrap_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
 
