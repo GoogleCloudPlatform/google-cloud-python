@@ -386,7 +386,9 @@ class TestAsyncAppendableObjectWriter:
     async def test_from_blob_generation_none_overwrites_fetched_blob(
         self, preconditions, field, value
     ):
-        # A Blob fetched from GCS carries its generation and metadata.
+        kms_key = "projects/p/locations/l/keyRings/r/cryptoKeys/k"
+        # A Blob fetched from GCS carries its generation, metadata and, for CMEK
+        # objects, the key version used to encrypt it.
         blob = Blob(OBJECT, bucket=Bucket(client=None, name=BUCKET))
         blob._set_properties(
             {
@@ -395,6 +397,7 @@ class TestAsyncAppendableObjectWriter:
                 "metageneration": "4",
                 "contentType": "text/plain",
                 "metadata": {"k": "v"},
+                "kmsKeyName": f"{kms_key}/cryptoKeyVersions/1",
             }
         )
         writer = AsyncAppendableObjectWriter.from_blob(
@@ -418,6 +421,8 @@ class TestAsyncAppendableObjectWriter:
         assert getattr(spec, field) == value
         assert spec.resource.content_type == "text/plain"
         assert dict(spec.resource.metadata) == {"k": "v"}
+        # GCS rejects a key version when creating an object.
+        assert spec.resource.kms_key == kms_key
 
     # -------------------------------------------------------------------------
     # Stream Lifecycle Tests

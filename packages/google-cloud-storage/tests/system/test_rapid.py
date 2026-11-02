@@ -895,13 +895,15 @@ def test_open_with_preconditions(
     RCU_SYSTEM_TESTS, reason="Write from blob for RCU not supported in SDK yet"
 )
 def test_from_blob_overwrite_fetched_blob_with_if_generation_match(
-    storage_client, blobs_to_delete, event_loop, grpc_client
+    storage_client, blobs_to_delete, event_loop, grpc_client, rapid_kms_key
 ):
-    """A fetched Blob is overwritten with CAS when `generation=None` is passed."""
+    """A fetched CMEK Blob is overwritten with CAS when `generation=None` is passed."""
     object_name = f"test_from_blob_cas-{uuid.uuid4()}"
 
     async def _run():
-        blob = storage_client.bucket(_BUCKET_UNDER_TEST).blob(object_name)
+        blob = storage_client.bucket(_BUCKET_UNDER_TEST).blob(
+            object_name, kms_key_name=rapid_kms_key
+        )
         blob.content_type = "text/plain"
         blob.metadata = {"environment": "system-test"}
         writer = AsyncAppendableObjectWriter.from_blob(grpc_client, blob)
@@ -910,6 +912,7 @@ def test_from_blob_overwrite_fetched_blob_with_if_generation_match(
         await writer.close(finalize_on_close=True)
         blobs_to_delete.append(blob)
 
+        # The fetched kms_key_name includes the key version.
         fetched = storage_client.bucket(_BUCKET_UNDER_TEST).get_blob(object_name)
         writer_cas = AsyncAppendableObjectWriter.from_blob(
             grpc_client,
@@ -927,6 +930,7 @@ def test_from_blob_overwrite_fetched_blob_with_if_generation_match(
         assert obj.generation != fetched.generation
         assert obj.content_type == "text/plain"
         assert obj.metadata["environment"] == "system-test"
+        assert obj.kms_key.startswith(rapid_kms_key)
 
         # cleanup
         del writer
