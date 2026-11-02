@@ -15,6 +15,7 @@
 #
 """A compatibility module for older versions of google-api-core."""
 
+import inspect
 import os
 import json
 
@@ -95,8 +96,7 @@ ASYNC_WRAP_METHOD_SUPPORTS_KIND = WRAP_METHOD_SUPPORTS_TRACING or hasattr(
 # _observability.apply_otel_async_channel_interceptors allows transports to pass
 # their resolved default host without mutating caller-owned client_options.
 SUPPORTS_DEFAULT_HOST = (
-    gapic_v1.method.wrap_method.__kwdefaults__ is not None
-    and "default_host" in gapic_v1.method.wrap_method.__kwdefaults__
+    "default_host" in inspect.signature(gapic_v1.method.wrap_method).parameters
 )
 
 try:
