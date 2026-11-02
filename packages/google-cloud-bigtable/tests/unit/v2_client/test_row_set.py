@@ -163,6 +163,33 @@ def test_row_set_add_row_range_with_prefix():
     assert row_set.row_ranges[0].end_key == b"rox"
 
 
+def test_row_set_add_row_range_with_prefix_utf8_boundaries():
+    import pytest
+
+    from google.cloud.bigtable.row_set import RowSet
+
+    cases = [
+        ("user\x7f", b"user\x7f", b"user\x80"),
+        ("p\u07ff", b"p\xdf\xbf", b"p\xdf\xc0"),
+        ("p\uffff", b"p\xef\xbf\xbf", b"p\xef\xbf\xc0"),
+        ("prefix\ud7ff", b"prefix\xed\x9f\xbf", b"prefix\xed\x9f\xc0"),
+        ("prefix\U0010ffff", b"prefix\xf4\x8f\xbf\xbf", b"prefix\xf4\x8f\xbf\xc0"),
+        (b"abc\xff", b"abc\xff", b"abd"),
+        (b"\xff\xff", b"\xff\xff", None),
+    ]
+    for prefix, expected_start, expected_end in cases:
+        row_set = RowSet()
+        row_set.add_row_range_with_prefix(prefix)
+        assert row_set.row_ranges[0].start_key == expected_start
+        assert row_set.row_ranges[0].end_key == expected_end
+
+    row_set = RowSet()
+    with pytest.raises(ValueError):
+        row_set.add_row_range_with_prefix("")
+    with pytest.raises(ValueError):
+        row_set.add_row_range_with_prefix(b"")
+
+
 def test_row_range_constructor():
     from google.cloud.bigtable.row_set import RowRange
 
