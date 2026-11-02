@@ -6788,6 +6788,25 @@ class Test__add_query_parameters(unittest.TestCase):
         self.assertEqual(self._call_fut(BASE_URL, NV_LIST), f"{BASE_URL}&{expected}")
 
 
+@pytest.mark.parametrize(
+    "storage_class",
+    [
+        "STANDARD_ENTERPRISE",
+        "STANDARD_FLEXBACKUP_ENTERPRISE",
+        "LR_STANDARD_ENTERPRISE",
+    ],
+)
+def test_blob_storage_class_enterprise_tuples(storage_class):
+    from google.cloud.storage.blob import Blob
+
+    bucket = _Bucket()
+    blob = Blob("blob-name", bucket=bucket)
+    assert storage_class in blob.STORAGE_CLASSES
+    blob.storage_class = storage_class
+    assert blob.storage_class == storage_class
+    assert blob._properties == {"storageClass": storage_class}
+
+
 class _Connection(object):
     API_BASE_URL = "http://example.com"
     USER_AGENT = "testing 1.2.3"

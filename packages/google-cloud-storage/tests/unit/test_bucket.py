@@ -3279,6 +3279,30 @@ class Test_Bucket(unittest.TestCase):
         self.assertEqual(bucket.storage_class, STANDARD_STORAGE_CLASS)
         self.assertTrue("storageClass" in bucket._changes)
 
+    def test_storage_class_setter_STANDARD_ENTERPRISE(self):
+        NAME = "name"
+        bucket = self._make_one(name=NAME)
+        self.assertIn("STANDARD_ENTERPRISE", bucket.STORAGE_CLASSES)
+        bucket.storage_class = "STANDARD_ENTERPRISE"
+        self.assertEqual(bucket.storage_class, "STANDARD_ENTERPRISE")
+        self.assertTrue("storageClass" in bucket._changes)
+
+    def test_storage_class_setter_STANDARD_FLEXBACKUP_ENTERPRISE(self):
+        NAME = "name"
+        bucket = self._make_one(name=NAME)
+        self.assertIn("STANDARD_FLEXBACKUP_ENTERPRISE", bucket.STORAGE_CLASSES)
+        bucket.storage_class = "STANDARD_FLEXBACKUP_ENTERPRISE"
+        self.assertEqual(bucket.storage_class, "STANDARD_FLEXBACKUP_ENTERPRISE")
+        self.assertTrue("storageClass" in bucket._changes)
+
+    def test_storage_class_setter_LR_STANDARD_ENTERPRISE(self):
+        NAME = "name"
+        bucket = self._make_one(name=NAME)
+        self.assertIn("LR_STANDARD_ENTERPRISE", bucket.STORAGE_CLASSES)
+        bucket.storage_class = "LR_STANDARD_ENTERPRISE"
+        self.assertEqual(bucket.storage_class, "LR_STANDARD_ENTERPRISE")
+        self.assertTrue("storageClass" in bucket._changes)
+
     def test_storage_class_setter_NEARLINE(self):
         from google.cloud.storage.constants import NEARLINE_STORAGE_CLASS
 
