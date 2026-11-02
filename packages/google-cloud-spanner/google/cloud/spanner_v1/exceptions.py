@@ -34,9 +34,18 @@ def wrap_with_request_id(error, request_id=None):
         the original error unchanged.
     """
     if isinstance(error, GoogleAPICallError) and request_id:
+        old_req_id = getattr(error, "request_id", None)
+        if old_req_id == request_id:
+            return error
         # Add request_id as an attribute for programmatic access
         error.request_id = request_id
         # Modify the message to include request_id so it appears in logs
-        if hasattr(error, "message") and error.message:
-            error.message = f"{error.message}, request_id = {request_id}"
+        message = getattr(error, "message", None)
+        if isinstance(message, str) and message:
+            if old_req_id and f", request_id = {old_req_id}" in message:
+                error.message = message.replace(
+                    f", request_id = {old_req_id}", f", request_id = {request_id}"
+                )
+            else:
+                error.message = f"{message}, request_id = {request_id}"
     return error
