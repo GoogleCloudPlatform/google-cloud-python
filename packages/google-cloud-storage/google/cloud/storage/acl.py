@@ -14,7 +14,14 @@
 
 """Manage access to objects and buckets."""
 
-from google.cloud.storage._helpers import _add_generation_match_parameters
+from contextlib import nullcontext
+
+from google.cloud.storage._helpers import (
+    _add_generation_match_parameters,
+    _client_method_override,
+    _resolve_operation_client,
+    _start_storage_operation,
+)
 from google.cloud.storage._opentelemetry_tracing import create_trace_span
 from google.cloud.storage.constants import _DEFAULT_TIMEOUT
 from google.cloud.storage.retry import (
@@ -143,6 +150,9 @@ class ACL(object):
     reload_path = None
     save_path = None
     user_project = None
+    _METRICS_CLASS_NAME = "ACL"
+    _METRICS_RELOAD_OP = "ListBucketACLs"
+    _METRICS_SAVE_OP = "UpdateBucketACL"
 
     def __init__(self):
         self.entities = {}
@@ -180,8 +190,16 @@ class ACL(object):
         self.entities.clear()
         self.loaded = False
 
+    def _lazy_method_context(self, method_name):
+        if self.loaded:
+            return nullcontext()
+        return _client_method_override(
+            f"storage.{self._METRICS_CLASS_NAME}.{method_name}"
+        )
+
     def __iter__(self):
-        self._ensure_loaded()
+        with self._lazy_method_context("__iter__"):
+            self._ensure_loaded()
 
         for entity in self.entities.values():
             for role in entity.get_roles():
@@ -201,24 +219,25 @@ class ACL(object):
         :rtype: :class:`_ACLEntity`
         :returns: An Entity constructed from the dictionary.
         """
-        entity = entity_dict["entity"]
-        role = entity_dict["role"]
+        with self._lazy_method_context("entity_from_dict"):
+            entity = entity_dict["entity"]
+            role = entity_dict["role"]
 
-        if entity == "allUsers":
-            entity = self.all()
+            if entity == "allUsers":
+                entity = self.all()
 
-        elif entity == "allAuthenticatedUsers":
-            entity = self.all_authenticated()
+            elif entity == "allAuthenticatedUsers":
+                entity = self.all_authenticated()
 
-        elif "-" in entity:
-            entity_type, identifier = entity.split("-", 1)
-            entity = self.entity(entity_type=entity_type, identifier=identifier)
+            elif "-" in entity:
+                entity_type, identifier = entity.split("-", 1)
+                entity = self.entity(entity_type=entity_type, identifier=identifier)
 
-        if not isinstance(entity, _ACLEntity):
-            raise ValueError(f"Invalid dictionary: {entity_dict}")
+            if not isinstance(entity, _ACLEntity):
+                raise ValueError(f"Invalid dictionary: {entity_dict}")
 
-        entity.grant(role)
-        return entity
+            entity.grant(role)
+            return entity
 
     def has_entity(self, entity):
         """Returns whether or not this ACL has any entries for an entity.
@@ -229,8 +248,9 @@ class ACL(object):
         :rtype: bool
         :returns: True of the entity exists in the ACL.
         """
-        self._ensure_loaded()
-        return str(entity) in self.entities
+        with self._lazy_method_context("has_entity"):
+            self._ensure_loaded()
+            return str(entity) in self.entities
 
     def get_entity(self, entity, default=None):
         """Gets an entity object from the ACL.
@@ -246,8 +266,9 @@ class ACL(object):
         :returns: The corresponding entity or the value provided
                   to ``default``.
         """
-        self._ensure_loaded()
-        return self.entities.get(str(entity), default)
+        with self._lazy_method_context("get_entity"):
+            self._ensure_loaded()
+            return self.entities.get(str(entity), default)
 
     def add_entity(self, entity):
         """Add an entity to the ACL.
@@ -255,8 +276,9 @@ class ACL(object):
         :type entity: :class:`_ACLEntity`
         :param entity: The entity to add to this ACL.
         """
-        self._ensure_loaded()
-        self.entities[str(entity)] = entity
+        with self._lazy_method_context("add_entity"):
+            self._ensure_loaded()
+            self.entities[str(entity)] = entity
 
     def entity(self, entity_type, identifier=None):
         """Factory method for creating an Entity.
@@ -277,12 +299,13 @@ class ACL(object):
         :rtype: :class:`_ACLEntity`
         :returns: A new Entity or a reference to an existing identical entity.
         """
-        entity = _ACLEntity(entity_type=entity_type, identifier=identifier)
-        if self.has_entity(entity):
-            entity = self.get_entity(entity)
-        else:
-            self.add_entity(entity)
-        return entity
+        with self._lazy_method_context("entity"):
+            entity = _ACLEntity(entity_type=entity_type, identifier=identifier)
+            if self.has_entity(entity):
+                entity = self.get_entity(entity)
+            else:
+                self.add_entity(entity)
+            return entity
 
     def user(self, identifier):
         """Factory method for a user Entity.
@@ -293,7 +316,8 @@ class ACL(object):
         :rtype: :class:`_ACLEntity`
         :returns: An Entity corresponding to this user.
         """
-        return self.entity("user", identifier=identifier)
+        with self._lazy_method_context("user"):
+            return self.entity("user", identifier=identifier)
 
     def group(self, identifier):
         """Factory method for a group Entity.
@@ -304,7 +328,8 @@ class ACL(object):
         :rtype: :class:`_ACLEntity`
         :returns: An Entity corresponding to this group.
         """
-        return self.entity("group", identifier=identifier)
+        with self._lazy_method_context("group"):
+            return self.entity("group", identifier=identifier)
 
     def domain(self, domain):
         """Factory method for a domain Entity.
@@ -315,7 +340,8 @@ class ACL(object):
         :rtype: :class:`_ACLEntity`
         :returns: An entity corresponding to this domain.
         """
-        return self.entity("domain", identifier=domain)
+        with self._lazy_method_context("domain"):
+            return self.entity("domain", identifier=domain)
 
     def all(self):
         """Factory method for an Entity representing all users.
@@ -323,7 +349,8 @@ class ACL(object):
         :rtype: :class:`_ACLEntity`
         :returns: An entity representing all users.
         """
-        return self.entity("allUsers")
+        with self._lazy_method_context("all"):
+            return self.entity("allUsers")
 
     def all_authenticated(self):
         """Factory method for an Entity representing all authenticated users.
@@ -331,7 +358,8 @@ class ACL(object):
         :rtype: :class:`_ACLEntity`
         :returns: An entity representing all authenticated users.
         """
-        return self.entity("allAuthenticatedUsers")
+        with self._lazy_method_context("all_authenticated"):
+            return self.entity("allAuthenticatedUsers")
 
     def get_entities(self):
         """Get a list of all Entity objects.
@@ -339,8 +367,9 @@ class ACL(object):
         :rtype: list of :class:`_ACLEntity` objects
         :returns: A list of all Entity objects.
         """
-        self._ensure_loaded()
-        return list(self.entities.values())
+        with self._lazy_method_context("get_entities"):
+            self._ensure_loaded()
+            return list(self.entities.values())
 
     @property
     def client(self):
@@ -381,25 +410,30 @@ class ACL(object):
             (Optional) How to retry the RPC. See: :ref:`configuring_retries`
         """
         with create_trace_span(name="Storage.ACL.reload"):
-            path = self.reload_path
-            client = self._require_client(client)
-            query_params = {}
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                f"storage.{self._METRICS_CLASS_NAME}.reload",
+                self._METRICS_RELOAD_OP,
+            ):
+                path = self.reload_path
+                client = self._require_client(client)
+                query_params = {}
 
-            if self.user_project is not None:
-                query_params["userProject"] = self.user_project
+                if self.user_project is not None:
+                    query_params["userProject"] = self.user_project
 
-            self.entities.clear()
+                self.entities.clear()
 
-            found = client._get_resource(
-                path,
-                query_params=query_params,
-                timeout=timeout,
-                retry=retry,
-            )
-            self.loaded = True
+                found = client._get_resource(
+                    path,
+                    query_params=query_params,
+                    timeout=timeout,
+                    retry=retry,
+                )
+                self.loaded = True
 
-            for entry in found.get("items", ()):
-                self.add_entity(self.entity_from_dict(entry))
+                for entry in found.get("items", ()):
+                    self.add_entity(self.entity_from_dict(entry))
 
     def _save(
         self,
@@ -545,17 +579,22 @@ class ACL(object):
                 save_to_backend = True
 
             if save_to_backend:
-                self._save(
-                    acl,
-                    None,
-                    client,
-                    if_generation_match=if_generation_match,
-                    if_generation_not_match=if_generation_not_match,
-                    if_metageneration_match=if_metageneration_match,
-                    if_metageneration_not_match=if_metageneration_not_match,
-                    timeout=timeout,
-                    retry=retry,
-                )
+                with _start_storage_operation(
+                    _resolve_operation_client(self, client),
+                    f"storage.{self._METRICS_CLASS_NAME}.save",
+                    self._METRICS_SAVE_OP,
+                ):
+                    self._save(
+                        acl,
+                        None,
+                        client,
+                        if_generation_match=if_generation_match,
+                        if_generation_not_match=if_generation_not_match,
+                        if_metageneration_match=if_metageneration_match,
+                        if_metageneration_not_match=if_metageneration_not_match,
+                        timeout=timeout,
+                        retry=retry,
+                    )
 
     def save_predefined(
         self,
@@ -610,18 +649,23 @@ class ACL(object):
             (Optional) How to retry the RPC. See: :ref:`configuring_retries`
         """
         with create_trace_span(name="Storage.ACL.savePredefined"):
-            predefined = self.validate_predefined(predefined)
-            self._save(
-                None,
-                predefined,
-                client,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                timeout=timeout,
-                retry=retry,
-            )
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                f"storage.{self._METRICS_CLASS_NAME}.save_predefined",
+                self._METRICS_SAVE_OP,
+            ):
+                predefined = self.validate_predefined(predefined)
+                self._save(
+                    None,
+                    predefined,
+                    client,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    timeout=timeout,
+                    retry=retry,
+                )
 
     def clear(
         self,
@@ -673,16 +717,21 @@ class ACL(object):
             (Optional) How to retry the RPC. See: :ref:`configuring_retries`
         """
         with create_trace_span(name="Storage.ACL.clear"):
-            self.save(
-                [],
-                client=client,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                timeout=timeout,
-                retry=retry,
-            )
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                f"storage.{self._METRICS_CLASS_NAME}.clear",
+                self._METRICS_SAVE_OP,
+            ):
+                self.save(
+                    [],
+                    client=client,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    timeout=timeout,
+                    retry=retry,
+                )
 
 
 class BucketACL(ACL):
@@ -691,6 +740,8 @@ class BucketACL(ACL):
     :type bucket: :class:`google.cloud.storage.bucket.Bucket`
     :param bucket: The bucket to which this ACL relates.
     """
+
+    _METRICS_CLASS_NAME = "BucketACL"
 
     def __init__(self, bucket):
         super(BucketACL, self).__init__()
@@ -722,6 +773,9 @@ class DefaultObjectACL(BucketACL):
 
     _URL_PATH_ELEM = "defaultObjectAcl"
     _PREDEFINED_QUERY_PARAM = "predefinedDefaultObjectAcl"
+    _METRICS_CLASS_NAME = "DefaultObjectACL"
+    _METRICS_RELOAD_OP = "ListDefaultObjectACLs"
+    _METRICS_SAVE_OP = "UpdateDefaultObjectACL"
 
 
 class ObjectACL(ACL):
@@ -730,6 +784,10 @@ class ObjectACL(ACL):
     :type blob: :class:`google.cloud.storage.blob.Blob`
     :param blob: The blob that this ACL corresponds to.
     """
+
+    _METRICS_CLASS_NAME = "ObjectACL"
+    _METRICS_RELOAD_OP = "ListObjectACLs"
+    _METRICS_SAVE_OP = "UpdateObjectACL"
 
     def __init__(self, blob):
         super(ObjectACL, self).__init__()

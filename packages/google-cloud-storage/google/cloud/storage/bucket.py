@@ -34,8 +34,11 @@ from google.cloud.storage._helpers import (
     _add_etag_match_headers,
     _add_generation_match_parameters,
     _bucket_bound_hostname_url,
+    _list_metrics_context,
     _PropertyMixin,
+    _resolve_operation_client,
     _scalar_property,
+    _start_storage_operation,
     _validate_name,
     _virtual_hosted_style_base_url,
 )
@@ -648,6 +651,10 @@ class Bucket(_PropertyMixin):
     This is used in Bucket.delete() and Bucket.make_public().
     """
 
+    _METRICS_CLASS_NAME = "Bucket"
+    _METRICS_GET_OP = "GetBucket"
+    _METRICS_UPDATE_OP = "UpdateBucket"
+
     STORAGE_CLASSES = (
         STANDARD_STORAGE_CLASS,
         NEARLINE_STORAGE_CLASS,
@@ -974,43 +981,44 @@ class Bucket(_PropertyMixin):
         """
         with self._create_trace_span(name="Storage.Bucket.exists"):
             client = self._require_client(client)
-            # We only need the status code (200 or not) so we seek to
-            # minimize the returned payload.
-            query_params = {"fields": "name"}
+            with _start_storage_operation(client, "storage.Bucket.exists", "GetBucket"):
+                # We only need the status code (200 or not) so we seek to
+                # minimize the returned payload.
+                query_params = {"fields": "name"}
 
-            if self.user_project is not None:
-                query_params["userProject"] = self.user_project
+                if self.user_project is not None:
+                    query_params["userProject"] = self.user_project
 
-            _add_generation_match_parameters(
-                query_params,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-            )
-
-            headers = {}
-            _add_etag_match_headers(
-                headers,
-                if_etag_match=if_etag_match,
-                if_etag_not_match=if_etag_not_match,
-            )
-
-            try:
-                # We intentionally pass `_target_object=None` since fields=name
-                # would limit the local properties.
-                client._get_resource(
-                    self.path,
-                    query_params=query_params,
-                    headers=headers,
-                    timeout=timeout,
-                    retry=retry,
-                    _target_object=None,
+                _add_generation_match_parameters(
+                    query_params,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
                 )
-            except NotFound:
-                # NOTE: This will not fail immediately in a batch. However, when
-                #       Batch.finish() is called, the resulting `NotFound` will be
-                #       raised.
-                return False
-            return True
+
+                headers = {}
+                _add_etag_match_headers(
+                    headers,
+                    if_etag_match=if_etag_match,
+                    if_etag_not_match=if_etag_not_match,
+                )
+
+                try:
+                    # We intentionally pass `_target_object=None` since fields=name
+                    # would limit the local properties.
+                    client._get_resource(
+                        self.path,
+                        query_params=query_params,
+                        headers=headers,
+                        timeout=timeout,
+                        retry=retry,
+                        _target_object=None,
+                    )
+                except NotFound:
+                    # NOTE: This will not fail immediately in a batch. However, when
+                    #       Batch.finish() is called, the resulting `NotFound` will be
+                    #       raised.
+                    return False
+                return True
 
     def create(
         self,
@@ -1075,17 +1083,20 @@ class Bucket(_PropertyMixin):
         """
         with self._create_trace_span(name="Storage.Bucket.create"):
             client = self._require_client(client)
-            client.create_bucket(
-                bucket_or_name=self,
-                project=project,
-                user_project=self.user_project,
-                location=location,
-                predefined_acl=predefined_acl,
-                predefined_default_object_acl=predefined_default_object_acl,
-                enable_object_retention=enable_object_retention,
-                timeout=timeout,
-                retry=retry,
-            )
+            with _start_storage_operation(
+                client, "storage.Bucket.create", "CreateBucket"
+            ):
+                client.create_bucket(
+                    bucket_or_name=self,
+                    project=project,
+                    user_project=self.user_project,
+                    location=location,
+                    predefined_acl=predefined_acl,
+                    predefined_default_object_acl=predefined_default_object_acl,
+                    enable_object_retention=enable_object_retention,
+                    timeout=timeout,
+                    retry=retry,
+                )
 
     def update(
         self,
@@ -1124,13 +1135,18 @@ class Bucket(_PropertyMixin):
             (Optional) How to retry the RPC. See: :ref:`configuring_retries`
         """
         with self._create_trace_span(name="Storage.Bucket.update"):
-            super(Bucket, self).update(
-                client=client,
-                timeout=timeout,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                retry=retry,
-            )
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Bucket.update",
+                "UpdateBucket",
+            ):
+                super(Bucket, self).update(
+                    client=client,
+                    timeout=timeout,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    retry=retry,
+                )
 
     def reload(
         self,
@@ -1191,39 +1207,44 @@ class Bucket(_PropertyMixin):
             See: https://cloud.google.com/storage/docs/soft-delete
         """
         with self._create_trace_span(name="Storage.Bucket.reload"):
-            try:
-                super(Bucket, self).reload(
-                    client=client,
-                    projection=projection,
-                    timeout=timeout,
-                    if_etag_match=if_etag_match,
-                    if_etag_not_match=if_etag_not_match,
-                    if_metageneration_match=if_metageneration_match,
-                    if_metageneration_not_match=if_metageneration_not_match,
-                    retry=retry,
-                    soft_deleted=soft_deleted,
-                )
-            except api_exceptions.Forbidden:
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Bucket.reload",
+                "GetBucket",
+            ):
+                try:
+                    super(Bucket, self).reload(
+                        client=client,
+                        projection=projection,
+                        timeout=timeout,
+                        if_etag_match=if_etag_match,
+                        if_etag_not_match=if_etag_not_match,
+                        if_metageneration_match=if_metageneration_match,
+                        if_metageneration_not_match=if_metageneration_not_match,
+                        retry=retry,
+                        soft_deleted=soft_deleted,
+                    )
+                except api_exceptions.Forbidden:
+                    active_client = client or self.client
+                    cache = getattr(active_client, "_bucket_metadata_cache", None)
+                    if cache:
+                        try:
+                            cache.update_cache(
+                                self.name,
+                                f"//storage.googleapis.com/projects/_/buckets/{self.name}",
+                                "global",
+                            )
+                        except Exception:
+                            pass
+                    raise
+
                 active_client = client or self.client
                 cache = getattr(active_client, "_bucket_metadata_cache", None)
                 if cache:
                     try:
-                        cache.update_cache(
-                            self.name,
-                            f"//storage.googleapis.com/projects/_/buckets/{self.name}",
-                            "global",
-                        )
+                        cache.update_from_bucket(self)
                     except Exception:
                         pass
-                raise
-
-            active_client = client or self.client
-            cache = getattr(active_client, "_bucket_metadata_cache", None)
-            if cache:
-                try:
-                    cache.update_from_bucket(self)
-                except Exception:
-                    pass
 
     def patch(
         self,
@@ -1262,22 +1283,27 @@ class Bucket(_PropertyMixin):
             (Optional) How to retry the RPC. See: :ref:`configuring_retries`
         """
         with self._create_trace_span(name="Storage.Bucket.patch"):
-            # Special case: For buckets, it is possible that labels are being
-            # removed; this requires special handling.
-            if self._label_removals:
-                self._changes.add("labels")
-                self._properties.setdefault("labels", {})
-                for removed_label in self._label_removals:
-                    self._properties["labels"][removed_label] = None
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Bucket.patch",
+                "UpdateBucket",
+            ):
+                # Special case: For buckets, it is possible that labels are being
+                # removed; this requires special handling.
+                if self._label_removals:
+                    self._changes.add("labels")
+                    self._properties.setdefault("labels", {})
+                    for removed_label in self._label_removals:
+                        self._properties["labels"][removed_label] = None
 
-            # Call the superclass method.
-            super(Bucket, self).patch(
-                client=client,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                timeout=timeout,
-                retry=retry,
-            )
+                # Call the superclass method.
+                super(Bucket, self).patch(
+                    client=client,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    timeout=timeout,
+                    retry=retry,
+                )
 
     @property
     def acl(self):
@@ -1398,33 +1424,38 @@ class Bucket(_PropertyMixin):
         :returns: The blob object if it exists, otherwise None.
         """
         with self._create_trace_span(name="Storage.Bucket.getBlob"):
-            blob = Blob(
-                bucket=self,
-                name=blob_name,
-                encryption_key=encryption_key,
-                generation=generation,
-                **kwargs,
-            )
-            try:
-                # NOTE: This will not fail immediately in a batch. However, when
-                #       Batch.finish() is called, the resulting `NotFound` will be
-                #       raised.
-                blob.reload(
-                    client=client,
-                    timeout=timeout,
-                    if_etag_match=if_etag_match,
-                    if_etag_not_match=if_etag_not_match,
-                    if_generation_match=if_generation_match,
-                    if_generation_not_match=if_generation_not_match,
-                    if_metageneration_match=if_metageneration_match,
-                    if_metageneration_not_match=if_metageneration_not_match,
-                    retry=retry,
-                    soft_deleted=soft_deleted,
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Bucket.get_blob",
+                "GetObject",
+            ):
+                blob = Blob(
+                    bucket=self,
+                    name=blob_name,
+                    encryption_key=encryption_key,
+                    generation=generation,
+                    **kwargs,
                 )
-            except NotFound:
-                return None
-            else:
-                return blob
+                try:
+                    # NOTE: This will not fail immediately in a batch. However, when
+                    #       Batch.finish() is called, the resulting `NotFound` will be
+                    #       raised.
+                    blob.reload(
+                        client=client,
+                        timeout=timeout,
+                        if_etag_match=if_etag_match,
+                        if_etag_not_match=if_etag_not_match,
+                        if_generation_match=if_generation_match,
+                        if_generation_not_match=if_generation_not_match,
+                        if_metageneration_match=if_metageneration_match,
+                        if_metageneration_not_match=if_metageneration_not_match,
+                        retry=retry,
+                        soft_deleted=soft_deleted,
+                    )
+                except NotFound:
+                    return None
+                else:
+                    return blob
 
     def list_blobs(
         self,
@@ -1555,26 +1586,27 @@ class Bucket(_PropertyMixin):
         """
         with self._create_trace_span(name="Storage.Bucket.listBlobs"):
             client = self._require_client(client)
-            return client.list_blobs(
-                self,
-                max_results=max_results,
-                page_token=page_token,
-                prefix=prefix,
-                delimiter=delimiter,
-                start_offset=start_offset,
-                end_offset=end_offset,
-                include_trailing_delimiter=include_trailing_delimiter,
-                versions=versions,
-                projection=projection,
-                fields=fields,
-                page_size=page_size,
-                timeout=timeout,
-                retry=retry,
-                match_glob=match_glob,
-                include_folders_as_prefixes=include_folders_as_prefixes,
-                soft_deleted=soft_deleted,
-                filter_=filter_,
-            )
+            with _list_metrics_context("storage.Bucket.list_blobs", "ListObjects"):
+                return client.list_blobs(
+                    self,
+                    max_results=max_results,
+                    page_token=page_token,
+                    prefix=prefix,
+                    delimiter=delimiter,
+                    start_offset=start_offset,
+                    end_offset=end_offset,
+                    include_trailing_delimiter=include_trailing_delimiter,
+                    versions=versions,
+                    projection=projection,
+                    fields=fields,
+                    page_size=page_size,
+                    timeout=timeout,
+                    retry=retry,
+                    match_glob=match_glob,
+                    include_folders_as_prefixes=include_folders_as_prefixes,
+                    soft_deleted=soft_deleted,
+                    filter_=filter_,
+                )
 
     def list_notifications(
         self, client=None, timeout=_DEFAULT_TIMEOUT, retry=DEFAULT_RETRY
@@ -1605,12 +1637,15 @@ class Bucket(_PropertyMixin):
         with self._create_trace_span(name="Storage.Bucket.listNotifications"):
             client = self._require_client(client)
             path = self.path + "/notificationConfigs"
-            iterator = client._list_resource(
-                path,
-                _item_to_notification,
-                timeout=timeout,
-                retry=retry,
-            )
+            with _list_metrics_context(
+                "storage.Bucket.list_notifications", "ListNotifications"
+            ):
+                iterator = client._list_resource(
+                    path,
+                    _item_to_notification,
+                    timeout=timeout,
+                    retry=retry,
+                )
             iterator.bucket = self
             return iterator
 
@@ -1648,9 +1683,14 @@ class Bucket(_PropertyMixin):
         :returns: notification instance.
         """
         with self._create_trace_span(name="Storage.Bucket.getNotification"):
-            notification = self.notification(notification_id=notification_id)
-            notification.reload(client=client, timeout=timeout, retry=retry)
-            return notification
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Bucket.get_notification",
+                "GetNotification",
+            ):
+                notification = self.notification(notification_id=notification_id)
+                notification.reload(client=client, timeout=timeout, retry=retry)
+                return notification
 
     def delete(
         self,
@@ -1709,61 +1749,64 @@ class Bucket(_PropertyMixin):
         """
         with self._create_trace_span(name="Storage.Bucket.delete"):
             client = self._require_client(client)
-            query_params = {}
+            with _start_storage_operation(
+                client, "storage.Bucket.delete", "DeleteBucket"
+            ):
+                query_params = {}
 
-            if self.user_project is not None:
-                query_params["userProject"] = self.user_project
+                if self.user_project is not None:
+                    query_params["userProject"] = self.user_project
 
-            _add_generation_match_parameters(
-                query_params,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-            )
-            if force:
-                blobs = list(
-                    self.list_blobs(
-                        max_results=self._MAX_OBJECTS_FOR_ITERATION + 1,
+                _add_generation_match_parameters(
+                    query_params,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                )
+                if force:
+                    blobs = list(
+                        self.list_blobs(
+                            max_results=self._MAX_OBJECTS_FOR_ITERATION + 1,
+                            client=client,
+                            timeout=timeout,
+                            retry=retry,
+                            versions=True,
+                        )
+                    )
+                    if len(blobs) > self._MAX_OBJECTS_FOR_ITERATION:
+                        message = (
+                            "Refusing to delete bucket with more than "
+                            "%d objects. If you actually want to delete "
+                            "this bucket, please delete the objects "
+                            "yourself before calling Bucket.delete()."
+                        ) % (self._MAX_OBJECTS_FOR_ITERATION,)
+                        raise ValueError(message)
+
+                    # Ignore 404 errors on delete.
+                    self.delete_blobs(
+                        blobs,
+                        on_error=lambda blob: None,
                         client=client,
                         timeout=timeout,
                         retry=retry,
-                        versions=True,
+                        preserve_generation=True,
                     )
-                )
-                if len(blobs) > self._MAX_OBJECTS_FOR_ITERATION:
-                    message = (
-                        "Refusing to delete bucket with more than "
-                        "%d objects. If you actually want to delete "
-                        "this bucket, please delete the objects "
-                        "yourself before calling Bucket.delete()."
-                    ) % (self._MAX_OBJECTS_FOR_ITERATION,)
-                    raise ValueError(message)
 
-                # Ignore 404 errors on delete.
-                self.delete_blobs(
-                    blobs,
-                    on_error=lambda blob: None,
-                    client=client,
+                # We intentionally pass `_target_object=None` since a DELETE
+                # request has no response value (whether in a standard request or
+                # in a batch request).
+                client._delete_resource(
+                    self.path,
+                    query_params=query_params,
                     timeout=timeout,
                     retry=retry,
-                    preserve_generation=True,
+                    _target_object=None,
                 )
-
-            # We intentionally pass `_target_object=None` since a DELETE
-            # request has no response value (whether in a standard request or
-            # in a batch request).
-            client._delete_resource(
-                self.path,
-                query_params=query_params,
-                timeout=timeout,
-                retry=retry,
-                _target_object=None,
-            )
-            cache = getattr(client, "_bucket_metadata_cache", None)
-            if cache:
-                try:
-                    cache.evict(self.name)
-                except Exception:
-                    pass
+                cache = getattr(client, "_bucket_metadata_cache", None)
+                if cache:
+                    try:
+                        cache.evict(self.name)
+                    except Exception:
+                        pass
 
     def delete_blob(
         self,
@@ -1838,26 +1881,29 @@ class Bucket(_PropertyMixin):
         """
         with self._create_trace_span(name="Storage.Bucket.deleteBlob"):
             client = self._require_client(client)
-            blob = Blob(blob_name, bucket=self, generation=generation)
+            with _start_storage_operation(
+                client, "storage.Bucket.delete_blob", "DeleteObject"
+            ):
+                blob = Blob(blob_name, bucket=self, generation=generation)
 
-            query_params = copy.deepcopy(blob._query_params)
-            _add_generation_match_parameters(
-                query_params,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-            )
-            # We intentionally pass `_target_object=None` since a DELETE
-            # request has no response value (whether in a standard request or
-            # in a batch request).
-            client._delete_resource(
-                blob.path,
-                query_params=query_params,
-                timeout=timeout,
-                retry=retry,
-                _target_object=None,
-            )
+                query_params = copy.deepcopy(blob._query_params)
+                _add_generation_match_parameters(
+                    query_params,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                )
+                # We intentionally pass `_target_object=None` since a DELETE
+                # request has no response value (whether in a standard request or
+                # in a batch request).
+                client._delete_resource(
+                    blob.path,
+                    query_params=query_params,
+                    timeout=timeout,
+                    retry=retry,
+                    _target_object=None,
+                )
 
     def delete_blobs(
         self,
@@ -1950,44 +1996,51 @@ class Bucket(_PropertyMixin):
                  `on_error` is not passed).
         """
         with self._create_trace_span(name="Storage.Bucket.deleteBlobs"):
-            _raise_if_len_differs(
-                len(blobs),
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-            )
-            if_generation_match = iter(if_generation_match or [])
-            if_generation_not_match = iter(if_generation_not_match or [])
-            if_metageneration_match = iter(if_metageneration_match or [])
-            if_metageneration_not_match = iter(if_metageneration_not_match or [])
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Bucket.delete_blobs",
+                "DeleteObject",
+            ):
+                _raise_if_len_differs(
+                    len(blobs),
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                )
+                if_generation_match = iter(if_generation_match or [])
+                if_generation_not_match = iter(if_generation_not_match or [])
+                if_metageneration_match = iter(if_metageneration_match or [])
+                if_metageneration_not_match = iter(if_metageneration_not_match or [])
 
-            for blob in blobs:
-                try:
-                    blob_name = blob
-                    generation = None
-                    if not isinstance(blob_name, str):
-                        blob_name = blob.name
-                        generation = blob.generation if preserve_generation else None
+                for blob in blobs:
+                    try:
+                        blob_name = blob
+                        generation = None
+                        if not isinstance(blob_name, str):
+                            blob_name = blob.name
+                            generation = (
+                                blob.generation if preserve_generation else None
+                            )
 
-                    self.delete_blob(
-                        blob_name,
-                        client=client,
-                        generation=generation,
-                        if_generation_match=next(if_generation_match, None),
-                        if_generation_not_match=next(if_generation_not_match, None),
-                        if_metageneration_match=next(if_metageneration_match, None),
-                        if_metageneration_not_match=next(
-                            if_metageneration_not_match, None
-                        ),
-                        timeout=timeout,
-                        retry=retry,
-                    )
-                except NotFound:
-                    if on_error is not None:
-                        on_error(blob)
-                    else:
-                        raise
+                        self.delete_blob(
+                            blob_name,
+                            client=client,
+                            generation=generation,
+                            if_generation_match=next(if_generation_match, None),
+                            if_generation_not_match=next(if_generation_not_match, None),
+                            if_metageneration_match=next(if_metageneration_match, None),
+                            if_metageneration_not_match=next(
+                                if_metageneration_not_match, None
+                            ),
+                            timeout=timeout,
+                            retry=retry,
+                        )
+                    except NotFound:
+                        if on_error is not None:
+                            on_error(blob)
+                        else:
+                            raise
 
     def copy_blob(
         self,
@@ -2110,57 +2163,60 @@ class Bucket(_PropertyMixin):
         """
         with self._create_trace_span(name="Storage.Bucket.copyBlob"):
             client = self._require_client(client)
-            query_params = {}
+            with _start_storage_operation(
+                client, "storage.Bucket.copy_blob", "RewriteObject"
+            ):
+                query_params = {}
 
-            if self.user_project is not None:
-                query_params["userProject"] = self.user_project
+                if self.user_project is not None:
+                    query_params["userProject"] = self.user_project
 
-            if source_generation is not None:
-                query_params["sourceGeneration"] = source_generation
+                if source_generation is not None:
+                    query_params["sourceGeneration"] = source_generation
 
-            _add_generation_match_parameters(
-                query_params,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                if_source_generation_match=if_source_generation_match,
-                if_source_generation_not_match=if_source_generation_not_match,
-                if_source_metageneration_match=if_source_metageneration_match,
-                if_source_metageneration_not_match=if_source_metageneration_not_match,
-            )
+                _add_generation_match_parameters(
+                    query_params,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    if_source_generation_match=if_source_generation_match,
+                    if_source_generation_not_match=if_source_generation_not_match,
+                    if_source_metageneration_match=if_source_metageneration_match,
+                    if_source_metageneration_not_match=if_source_metageneration_not_match,
+                )
 
-            if new_name is None:
-                new_name = blob.name
+                if new_name is None:
+                    new_name = blob.name
 
-            new_blob = Blob(bucket=destination_bucket, name=new_name)
+                new_blob = Blob(bucket=destination_bucket, name=new_name)
 
-            if destination_contexts is not None:
-                if isinstance(destination_contexts, ObjectContexts):
-                    new_blob.contexts = destination_contexts
+                if destination_contexts is not None:
+                    if isinstance(destination_contexts, ObjectContexts):
+                        new_blob.contexts = destination_contexts
+                    else:
+                        raise ValueError(
+                            "destination_contexts must be an ObjectContexts object"
+                        )
+                    request_body = new_blob._properties.copy()
                 else:
-                    raise ValueError(
-                        "destination_contexts must be an ObjectContexts object"
-                    )
-                request_body = new_blob._properties.copy()
-            else:
-                request_body = None
+                    request_body = None
 
-            api_path = blob.path + "/copyTo" + new_blob.path
-            copy_result = client._post_resource(
-                api_path,
-                request_body,
-                query_params=query_params,
-                timeout=timeout,
-                retry=retry,
-                _target_object=new_blob,
-            )
+                api_path = blob.path + "/copyTo" + new_blob.path
+                copy_result = client._post_resource(
+                    api_path,
+                    request_body,
+                    query_params=query_params,
+                    timeout=timeout,
+                    retry=retry,
+                    _target_object=new_blob,
+                )
 
-            if not preserve_acl:
-                new_blob.acl.save(acl={}, client=client, timeout=timeout)
+                if not preserve_acl:
+                    new_blob.acl.save(acl={}, client=client, timeout=timeout)
 
-            new_blob._set_properties(copy_result)
-            return new_blob
+                new_blob._set_properties(copy_result)
+                return new_blob
 
     def rename_blob(
         self,
@@ -2275,36 +2331,41 @@ class Bucket(_PropertyMixin):
         :returns: The newly-renamed blob.
         """
         with self._create_trace_span(name="Storage.Bucket.renameBlob"):
-            same_name = blob.name == new_name
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Bucket.rename_blob",
+                "RewriteObject",
+            ):
+                same_name = blob.name == new_name
 
-            new_blob = self.copy_blob(
-                blob,
-                self,
-                new_name,
-                client=client,
-                timeout=timeout,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                if_source_generation_match=if_source_generation_match,
-                if_source_generation_not_match=if_source_generation_not_match,
-                if_source_metageneration_match=if_source_metageneration_match,
-                if_source_metageneration_not_match=if_source_metageneration_not_match,
-                retry=retry,
-            )
-
-            if not same_name:
-                blob.delete(
+                new_blob = self.copy_blob(
+                    blob,
+                    self,
+                    new_name,
                     client=client,
                     timeout=timeout,
-                    if_generation_match=if_source_generation_match,
-                    if_generation_not_match=if_source_generation_not_match,
-                    if_metageneration_match=if_source_metageneration_match,
-                    if_metageneration_not_match=if_source_metageneration_not_match,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    if_source_generation_match=if_source_generation_match,
+                    if_source_generation_not_match=if_source_generation_not_match,
+                    if_source_metageneration_match=if_source_metageneration_match,
+                    if_source_metageneration_not_match=if_source_metageneration_not_match,
                     retry=retry,
                 )
-            return new_blob
+
+                if not same_name:
+                    blob.delete(
+                        client=client,
+                        timeout=timeout,
+                        if_generation_match=if_source_generation_match,
+                        if_generation_not_match=if_source_generation_not_match,
+                        if_metageneration_match=if_source_metageneration_match,
+                        if_metageneration_not_match=if_source_metageneration_not_match,
+                        retry=retry,
+                    )
+                return new_blob
 
     def move_blob(
         self,
@@ -2396,39 +2457,42 @@ class Bucket(_PropertyMixin):
         """
         with self._create_trace_span(name="Storage.Bucket.moveBlob"):
             client = self._require_client(client)
-            query_params = {}
+            with _start_storage_operation(
+                client, "storage.Bucket.move_blob", "MoveObject"
+            ):
+                query_params = {}
 
-            if self.user_project is not None:
-                query_params["userProject"] = self.user_project
+                if self.user_project is not None:
+                    query_params["userProject"] = self.user_project
 
-            _add_generation_match_parameters(
-                query_params,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                if_source_generation_match=if_source_generation_match,
-                if_source_generation_not_match=if_source_generation_not_match,
-                if_source_metageneration_match=if_source_metageneration_match,
-                if_source_metageneration_not_match=if_source_metageneration_not_match,
-            )
+                _add_generation_match_parameters(
+                    query_params,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    if_source_generation_match=if_source_generation_match,
+                    if_source_generation_not_match=if_source_generation_not_match,
+                    if_source_metageneration_match=if_source_metageneration_match,
+                    if_source_metageneration_not_match=if_source_metageneration_not_match,
+                )
 
-            new_blob = Blob(bucket=self, name=new_name)
-            api_path = "{blob_path}/moveTo/o/{new_name}".format(
-                blob_path=blob.path, new_name=_quote(new_blob.name)
-            )
+                new_blob = Blob(bucket=self, name=new_name)
+                api_path = "{blob_path}/moveTo/o/{new_name}".format(
+                    blob_path=blob.path, new_name=_quote(new_blob.name)
+                )
 
-            move_result = client._post_resource(
-                api_path,
-                None,
-                query_params=query_params,
-                timeout=timeout,
-                retry=retry,
-                _target_object=new_blob,
-            )
+                move_result = client._post_resource(
+                    api_path,
+                    None,
+                    query_params=query_params,
+                    timeout=timeout,
+                    retry=retry,
+                    _target_object=new_blob,
+                )
 
-            new_blob._set_properties(move_result)
-            return new_blob
+                new_blob._set_properties(move_result)
+                return new_blob
 
     def restore_blob(
         self,
@@ -2505,35 +2569,38 @@ class Bucket(_PropertyMixin):
         """
         with self._create_trace_span(name="Storage.Bucket.restore_blob"):
             client = self._require_client(client)
-            query_params = {}
+            with _start_storage_operation(
+                client, "storage.Bucket.restore_blob", "RestoreObject"
+            ):
+                query_params = {}
 
-            if self.user_project is not None:
-                query_params["userProject"] = self.user_project
-            if generation is not None:
-                query_params["generation"] = generation
-            if copy_source_acl is not None:
-                query_params["copySourceAcl"] = copy_source_acl
-            if projection is not None:
-                query_params["projection"] = projection
+                if self.user_project is not None:
+                    query_params["userProject"] = self.user_project
+                if generation is not None:
+                    query_params["generation"] = generation
+                if copy_source_acl is not None:
+                    query_params["copySourceAcl"] = copy_source_acl
+                if projection is not None:
+                    query_params["projection"] = projection
 
-            _add_generation_match_parameters(
-                query_params,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-            )
+                _add_generation_match_parameters(
+                    query_params,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                )
 
-            blob = Blob(bucket=self, name=blob_name)
-            api_response = client._post_resource(
-                f"{blob.path}/restore",
-                None,
-                query_params=query_params,
-                timeout=timeout,
-                retry=retry,
-            )
-            blob._set_properties(api_response)
-            return blob
+                blob = Blob(bucket=self, name=blob_name)
+                api_response = client._post_resource(
+                    f"{blob.path}/restore",
+                    None,
+                    query_params=query_params,
+                    timeout=timeout,
+                    retry=retry,
+                )
+                blob._set_properties(api_response)
+                return blob
 
     @property
     def cors(self):
@@ -3400,22 +3467,27 @@ class Bucket(_PropertyMixin):
         """
         with self._create_trace_span(name="Storage.Bucket.getIamPolicy"):
             client = self._require_client(client)
-            query_params = {}
+            with _start_storage_operation(
+                client, "storage.Bucket.get_iam_policy", "GetIamPolicy"
+            ):
+                query_params = {}
 
-            if self.user_project is not None:
-                query_params["userProject"] = self.user_project
+                if self.user_project is not None:
+                    query_params["userProject"] = self.user_project
 
-            if requested_policy_version is not None:
-                query_params["optionsRequestedPolicyVersion"] = requested_policy_version
+                if requested_policy_version is not None:
+                    query_params["optionsRequestedPolicyVersion"] = (
+                        requested_policy_version
+                    )
 
-            info = client._get_resource(
-                f"{self.path}/iam",
-                query_params=query_params,
-                timeout=timeout,
-                retry=retry,
-                _target_object=None,
-            )
-            return Policy.from_api_repr(info)
+                info = client._get_resource(
+                    f"{self.path}/iam",
+                    query_params=query_params,
+                    timeout=timeout,
+                    retry=retry,
+                    _target_object=None,
+                )
+                return Policy.from_api_repr(info)
 
     def set_iam_policy(
         self,
@@ -3454,25 +3526,28 @@ class Bucket(_PropertyMixin):
         """
         with self._create_trace_span(name="Storage.Bucket.setIamPolicy"):
             client = self._require_client(client)
-            query_params = {}
+            with _start_storage_operation(
+                client, "storage.Bucket.set_iam_policy", "SetIamPolicy"
+            ):
+                query_params = {}
 
-            if self.user_project is not None:
-                query_params["userProject"] = self.user_project
+                if self.user_project is not None:
+                    query_params["userProject"] = self.user_project
 
-            path = f"{self.path}/iam"
-            resource = policy.to_api_repr()
-            resource["resourceId"] = self.path
+                path = f"{self.path}/iam"
+                resource = policy.to_api_repr()
+                resource["resourceId"] = self.path
 
-            info = client._put_resource(
-                path,
-                resource,
-                query_params=query_params,
-                timeout=timeout,
-                retry=retry,
-                _target_object=None,
-            )
+                info = client._put_resource(
+                    path,
+                    resource,
+                    query_params=query_params,
+                    timeout=timeout,
+                    retry=retry,
+                    _target_object=None,
+                )
 
-            return Policy.from_api_repr(info)
+                return Policy.from_api_repr(info)
 
     def test_iam_permissions(
         self,
@@ -3511,20 +3586,25 @@ class Bucket(_PropertyMixin):
         """
         with self._create_trace_span(name="Storage.Bucket.testIamPermissions"):
             client = self._require_client(client)
-            query_params = {"permissions": permissions}
+            with _start_storage_operation(
+                client,
+                "storage.Bucket.test_iam_permissions",
+                "TestIamPermissions",
+            ):
+                query_params = {"permissions": permissions}
 
-            if self.user_project is not None:
-                query_params["userProject"] = self.user_project
+                if self.user_project is not None:
+                    query_params["userProject"] = self.user_project
 
-            path = f"{self.path}/iam/testPermissions"
-            resp = client._get_resource(
-                path,
-                query_params=query_params,
-                timeout=timeout,
-                retry=retry,
-                _target_object=None,
-            )
-            return resp.get("permissions", [])
+                path = f"{self.path}/iam/testPermissions"
+                resp = client._get_resource(
+                    path,
+                    query_params=query_params,
+                    timeout=timeout,
+                    retry=retry,
+                    _target_object=None,
+                )
+                return resp.get("permissions", [])
 
     def make_public(
         self,
@@ -3576,21 +3656,13 @@ class Bucket(_PropertyMixin):
             for each blob.
         """
         with self._create_trace_span(name="Storage.Bucket.makePublic"):
-            self.acl.all().grant_read()
-            self.acl.save(
-                client=client,
-                timeout=timeout,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                retry=retry,
-            )
-
-            if future:
-                doa = self.default_object_acl
-                if not doa.loaded:
-                    doa.reload(client=client, timeout=timeout)
-                doa.all().grant_read()
-                doa.save(
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Bucket.make_public",
+                "UpdateBucketACL",
+            ):
+                self.acl.all().grant_read()
+                self.acl.save(
                     client=client,
                     timeout=timeout,
                     if_metageneration_match=if_metageneration_match,
@@ -3598,31 +3670,44 @@ class Bucket(_PropertyMixin):
                     retry=retry,
                 )
 
-            if recursive:
-                blobs = list(
-                    self.list_blobs(
-                        projection="full",
-                        max_results=self._MAX_OBJECTS_FOR_ITERATION + 1,
+                if future:
+                    doa = self.default_object_acl
+                    if not doa.loaded:
+                        doa.reload(client=client, timeout=timeout)
+                    doa.all().grant_read()
+                    doa.save(
                         client=client,
                         timeout=timeout,
+                        if_metageneration_match=if_metageneration_match,
+                        if_metageneration_not_match=if_metageneration_not_match,
+                        retry=retry,
                     )
-                )
-                if len(blobs) > self._MAX_OBJECTS_FOR_ITERATION:
-                    message = (
-                        "Refusing to make public recursively with more than "
-                        "%d objects. If you actually want to make every object "
-                        "in this bucket public, iterate through the blobs "
-                        "returned by 'Bucket.list_blobs()' and call "
-                        "'make_public' on each one."
-                    ) % (self._MAX_OBJECTS_FOR_ITERATION,)
-                    raise ValueError(message)
 
-                for blob in blobs:
-                    blob.acl.all().grant_read()
-                    blob.acl.save(
-                        client=client,
-                        timeout=timeout,
+                if recursive:
+                    blobs = list(
+                        self.list_blobs(
+                            projection="full",
+                            max_results=self._MAX_OBJECTS_FOR_ITERATION + 1,
+                            client=client,
+                            timeout=timeout,
+                        )
                     )
+                    if len(blobs) > self._MAX_OBJECTS_FOR_ITERATION:
+                        message = (
+                            "Refusing to make public recursively with more than "
+                            "%d objects. If you actually want to make every object "
+                            "in this bucket public, iterate through the blobs "
+                            "returned by 'Bucket.list_blobs()' and call "
+                            "'make_public' on each one."
+                        ) % (self._MAX_OBJECTS_FOR_ITERATION,)
+                        raise ValueError(message)
+
+                    for blob in blobs:
+                        blob.acl.all().grant_read()
+                        blob.acl.save(
+                            client=client,
+                            timeout=timeout,
+                        )
 
     def make_private(
         self,
@@ -3673,21 +3758,13 @@ class Bucket(_PropertyMixin):
             for each blob.
         """
         with self._create_trace_span(name="Storage.Bucket.makePrivate"):
-            self.acl.all().revoke_read()
-            self.acl.save(
-                client=client,
-                timeout=timeout,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                retry=retry,
-            )
-
-            if future:
-                doa = self.default_object_acl
-                if not doa.loaded:
-                    doa.reload(client=client, timeout=timeout)
-                doa.all().revoke_read()
-                doa.save(
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Bucket.make_private",
+                "UpdateBucketACL",
+            ):
+                self.acl.all().revoke_read()
+                self.acl.save(
                     client=client,
                     timeout=timeout,
                     if_metageneration_match=if_metageneration_match,
@@ -3695,28 +3772,41 @@ class Bucket(_PropertyMixin):
                     retry=retry,
                 )
 
-            if recursive:
-                blobs = list(
-                    self.list_blobs(
-                        projection="full",
-                        max_results=self._MAX_OBJECTS_FOR_ITERATION + 1,
+                if future:
+                    doa = self.default_object_acl
+                    if not doa.loaded:
+                        doa.reload(client=client, timeout=timeout)
+                    doa.all().revoke_read()
+                    doa.save(
                         client=client,
                         timeout=timeout,
+                        if_metageneration_match=if_metageneration_match,
+                        if_metageneration_not_match=if_metageneration_not_match,
+                        retry=retry,
                     )
-                )
-                if len(blobs) > self._MAX_OBJECTS_FOR_ITERATION:
-                    message = (
-                        "Refusing to make private recursively with more than "
-                        "%d objects. If you actually want to make every object "
-                        "in this bucket private, iterate through the blobs "
-                        "returned by 'Bucket.list_blobs()' and call "
-                        "'make_private' on each one."
-                    ) % (self._MAX_OBJECTS_FOR_ITERATION,)
-                    raise ValueError(message)
 
-                for blob in blobs:
-                    blob.acl.all().revoke_read()
-                    blob.acl.save(client=client, timeout=timeout)
+                if recursive:
+                    blobs = list(
+                        self.list_blobs(
+                            projection="full",
+                            max_results=self._MAX_OBJECTS_FOR_ITERATION + 1,
+                            client=client,
+                            timeout=timeout,
+                        )
+                    )
+                    if len(blobs) > self._MAX_OBJECTS_FOR_ITERATION:
+                        message = (
+                            "Refusing to make private recursively with more than "
+                            "%d objects. If you actually want to make every object "
+                            "in this bucket private, iterate through the blobs "
+                            "returned by 'Bucket.list_blobs()' and call "
+                            "'make_private' on each one."
+                        ) % (self._MAX_OBJECTS_FOR_ITERATION,)
+                        raise ValueError(message)
+
+                    for blob in blobs:
+                        blob.acl.all().revoke_read()
+                        blob.acl.save(client=client, timeout=timeout)
 
     def generate_upload_policy(self, conditions, expiration=None, client=None):
         """Create a signed upload policy for uploading objects.
@@ -3797,38 +3887,43 @@ class Bucket(_PropertyMixin):
             if the bucket's retention policy is already locked.
         """
         with self._create_trace_span(name="Storage.Bucket.lockRetentionPolicy"):
-            if "metageneration" not in self._properties:
-                raise ValueError(
-                    "Bucket has no retention policy assigned: try 'reload'?"
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.Bucket.lock_retention_policy",
+                "LockBucketRetentionPolicy",
+            ):
+                if "metageneration" not in self._properties:
+                    raise ValueError(
+                        "Bucket has no retention policy assigned: try 'reload'?"
+                    )
+
+                policy = self._properties.get("retentionPolicy")
+
+                if policy is None:
+                    raise ValueError(
+                        "Bucket has no retention policy assigned: try 'reload'?"
+                    )
+
+                if policy.get("isLocked"):
+                    raise ValueError("Bucket's retention policy is already locked.")
+
+                client = self._require_client(client)
+
+                query_params = {"ifMetagenerationMatch": self.metageneration}
+
+                if self.user_project is not None:
+                    query_params["userProject"] = self.user_project
+
+                path = f"/b/{self.name}/lockRetentionPolicy"
+                api_response = client._post_resource(
+                    path,
+                    None,
+                    query_params=query_params,
+                    timeout=timeout,
+                    retry=retry,
+                    _target_object=self,
                 )
-
-            policy = self._properties.get("retentionPolicy")
-
-            if policy is None:
-                raise ValueError(
-                    "Bucket has no retention policy assigned: try 'reload'?"
-                )
-
-            if policy.get("isLocked"):
-                raise ValueError("Bucket's retention policy is already locked.")
-
-            client = self._require_client(client)
-
-            query_params = {"ifMetagenerationMatch": self.metageneration}
-
-            if self.user_project is not None:
-                query_params["userProject"] = self.user_project
-
-            path = f"/b/{self.name}/lockRetentionPolicy"
-            api_response = client._post_resource(
-                path,
-                None,
-                query_params=query_params,
-                timeout=timeout,
-                retry=retry,
-                _target_object=self,
-            )
-            self._set_properties(api_response)
+                self._set_properties(api_response)
 
     def generate_signed_url(
         self,
