@@ -227,9 +227,9 @@ def construct_observability_client(
     transport configuration and OpenTelemetry client_options.
 
     Design Note:
-        Rather than modifying the shared system test fixture helper (`conftest.construct_client`),
-        wrapping it locally insulates this compliance suite with zero blast radius on existing
-        Showcase tests.
+        Wrapping the shared system test fixture helper (`conftest.construct_client`)
+        supplies observability test defaults (`use_mtls=False` and `_insecure_channel_factory`
+        for host-managed gRPC channels) without altering defaults for other Showcase tests.
 
     Args:
         client_class: The GAPIC client class to instantiate (e.g. EchoClient).
