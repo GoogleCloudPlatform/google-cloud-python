@@ -20,6 +20,7 @@ import threading
 from google.api_core import exceptions as api_exceptions
 from google.cloud.exceptions import NotFound
 
+from google.cloud.storage import _helpers
 from google.cloud.storage._lru_cache import LRUCache
 
 logger = logging.getLogger(__name__)
@@ -81,9 +82,10 @@ class BucketMetadataCache:
 
     def _verify_existence_background(self, bucket_name):
         try:
-            bucket = self._client.bucket(bucket_name)
-            if not bucket.exists():
-                self.evict(bucket_name)
+            with _helpers._suppress_internal_metrics():
+                bucket = self._client.bucket(bucket_name)
+                if not bucket.exists():
+                    self.evict(bucket_name)
         except Exception as e:
             logger.debug(
                 f"Background verification for bucket existence failed for {bucket_name}: {e}"
@@ -95,7 +97,8 @@ class BucketMetadataCache:
     def _fetch_background(self, bucket_name):
         """Asynchronously fetch bucket metadata and update the cache."""
         try:
-            bucket = self._client.get_bucket(bucket_name, timeout=10.0)
+            with _helpers._suppress_internal_metrics():
+                bucket = self._client.get_bucket(bucket_name, timeout=10.0)
             self.update_from_bucket(bucket)
         except (NotFound, api_exceptions.NotFound):
             self.evict(bucket_name)

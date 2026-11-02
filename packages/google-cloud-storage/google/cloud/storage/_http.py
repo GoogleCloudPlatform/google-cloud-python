@@ -17,12 +17,14 @@
 import functools
 import logging
 import re
+import time
+from contextvars import ContextVar
 
 from google.api_core import exceptions as api_exceptions
 from google.cloud.exceptions import NotFound
 
 from google.cloud import _http
-from google.cloud.storage import __version__, _helpers
+from google.cloud.storage import __version__, _helpers, _opentelemetry_metrics
 from google.cloud.storage._opentelemetry_tracing import (
     HAS_OPENTELEMETRY,
     _is_bucket_metadata_disabled,
@@ -31,6 +33,9 @@ from google.cloud.storage._opentelemetry_tracing import (
 )
 
 logger = logging.getLogger(__name__)
+
+_IN_API_REQUEST = ContextVar("_gcs_in_api_request", default=False)
+_LAST_ATTEMPT_RESPONSE = ContextVar("_gcs_last_attempt_response", default=None)
 
 
 class Connection(_http.JSONConnection):
@@ -55,6 +60,7 @@ class Connection(_http.JSONConnection):
 
     DEFAULT_API_ENDPOINT = _helpers._get_default_storage_base_url()
     DEFAULT_API_MTLS_ENDPOINT = "https://storage.mtls.googleapis.com"
+    _IS_BATCH = False
 
     def __init__(self, client, client_info=None, api_endpoint=None):
         super(Connection, self).__init__(client, client_info)
@@ -75,6 +81,64 @@ class Connection(_http.JSONConnection):
 
     API_URL_TEMPLATE = "{api_base_url}/storage/{api_version}{path}"
     """A template for the URL of a particular API call."""
+
+    def _make_request(self, method, url, *args, **kwargs):
+        if (
+            getattr(self, "_IS_BATCH", False) is True
+            or _helpers._SUPPRESS_INTERNAL_METRICS.get()
+        ):
+            return super(Connection, self)._make_request(method, url, *args, **kwargs)
+
+        recorder = _opentelemetry_metrics.get_active_recorder(self._client)
+        if recorder is None:
+            return super(Connection, self)._make_request(method, url, *args, **kwargs)
+
+        if _IN_API_REQUEST.get():
+            req_start = time.perf_counter()
+            response = super(Connection, self)._make_request(
+                method, url, *args, **kwargs
+            )
+            _LAST_ATTEMPT_RESPONSE.set((response, time.perf_counter() - req_start, url))
+            return response
+
+        url_template = _opentelemetry_metrics.normalize_url_template(url)
+        attempt_start = time.perf_counter()
+        try:
+            response = super(Connection, self)._make_request(
+                method, url, *args, **kwargs
+            )
+        except BaseException as exc:
+            recorder.record_http_attempt(
+                duration=time.perf_counter() - attempt_start,
+                http_method=method,
+                url_template=url_template,
+                status_code=None,
+                error_type=_opentelemetry_metrics.classify_error_type(exc),
+                network_path="cloudpath",
+            )
+            raise
+
+        duration = time.perf_counter() - attempt_start
+        raw_sc = getattr(response, "status_code", None)
+        status_code = (
+            raw_sc
+            if (isinstance(raw_sc, int) and not isinstance(raw_sc, bool))
+            else None
+        )
+        if status_code is not None:
+            recorder.record_ttfb(duration, network_path="cloudpath")
+        error_type = _opentelemetry_metrics.classify_error_type(
+            None, status_code=status_code
+        )
+        recorder.record_http_attempt(
+            duration=duration,
+            http_method=method,
+            url_template=url_template,
+            status_code=status_code,
+            error_type=error_type,
+            network_path="cloudpath",
+        )
+        return response
 
     def api_request(self, *args, **kwargs):
         retry = kwargs.pop("retry", None)
@@ -103,7 +167,102 @@ class Connection(_http.JSONConnection):
                 except Exception as e:
                     logger.debug(f"Failed cache.get_or_queue_fetch in api_request: {e}")
 
-        call = functools.partial(super(Connection, self).api_request, *args, **kwargs)
+        base_call = functools.partial(
+            super(Connection, self).api_request, *args, **kwargs
+        )
+        recorder = (
+            None
+            if (
+                getattr(self, "_IS_BATCH", False) is True
+                or _helpers._SUPPRESS_INTERNAL_METRICS.get()
+            )
+            else _opentelemetry_metrics.get_active_recorder(client)
+        )
+
+        if recorder is not None:
+            http_method = args[0] if len(args) >= 1 else kwargs.get("method", "")
+            raw_path = args[1] if len(args) >= 2 else kwargs.get("path", "")
+            fallback_template = _opentelemetry_metrics.normalize_url_template(raw_path)
+
+            def _timed_attempt():
+                _LAST_ATTEMPT_RESPONSE.set(None)
+                attempt_start = time.perf_counter()
+                try:
+                    result = base_call()
+                except BaseException as exc:
+                    duration = time.perf_counter() - attempt_start
+                    stashed = _LAST_ATTEMPT_RESPONSE.get()
+                    _LAST_ATTEMPT_RESPONSE.set(None)
+                    if stashed is not None:
+                        resp, ttfb_dur, req_url = stashed
+                        raw_sc = getattr(resp, "status_code", None)
+                        status_code = (
+                            raw_sc
+                            if (
+                                isinstance(raw_sc, int) and not isinstance(raw_sc, bool)
+                            )
+                            else None
+                        )
+                        url_template = (
+                            _opentelemetry_metrics.normalize_url_template(req_url)
+                            if req_url
+                            else fallback_template
+                        )
+                        if status_code is not None:
+                            recorder.record_ttfb(ttfb_dur, network_path="cloudpath")
+                        err_type = _opentelemetry_metrics.classify_error_type(
+                            exc, status_code=status_code
+                        )
+                    else:
+                        status_code = None
+                        url_template = fallback_template
+                        err_type = _opentelemetry_metrics.classify_error_type(exc)
+                    recorder.record_http_attempt(
+                        duration=duration,
+                        http_method=http_method,
+                        url_template=url_template,
+                        status_code=status_code,
+                        error_type=err_type,
+                        network_path="cloudpath",
+                    )
+                    raise
+
+                duration = time.perf_counter() - attempt_start
+                stashed = _LAST_ATTEMPT_RESPONSE.get()
+                _LAST_ATTEMPT_RESPONSE.set(None)
+                status_code = 200
+                url_template = fallback_template
+                if stashed is not None:
+                    resp, ttfb_dur, req_url = stashed
+                    raw_sc = getattr(resp, "status_code", None)
+                    status_code = (
+                        raw_sc
+                        if (isinstance(raw_sc, int) and not isinstance(raw_sc, bool))
+                        else None
+                    )
+                    if req_url:
+                        url_template = _opentelemetry_metrics.normalize_url_template(
+                            req_url
+                        )
+                    if status_code is not None:
+                        recorder.record_ttfb(ttfb_dur, network_path="cloudpath")
+                else:
+                    recorder.record_ttfb(duration, network_path="cloudpath")
+
+                recorder.record_http_attempt(
+                    duration=duration,
+                    http_method=http_method,
+                    url_template=url_template,
+                    status_code=status_code,
+                    error_type="OK",
+                    network_path="cloudpath",
+                )
+                return result
+
+            call = _timed_attempt
+        else:
+            call = base_call
+
         with create_trace_span(
             name="Storage.Connection.api_request",
             attributes=span_attributes,
@@ -119,6 +278,7 @@ class Connection(_http.JSONConnection):
                     pass
                 if retry:
                     call = retry(call)
+            in_api_token = _IN_API_REQUEST.set(True) if recorder is not None else None
             try:
                 return call()
             except (NotFound, api_exceptions.NotFound):
@@ -140,3 +300,10 @@ class Connection(_http.JSONConnection):
                                 f"Failed cache.check_and_evict on 404 in api_request: {e}"
                             )
                 raise
+            finally:
+                if in_api_token is not None:
+                    _IN_API_REQUEST.reset(in_api_token)
+                    _LAST_ATTEMPT_RESPONSE.set(None)
+                    current_op = _opentelemetry_metrics.get_current_operation()
+                    if current_op is not None:
+                        current_op.last_failure_error_type = None

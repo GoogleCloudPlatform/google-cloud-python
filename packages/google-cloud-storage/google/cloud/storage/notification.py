@@ -21,6 +21,10 @@ import re
 
 from google.api_core.exceptions import NotFound
 
+from google.cloud.storage._helpers import (
+    _resolve_operation_client,
+    _start_storage_operation,
+)
 from google.cloud.storage._opentelemetry_tracing import create_trace_span
 from google.cloud.storage.constants import _DEFAULT_TIMEOUT
 from google.cloud.storage.retry import DEFAULT_RETRY
@@ -254,34 +258,39 @@ class BucketNotification(object):
         :raises ValueError: if the notification already exists.
         """
         with create_trace_span(name="Storage.BucketNotification.create"):
-            if self.notification_id is not None:
-                raise ValueError(
-                    f"notification_id already set to {self.notification_id}; must be None to create a Notification."  # noqa: E702
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.BucketNotification.create",
+                "CreateNotification",
+            ):
+                if self.notification_id is not None:
+                    raise ValueError(
+                        f"notification_id already set to {self.notification_id}; must be None to create a Notification."  # noqa: E702
+                    )
+
+                client = self._require_client(client)
+
+                query_params = {}
+                if self.bucket.user_project is not None:
+                    query_params["userProject"] = self.bucket.user_project
+
+                path = f"/b/{self.bucket.name}/notificationConfigs"
+                properties = self._properties.copy()
+
+                if self.topic_name is None:
+                    properties["topic"] = _TOPIC_REF_FMT.format(self.topic_project, "")
+                else:
+                    properties["topic"] = _TOPIC_REF_FMT.format(
+                        self.topic_project, self.topic_name
+                    )
+
+                self._properties = client._post_resource(
+                    path,
+                    properties,
+                    query_params=query_params,
+                    timeout=timeout,
+                    retry=retry,
                 )
-
-            client = self._require_client(client)
-
-            query_params = {}
-            if self.bucket.user_project is not None:
-                query_params["userProject"] = self.bucket.user_project
-
-            path = f"/b/{self.bucket.name}/notificationConfigs"
-            properties = self._properties.copy()
-
-            if self.topic_name is None:
-                properties["topic"] = _TOPIC_REF_FMT.format(self.topic_project, "")
-            else:
-                properties["topic"] = _TOPIC_REF_FMT.format(
-                    self.topic_project, self.topic_name
-                )
-
-            self._properties = client._post_resource(
-                path,
-                properties,
-                query_params=query_params,
-                timeout=timeout,
-                retry=retry,
-            )
 
     def exists(self, client=None, timeout=_DEFAULT_TIMEOUT, retry=DEFAULT_RETRY):
         """Test whether this notification exists.
@@ -310,28 +319,33 @@ class BucketNotification(object):
         :raises ValueError: if the notification has no ID.
         """
         with create_trace_span(name="Storage.BucketNotification.exists"):
-            if self.notification_id is None:
-                raise ValueError(
-                    "Notification ID not set: set an explicit notification_id"
-                )
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.BucketNotification.exists",
+                "GetNotification",
+            ):
+                if self.notification_id is None:
+                    raise ValueError(
+                        "Notification ID not set: set an explicit notification_id"
+                    )
 
-            client = self._require_client(client)
+                client = self._require_client(client)
 
-            query_params = {}
-            if self.bucket.user_project is not None:
-                query_params["userProject"] = self.bucket.user_project
+                query_params = {}
+                if self.bucket.user_project is not None:
+                    query_params["userProject"] = self.bucket.user_project
 
-            try:
-                client._get_resource(
-                    self.path,
-                    query_params=query_params,
-                    timeout=timeout,
-                    retry=retry,
-                )
-            except NotFound:
-                return False
-            else:
-                return True
+                try:
+                    client._get_resource(
+                        self.path,
+                        query_params=query_params,
+                        timeout=timeout,
+                        retry=retry,
+                    )
+                except NotFound:
+                    return False
+                else:
+                    return True
 
     def reload(self, client=None, timeout=_DEFAULT_TIMEOUT, retry=DEFAULT_RETRY):
         """Update this notification from the server configuration.
@@ -359,24 +373,29 @@ class BucketNotification(object):
         :raises ValueError: if the notification has no ID.
         """
         with create_trace_span(name="Storage.BucketNotification.reload"):
-            if self.notification_id is None:
-                raise ValueError(
-                    "Notification ID not set: set an explicit notification_id"
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.BucketNotification.reload",
+                "GetNotification",
+            ):
+                if self.notification_id is None:
+                    raise ValueError(
+                        "Notification ID not set: set an explicit notification_id"
+                    )
+
+                client = self._require_client(client)
+
+                query_params = {}
+                if self.bucket.user_project is not None:
+                    query_params["userProject"] = self.bucket.user_project
+
+                response = client._get_resource(
+                    self.path,
+                    query_params=query_params,
+                    timeout=timeout,
+                    retry=retry,
                 )
-
-            client = self._require_client(client)
-
-            query_params = {}
-            if self.bucket.user_project is not None:
-                query_params["userProject"] = self.bucket.user_project
-
-            response = client._get_resource(
-                self.path,
-                query_params=query_params,
-                timeout=timeout,
-                retry=retry,
-            )
-            self._set_properties(response)
+                self._set_properties(response)
 
     def delete(self, client=None, timeout=_DEFAULT_TIMEOUT, retry=DEFAULT_RETRY):
         """Delete this notification.
@@ -405,23 +424,28 @@ class BucketNotification(object):
         :raises ValueError: if the notification has no ID.
         """
         with create_trace_span(name="Storage.BucketNotification.delete"):
-            if self.notification_id is None:
-                raise ValueError(
-                    "Notification ID not set: set an explicit notification_id"
+            with _start_storage_operation(
+                _resolve_operation_client(self, client),
+                "storage.BucketNotification.delete",
+                "DeleteNotification",
+            ):
+                if self.notification_id is None:
+                    raise ValueError(
+                        "Notification ID not set: set an explicit notification_id"
+                    )
+
+                client = self._require_client(client)
+
+                query_params = {}
+                if self.bucket.user_project is not None:
+                    query_params["userProject"] = self.bucket.user_project
+
+                client._delete_resource(
+                    self.path,
+                    query_params=query_params,
+                    timeout=timeout,
+                    retry=retry,
                 )
-
-            client = self._require_client(client)
-
-            query_params = {}
-            if self.bucket.user_project is not None:
-                query_params["userProject"] = self.bucket.user_project
-
-            client._delete_resource(
-                self.path,
-                query_params=query_params,
-                timeout=timeout,
-                retry=retry,
-            )
 
 
 def _parse_topic_path(topic_path):

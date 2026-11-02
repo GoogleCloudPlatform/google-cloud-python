@@ -41,6 +41,7 @@ from email.parser import Parser
 import requests
 
 from google.cloud import _helpers, exceptions
+from google.cloud.storage._helpers import _start_storage_operation
 from google.cloud.storage._http import Connection
 from google.cloud.storage.constants import _DEFAULT_TIMEOUT
 
@@ -163,6 +164,7 @@ class Batch(Connection):
     """
 
     _MAX_BATCH_SIZE = 1000
+    _IS_BATCH = True
 
     def __init__(self, client, raise_exception=True):
         api_endpoint = client._connection.API_BASE_URL
@@ -299,25 +301,26 @@ class Batch(Connection):
         :rtype: list of tuples
         :returns: one ``(headers, payload)`` tuple per deferred request.
         """
-        headers, body, timeout = self._prepare_batch_request()
+        with _start_storage_operation(self._client, "storage.Batch.finish", "Batch"):
+            headers, body, timeout = self._prepare_batch_request()
 
-        url = f"{self.API_BASE_URL}/batch/storage/v1"
+            url = f"{self.API_BASE_URL}/batch/storage/v1"
 
-        # Use the private ``_base_connection`` rather than the property
-        # ``_connection``, since the property may be this
-        # current batch.
-        response = self._client._base_connection._make_request(
-            "POST", url, data=body, headers=headers, timeout=timeout
-        )
+            # Use the private ``_base_connection`` rather than the property
+            # ``_connection``, since the property may be this
+            # current batch.
+            response = self._client._base_connection._make_request(
+                "POST", url, data=body, headers=headers, timeout=timeout
+            )
 
-        # Raise exception if the top-level batch request fails
-        if not 200 <= response.status_code < 300:
-            raise exceptions.from_http_response(response)
+            # Raise exception if the top-level batch request fails
+            if not 200 <= response.status_code < 300:
+                raise exceptions.from_http_response(response)
 
-        responses = list(_unpack_batch_response(response))
-        self._finish_futures(responses, raise_exception=raise_exception)
-        self._responses = responses
-        return responses
+            responses = list(_unpack_batch_response(response))
+            self._finish_futures(responses, raise_exception=raise_exception)
+            self._responses = responses
+            return responses
 
     def current(self):
         """Return the topmost batch, or None."""
