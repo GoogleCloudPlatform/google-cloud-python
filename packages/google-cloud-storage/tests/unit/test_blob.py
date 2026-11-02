@@ -6197,30 +6197,6 @@ class Test_Blob(unittest.TestCase):
         self.assertEqual(blob.storage_class, storage_class)
         self.assertEqual(blob._properties, {"storageClass": storage_class})
 
-    def test_storage_class_enterprise_constants(self):
-        from google.cloud.storage.constants import (
-            LR_STANDARD_ENTERPRISE_STORAGE_CLASS,
-            STANDARD_ENTERPRISE_STORAGE_CLASS,
-            STANDARD_FLEXBACKUP_ENTERPRISE_STORAGE_CLASS,
-        )
-
-        blob_name = "blob-name"
-        bucket = _Bucket()
-        blob = self._make_one(blob_name, bucket=bucket)
-        self.assertIn(STANDARD_ENTERPRISE_STORAGE_CLASS, blob.STORAGE_CLASSES)
-        self.assertIn(
-            STANDARD_FLEXBACKUP_ENTERPRISE_STORAGE_CLASS, blob.STORAGE_CLASSES
-        )
-        self.assertIn(LR_STANDARD_ENTERPRISE_STORAGE_CLASS, blob.STORAGE_CLASSES)
-        for storage_class in (
-            STANDARD_ENTERPRISE_STORAGE_CLASS,
-            STANDARD_FLEXBACKUP_ENTERPRISE_STORAGE_CLASS,
-            LR_STANDARD_ENTERPRISE_STORAGE_CLASS,
-        ):
-            blob.storage_class = storage_class
-            self.assertEqual(blob.storage_class, storage_class)
-            self.assertEqual(blob._properties, {"storageClass": storage_class})
-
     def test_temporary_hold_getter_missing(self):
         BLOB_NAME = "blob-name"
         bucket = _Bucket()
@@ -6810,6 +6786,31 @@ class Test__add_query_parameters(unittest.TestCase):
         NV_LIST = [("one", "One"), ("two", "Two")]
         expected = "&".join([f"{name}={value}" for name, value in NV_LIST])
         self.assertEqual(self._call_fut(BASE_URL, NV_LIST), f"{BASE_URL}&{expected}")
+
+
+@pytest.mark.parametrize(
+    "constant_name,expected_value",
+    [
+        ("STANDARD_ENTERPRISE_STORAGE_CLASS", "STANDARD_ENTERPRISE"),
+        (
+            "STANDARD_FLEXBACKUP_ENTERPRISE_STORAGE_CLASS",
+            "STANDARD_FLEXBACKUP_ENTERPRISE",
+        ),
+        ("LR_STANDARD_ENTERPRISE_STORAGE_CLASS", "LR_STANDARD_ENTERPRISE"),
+    ],
+)
+def test_blob_storage_class_enterprise_constants(constant_name, expected_value):
+    from google.cloud.storage import constants
+    from google.cloud.storage.blob import Blob
+
+    storage_class = getattr(constants, constant_name)
+    assert storage_class == expected_value
+    bucket = _Bucket()
+    blob = Blob("blob-name", bucket=bucket)
+    assert storage_class in blob.STORAGE_CLASSES
+    blob.storage_class = storage_class
+    assert blob.storage_class == storage_class
+    assert blob._properties == {"storageClass": storage_class}
 
 
 class _Connection(object):
